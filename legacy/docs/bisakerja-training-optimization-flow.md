@@ -484,24 +484,30 @@ Alasan:
 
 ## 8. Perbandingan Model Embedding
 
-Karena dataset target sepenuhnya berbahasa Inggris, gunakan model yang kuat untuk Bahasa Inggris sebagai default.
+Karena dataset target dan output model core saat ini difokuskan ke Bahasa Inggris, gunakan model English retrieval yang kuat sebagai default training.
 
-| Model                                     | Bahasa      | Kelebihan                     | Kekurangan                     | Rekomendasi                     |
-| ----------------------------------------- | ----------- | ----------------------------- | ------------------------------ | ------------------------------- |
-| `sentence-transformers/all-MiniLM-L6-v2`  | Inggris     | sangat cepat, murah, stabil   | kualitas di bawah model besar  | uji cepat + baseline cepat      |
-| `sentence-transformers/all-mpnet-base-v2` | Inggris     | kualitas STS kuat             | lebih lambat dari MiniLM       | default lokal jika GPU/CPU kuat |
-| `intfloat/e5-base-v2`                     | Inggris     | kuat untuk pencarian kandidat | perlu prefix query/passage     | benchmark rekomendasi default   |
-| `intfloat/e5-large-v2`                    | Inggris     | kualitas tinggi               | mahal saat pelatihan/inferensi | benchmark akhir                 |
-| `BAAI/bge-base-en-v1.5`                   | Inggris     | kuat untuk pencarian semantik | perlu evaluasi threshold ulang | kandidat pencarian production   |
-| `BAAI/bge-large-en-v1.5`                  | Inggris     | kualitas tinggi               | VRAM/latensi lebih besar       | benchmark offline               |
-| `BAAI/bge-m3`                             | multibahasa | kuat jika data campur bahasa  | lebih berat                    | fallback jika gerbang gagal     |
-| `intfloat/multilingual-e5-base`           | multibahasa | kuat untuk migrasi ID/EN      | bukan default data Inggris     | fallback migrasi                |
+Default training embedding model:
+
+```text
+intfloat/e5-base-v2
+```
+
+| Model                                     | Bahasa      | Kelebihan                         | Kekurangan                     | Rekomendasi                     |
+| ----------------------------------------- | ----------- | --------------------------------- | ------------------------------ | ------------------------------- |
+| `intfloat/e5-base-v2`                     | Inggris     | kuat untuk retrieval + matching   | perlu prefix query/passage     | default training utama          |
+| `sentence-transformers/all-mpnet-base-v2` | Inggris     | kualitas STS kuat                 | kurang retrieval-oriented      | pembanding semantic baseline    |
+| `sentence-transformers/all-MiniLM-L6-v2`  | Inggris     | sangat cepat, murah, stabil       | kualitas di bawah model base   | baseline cepat saja             |
+| `BAAI/bge-base-en-v1.5`                   | Inggris     | kuat untuk pencarian semantik     | perlu evaluasi threshold ulang | pembanding retrieval benchmark  |
+| `intfloat/e5-large-v2`                    | Inggris     | kualitas tinggi                   | mahal saat pelatihan/inferensi | benchmark akhir                 |
+| `BAAI/bge-large-en-v1.5`                  | Inggris     | kualitas tinggi                   | VRAM/latensi lebih besar       | benchmark offline               |
+| `BAAI/bge-m3`                             | multibahasa | kuat jika data campur bahasa      | lebih berat                    | fallback jika gerbang EN gagal  |
+| `intfloat/multilingual-e5-base`           | multibahasa | kuat untuk migrasi ID/EN          | bukan default data Inggris     | fallback migrasi                |
 
 Pilihan awal:
 
-- Uji cepat: `sentence-transformers/all-MiniLM-L6-v2`.
-- Baseline lokal utama: `sentence-transformers/all-mpnet-base-v2`.
-- Benchmark pencarian utama: `intfloat/e5-base-v2` atau `BAAI/bge-base-en-v1.5`.
+- Default training utama: `intfloat/e5-base-v2`.
+- Pembanding semantic baseline: `sentence-transformers/all-mpnet-base-v2`.
+- Baseline cepat: `sentence-transformers/all-MiniLM-L6-v2`.
 - Benchmark akhir: `intfloat/e5-large-v2` atau `BAAI/bge-large-en-v1.5`.
 
 Prompting:
@@ -1107,7 +1113,7 @@ Isi `run_manifest_v1.json`:
   "run_name": "bisakerja_matcher_v1_e5base_20260515_seed42",
   "seed": 42,
   "dataset_version": "profile_job_pairs_v1",
-  "embedding_model": "intfloat/multilingual-e5-base",
+  "embedding_model": "intfloat/e5-base-v2",
   "model_format": ".keras",
   "git_commit": "fill-at-runtime",
   "target_accuracy": 0.85,

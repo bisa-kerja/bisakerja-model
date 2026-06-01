@@ -467,20 +467,26 @@ pairs.to_parquet(f"{PERSIST_DIR}/datasets/processed/profile_job_pairs_v1.parquet
 
 Model yang disarankan:
 
-| Model                                     | Kegunaan               | Biaya cloud | Catatan                        |
-| ----------------------------------------- | ---------------------- | ----------- | ------------------------------ |
-| `sentence-transformers/all-MiniLM-L6-v2`  | baseline uji cepat     | rendah      | cepat dan stabil               |
-| `sentence-transformers/all-mpnet-base-v2` | pencocokan semantik    | sedang      | default kuat untuk Inggris     |
-| `intfloat/e5-base-v2`                     | pencarian + pencocokan | sedang      | pakai prompt query/passage     |
-| `BAAI/bge-base-en-v1.5`                   | benchmark pencarian    | sedang      | kuat untuk pencarian Inggris   |
-| `intfloat/e5-large-v2`                    | benchmark akhir        | tinggi      | lebih baik, lebih lambat       |
-| `BAAI/bge-large-en-v1.5`                  | pencarian akhir        | tinggi      | VRAM/latensi lebih tinggi      |
-| `BAAI/bge-m3`                             | fallback data campuran | tinggi      | pakai hanya jika gerbang gagal |
+Default training embedding model:
+
+```text
+intfloat/e5-base-v2
+```
+
+| Model                                     | Kegunaan                    | Biaya cloud | Catatan                              |
+| ----------------------------------------- | --------------------------- | ----------- | ------------------------------------ |
+| `intfloat/e5-base-v2`                     | pencarian + pencocokan      | sedang      | default training; query/passage wajib |
+| `sentence-transformers/all-mpnet-base-v2` | pembanding semantik         | sedang      | STS kuat untuk baseline pembanding    |
+| `sentence-transformers/all-MiniLM-L6-v2`  | baseline uji cepat          | rendah      | cepat; bukan default final            |
+| `BAAI/bge-base-en-v1.5`                   | benchmark pencarian         | sedang      | kuat untuk pencarian Inggris          |
+| `intfloat/e5-large-v2`                    | benchmark akhir             | tinggi      | lebih baik, lebih lambat              |
+| `BAAI/bge-large-en-v1.5`                  | pencarian akhir             | tinggi      | VRAM/latensi lebih tinggi             |
+| `BAAI/bge-m3`                             | fallback data campuran      | tinggi      | pakai hanya jika gerbang EN gagal     |
 
 Rekomendasi cloud:
 
-- Mulai dari `all-MiniLM-L6-v2` untuk uji cepat.
-- Naik ke `all-mpnet-base-v2`, `e5-base-v2`, atau `bge-base-en-v1.5` untuk eksperimen utama.
+- Gunakan `intfloat/e5-base-v2` sebagai default Phase 17/18 training.
+- Pakai `all-mpnet-base-v2` dan `all-MiniLM-L6-v2` hanya sebagai baseline pembanding.
 - Benchmark model besar hanya setelah label, split, dan cache stabil.
 - Pakai model multibahasa hanya untuk cek migrasi, bukan pelatihan final data Inggris.
 
@@ -1172,7 +1178,7 @@ Cloud-friendly tuning:
 Suggested search:
 
 ```text
-embedding_model: MiniLM, e5-base
+embedding_model: e5-base-v2 default; all-mpnet-base-v2/MiniLM comparator only
 dense_units: 256/128, 512/256
 dropout: 0.1, 0.2, 0.3
 learning_rate: 1e-4, 3e-4, 1e-3
