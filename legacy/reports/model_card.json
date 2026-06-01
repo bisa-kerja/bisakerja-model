@@ -1,0 +1,21 @@
+{
+  "model_name": "bisakerja_jobfit_v1",
+  "version": "v1",
+  "embedding_model": "all-MiniLM-L6-v2",
+  "embedding_dim": 384,
+  "training_pairs": 25500,
+  "val_pairs": 4500,
+  "metrics": {
+    "mae": 0.0844,
+    "accuracy": 0.802,
+    "r2": -0.0038
+  },
+  "gate_passed": true,
+  "trained_at": "2026-05-29T05:31:11.187938",
+  "artifacts": {
+    "model": "models/model_jobfit_v1.keras",
+    "job_embeddings": "cache/all_job_embeddings.npy",
+    "job_index": "artifacts/job_index.json",
+    "pairs": "artifacts/pairs.parquet"
+  }
+}

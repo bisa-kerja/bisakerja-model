@@ -1,0 +1,6 @@
+{
+  "pairs_fingerprint": "bbd83f81ce57f29c5afdadfbae5e58a6",
+  "n_pairs": 30000,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "embedding_dim": 384
+}

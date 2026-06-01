@@ -1,0 +1,10 @@
+{
+  "distribution": {
+    "EN": 1426,
+    "UNKNOWN": 602,
+    "MIXED": 23,
+    "ID": 22
+  },
+  "en_ratio": 0.6879,
+  "gate_passed": true
+}
