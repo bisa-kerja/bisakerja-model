@@ -14,7 +14,7 @@ Recommended minimum VPS shape:
 - Docker Engine with Docker Compose v2
 - Optional reverse proxy such as Caddy or Nginx
 
-The production compose file binds Model API publicly to `0.0.0.0:3004` by default while the container still listens on `7860`. Keep `MODEL_API_SERVICE_TOKEN` strong because port `3004` is intended for public ingress.
+The production compose file binds Model API to `127.0.0.1:3004` by default while the container still listens on `7860`. Public traffic should enter through Nginx HTTPS, then proxy to this local port. Keep `MODEL_API_SERVICE_TOKEN` strong because protected endpoints require bearer auth.
 
 ## Files
 
@@ -42,13 +42,14 @@ sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
-Open public ingress only for port `3004`:
+Open public ingress for HTTP/HTTPS only when Nginx handles the public domain:
 
 ```bash
-sudo ufw allow 3004/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
 ```
 
-If a cloud firewall is present, allow TCP `3004` there too. Public requests must include `Authorization: Bearer <MODEL_API_SERVICE_TOKEN>` for protected endpoints.
+Do not expose Docker port `3004` publicly unless Nginx is not used. Public requests to protected endpoints must include `Authorization: Bearer <MODEL_API_SERVICE_TOKEN>`.
 
 ## GitHub Secrets
 
@@ -161,15 +162,15 @@ COMPOSE_PROJECT_NAME=bisakerja-model-api \
 
 `docker-compose.production.yml` supports these optional env overrides:
 
-| Env var                  | Default                                   | Purpose                                           |
-| ------------------------ | ----------------------------------------- | ------------------------------------------------- |
-| `MODEL_API_IMAGE`        | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                                     |
-| `MODEL_API_BIND_ADDRESS` | `0.0.0.0`                                 | Public host bind address.                         |
-| `MODEL_API_PORT`         | `3004`                                    | Public host port mapped to container port `7860`. |
-| `MODEL_API_ENV_FILE`     | `.env.production`                         | Compose env file path.                            |
-| `MODEL_API_MEM_LIMIT`    | `8g`                                      | Container memory limit.                           |
-| `MODEL_API_CPUS`         | `3.0`                                     | Container CPU quota.                              |
-| `COMPOSE_PROJECT_NAME`   | `bisakerja-model-api`                     | Compose project name.                             |
+| Env var                  | Default                                   | Purpose                                     |
+| ------------------------ | ----------------------------------------- | ------------------------------------------- |
+| `MODEL_API_IMAGE`        | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                               |
+| `MODEL_API_BIND_ADDRESS` | `127.0.0.1`                               | Local host bind address for Nginx upstream. |
+| `MODEL_API_PORT`         | `3004`                                    | Host port mapped to container port `7860`.  |
+| `MODEL_API_ENV_FILE`     | `.env.production`                         | Compose env file path.                      |
+| `MODEL_API_MEM_LIMIT`    | `8g`                                      | Container memory limit.                     |
+| `MODEL_API_CPUS`         | `3.0`                                     | Container CPU quota.                        |
+| `COMPOSE_PROJECT_NAME`   | `bisakerja-model-api`                     | Compose project name.                       |
 
 For a 4 vCPU / 12 GB VPS, keep defaults first. Increase `MODEL_API_TIMEOUT_MS` before raising CPU/memory limits.
 

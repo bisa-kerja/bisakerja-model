@@ -8,7 +8,7 @@ services:
       - path: ${MODEL_API_ENV_FILE:-.env.production}
         required: true
     ports:
-      - "${MODEL_API_BIND_ADDRESS:-0.0.0.0}:${MODEL_API_PORT:-3004}:7860"
+      - "${MODEL_API_BIND_ADDRESS:-127.0.0.1}:${MODEL_API_PORT:-3004}:7860"
     mem_limit: ${MODEL_API_MEM_LIMIT:-8g}
     cpus: ${MODEL_API_CPUS:-3.0}
     security_opt:
