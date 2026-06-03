@@ -1249,6 +1249,91 @@ Acceptance Criteria:
 
 ---
 
+### Phase 40 — AI CV Analyzer Backend Regression Closure and Candidate Policy Hardening
+
+Status: Complete
+
+Goal: Close the remaining Backend AI CV Analyzer regressions found after the Phase 39 copy update, and ensure Backend handles candidate edge cases before calling Model API.
+
+Scope boundary:
+
+- Focus only on AI CV Analyzer Backend code and tests under `references/`.
+- Do not change Model API model-core response contract unless a new drift is proven.
+- Do not rollback approved Phase 39 English-safe fallback copy.
+- Backend remains owner of public `cv-analysis-v2`, candidate retrieval policy, and error mapping.
+
+Current gap:
+
+- `references/tests/integration/routes/ai-cv-analyzer.test.ts` still expects pre-Phase-39 fallback copy, so Backend route test suite fails even though actual response uses approved richer templates.
+- Backend can still call Model API with an empty `jobCandidates` set, although integration docs say Backend should resolve empty candidates before Model API call.
+- Multipart upload limits in `createCvUploadMiddleware` may reject valid requests with up to 10 repeated `jobRoles[]` fields plus analyzer metadata.
+
+Tasks:
+
+- [x] Step 40.1: Refresh route fallback assertions — Update AI CV Analyzer route tests to expect approved Phase 39 English-safe copy templates for `jobFitAlignment`, `atsFriendliness`, `overallImpression`, `topActionables`, `sectionReviews`, and recommendation `reason/nextStep`.
+- [x] Step 40.2: Keep generated-wrapper tests aligned — Ensure GenAI success/failure tests still prove provider output is accepted only when schema-safe, while provider failure falls back to approved Phase 39 deterministic copy.
+- [x] Step 40.3: Add empty-candidate policy — In Backend service, handle empty candidate retrieval before Model API call with deterministic product-approved behavior and no fake production scores.
+- [x] Step 40.4: Map candidate-not-found errors — For `DIRECT_JOB_DETAIL`, return `404 JOB_NOT_FOUND`; for `BOOKMARK`, hide ownership with `404 BOOKMARK_NOT_FOUND` or approved no-candidate response; for `JOB_SEARCH`, use approved no-recommendation/validation policy.
+- [x] Step 40.5: Expand candidate edge tests — Cover `DIRECT_JOB_DETAIL` missing job, unowned bookmark/no bookmark candidates, empty job search result, and assert Model API client is not called when Backend resolves no candidates.
+- [x] Step 40.6: Fix multipart field limits — Increase or redesign Multer `fields`/`parts` limits so a valid request with 10 `jobRoles` plus metadata fields is accepted without weakening file count and size limits.
+- [x] Step 40.7: Add max-role route test — Submit 10 valid repeated `jobRoles` fields through `/api/v1/ai/cv-analyzer` and assert success or the agreed validation behavior.
+- [x] Step 40.8: Run Backend regression suite — Run `cd references && bun test --preload ./tests/preload-env.ts tests/unit/ai-cv-analyzer tests/unit/shared/model-api.schema.test.ts tests/unit/shared/model-api.client.test.ts tests/integration/routes/ai-cv-analyzer.test.ts tests/integration/contracts/fixture-contracts.test.ts` and record result.
+
+Acceptance Criteria:
+
+- [x] Backend AI CV Analyzer route tests pass with Phase 39 approved fallback copy, not stale pre-Phase-39 strings.
+- [x] Backend never calls Model API with empty `jobCandidates` unless an explicitly documented no-candidate model-core contract exists.
+- [x] Public errors for missing direct job/bookmark ownership remain ownership-safe and match documented error codes.
+- [x] Valid multipart requests with the documented max `jobRoles` do not fail due to infrastructure limits.
+- [x] No raw CV text, storage keys, service tokens, prompt text, DB URLs, or raw Model API internals leak in responses, logs, or persisted snapshots.
+
+Verification:
+
+- `cd references && bun test --preload ./tests/preload-env.ts tests/unit/ai-cv-analyzer tests/unit/shared/model-api.schema.test.ts tests/unit/shared/model-api.client.test.ts tests/integration/routes/ai-cv-analyzer.test.ts tests/integration/contracts/fixture-contracts.test.ts` — 51 pass, 0 fail.
+
+---
+
+### Phase 41 — AI CV Analyzer Public Staging Smoke and Payload Hygiene Closure
+
+Status: Completed
+
+Goal: Complete the missing public staging smoke evidence and remove internal payload ambiguity before broader AI CV Analyzer staging/demo traffic.
+
+Scope boundary:
+
+- Focus on AI CV Analyzer staging readiness only.
+- Do not deploy or mutate production.
+- Do not audit AI CV Generate in this phase.
+- Keep Model API internal-only and Backend public-only.
+
+Current gap:
+
+- Phase 38 still has incomplete Step 38.6 for a real Backend-to-Model public staging smoke.
+- The staging runbook curl example is incomplete for the current public analyzer schema because it omits required `jobRoles` and `inputMode` fields.
+- Backend Model API client sends `cv` metadata with `storageKey` even though the canonical internal multipart contract only requires the PDF file and safe analyzer fields.
+
+Tasks:
+
+- [x] Step 41.1: Add public staging smoke script — Create a repeatable script that warms Model API, calls Backend `/api/v1/ai/cv-analyzer` with a sanitized PDF fixture, valid auth, `jobRoles`, `language`, `inputMode`, `compareSource`, and optional `persistResult`, then writes a report.
+- [x] Step 41.2: Seed or fixture candidate jobs — Ensure the smoke has deterministic visible/active Backend job candidates for `JOB_SEARCH` and optionally `DIRECT_JOB_DETAIL`/`BOOKMARK` without production data dependency.
+- [x] Step 41.3: Validate public response shape — Assert the public envelope `{ success, message, data, meta }`, `cv-analysis-v2`, max 5 hydrated recommendations, `generatedCv.available=false`, model metadata, and OpenAPI-compatible field limits.
+- [x] Step 41.4: Validate persistence behavior — When `persistResult=true`, assert sanitized `CvAnalysisResult`, recommendation run/items, and CV file metadata are written without raw CV text, file bytes, storage keys, prompts, tokens, or full internal payloads.
+- [x] Step 41.5: Validate latency budget — Capture Backend total latency plus Model API observability where available, and compare against cold/warm staging budgets from the Phase 38 runbook.
+- [x] Step 41.6: Update staging runbook curl — Fix `docs/runbooks/ai-cv-analyzer-staging-runtime.md` example to include required `jobRoles` and `inputMode`, plus expected auth and persistence notes.
+- [x] Step 41.7: Remove or justify `cv.storageKey` in Model API multipart — Either stop sending the unused `cv` metadata field/storage key from Backend client, or document why it remains internal-only and add tests proving it is never exposed/logged/trusted.
+- [x] Step 41.8: Add payload hygiene tests — Assert Backend-to-Model multipart excludes unneeded sensitive metadata when possible, and public responses never include `storageKey`, uploaded bytes, raw CV text, auth headers, service tokens, prompts, DB URLs, or artifact paths.
+- [x] Step 41.9: Close Phase 38.6 evidence — Update `TODOS.md`, `reports/phase_38_ai_cv_analyzer_runtime_gate.*`, or a new Phase 41 report with smoke command, pass/fail result, latency, and no-private-field evidence.
+
+Acceptance Criteria:
+
+- [x] A reviewer can run one documented public staging smoke command after warmup and get a valid Backend `CvAnalysis` response.
+- [x] Smoke report records latency, persistence choice, contract validation result, model version, and private-field leak checks.
+- [x] Staging runbook curl example is executable against the current public schema.
+- [x] Backend-to-Model multipart payload contains only necessary internal fields, and any retained internal metadata is justified and non-public.
+- [x] Phase 38.6 is either completed or explicitly superseded by Phase 41 evidence.
+
+---
+
 ## Suggested Execution Order
 
 1. Treat Phase 0-11 as completed design and audit baseline.
@@ -1268,6 +1353,8 @@ Acceptance Criteria:
 15. Complete Phase 37 only if product needs LLM-generated AI CV Analyzer prose; otherwise keep deterministic fallback as the safe default.
 16. Complete Phase 38 before broader staging/demo traffic so E5/TensorFlow cold-start latency and readiness behavior are explicit.
 17. Complete Phase 39 before user-facing copy review, localization, or broader beta testing.
+18. Complete Phase 40 before any new AI CV Analyzer staging-ready claim, because Backend route regressions and empty-candidate policy are current blockers.
+19. Complete Phase 41 before broader staging/demo traffic, because public Backend-to-Model smoke evidence and payload hygiene must be reproducible.
 
 ## Out of Scope for Model-Core Training Notebooks
 

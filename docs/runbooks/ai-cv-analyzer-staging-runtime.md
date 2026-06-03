@@ -53,23 +53,55 @@ Repeat command once after cold-start. First run records cold-start latency. Seco
 
 ## Backend public staging smoke
 
-After Model API warmup passes, run a Backend-to-Model fixture through public Backend route:
+After Model API warmup passes, seed deterministic non-production Backend jobs and run a Backend-to-Model fixture through the public Backend route:
+
+```bash
+cd references && bun run prisma:seed
+cd ..
+
+python scripts/smoke_ai_cv_analyzer_public_staging.py \
+  --backend-api-url "${BACKEND_API_URL}" \
+  --user-access-token "${USER_ACCESS_TOKEN}" \
+  --fixture-pdf artifacts/smoke/sanitized-cv.pdf \
+  --job-role "Backend Developer" \
+  --language en \
+  --input-mode UPLOAD \
+  --compare-source JOB_SEARCH \
+  --latency-budget-ms 5000 \
+  --output reports/phase_41_ai_cv_analyzer_public_staging_smoke.json
+```
+
+Equivalent curl for manual debugging:
 
 ```bash
 curl -X POST "${BACKEND_API_URL}/api/v1/ai/cv-analyzer" \
   -H "authorization: Bearer ${USER_ACCESS_TOKEN}" \
   -F "cvFile=@artifacts/smoke/sanitized-cv.pdf;type=application/pdf" \
+  -F "jobRoles=Backend Developer" \
+  -F "language=en" \
+  -F "inputMode=UPLOAD" \
   -F "compareSource=JOB_SEARCH" \
-  -F "language=en"
+  -F "persistResult=false"
 ```
+
+Smoke preconditions:
+
+- `USER_ACCESS_TOKEN` belongs to a staging/non-production user.
+- Seeded Backend data includes visible active jobs for `Backend Developer`; `cd references && bun run prisma:seed` provides `seed-job-001` for `JOB_SEARCH`.
+- `persistResult=false` avoids writes except transient upload metadata. Use `--persist-result` only when persistence evidence is required in non-production.
 
 Assert:
 
-- response shape matches public `CvAnalysis` contract.
+- response envelope contains `{ success, message, data, meta }`.
+- `data.analysisResult.schemaVersion` is `cv-analysis-v2`.
+- hydrated `jobRecommendations` length is at most 5.
+- `generatedCv.available=false` is valid when deterministic prose fallback is used.
+- model metadata includes name and version.
 - latency stays within staging budget.
 - persistence behavior matches request policy.
-- no private field leakage: no raw CV text, uploaded bytes, storage keys, service tokens, DB URLs, prompts, or auth headers.
-- `generatedCv.available=false` is valid when deterministic prose fallback is used.
+- no private field leakage: no raw CV text, uploaded bytes, storage keys, service tokens, DB URLs, prompts, artifact paths, or auth headers.
+
+Phase 38.6 public Backend-to-Model smoke is superseded by this public staging smoke command and report.
 
 ## Rollback checklist
 

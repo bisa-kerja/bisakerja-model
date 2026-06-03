@@ -1,0 +1,34 @@
+{
+  "blockers": [],
+  "checks": {
+    "deterministic_candidate_fixture_documented": true,
+    "multipart_excludes_cv_storage_metadata": true,
+    "payload_hygiene_test_exists": true,
+    "persistence_and_latency_recorded": true,
+    "phase_38_6_superseded_by_phase_41": true,
+    "private_field_leak_checks_present": true,
+    "public_response_contract_validated": true,
+    "public_smoke_script_exists": true,
+    "sanitized_pdf_fixture_exists": true
+  },
+  "commands": {
+    "backend_payload_hygiene_tests": "cd references && bun test --preload ./tests/preload-env.ts tests/unit/shared/model-api.client.test.ts tests/integration/routes/ai-cv-analyzer.test.ts",
+    "backend_seed": "cd references && bun run prisma:seed",
+    "model_api_warmup": "python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url ${MODEL_API_URL:-http://127.0.0.1:8000} --token ${MODEL_API_SERVICE_TOKEN} --latency-budget-ms 30000 --output reports/ai_cv_analyzer_warmup_staging.json",
+    "phase41_gate": "python scripts/verify_phase_41_ai_cv_analyzer_public_staging_smoke.py --write",
+    "public_staging_smoke": "python scripts/smoke_ai_cv_analyzer_public_staging.py --backend-api-url ${BACKEND_API_URL} --user-access-token ${USER_ACCESS_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --job-role 'Backend Developer' --language en --input-mode UPLOAD --compare-source JOB_SEARCH --latency-budget-ms 5000 --output reports/phase_41_ai_cv_analyzer_public_staging_smoke.json"
+  },
+  "final_decision": "go",
+  "phase_38_6_status": "superseded_by_phase_41_public_staging_smoke",
+  "phase_id": "phase_41_ai_cv_analyzer_public_staging_smoke",
+  "schema_version": "phase-41-ai-cv-analyzer-public-staging-smoke-v1",
+  "sources": [
+    "scripts/smoke_ai_cv_analyzer_public_staging.py",
+    "artifacts/smoke/sanitized-cv.pdf",
+    "docs/runbooks/ai-cv-analyzer-staging-runtime.md",
+    "references/src/shared/integrations/model-api.client.ts",
+    "references/tests/unit/shared/model-api.client.test.ts",
+    "references/prisma/seed-data.ts",
+    "reports/phase_38_ai_cv_analyzer_runtime_gate.md"
+  ]
+}
