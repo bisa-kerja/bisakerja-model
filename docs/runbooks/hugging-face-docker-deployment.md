@@ -91,6 +91,55 @@ Set these Space variables/secrets in Settings.
 
 The Docker image also sets safe defaults for these values, but Space Settings should own deployment-specific runtime config.
 
+## Deploy From Full Repository Safely
+
+Do not push this full repository directly to Hugging Face Spaces. The full repo contains training, legacy, and embedding files that are not needed by runtime and can exceed Hugging Face's normal git file size limit.
+
+Use the deploy script to generate a minimal Space repository:
+
+```bash
+scripts/deploy_hf_space.sh
+```
+
+The script creates `../bisakerja-model-hf-space` by default and copies only:
+
+- root Space files: `README.md`, `Dockerfile`, `.dockerignore`, `requirements.txt`
+- `model_api/`
+- `docs/`
+- Phase 25 artifacts with `required_for_inference=true`
+- `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json`
+
+The script intentionally excludes:
+
+- `.env` and `.env.*`
+- `legacy/`
+- `training/`
+- `references/`
+- `reports/`
+- `.venv/`
+- non-runtime embeddings and TensorBoard output
+
+Push manually after reviewing the generated deploy repo:
+
+```bash
+cd ../bisakerja-model-hf-space
+git push --force-with-lease hf main
+```
+
+Or let the script push after confirmation:
+
+```bash
+scripts/deploy_hf_space.sh --push
+```
+
+If a required runtime model artifact becomes larger than 10 MiB, use Git LFS in the deploy repo:
+
+```bash
+scripts/deploy_hf_space.sh --push --with-lfs
+```
+
+`--push` rewrites the Hugging Face Space `main` branch. Use it only after confirming the target remote is the Space repository.
+
 ## Local Docker Smoke
 
 Build and run locally:

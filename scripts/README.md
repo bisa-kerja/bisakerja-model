@@ -9,6 +9,7 @@ Scripts should be deterministic, repo-root relative, and safe to run locally unl
 ## Common Commands
 
 ```bash
+scripts/deploy_hf_space.sh
 python scripts/generate_training_audit_v1.py
 python scripts/verify_training_phase1.py
 python scripts/verify_phase_27_1_27_2_release_gate.py --write
@@ -23,5 +24,28 @@ python scripts/verify_phase_31_release_gate.py
 - Keep outputs deterministic and path-stable.
 - Write generated evidence under `reports/` or `artifacts/`.
 - Avoid hidden network calls unless a script is clearly a live smoke gate.
+- Do not push to external remotes unless the script requires an explicit flag/confirmation.
 - Do not require production secrets for ordinary local checks.
 - Preserve exact failure semantics used by tests.
+
+## Hugging Face Space Deployment
+
+Use `scripts/deploy_hf_space.sh` to build a minimal deploy repository for Hugging Face Spaces. The script excludes training, legacy, local env, reports, and non-runtime embeddings, while preserving required runtime artifacts such as `.keras` model files.
+
+Default behavior prepares `../bisakerja-model-hf-space` only:
+
+```bash
+scripts/deploy_hf_space.sh
+```
+
+Push after confirmation:
+
+```bash
+scripts/deploy_hf_space.sh --push
+```
+
+Use Git LFS only if required runtime files exceed Hugging Face's 10 MiB normal git limit:
+
+```bash
+scripts/deploy_hf_space.sh --push --with-lfs
+```
