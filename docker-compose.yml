@@ -1,0 +1,30 @@
+services:
+  model-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bisakerja-model-api:local
+    ports:
+      - "7860:7860"
+    environment:
+      MODEL_API_ENV: local
+      MODEL_API_SERVICE_NAME: bisakerja-model-api
+      MODEL_API_SERVICE_TOKEN: local-dev-token
+      MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL: "false"
+      MODEL_API_TIMEOUT_MS: "30000"
+      MODEL_API_MAX_RECOMMENDATIONS: "5"
+      MODEL_API_WARMUP_ON_STARTUP: "false"
+      MODEL_API_WARMUP_REQUIRED: "false"
+      MODEL_API_MAX_PDF_BYTES: "5000000"
+      MODEL_API_MAX_PDF_PAGES: "10"
+      MODEL_API_ENABLE_GENAI_WRAPPER: "false"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:7860/health', timeout=5).read()"
+      interval: 30s
+      timeout: 10s
+      start_period: 180s
+      retries: 3

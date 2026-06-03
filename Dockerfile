@@ -1,0 +1,42 @@
+FROM python:3.13-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -u 1000 user
+
+USER user
+ENV HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH \
+    MODEL_API_ENV=staging \
+    MODEL_API_SERVICE_NAME=bisakerja-model-api \
+    MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL=false \
+    MODEL_API_MAX_RECOMMENDATIONS=5 \
+    MODEL_API_TIMEOUT_MS=30000 \
+    MODEL_API_WARMUP_ON_STARTUP=true \
+    MODEL_API_WARMUP_REQUIRED=true \
+    MODEL_API_MAX_PDF_BYTES=5000000 \
+    MODEL_API_MAX_PDF_PAGES=10 \
+    MODEL_API_ENABLE_GENAI_WRAPPER=false
+
+WORKDIR $HOME/app
+
+COPY --chown=user requirements.txt ./requirements.txt
+RUN python -m pip install --upgrade pip \
+    && python -m pip install -r requirements.txt
+
+COPY --chown=user model_api ./model_api
+COPY --chown=user artifacts/phase_25_tensorflow_training_delivery ./artifacts/phase_25_tensorflow_training_delivery
+
+EXPOSE 7860
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=180s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:7860/health', timeout=5).read()" || exit 1
+
+CMD ["uvicorn", "model_api.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "7860"]

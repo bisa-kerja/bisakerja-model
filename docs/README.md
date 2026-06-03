@@ -6,12 +6,13 @@ This repository documents the model side only. The Backend API is a separate rep
 
 ## Core Docs
 
-| Document                             | Purpose                                                                  |
-| ------------------------------------ | ------------------------------------------------------------------------ |
-| `project-structure.md`               | Model-repo layout, folder ownership, and safe restructuring rules.       |
-| `architecture/service-boundaries.md` | Backend API, Model API, training, artifacts, and legacy boundaries.      |
-| `runbooks/local-development.md`      | Local setup for Model API, training notebooks, tests, and release gates. |
-| `runbooks/release-gates.md`          | Production evidence gates, expected checks, and failure handling.        |
+| Document                                     | Purpose                                                                  |
+| -------------------------------------------- | ------------------------------------------------------------------------ |
+| `project-structure.md`                       | Model-repo layout, folder ownership, and safe restructuring rules.       |
+| `architecture/service-boundaries.md`         | Backend API, Model API, training, artifacts, and legacy boundaries.      |
+| `runbooks/local-development.md`              | Local setup for Model API, training notebooks, tests, and release gates. |
+| `runbooks/hugging-face-docker-deployment.md` | Docker deployment runbook for Hugging Face Spaces.                       |
+| `runbooks/release-gates.md`                  | Production evidence gates, expected checks, and failure handling.        |
 
 ## Workspace Docs
 

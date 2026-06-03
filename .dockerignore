@@ -1,0 +1,42 @@
+# VCS / local state
+.git
+.gitignore
+.DS_Store
+.pi
+.ipynb_checkpoints
+.pytest_cache
+__pycache__
+**/__pycache__
+*.py[cod]
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+!*.env.example
+model_api/.env
+model_api/.env.*
+!model_api/.env.example
+
+# Python envs
+.venv
+venv
+training/.tf-venv-3.13
+training/venv
+
+# Non-serving workspaces
+legacy
+references
+reports
+training
+tests
+scripts
+
+# Keep Docker context focused on runtime artifacts only.
+artifacts/**
+!artifacts/phase_25_tensorflow_training_delivery/
+!artifacts/phase_25_tensorflow_training_delivery/**
+
+# Generated / heavy non-runtime artifact folders inside Phase 25.
+artifacts/phase_25_tensorflow_training_delivery/embeddings
+artifacts/phase_25_tensorflow_training_delivery/tensorboard_release

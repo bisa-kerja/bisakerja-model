@@ -1,3 +1,19 @@
+---
+title: Bisakerja Model API
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+suggested_hardware: cpu-upgrade
+startup_duration_timeout: 1h
+models:
+  - intfloat/e5-base-v2
+preload_from_hub:
+  - intfloat/e5-base-v2
+pinned: false
+---
+
 # Bisakerja Model Workspace
 
 Model, inference, evidence, and Model API workspace for the Bisakerja AI career platform.
@@ -67,8 +83,9 @@ Backend contract alignment should use exported contracts or fixtures from <https
 3. `docs/architecture/service-boundaries.md` — Backend vs Model API vs Training boundaries.
 4. `training/README.md` — notebook workflow and training runtime.
 5. `model_api/README.md` — serving runtime, contracts, environment, and smoke tests.
-6. `RUNNING_STEPS.md` — local and staging execution runbook.
-7. `REQUIREMENT.md` and `GAP_MODEL_TRAINING.md` — delivery criteria and model-readiness risks.
+6. `docs/runbooks/hugging-face-docker-deployment.md` — Docker deployment runbook for Hugging Face Spaces.
+7. `RUNNING_STEPS.md` — local and staging execution runbook.
+8. `REQUIREMENT.md` and `GAP_MODEL_TRAINING.md` — delivery criteria and model-readiness risks.
 
 ## Quick Start
 
