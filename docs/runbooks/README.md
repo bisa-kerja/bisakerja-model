@@ -8,6 +8,8 @@ Operational guides for local development, staging validation, release gates, and
 | --------------------------------------------- | -------------------------------------------------------------------------------- |
 | `local-development.md`                        | Local Model API, training runtime, notebook kernel, and targeted tests.          |
 | `hugging-face-docker-deployment.md`           | Docker deployment runbook for Hugging Face Spaces.                               |
+| `vps-docker-deployment.md`                    | Docker Compose + GitHub Actions deployment runbook for a self-managed VPS.       |
+| `nginx-bisakerja-model-api.conf`              | Nginx reverse proxy config for the public Model API domain.                      |
 | `ai-cv-analyzer-staging-runtime.md`           | AI CV Analyzer warmup, readiness, latency, cache, smoke, and rollback.           |
 | `ai-cv-analyzer-product-copy-localization.md` | AI CV Analyzer public-copy language policy, templates, safety, and verification. |
 | `release-gates.md`                            | Production evidence gates, expected failure modes, and release notes.            |

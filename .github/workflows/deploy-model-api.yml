@@ -1,0 +1,237 @@
+name: Deploy Model API
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+    inputs:
+      deploy_branch:
+        description: Branch to deploy
+        required: true
+        default: main
+        type: string
+
+concurrency:
+  group: deploy-model-api
+  cancel-in-progress: false
+
+env:
+  CONTAINER_REGISTRY: ghcr.io
+  COMPOSE_FILE: docker-compose.production.yml
+  RUNTIME_ENV_FILE: .env.production
+  DEFAULT_MODEL_API_PORT: "3004"
+  DEPLOY_TARGET: production
+  EXPECTED_MODEL_API_ENV: production
+  COMPOSE_PROJECT_NAME: bisakerja-model-api
+
+jobs:
+  build-and-push:
+    name: Build And Push Docker Image
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: read
+      packages: write
+
+    outputs:
+      deploy_branch: ${{ steps.meta.outputs.deploy_branch }}
+      image_name: ${{ steps.meta.outputs.image_name }}
+      image_tag: ${{ steps.meta.outputs.image_tag }}
+      image_ref: ${{ steps.meta.outputs.image_ref }}
+      source_sha: ${{ steps.meta.outputs.source_sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_branch || github.ref }}
+
+      - name: Resolve image metadata
+        id: meta
+        run: |
+          set -euo pipefail
+
+          deploy_branch="${{ github.event_name == 'workflow_dispatch' && inputs.deploy_branch || github.ref_name }}"
+
+          case "$deploy_branch" in
+            develop|main)
+              ;;
+            *)
+              echo "::error::Unsupported deploy branch: $deploy_branch"
+              exit 1
+              ;;
+          esac
+
+          image_name="ghcr.io/${GITHUB_REPOSITORY,,}"
+          image_tag="$deploy_branch"
+          source_sha="$(git rev-parse HEAD)"
+
+          {
+            echo "deploy_branch=$deploy_branch"
+            echo "image_name=$image_name"
+            echo "image_tag=$image_tag"
+            echo "image_ref=$image_name:$image_tag"
+            echo "source_sha=$source_sha"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.CONTAINER_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ steps.meta.outputs.image_name }}:${{ steps.meta.outputs.image_tag }}
+            ${{ steps.meta.outputs.image_name }}:sha-${{ steps.meta.outputs.source_sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy To VPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: build-and-push
+    environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.build-and-push.outputs.source_sha }}
+
+      - name: Validate required deployment secrets
+        env:
+          DEPLOY_VPS_HOST: ${{ secrets.DEPLOY_VPS_HOST }}
+          DEPLOY_VPS_PORT: ${{ secrets.DEPLOY_VPS_PORT }}
+          DEPLOY_VPS_USERNAME: ${{ secrets.DEPLOY_VPS_USERNAME }}
+          DEPLOY_VPS_KEY: ${{ secrets.DEPLOY_VPS_KEY }}
+          DEPLOY_REMOTE_PATH: ${{ secrets.DEPLOY_REMOTE_PATH }}
+          DEPLOY_ENV_FILE: ${{ secrets.DEPLOY_ENV_FILE }}
+          GHCR_READ_PACKAGES_TOKEN: ${{ secrets.GHCR_READ_PACKAGES_TOKEN }}
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+        run: |
+          set -euo pipefail
+
+          required=(
+            DEPLOY_VPS_HOST
+            DEPLOY_VPS_PORT
+            DEPLOY_VPS_USERNAME
+            DEPLOY_VPS_KEY
+            DEPLOY_REMOTE_PATH
+            DEPLOY_ENV_FILE
+            GHCR_READ_PACKAGES_TOKEN
+            GH_USERNAME
+          )
+
+          missing=0
+
+          for secret_name in "${required[@]}"; do
+            if [ -z "${!secret_name:-}" ]; then
+              echo "::error::Missing required secret: ${secret_name}"
+              missing=1
+            fi
+          done
+
+          if [ "$missing" -eq 1 ]; then
+            exit 1
+          fi
+
+      - name: Install SSH key
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          cat <<'EOF' > ~/.ssh/deploy_key
+          ${{ secrets.DEPLOY_VPS_KEY }}
+          EOF
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_HOST }}' >> ~/.ssh/known_hosts
+
+      - name: Upload compose file
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}' \
+            "install -d -m 755 '${{ secrets.DEPLOY_REMOTE_PATH }}'"
+          scp -i ~/.ssh/deploy_key -P '${{ secrets.DEPLOY_VPS_PORT }}' '${{ env.COMPOSE_FILE }}' \
+            '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}:${{ secrets.DEPLOY_REMOTE_PATH }}/${{ env.COMPOSE_FILE }}'
+
+      - name: Deploy via SSH
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}' <<'REMOTE_SCRIPT'
+          set -euo pipefail
+
+          REMOTE_PATH='${{ secrets.DEPLOY_REMOTE_PATH }}'
+          RUNTIME_ENV_FILE='${{ env.RUNTIME_ENV_FILE }}'
+          COMPOSE_FILE='${{ env.COMPOSE_FILE }}'
+          MODEL_API_PORT='${{ env.DEFAULT_MODEL_API_PORT }}'
+          MODEL_API_IMAGE='${{ needs.build-and-push.outputs.image_ref }}'
+          COMPOSE_PROJECT_NAME='${{ env.COMPOSE_PROJECT_NAME }}'
+          EXPECTED_MODEL_API_ENV='${{ env.EXPECTED_MODEL_API_ENV }}'
+
+          install -d -m 755 "$REMOTE_PATH"
+          cat <<'EOF' > "$REMOTE_PATH/$RUNTIME_ENV_FILE"
+          ${{ secrets.DEPLOY_ENV_FILE }}
+          EOF
+          chmod 600 "$REMOTE_PATH/$RUNTIME_ENV_FILE"
+
+          cd "$REMOTE_PATH"
+
+          if ! grep -Eq '^MODEL_API_ENV=' "$RUNTIME_ENV_FILE"; then
+            echo "MODEL_API_ENV is required in $RUNTIME_ENV_FILE" >&2
+            exit 1
+          fi
+
+          actual_env="$(grep -E '^MODEL_API_ENV=' "$RUNTIME_ENV_FILE" | tail -1 | cut -d= -f2- | tr -d '"' | tr -d "'")"
+          if [ "$actual_env" != "$EXPECTED_MODEL_API_ENV" ]; then
+            echo "Unexpected MODEL_API_ENV=$actual_env; expected $EXPECTED_MODEL_API_ENV" >&2
+            exit 1
+          fi
+
+          printf '%s' '${{ secrets.GHCR_READ_PACKAGES_TOKEN }}' | docker login ghcr.io -u '${{ secrets.GH_USERNAME }}' --password-stdin
+
+          MODEL_API_IMAGE="$MODEL_API_IMAGE" \
+          MODEL_API_PORT="$MODEL_API_PORT" \
+          MODEL_API_ENV_FILE="$RUNTIME_ENV_FILE" \
+          COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
+            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" pull model-api
+
+          MODEL_API_IMAGE="$MODEL_API_IMAGE" \
+          MODEL_API_PORT="$MODEL_API_PORT" \
+          MODEL_API_ENV_FILE="$RUNTIME_ENV_FILE" \
+          COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
+            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" up -d --remove-orphans model-api
+
+          for attempt in $(seq 1 40); do
+            if curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/health" >/dev/null; then
+              docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
+              exit 0
+            fi
+            sleep 5
+          done
+
+          docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
+          docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" logs --tail=150 model-api
+          exit 1
+          REMOTE_SCRIPT
+
+      - name: Collect remote diagnostics on failure
+        if: failure()
+        run: |
+          set +e
+          ssh -i ~/.ssh/deploy_key -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}' <<'REMOTE_SCRIPT'
+          cd '${{ secrets.DEPLOY_REMOTE_PATH }}' || exit 0
+          docker compose -f '${{ env.COMPOSE_FILE }}' --env-file '${{ env.RUNTIME_ENV_FILE }}' ps model-api
+          docker compose -f '${{ env.COMPOSE_FILE }}' --env-file '${{ env.RUNTIME_ENV_FILE }}' logs --tail=150 model-api
+          REMOTE_SCRIPT

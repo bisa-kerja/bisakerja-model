@@ -84,8 +84,9 @@ Backend contract alignment should use exported contracts or fixtures from <https
 4. `training/README.md` — notebook workflow and training runtime.
 5. `model_api/README.md` — serving runtime, contracts, environment, and smoke tests.
 6. `docs/runbooks/hugging-face-docker-deployment.md` — Docker deployment runbook for Hugging Face Spaces.
-7. `RUNNING_STEPS.md` — local and staging execution runbook.
-8. `REQUIREMENT.md` and `GAP_MODEL_TRAINING.md` — delivery criteria and model-readiness risks.
+7. `docs/runbooks/vps-docker-deployment.md` — Docker Compose + GitHub Actions deployment runbook for a self-managed VPS.
+8. `RUNNING_STEPS.md` — local and staging execution runbook.
+9. `REQUIREMENT.md` and `GAP_MODEL_TRAINING.md` — delivery criteria and model-readiness risks.
 
 ## Quick Start
 

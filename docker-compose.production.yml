@@ -1,0 +1,30 @@
+name: ${COMPOSE_PROJECT_NAME:-bisakerja-model-api}
+
+services:
+  model-api:
+    image: ${MODEL_API_IMAGE:-ghcr.io/bisa-kerja/bisakerja-model:main}
+    restart: unless-stopped
+    env_file:
+      - path: ${MODEL_API_ENV_FILE:-.env.production}
+        required: true
+    ports:
+      - "${MODEL_API_BIND_ADDRESS:-0.0.0.0}:${MODEL_API_PORT:-3004}:7860"
+    mem_limit: ${MODEL_API_MEM_LIMIT:-8g}
+    cpus: ${MODEL_API_CPUS:-3.0}
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:7860/health', timeout=5).read()"
+      interval: 30s
+      timeout: 10s
+      start_period: 180s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

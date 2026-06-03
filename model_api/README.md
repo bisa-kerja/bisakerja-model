@@ -293,6 +293,8 @@ Run this only inside a Python `3.13.x` serving environment after `python -m pip 
 
 ## Deployment Notes
 
+See `docs/runbooks/hugging-face-docker-deployment.md` for Hugging Face Spaces and `docs/runbooks/vps-docker-deployment.md` for VPS Docker Compose deployment.
+
 - Build images from repo root so relative artifact paths resolve.
 - Mount Phase 25 artifact directory read-only.
 - Set env vars explicitly in staging/production.
