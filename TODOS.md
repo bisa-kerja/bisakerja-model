@@ -842,7 +842,7 @@ These phases correct the current boundary mismatch: Backend OpenAPI receives PDF
 
 ### Phase 28 — Backend/Model API Contract Realignment
 
-Status: Planned
+Status: Complete
 
 Goal: Freeze a safe internal contract where Backend sends a sanitized multipart PDF plus backend-selected job candidates to Model API, and Model API returns model-core output that Backend maps to the public OpenAPI `cv-analysis-v2` response.
 
@@ -855,21 +855,21 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 28.1: Define final internal request contract — Document `POST /internal/model/cv-analysis` as multipart with `requestId`, `language`, `inputMode`, `compareSource`, `jobRoles[]`, `cvFile`, `jobCandidates` JSON, and `rankingPolicy` JSON.
-- [ ] Step 28.2: Define final internal response contract — Document `model-core-cv-analysis-v1` containing `parsedCv`, `jobFitAlignment`, `atsFriendliness`, `overallImpression` evidence, `candidateReranking.recommendations[]`, `model`, and timestamps; exclude public wrapper fields.
-- [ ] Step 28.3: Map OpenAPI/Prisma fields to contract owners — Create a matrix from `references/docs/generated/openapi.json` and `references/prisma/schema.prisma` covering `CvAnalysisResult`, `JobRecommendationRun`, `JobRecommendationItem`, `JobListing`, `JobRequirement`, and `JobSkill`.
-- [ ] Step 28.4: Define language and enum mapping — Freeze `id/en` for public/model API, `ID/EN` for Prisma, `UPLOAD/REFERENCE`, `BOOKMARK/JOB_SEARCH/DIRECT_JOB_DETAIL`, and `strong/good/stretch` to Prisma `STRONG/GOOD/STRETCH`.
-- [ ] Step 28.5: Define failure contracts — Specify deterministic backend behavior for Model API `422`, `503`, `504`, parse failure, empty candidate set, stale artifact, timeout, and GenAI wrapper failure.
-- [ ] Step 28.6: Add contract fixtures — Create positive/negative fixtures for direct upload PDF, active CV reference, bookmarked candidates, job-search candidates, direct-job-detail candidate, duplicate job IDs, empty PDF parse, and missing candidate evidence.
-- [ ] Step 28.7: Update durable docs — Update `model_api/README.md`, backend integration docs under `references/docs/integrations/model-api.md`, and module docs so future implementation follows one contract.
+- [x] Step 28.1: Define final internal request contract — Document `POST /internal/model/cv-analysis` as multipart with `requestId`, `language`, `inputMode`, `compareSource`, `jobRoles[]`, `cvFile`, `jobCandidates` JSON, and `rankingPolicy` JSON.
+- [x] Step 28.2: Define final internal response contract — Document `model-core-cv-analysis-v1` containing `parsedCv`, `jobFitAlignment`, `atsFriendliness`, `overallImpression` evidence, `candidateReranking.recommendations[]`, `model`, and timestamps; exclude public wrapper fields.
+- [x] Step 28.3: Map OpenAPI/Prisma fields to contract owners — Create a matrix from `references/docs/generated/openapi.json` and `references/prisma/schema.prisma` covering `CvAnalysisResult`, `JobRecommendationRun`, `JobRecommendationItem`, `JobListing`, `JobRequirement`, and `JobSkill`.
+- [x] Step 28.4: Define language and enum mapping — Freeze `id/en` for public/model API, `ID/EN` for Prisma, `UPLOAD/REFERENCE`, `BOOKMARK/JOB_SEARCH/DIRECT_JOB_DETAIL`, and `strong/good/stretch` to Prisma `STRONG/GOOD/STRETCH`.
+- [x] Step 28.5: Define failure contracts — Specify deterministic backend behavior for Model API `422`, `503`, `504`, parse failure, empty candidate set, stale artifact, timeout, and GenAI wrapper failure.
+- [x] Step 28.6: Add contract fixtures — Create positive/negative fixtures for direct upload PDF, active CV reference, bookmarked candidates, job-search candidates, direct-job-detail candidate, duplicate job IDs, empty PDF parse, and missing candidate evidence.
+- [x] Step 28.7: Update durable docs — Update `model_api/README.md`, backend integration docs under `references/docs/integrations/model-api.md`, and module docs so future implementation follows one contract.
 
 Acceptance Criteria:
 
-- [ ] One internal contract clearly separates model-owned fields from backend/wrapper-owned fields.
-- [ ] Backend can map every Model API response field into final `CvAnalysis.analysisResult` without guessing or inventing jobs.
-- [ ] Model API rejects backend-owned public fields such as `title`, `companyName`, `reason`, `nextStep`, `topActionables`, `sectionReviews`, `generatedCv`, auth, persistence, and hydrated DB objects in model-core output.
-- [ ] Contract fixtures cover all public compare sources and both upload/reference CV modes.
-- [ ] Reviewer can verify the contract against OpenAPI and Prisma without reading implementation code.
+- [x] One internal contract clearly separates model-owned fields from backend/wrapper-owned fields.
+- [x] Backend can map every Model API response field into final `CvAnalysis.analysisResult` without guessing or inventing jobs.
+- [x] Model API rejects backend-owned public fields such as `title`, `companyName`, `reason`, `nextStep`, `topActionables`, `sectionReviews`, `generatedCv`, auth, persistence, and hydrated DB objects in model-core output.
+- [x] Contract fixtures cover all public compare sources and both upload/reference CV modes.
+- [x] Reviewer can verify the contract against OpenAPI and Prisma without reading implementation code.
 
 ---
 

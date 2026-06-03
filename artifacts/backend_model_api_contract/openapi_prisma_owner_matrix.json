@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "phase-28-openapi-prisma-owner-matrix-v1",
+  "sources": {
+    "openapi": "references/docs/generated/openapi.json",
+    "prisma": "references/prisma/schema.prisma",
+    "modelApiContract": "artifacts/backend_model_api_contract/internal_contract_fixtures.json"
+  },
+  "enumMappings": {
+    "language": {
+      "publicModelApi": ["id", "en"],
+      "prisma": ["ID", "EN"],
+      "mapping": {"id": "ID", "en": "EN"}
+    },
+    "inputMode": {
+      "publicModelApi": ["UPLOAD", "REFERENCE"],
+      "prisma": ["UPLOAD", "REFERENCE"]
+    },
+    "compareSource": {
+      "publicModelApi": ["BOOKMARK", "JOB_SEARCH", "DIRECT_JOB_DETAIL"],
+      "prisma": ["BOOKMARK", "JOB_SEARCH", "DIRECT_JOB_DETAIL"]
+    },
+    "matchLevel": {
+      "modelCore": ["strong", "good", "stretch"],
+      "prisma": ["STRONG", "GOOD", "STRETCH"],
+      "mapping": {"strong": "STRONG", "good": "GOOD", "stretch": "STRETCH"}
+    }
+  },
+  "ownerMatrix": [
+    {
+      "entity": "CvAnalysis.analysisResult",
+      "source": "OpenAPI",
+      "backendOwnedFields": ["id", "schemaVersion", "jobFitAlignment.summary", "atsFriendliness.summary", "topActionables", "sectionReviews", "jobRecommendations.title", "jobRecommendations.companyName", "jobRecommendations.reason", "jobRecommendations.nextStep", "generatedCv"],
+      "modelOwnedFields": ["jobFitAlignment.score", "jobFitAlignment.evidence", "atsFriendliness.score", "atsFriendliness.detectedIssues", "overallImpression.evidence", "candidateReranking.recommendations[].jobId", "candidateReranking.recommendations[].matchScore"],
+      "mappingRule": "Backend validates model-core scores and evidence, runs grounded wrapper/fallback for prose, hydrates jobs from DB, then persists/returns cv-analysis-v2."
+    },
+    {
+      "entity": "CvAnalysisResult",
+      "source": "Prisma",
+      "backendOwnedFields": ["id", "userId", "jobListingId", "cvFileMetadataId", "language", "inputMode", "compareSource", "schemaVersion", "overallImpression", "topActionables", "sectionReviews", "jobRecommendations", "inputSummary", "analyzedAt", "createdAt"],
+      "modelOwnedFields": ["jobFitAlignment.score", "jobFitAlignment.matchedSkills", "jobFitAlignment.missingSkills", "atsFriendliness.score", "atsFriendliness.detectedIssues", "modelName", "modelVersion"],
+      "mappingRule": "Backend stores public-safe snapshot; raw CV text, auth, DB credentials, and Model API internals are not stored in model-core output."
+    },
+    {
+      "entity": "JobRecommendationRun",
+      "source": "Prisma/OpenAPI",
+      "backendOwnedFields": ["id", "userId", "cvAnalysisResultId", "idempotencyKey", "requestedLimit", "candidateCount", "recommendationCount", "status", "errorCode", "filtersSnapshot", "inputSummary", "createdAt", "expiresAt"],
+      "modelOwnedFields": ["modelName", "modelVersion", "candidateReranking.schemaVersion"],
+      "mappingRule": "Backend creates run after candidate retrieval and model validation; Model API only returns model identity and ordered candidate IDs/scores."
+    },
+    {
+      "entity": "JobRecommendationItem",
+      "source": "Prisma/OpenAPI",
+      "backendOwnedFields": ["id", "runId", "jobListingId", "rank", "reasons", "nextSteps", "job", "isBookmarked", "hasApplied"],
+      "modelOwnedFields": ["matchScore", "matchLevel", "matchedSkills", "missingSkills"],
+      "mappingRule": "Backend maps model jobId to JobListing, preserves rank/order, maps matchLevel to Prisma enum, and generates user-facing reasons/nextSteps from grounded evidence."
+    },
+    {
+      "entity": "JobListing",
+      "source": "Prisma",
+      "backendOwnedFields": ["id", "companyId", "title", "description", "requirementSummary", "workType", "employmentType", "experienceLevel", "locationDisplay", "province", "city", "salaryMin", "salaryMax", "sourceUrl", "externalApplyUrl", "status", "expiredAt", "lastSeenAt"],
+      "modelOwnedFields": ["jobCandidates[].jobId membership only", "jobCandidates[].scoringInput.titleText", "jobCandidates[].scoringInput.descriptionText", "jobCandidates[].scoringInput.requirementSummary", "jobCandidates[].scoringInput.roleFamily", "jobCandidates[].scoringInput.experienceLevel", "jobCandidates[].scoringInput.workType"],
+      "mappingRule": "Backend filters active/visible jobs and sends scoringInput; Model API must not hydrate title/company/location in response."
+    },
+    {
+      "entity": "JobRequirement",
+      "source": "Prisma/OpenAPI",
+      "backendOwnedFields": ["id", "jobListingId", "type", "value", "priority", "sortOrder", "createdAt"],
+      "modelOwnedFields": ["jobCandidates[].scoringInput.requirements", "jobCandidates[].scoringInput.requirementCoverage"],
+      "mappingRule": "Backend converts requirements into text/features; Model API may return evidence and coverage but not persisted requirement records."
+    },
+    {
+      "entity": "JobSkill",
+      "source": "Prisma",
+      "backendOwnedFields": ["id", "jobListingId", "skillId", "confidence", "createdAt"],
+      "modelOwnedFields": ["jobCandidates[].scoringInput.requiredSkills", "candidateReranking.recommendations[].matchedSkills", "candidateReranking.recommendations[].missingSkills"],
+      "mappingRule": "Backend resolves Skill records to normalized skill strings; Model API only compares skills and returns evidence arrays."
+    }
+  ]
+}

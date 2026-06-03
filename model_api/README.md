@@ -149,6 +149,42 @@ Run this only inside a Python `3.13.x` serving environment after `python -m pip 
 - Keep OpenRouter disabled for core inference; wrapper GenAI remains backend-owned.
 - Do not mutate artifacts at runtime.
 
+## Internal multipart CV analysis contract
+
+Production Backend integration uses one internal route:
+
+```text
+POST /internal/model/cv-analysis
+content-type: multipart/form-data
+```
+
+Backend sends:
+
+- `requestId`: required trace id.
+- `language`: public/model enum `id | en`; Backend maps Prisma `ID | EN` at persistence boundary.
+- `inputMode`: `UPLOAD | REFERENCE`; Backend resolves ownership before forwarding PDF bytes.
+- `compareSource`: `BOOKMARK | JOB_SEARCH | DIRECT_JOB_DETAIL`.
+- `jobRoles[]`: backend-selected target roles.
+- `cvFile`: one PDF file part only.
+- `jobCandidates`: JSON array of backend-selected candidate jobs.
+- `rankingPolicy`: JSON policy with `maxRecommendations <= 5`, `requireCandidateJobIds=true`, `deduplicateByJobId=true`, and `backendOwnsHydration=true`.
+
+Model API returns `model-core-cv-analysis-v1` only:
+
+- `parsedCv`: parser status, page count, text length, detected sections, and extraction evidence.
+- `jobFitAlignment`: bounded score plus matched/missing signals and evidence.
+- `atsFriendliness`: bounded score plus parser/format issues and evidence.
+- `overallImpression`: score/evidence for Backend wrapper copy.
+- `candidateReranking.recommendations[]`: supplied `jobId`, bounded `matchScore`, `matchLevel`, skill evidence, max five items.
+- `model` and timestamps.
+
+Model-core output must exclude Backend/public fields: `title`, `companyName`, `reason`, `nextStep`, `topActionables`, `sectionReviews`, `generatedCv`, auth, persistence, DB objects, and hydrated job data.
+
+Durable contract evidence:
+
+- `artifacts/backend_model_api_contract/internal_contract_fixtures.json`
+- `artifacts/backend_model_api_contract/openapi_prisma_owner_matrix.json`
+
 ## Request schema boundary
 
 Model API requests are strict model-core inputs:

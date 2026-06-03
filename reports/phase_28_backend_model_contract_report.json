@@ -1,0 +1,41 @@
+{
+  "blockers": [],
+  "checks": {
+    "contract_route_is_internal_multipart": true,
+    "docs_reference_contract_and_fixtures": true,
+    "enum_mapping_is_frozen": true,
+    "model_core_response_excludes_public_wrapper_fields": true,
+    "model_core_response_has_required_sections": true,
+    "model_core_response_schema_is_v1": true,
+    "model_recommendations_are_backend_candidate_members": true,
+    "negative_fixtures_cover_duplicate_empty_missing_evidence": true,
+    "openapi_contains_public_cv_analysis_v2": true,
+    "owner_matrix_covers_required_entities": true,
+    "positive_fixtures_cover_compare_sources": true,
+    "positive_fixtures_cover_input_modes": true,
+    "prisma_contains_persistence_entities": true
+  },
+  "final_decision": "passed",
+  "fixtures": {
+    "negative_case_ids": [
+      "duplicate-job-ids",
+      "empty-pdf-parse",
+      "missing-candidate-evidence"
+    ],
+    "positive_case_ids": [
+      "direct-upload-pdf-job-search",
+      "active-cv-reference-bookmark",
+      "direct-job-detail-candidate"
+    ]
+  },
+  "schema_version": "phase-28-contract-realignment-report-v1",
+  "sources": {
+    "ai_cv_analyzer_doc": "references/docs/modules/ai-cv-analyzer.md",
+    "fixtures": "artifacts/backend_model_api_contract/internal_contract_fixtures.json",
+    "model_api_integration_doc": "references/docs/integrations/model-api.md",
+    "model_api_readme": "model_api/README.md",
+    "openapi": "references/docs/generated/openapi.json",
+    "owner_matrix": "artifacts/backend_model_api_contract/openapi_prisma_owner_matrix.json",
+    "prisma": "references/prisma/schema.prisma"
+  }
+}

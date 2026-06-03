@@ -1,0 +1,249 @@
+{
+  "schemaVersion": "phase-28-backend-model-contract-fixtures-v1",
+  "contractRoute": "POST /internal/model/cv-analysis",
+  "requestContentType": "multipart/form-data",
+  "positiveCases": [
+    {
+      "caseId": "direct-upload-pdf-job-search",
+      "description": "Backend forwards fresh analyzer upload with job-search candidates.",
+      "form": {
+        "requestId": "req_phase28_upload_001",
+        "language": "id",
+        "inputMode": "UPLOAD",
+        "compareSource": "JOB_SEARCH",
+        "jobRoles": ["Backend Developer", "Software Engineer"],
+        "cvFile": {
+          "fieldName": "cvFile",
+          "filename": "backend-developer.pdf",
+          "contentType": "application/pdf",
+          "sha256": "fixture-pdf-sha256-placeholder"
+        },
+        "jobCandidates": [
+          {
+            "jobId": "job-backend-001",
+            "scoringInput": {
+              "titleText": "Backend Developer",
+              "descriptionText": "Build REST APIs and PostgreSQL services.",
+              "requirementSummary": "TypeScript, PostgreSQL, API testing.",
+              "requiredSkills": ["typescript", "postgresql", "rest api"],
+              "requirements": ["Build REST APIs", "Maintain PostgreSQL schema"],
+              "roleFamily": "backend",
+              "experienceLevel": "ENTRY_LEVEL",
+              "workType": "REMOTE"
+            },
+            "backendMetadata": {
+              "title": "Backend Developer",
+              "companyName": "Nusantara Tech",
+              "source": "JOB_SEARCH"
+            }
+          },
+          {
+            "jobId": "job-fullstack-002",
+            "scoringInput": {
+              "titleText": "Full Stack Engineer",
+              "descriptionText": "Build product features with TypeScript.",
+              "requiredSkills": ["typescript", "react", "postgresql"],
+              "roleFamily": "fullstack"
+            },
+            "backendMetadata": {
+              "title": "Full Stack Engineer",
+              "companyName": "Karya Digital",
+              "source": "JOB_SEARCH"
+            }
+          }
+        ],
+        "rankingPolicy": {
+          "maxRecommendations": 5,
+          "requireCandidateJobIds": true,
+          "deduplicateByJobId": true,
+          "backendOwnsHydration": true
+        }
+      }
+    },
+    {
+      "caseId": "active-cv-reference-bookmark",
+      "description": "Backend resolves active stored CV, streams PDF bytes, and limits candidates to bookmarked jobs.",
+      "form": {
+        "requestId": "req_phase28_reference_001",
+        "language": "en",
+        "inputMode": "REFERENCE",
+        "compareSource": "BOOKMARK",
+        "jobRoles": ["Data Analyst"],
+        "cvFile": {
+          "fieldName": "cvFile",
+          "filename": "active-cv.pdf",
+          "contentType": "application/pdf",
+          "cvFileId": "cv-file-active-001",
+          "sha256": "fixture-active-pdf-sha256-placeholder"
+        },
+        "jobCandidates": [
+          {
+            "jobId": "job-bookmark-001",
+            "scoringInput": {
+              "titleText": "Data Analyst",
+              "descriptionText": "Analyze dashboards and business metrics.",
+              "requiredSkills": ["sql", "dashboard", "statistics"],
+              "roleFamily": "data"
+            },
+            "backendMetadata": {
+              "title": "Data Analyst",
+              "companyName": "Insight ID",
+              "source": "BOOKMARK"
+            }
+          }
+        ],
+        "rankingPolicy": {
+          "maxRecommendations": 5,
+          "requireCandidateJobIds": true,
+          "deduplicateByJobId": true,
+          "backendOwnsHydration": true
+        }
+      }
+    },
+    {
+      "caseId": "direct-job-detail-candidate",
+      "description": "Backend analyzes CV against one explicitly selected job-detail candidate.",
+      "form": {
+        "requestId": "req_phase28_direct_job_001",
+        "language": "id",
+        "inputMode": "UPLOAD",
+        "compareSource": "DIRECT_JOB_DETAIL",
+        "jobRoles": ["Product Designer"],
+        "cvFile": {
+          "fieldName": "cvFile",
+          "filename": "designer.pdf",
+          "contentType": "application/pdf",
+          "sha256": "fixture-designer-pdf-sha256-placeholder"
+        },
+        "jobCandidates": [
+          {
+            "jobId": "job-direct-001",
+            "scoringInput": {
+              "titleText": "Product Designer",
+              "descriptionText": "Design mobile experiences and collaborate with product managers.",
+              "requiredSkills": ["figma", "user research", "prototyping"],
+              "roleFamily": "design",
+              "workType": "HYBRID"
+            },
+            "backendMetadata": {
+              "title": "Product Designer",
+              "companyName": "Produk Nusantara",
+              "source": "DIRECT_JOB_DETAIL"
+            }
+          }
+        ],
+        "rankingPolicy": {
+          "maxRecommendations": 1,
+          "requireCandidateJobIds": true,
+          "deduplicateByJobId": true,
+          "backendOwnsHydration": true
+        }
+      }
+    }
+  ],
+  "negativeCases": [
+    {
+      "caseId": "duplicate-job-ids",
+      "expectedStatus": 422,
+      "expectedErrorCode": "contract_validation_error",
+      "reason": "jobCandidates[].jobId must be unique so Backend can hydrate deterministically.",
+      "formPatch": {
+        "jobCandidates": [
+          {"jobId": "job-dup-001", "scoringInput": {"requiredSkills": ["typescript"]}},
+          {"jobId": "job-dup-001", "scoringInput": {"requiredSkills": ["postgresql"]}}
+        ]
+      }
+    },
+    {
+      "caseId": "empty-pdf-parse",
+      "expectedStatus": 422,
+      "expectedErrorCode": "cv_parse_empty_text",
+      "reason": "Empty or scanned PDF must return deterministic parse failure or low-confidence parser evidence; fabricated CV text is forbidden.",
+      "parserEvidence": {
+        "parseStatus": "empty_text",
+        "pageCount": 1,
+        "textCharCount": 0,
+        "detectedSections": []
+      }
+    },
+    {
+      "caseId": "missing-candidate-evidence",
+      "expectedStatus": 422,
+      "expectedErrorCode": "contract_validation_error",
+      "reason": "Each candidate needs model-owned scoringInput evidence; hydrated backendMetadata alone is insufficient.",
+      "formPatch": {
+        "jobCandidates": [
+          {
+            "jobId": "job-no-evidence-001",
+            "backendMetadata": {
+              "title": "Backend Developer",
+              "companyName": "Nusantara Tech"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "modelCoreResponseExample": {
+    "schemaVersion": "model-core-cv-analysis-v1",
+    "requestId": "req_phase28_upload_001",
+    "language": "id",
+    "parsedCv": {
+      "parseStatus": "parsed",
+      "pageCount": 2,
+      "textCharCount": 4820,
+      "detectedSections": ["summary", "experience", "skills", "education"],
+      "evidenceSummary": {
+        "normalizedSkills": ["typescript", "postgresql", "rest api"],
+        "targetRoles": ["Backend Developer"],
+        "experienceSignals": ["Built REST APIs", "Maintained PostgreSQL schema"]
+      }
+    },
+    "jobFitAlignment": {
+      "score": 82,
+      "matchedSignals": ["typescript", "postgresql", "rest api"],
+      "missingSignals": ["deployment evidence"],
+      "matchedSkills": ["typescript", "postgresql"],
+      "missingSkills": ["docker"],
+      "evidence": ["CV mentions REST API and PostgreSQL projects"]
+    },
+    "atsFriendliness": {
+      "score": 78,
+      "detectedIssues": ["missing measurable impact bullets"],
+      "parseQuality": "good",
+      "evidence": ["standard sections detected", "contact-like signal detected"]
+    },
+    "overallImpression": {
+      "score": 80,
+      "evidence": ["Backend evidence is relevant to supplied candidate set"]
+    },
+    "candidateReranking": {
+      "schemaVersion": "model-core-candidate-reranking-v1",
+      "language": "id",
+      "recommendations": [
+        {
+          "jobId": "job-backend-001",
+          "matchScore": 84,
+          "matchLevel": "strong",
+          "matchedSkills": ["typescript", "postgresql"],
+          "missingSkills": ["docker"],
+          "evidence": ["Candidate requirement overlaps CV skills"]
+        },
+        {
+          "jobId": "job-fullstack-002",
+          "matchScore": 69,
+          "matchLevel": "good",
+          "matchedSkills": ["typescript", "postgresql"],
+          "missingSkills": ["react"],
+          "evidence": ["Backend skills overlap but frontend evidence is limited"]
+        }
+      ]
+    },
+    "model": {
+      "name": "bisakerja-jobfit-tf",
+      "version": "phase25",
+      "artifactSha256": "artifact-sha256-placeholder"
+    },
+    "createdAt": "2026-06-03T00:00:00.000Z"
+  }
+}
