@@ -1045,7 +1045,7 @@ Acceptance Criteria:
 
 ### Phase 34 — Model API AI CV Analyzer Response Compatibility Fix
 
-Status: Planned
+Status: Complete
 
 Goal: Return model-core response that Backend Zod schemas can validate and map into public `cv-analysis-v2` exactly as OpenAPI expects.
 
@@ -1057,22 +1057,22 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 34.1: Fix raw/envelope behavior — Match Backend client expectation exactly: either return raw model-core payload from `/internal/model/cv-analysis` or update Backend client to unwrap `data`; add a contract test that fails on mismatch.
-- [ ] Step 34.2: Align `parsedCv` — Return `status: parsed|empty_text|parse_failed`, `pageCount`, `textLength`, `detectedSections`, and optional `extractionEvidence` exactly as Backend schema expects.
-- [ ] Step 34.3: Align `jobFitAlignment` — Return `score`, `matchedSignals`, `missingSignals`, `matchedSkills`, `missingSkills`, and optional `evidence`; remove or map `summarySignals/confidenceNotes` before Backend validation.
-- [ ] Step 34.4: Align `atsFriendliness` — Return `score`, `detectedIssues`, `parseQuality: high|medium|low|failed`, and optional `evidence`; map parser qualities from Model API internal values safely.
-- [ ] Step 34.5: Align `overallImpression` — Return `score` and `evidence` array only; no final prose from Model API core.
-- [ ] Step 34.6: Align `candidateReranking` — Return `recommendations[]` only if Backend strict schema requires it, or update Backend schema explicitly; each item must contain only `jobId`, `matchScore`, `matchLevel`, `matchedSkills`, `missingSkills`, and optional string `rankingSignals`.
-- [ ] Step 34.7: Align `model` and timestamp — Return only `model.name`, `model.version`, and `createdAt` if Backend expects `createdAt`; do not expose artifact path/hash in the strict Model API response unless Backend schema explicitly allows it.
-- [ ] Step 34.8: Keep scores/ranks immutable — Validate scores are integer `0-100`, recommendation count max 5, job IDs are unique, all job IDs come from request candidates, and ordering is deterministic.
-- [ ] Step 34.9: Add response contract tests — Validate real Model API output with Backend `cvAnalyzerModelResponseSchema` or equivalent JSON Schema fixture before any staging-ready claim.
+- [x] Step 34.1: Fix raw/envelope behavior — Match Backend client expectation exactly: either return raw model-core payload from `/internal/model/cv-analysis` or update Backend client to unwrap `data`; add a contract test that fails on mismatch.
+- [x] Step 34.2: Align `parsedCv` — Return `status: parsed|empty_text|parse_failed`, `pageCount`, `textLength`, `detectedSections`, and optional `extractionEvidence` exactly as Backend schema expects.
+- [x] Step 34.3: Align `jobFitAlignment` — Return `score`, `matchedSignals`, `missingSignals`, `matchedSkills`, `missingSkills`, and optional `evidence`; remove or map `summarySignals/confidenceNotes` before Backend validation.
+- [x] Step 34.4: Align `atsFriendliness` — Return `score`, `detectedIssues`, `parseQuality: high|medium|low|failed`, and optional `evidence`; map parser qualities from Model API internal values safely.
+- [x] Step 34.5: Align `overallImpression` — Return `score` and `evidence` array only; no final prose from Model API core.
+- [x] Step 34.6: Align `candidateReranking` — Return `recommendations[]` only if Backend strict schema requires it, or update Backend schema explicitly; each item must contain only `jobId`, `matchScore`, `matchLevel`, `matchedSkills`, `missingSkills`, and optional string `rankingSignals`.
+- [x] Step 34.7: Align `model` and timestamp — Return only `model.name`, `model.version`, and `createdAt` if Backend expects `createdAt`; do not expose artifact path/hash in the strict Model API response unless Backend schema explicitly allows it.
+- [x] Step 34.8: Keep scores/ranks immutable — Validate scores are integer `0-100`, recommendation count max 5, job IDs are unique, all job IDs come from request candidates, and ordering is deterministic.
+- [x] Step 34.9: Add response contract tests — Validate real Model API output with Backend `cvAnalyzerModelResponseSchema` or equivalent JSON Schema fixture before any staging-ready claim.
 
 Acceptance Criteria:
 
-- [ ] Model API AI CV Analyzer response passes Backend response schema with no strict-object extra field failures.
-- [ ] Backend can map model-core output into public OpenAPI `CvAnalysis.analysisResult` without missing fields or timestamp drift.
-- [ ] Model API response contains no backend-owned hydrated fields, no raw CV text, no prompt, no token, no storage key, and no raw model artifact path unless explicitly allowed.
-- [ ] English-safe model-core evidence is suitable for Backend fallback/wrapper prose.
+- [x] Model API AI CV Analyzer response passes Backend response schema with no strict-object extra field failures.
+- [x] Backend can map model-core output into public OpenAPI `CvAnalysis.analysisResult` without missing fields or timestamp drift.
+- [x] Model API response contains no backend-owned hydrated fields, no raw CV text, no prompt, no token, no storage key, and no raw model artifact path unless explicitly allowed.
+- [x] English-safe model-core evidence is suitable for Backend fallback/wrapper prose.
 
 ---
 

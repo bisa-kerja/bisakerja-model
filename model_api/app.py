@@ -53,10 +53,12 @@ from .schemas import MODEL_CORE_CV_ANALYZER_INPUT_VERSION, ModelIdentity
 from .validators import validate_model_core_payload
 
 
-def _model_identity_payload(identity: ModelIdentity | None) -> dict[str, object] | None:
+def _model_identity_payload(identity: ModelIdentity | None, *, include_artifact: bool = False) -> dict[str, object] | None:
     if identity is None:
         return None
-    return asdict(identity)
+    if include_artifact:
+        return asdict(identity)
+    return {"name": identity.name, "version": identity.version}
 
 
 def _runtime_state_payload(state: RuntimeState) -> dict[str, object]:
@@ -66,7 +68,7 @@ def _runtime_state_payload(state: RuntimeState) -> dict[str, object]:
         "artifactManifestPhase": state.artifact_manifest_phase,
         "loadedAt": state.loaded_at,
         "errorCode": state.error_code,
-        "model": _model_identity_payload(state.model_identity),
+        "model": _model_identity_payload(state.model_identity, include_artifact=True),
     }
 
 
@@ -83,12 +85,22 @@ def _score_signal_payload(signal: ScoreSignal) -> dict[str, object]:
     return {"key": signal.key, "label": signal.label, "value": signal.value}
 
 
+def _score_signal_text(signal: ScoreSignal) -> str:
+    if signal.label and signal.value is not None:
+        return f"{signal.label}: {signal.value:.3f}"
+    if signal.label:
+        return signal.label
+    if signal.value is not None:
+        return f"{signal.key}: {signal.value:.3f}"
+    return signal.key
+
+
 def _recommendation_payload(recommendation) -> dict[str, object]:
     return {
         "jobId": recommendation.jobId,
         "matchScore": recommendation.matchScore,
         "matchLevel": recommendation.matchLevel,
-        "rankingSignals": [_score_signal_payload(signal) for signal in recommendation.rankingSignals],
+        "rankingSignals": [_score_signal_text(signal) for signal in recommendation.rankingSignals],
         "matchedSkills": list(recommendation.matchedSkills),
         "missingSkills": list(recommendation.missingSkills),
     }
@@ -197,55 +209,41 @@ def build_cv_analysis_response_payload(
         evidenceKeys=("jobFitAlignment", "atsFriendliness", "candidateReranking"),
         confidenceNotes=("No external GenAI call is made by Model API core inference.",),
     )
+    detected_sections = list(request.profile.detectedCvSectionNames)
+    parse_quality = "high" if detected_sections else ("medium" if request.profile.cvText.strip() else "failed")
     payload: dict[str, object] = {
-        "requestId": request.requestId,
         "schemaVersion": MODEL_CORE_CV_ANALYSIS_SCHEMA_VERSION,
-        "language": request.language,
+        "parsedCv": {
+            "status": "parsed" if request.profile.cvText.strip() else "empty_text",
+            "pageCount": 0,
+            "textLength": len(request.profile.cvText),
+            "detectedSections": detected_sections,
+            "extractionEvidence": profile_evidence_keys,
+        },
         "jobFitAlignment": {
             "score": job_fit.score,
+            "matchedSignals": [_score_signal_text(signal) for signal in job_fit.summarySignals],
+            "missingSignals": list(job_fit.confidenceNotes),
             "matchedSkills": list(job_fit.matchedSkills),
             "missingSkills": list(job_fit.missingSkills),
-            "summarySignals": [_score_signal_payload(signal) for signal in job_fit.summarySignals],
-            "confidenceNotes": list(job_fit.confidenceNotes),
+            "evidence": ["top candidate model-core score", *profile_evidence_keys],
         },
         "atsFriendliness": {
             "score": ats.score,
             "detectedIssues": list(ats.detectedIssues),
-            "evidence": dict(ats.evidence),
-            "fallback": ats.fallback,
+            "parseQuality": parse_quality,
+            "evidence": [str(value) for value in ats.evidence.get("evidenceKeys", profile_evidence_keys)] if isinstance(ats.evidence, dict) else profile_evidence_keys,
         },
         "overallImpression": {
             "score": overall.score,
-            "summary": overall.summary,
-            "evidenceKeys": list(overall.evidenceKeys),
-            "confidenceNotes": list(overall.confidenceNotes),
+            "evidence": [*overall.evidenceKeys, *overall.confidenceNotes],
         },
         "candidateReranking": {
-            "requestId": request.requestId,
-            "schemaVersion": MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
-            "candidateSetId": request.requestId,
-            "language": request.language,
             "recommendations": _recommendation_payloads_with_evidence(recommendations, request.profile, request.jobCandidates),
-            "model": _model_identity_payload(state.model_identity),
-            "rankedAt": utc_now_iso(),
         },
         "model": _model_identity_payload(state.model_identity),
-        "analyzedAt": utc_now_iso(),
+        "createdAt": utc_now_iso(),
     }
-    _attach_observability(
-        payload,
-        requestId=request.requestId,
-        modelVersion=state.model_identity.version,
-        artifactHash=state.model_identity.artifact_sha256,
-        candidateCount=len(request.jobCandidates),
-        parseQuality="json_input",
-        parseLatencyMs=0,
-        embeddingLatencyMs=embedding_latency_ms,
-        tensorflowLatencyMs=tensorflow_latency_ms,
-        wrapperLatencyMs=0,
-        totalLatencyMs=_latency_ms(total_started_at),
-        fallbackReason="ats_section_evidence_missing" if ats.fallback else None,
-    )
     validate_model_core_payload(payload, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
     return payload
 
@@ -594,7 +592,7 @@ def create_app(
         return {
             "ready": state.ready,
             "readiness": _runtime_state_payload(state),
-            "model": _model_identity_payload(state.model_identity),
+            "model": _model_identity_payload(state.model_identity, include_artifact=True),
             "artifacts": runtime_config.artifact_paths.as_dict(),
             "artifactVerification": _artifact_verification_payload(artifact_report),
             "openrouter": {
@@ -669,24 +667,19 @@ def create_app(
             timeout_ms=runtime_config.timeout_ms,
         )
         if isinstance(data.get("atsFriendliness"), dict) and isinstance(parsed_pdf_evidence, dict):
+            parse_quality = parsed_pdf_evidence["parseQuality"]
             data["parsedCv"] = {
+                "status": "parsed" if request.profile.cvText.strip() else "empty_text",
                 "textLength": len(request.profile.cvText),
                 "pageCount": parsed_pdf_evidence["pageCount"],
-                "parseQuality": parsed_pdf_evidence["parseQuality"],
-                "sectionNames": list(request.profile.detectedCvSectionNames),
+                "detectedSections": list(request.profile.detectedCvSectionNames),
+                "extractionEvidence": ["deterministic_pdf_parser", f"parseLatencyMs={parsed_pdf_evidence['parseLatencyMs']}"],
             }
             data["atsFriendliness"]["score"] = parsed_pdf_evidence["atsScore"]
             data["atsFriendliness"]["detectedIssues"] = parsed_pdf_evidence["detectedIssues"]
-            data["atsFriendliness"]["fallback"] = parsed_pdf_evidence["fallback"]
-            data["atsFriendliness"]["evidence"] = {"source": "deterministic_pdf_parser", **parsed_pdf_evidence}
-            existing_observability = data.get("observability") if isinstance(data.get("observability"), dict) else {}
-            data["observability"] = {
-                **existing_observability,
-                "parseQuality": parsed_pdf_evidence["parseQuality"],
-                "parseLatencyMs": parsed_pdf_evidence["parseLatencyMs"],
-                "fallbackReason": "pdf_parse_fallback" if parsed_pdf_evidence["fallback"] else existing_observability.get("fallbackReason"),
-            }
+            data["atsFriendliness"]["parseQuality"] = parse_quality if parse_quality in {"high", "medium", "low", "failed"} else "low"
+            data["atsFriendliness"]["evidence"] = ["deterministic_pdf_parser"]
         validate_model_core_payload(data, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
-        return {"success": True, "message": "Model-core PDF inference completed", "data": data, "error": None}
+        return data
 
     return app

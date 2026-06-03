@@ -114,14 +114,14 @@ def _validate_nested_candidate_reranking(
     path: str,
 ) -> list[str]:
     errors: list[str] = []
-    schema_version = payload.get("schemaVersion")
-    if schema_version != MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION:
+    if "schemaVersion" in payload and payload.get("schemaVersion") != MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION:
         errors.append(f"{path}.schemaVersion must be {MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION!r}")
     language = payload.get("language")
-    if language not in ALLOWED_LANGUAGES:
-        errors.append(f"{path}.language must be one of {sorted(ALLOWED_LANGUAGES)}")
-    elif parent_language in ALLOWED_LANGUAGES and language != parent_language:
-        errors.append(f"{path}.language must match $.language")
+    if language is not None:
+        if language not in ALLOWED_LANGUAGES:
+            errors.append(f"{path}.language must be one of {sorted(ALLOWED_LANGUAGES)}")
+        elif parent_language in ALLOWED_LANGUAGES and language != parent_language:
+            errors.append(f"{path}.language must match $.language")
     errors.extend(
         validate_candidate_recommendations(
             payload.get("recommendations", []),
@@ -151,7 +151,7 @@ def validate_model_core_payload(
             f"expected one of {[MODEL_CORE_CV_ANALYSIS_SCHEMA_VERSION, MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION]}"
         )
     language = payload.get("language")
-    if language not in ALLOWED_LANGUAGES:
+    if language is not None and language not in ALLOWED_LANGUAGES:
         errors.append(f"language must be one of {sorted(ALLOWED_LANGUAGES)}")
     if isinstance(payload.get("jobFitAlignment"), Mapping):
         errors.extend(ensure_score_0_100(payload["jobFitAlignment"].get("score"), "$.jobFitAlignment.score"))
