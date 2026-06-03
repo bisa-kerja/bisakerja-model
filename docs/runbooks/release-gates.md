@@ -15,6 +15,7 @@ python scripts/verify_phase_27_10_requirement_matrix.py --write
 python scripts/verify_phase_28_contract_realignment.py --write
 python scripts/verify_phase_31_release_gate.py
 python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py
+python scripts/verify_phase_38_ai_cv_analyzer_runtime_gate.py --write
 ```
 
 ## Evidence Areas
@@ -23,7 +24,7 @@ python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | Training                  | TensorFlow model export, custom component, custom training loop, TensorBoard logs, model card.                                                |
 | Data and labels           | Human-label policy, validation expansion, slice coverage, ATS benchmark, recommendation fixtures.                                             |
-| Model API                 | Runtime loading, artifact verification, strict schemas, PDF parsing, E5 features, deterministic errors.                                       |
+| Model API                 | Runtime loading, artifact verification, strict schemas, PDF parsing, E5 features, deterministic errors, `/ready.ready=true`, warmup evidence. |
 | External Backend contract | OpenAPI/Prisma owner matrix, internal contract fixtures, Backend-owned hydration boundary from <https://github.com/bisa-kerja/bisakerja-api>. |
 | Security/privacy          | No DB credentials in Model API, no raw CV logs, service-token routing, upload and retention notes.                                            |
 
@@ -35,6 +36,7 @@ python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py
 - Model API timeout -> `504` or AI-unavailable mapping
 - TensorFlow load failure -> `503` readiness failure
 - E5 failure -> `503` readiness or inference failure
+- Missing warmup when required -> `/ready.ready=false` until warmup completes
 - GenAI wrapper failure -> Backend fallback copy while preserving model scores/order
 
 ## Release Notes
@@ -44,3 +46,4 @@ python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py
 - Do not bypass human-label requirements with weak labels.
 - Do not use the small handoff fixture as the only recommendation-quality evidence.
 - Keep Model API private/internal and service-token protected.
+- Run `scripts/warmup_ai_cv_analyzer_runtime.py` before demo/staging traffic and keep cold-start latency plus warm inference latency evidence.

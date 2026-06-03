@@ -1,0 +1,83 @@
+{
+  "checks": {
+    "latency_budget_met": true,
+    "observability_has_latency_breakdown": true,
+    "private_fields_not_returned": true,
+    "ready_endpoint_reachable_before_warmup": true,
+    "ready_endpoint_true_after_warmup": true,
+    "warmup_inference_succeeded": true
+  },
+  "final_decision": "pass",
+  "latency_budget_ms": 30000.0,
+  "model_api_url": "http://127.0.0.1:8000",
+  "ready_after": {
+    "body": {
+      "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "checks": {
+        "artifactsVerified": true,
+        "e5BackendConfigured": true,
+        "pdfParserAvailable": true,
+        "serviceTokenConfigured": true,
+        "tensorflowModelLoaded": true,
+        "warmupCompleted": true
+      },
+      "environment": "local",
+      "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+      "ready": true,
+      "service": "bisakerja-model-api",
+      "warmup": {
+        "completed": true,
+        "error": null,
+        "latencyMs": 728,
+        "onStartup": false,
+        "required": false
+      }
+    },
+    "latency_ms": 1.231,
+    "status_code": 200
+  },
+  "ready_before": {
+    "body": {
+      "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "checks": {
+        "artifactsVerified": true,
+        "e5BackendConfigured": true,
+        "pdfParserAvailable": true,
+        "serviceTokenConfigured": true,
+        "tensorflowModelLoaded": true,
+        "warmupCompleted": true
+      },
+      "environment": "local",
+      "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+      "ready": true,
+      "service": "bisakerja-model-api",
+      "warmup": {
+        "completed": true,
+        "error": null,
+        "latencyMs": 11918,
+        "onStartup": false,
+        "required": false
+      }
+    },
+    "latency_ms": 23.863,
+    "status_code": 200
+  },
+  "schema_version": "ai-cv-analyzer-runtime-warmup-v1",
+  "warmup": {
+    "latency_ms": 733.644,
+    "observability": {
+      "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "candidateCount": 1,
+      "embeddingLatencyMs": 688,
+      "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+      "parseLatencyMs": 0,
+      "parseQuality": "high",
+      "requestId": "warmup_cv_analysis_staging_fixture",
+      "tensorflowLatencyMs": 39,
+      "totalLatencyMs": 728,
+      "wrapperLatencyMs": 0
+    },
+    "schemaVersion": "model-core-cv-analysis-v1",
+    "status_code": 200
+  }
+}

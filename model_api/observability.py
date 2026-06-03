@@ -37,6 +37,8 @@ SAFE_OBSERVABILITY_KEYS = frozenset(
         "totalLatencyMs",
         "errorCode",
         "fallbackReason",
+        "warmupCompleted",
+        "warmupLatencyMs",
     }
 )
 

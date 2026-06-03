@@ -140,6 +140,71 @@ def _attach_observability(payload: dict[str, object], **values: object) -> None:
         payload["observability"] = event
 
 
+def _warmup_cv_analysis_request() -> CvAnalysisModelCoreRequest:
+    return parse_cv_analysis_model_core_request(
+        {
+            "requestId": "warmup_cv_analysis_staging_fixture",
+            "inputVersion": MODEL_CORE_CV_ANALYZER_INPUT_VERSION,
+            "language": "en",
+            "inputMode": "UPLOAD",
+            "compareSource": "JOB_SEARCH",
+            "profile": {
+                "cvText": "Summary Backend engineer. Skills Python SQL REST APIs. Experience 2020 to 2024.",
+                "profileText": "Backend engineer building REST APIs with Python and SQL.",
+                "targetRoles": ["Backend Engineer"],
+                "normalizedSkills": ["python", "sql", "rest api"],
+                "detectedCvSectionNames": ["summary", "skills", "experience"],
+            },
+            "jobCandidates": [
+                {
+                    "jobId": "warmup-job-backend-engineer",
+                    "scoringInput": {
+                        "titleText": "Backend Engineer",
+                        "requirementSummary": "Build REST APIs using Python and SQL.",
+                        "requiredSkills": ["python", "sql", "rest api"],
+                        "roleFamily": "backend",
+                    },
+                }
+            ],
+            "rankingPolicy": {
+                "maxRecommendations": 1,
+                "requireCandidateJobIds": True,
+                "deduplicateByJobId": True,
+                "backendOwnsHydration": True,
+            },
+            "maxRecommendations": 1,
+        }
+    )
+
+
+def _run_cv_analysis_warmup(
+    *,
+    service: InferenceService,
+    feature_config: TensorFlowFeatureConfig,
+    calibration_policy: ScoreCalibrationPolicy,
+    embedding_backend: TextEmbeddingBackend,
+    environment: str,
+    timeout_ms: int | None,
+) -> dict[str, object]:
+    started_at = perf_counter()
+    payload = build_cv_analysis_response_payload(
+        _warmup_cv_analysis_request(),
+        service=service,
+        feature_config=feature_config,
+        calibration_policy=calibration_policy,
+        embedding_backend=embedding_backend,
+        environment=environment,
+        timeout_ms=timeout_ms,
+        include_observability=True,
+    )
+    return {
+        "completed": True,
+        "latencyMs": _latency_ms(started_at),
+        "modelVersion": (payload.get("model") or {}).get("version") if isinstance(payload.get("model"), dict) else None,
+        "observability": payload.get("observability", {}),
+    }
+
+
 def build_cv_analysis_response_payload(
     request: CvAnalysisModelCoreRequest,
     service: InferenceService,
@@ -148,6 +213,7 @@ def build_cv_analysis_response_payload(
     embedding_backend: TextEmbeddingBackend | None = None,
     environment: str = "local",
     timeout_ms: int | None = None,
+    include_observability: bool = False,
 ) -> dict[str, object]:
     """Build validated model-core CV-analysis response for HTTP route/tests."""
 
@@ -246,6 +312,20 @@ def build_cv_analysis_response_payload(
         "model": _model_identity_payload(state.model_identity),
         "createdAt": utc_now_iso(),
     }
+    if include_observability:
+        _attach_observability(
+            payload,
+            requestId=request.requestId,
+            modelVersion=state.model_identity.version,
+            artifactHash=state.model_identity.artifact_sha256,
+            candidateCount=len(request.jobCandidates),
+            parseQuality=parse_quality,
+            parseLatencyMs=0,
+            embeddingLatencyMs=embedding_latency_ms,
+            tensorflowLatencyMs=tensorflow_latency_ms,
+            wrapperLatencyMs=0,
+            totalLatencyMs=_latency_ms(total_started_at),
+        )
     validate_model_core_payload(payload, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
     return payload
 
@@ -482,6 +562,7 @@ def create_app(
     calibration_policy = ScoreCalibrationPolicy.from_path(runtime_config.artifact_paths.score_calibration_path)
     inference_service = service or InferenceService()
     runtime_embedding_backend = embedding_backend or SentenceTransformerE5Embedder()
+    warmup_state: dict[str, object] = {"completed": False, "latencyMs": None, "error": None}
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -492,7 +573,19 @@ def create_app(
         app.state.calibration_policy = calibration_policy
         inference_service.load_once(runtime_config.artifact_paths, artifact_report)
         if runtime_config.warmup_on_startup and inference_service.state.ready:
-            inference_service.require_ready()
+            try:
+                warmup_state.update(
+                    _run_cv_analysis_warmup(
+                        service=inference_service,
+                        feature_config=feature_config,
+                        calibration_policy=calibration_policy,
+                        embedding_backend=runtime_embedding_backend,
+                        environment=runtime_config.environment,
+                        timeout_ms=runtime_config.timeout_ms,
+                    )
+                )
+            except Exception as exc:  # pragma: no cover - depends on live TensorFlow/E5 runtime
+                warmup_state.update({"completed": False, "error": repr(exc)})
         yield
 
     app = FastAPI(title="Bisakerja Model API", version="0.1.0-phase26.4", lifespan=lifespan)
@@ -582,12 +675,20 @@ def create_app(
             "e5BackendConfigured": getattr(runtime_embedding_backend, "backend_name", "") != "local-hash",
             "pdfParserAvailable": callable(parse_pdf_bytes),
             "serviceTokenConfigured": (not runtime_config.requires_service_token) or bool(runtime_config.service_token),
+            "warmupCompleted": (not runtime_config.warmup_required) or bool(warmup_state.get("completed")),
         }
         return {
             "service": runtime_config.service_name,
             "environment": runtime_config.environment,
             "ready": all(checks.values()),
             "checks": checks,
+            "warmup": {
+                "required": runtime_config.warmup_required,
+                "onStartup": runtime_config.warmup_on_startup,
+                "completed": bool(warmup_state.get("completed")),
+                "latencyMs": warmup_state.get("latencyMs"),
+                "error": warmup_state.get("error"),
+            },
             "modelVersion": None if identity is None else identity.version,
             "artifactHash": None if identity is None else identity.artifact_sha256,
         }
@@ -618,6 +719,7 @@ def create_app(
         if auth_error is not None:
             return JSONResponse(status_code=401, content=auth_error)
         request = parse_cv_analysis_model_core_request(payload)
+        include_observability = http_request.headers.get("x-model-api-include-observability") == "true"
         data = build_cv_analysis_response_payload(
             request,
             service=inference_service,
@@ -626,6 +728,15 @@ def create_app(
             embedding_backend=runtime_embedding_backend,
             environment=runtime_config.environment,
             timeout_ms=runtime_config.timeout_ms,
+            include_observability=include_observability,
+        )
+        observability = data.get("observability") if isinstance(data, dict) else None
+        warmup_state.update(
+            {
+                "completed": True,
+                "latencyMs": observability.get("totalLatencyMs") if isinstance(observability, dict) else None,
+                "error": None,
+            }
         )
         return {"success": True, "message": "Model-core inference completed", "data": data, "error": None}
 
@@ -666,6 +777,7 @@ def create_app(
         payload = _build_cv_payload_from_multipart(form, pdf_bytes, runtime_config)
         parsed_pdf_evidence = payload.pop("_parsedPdfEvidence")
         request = parse_cv_analysis_model_core_request(payload)
+        include_observability = http_request.headers.get("x-model-api-include-observability") == "true"
         data = build_cv_analysis_response_payload(
             request,
             service=inference_service,
@@ -674,6 +786,15 @@ def create_app(
             embedding_backend=runtime_embedding_backend,
             environment=runtime_config.environment,
             timeout_ms=runtime_config.timeout_ms,
+            include_observability=include_observability,
+        )
+        observability = data.get("observability") if isinstance(data, dict) else None
+        warmup_state.update(
+            {
+                "completed": True,
+                "latencyMs": observability.get("totalLatencyMs") if isinstance(observability, dict) else None,
+                "error": None,
+            }
         )
         if isinstance(data.get("atsFriendliness"), dict) and isinstance(parsed_pdf_evidence, dict):
             parse_quality = parsed_pdf_evidence["parseQuality"]

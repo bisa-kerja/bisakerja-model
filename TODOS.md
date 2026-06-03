@@ -1142,7 +1142,7 @@ Acceptance Criteria:
 
 ### Phase 37 — Backend AI CV Analyzer GenAI Wrapper Provider Integration
 
-Status: Planned
+Status: Complete
 
 Goal: Wire an optional Backend-owned GenAI provider for AI CV Analyzer public prose while keeping Model API deterministic and preserving deterministic fallback as the safe default.
 
@@ -1161,26 +1161,26 @@ Current gap:
 
 Tasks:
 
-- [ ] Step 37.1: Add Backend GenAI config — Add explicit Backend env vars such as `AI_CV_ANALYZER_GENAI_ENABLED`, provider base URL, model name, API key env, timeout, and max retries; default disabled in local/test/staging unless intentionally enabled.
-- [ ] Step 37.2: Implement provider client — Create a Backend-owned OpenAI-compatible/OpenRouter client with request timeout, abort handling, JSON-only response parsing, sanitized logging, and no retry for expensive unsafe inference by default.
-- [ ] Step 37.3: Wire analyzer service — In `AiCvAnalyzerService.analyzeCv`, build wrapper input from model-core response, call provider only when enabled, pass provider output into `buildPublicCvAnalysisResponse`, and fallback deterministically on timeout, invalid JSON, schema drift, or safety rejection.
-- [ ] Step 37.4: Preserve safety invariants — Enforce that generated output cannot alter scores, IDs, order, model name/version, `createdAt/analyzedAt`, recommendation count, or candidate membership.
-- [ ] Step 37.5: Add red-team tests — Cover prompt injection in CV evidence, job descriptions, skills, company names, malformed JSON, markdown output, raw secret leakage, PII-like output, score mutation, candidate mutation, and provider timeout.
-- [ ] Step 37.6: Add OpenAPI contract tests — Validate both generated and fallback responses against `references/docs/generated/openapi.json` `CvAnalysis` and public response envelope.
-- [ ] Step 37.7: Update operations docs — Document when to enable GenAI, required secrets, latency/cost impact, fallback behavior, and rollback to deterministic fallback.
+- [x] Step 37.1: Add Backend GenAI config — Add explicit Backend env vars such as `AI_CV_ANALYZER_GENAI_ENABLED`, provider base URL, model name, API key env, timeout, and max retries; default disabled in local/test/staging unless intentionally enabled.
+- [x] Step 37.2: Implement provider client — Create a Backend-owned OpenAI-compatible/OpenRouter client with request timeout, abort handling, JSON-only response parsing, sanitized logging, and no retry for expensive unsafe inference by default.
+- [x] Step 37.3: Wire analyzer service — In `AiCvAnalyzerService.analyzeCv`, build wrapper input from model-core response, call provider only when enabled, pass provider output into `buildPublicCvAnalysisResponse`, and fallback deterministically on timeout, invalid JSON, schema drift, or safety rejection.
+- [x] Step 37.4: Preserve safety invariants — Enforce that generated output cannot alter scores, IDs, order, model name/version, `createdAt/analyzedAt`, recommendation count, or candidate membership.
+- [x] Step 37.5: Add red-team tests — Cover prompt injection in CV evidence, job descriptions, skills, company names, malformed JSON, markdown output, raw secret leakage, PII-like output, score mutation, candidate mutation, and provider timeout.
+- [x] Step 37.6: Add OpenAPI contract tests — Validate both generated and fallback responses against `references/docs/generated/openapi.json` `CvAnalysis` and public response envelope.
+- [x] Step 37.7: Update operations docs — Document when to enable GenAI, required secrets, latency/cost impact, fallback behavior, and rollback to deterministic fallback.
 
 Acceptance Criteria:
 
-- [ ] Backend can optionally generate higher-quality AI CV Analyzer prose through a provider while deterministic fallback remains the default safe path.
-- [ ] Provider failures never fail successful model-core inference unless product policy explicitly chooses fail-closed.
-- [ ] Generated output validates against OpenAPI and cannot mutate model-owned scores, candidate IDs/order, model metadata, or timestamps.
-- [ ] No raw CV text, uploaded file bytes, tokens, storage keys, DB URLs, prompts, or auth headers are sent to provider or logged.
+- [x] Backend can optionally generate higher-quality AI CV Analyzer prose through a provider while deterministic fallback remains the default safe path.
+- [x] Provider failures never fail successful model-core inference unless product policy explicitly chooses fail-closed.
+- [x] Generated output validates against OpenAPI and cannot mutate model-owned scores, candidate IDs/order, model metadata, or timestamps.
+- [x] No raw CV text, uploaded file bytes, tokens, storage keys, DB URLs, prompts, or auth headers are sent to provider or logged.
 
 ---
 
 ### Phase 38 — AI CV Analyzer Staging Runtime Warmup and Performance Gate
 
-Status: Planned
+Status: In Progress
 
 Goal: Make staging/demo behavior reliable after the live Model API smoke passes by adding warmup, readiness, and latency acceptance gates for TensorFlow and E5 first-load behavior.
 
@@ -1198,20 +1198,20 @@ Current gap:
 
 Tasks:
 
-- [ ] Step 38.1: Add Model API warmup command/runbook — Document and script a safe warmup that loads TensorFlow and E5 using a sanitized fixture before routing demo/staging traffic.
-- [ ] Step 38.2: Add readiness strictness — Update Backend readiness or staging gate to verify Model API `/ready.ready=true`, not only `/health` reachability.
-- [ ] Step 38.3: Add latency budget evidence — Record cold-start and warm inference latency for `/internal/model/cv-analysis`, including parse, embedding, TensorFlow, and total latency.
-- [ ] Step 38.4: Add timeout alignment check — Ensure Backend `MODEL_API_TIMEOUT_MS` is greater than cold/warm expected latency or warmup is mandatory before traffic.
-- [ ] Step 38.5: Add HF/E5 cache guidance — Document `SENTENCE_TRANSFORMERS_HOME`, optional `HF_TOKEN` for rate limits, and cache persistence for container/staging deployments.
+- [x] Step 38.1: Add Model API warmup command/runbook — Document and script a safe warmup that loads TensorFlow and E5 using a sanitized fixture before routing demo/staging traffic.
+- [x] Step 38.2: Add readiness strictness — Update Backend readiness or staging gate to verify Model API `/ready.ready=true`, not only `/health` reachability.
+- [x] Step 38.3: Add latency budget evidence — Record cold-start and warm inference latency for `/internal/model/cv-analysis`, including parse, embedding, TensorFlow, and total latency.
+- [x] Step 38.4: Add timeout alignment check — Ensure Backend `MODEL_API_TIMEOUT_MS` is greater than cold/warm expected latency or warmup is mandatory before traffic.
+- [x] Step 38.5: Add HF/E5 cache guidance — Document `SENTENCE_TRANSFORMERS_HOME`, optional `HF_TOKEN` for rate limits, and cache persistence for container/staging deployments.
 - [ ] Step 38.6: Add staging smoke script — Run a Backend-to-Model fixture through public `/api/v1/ai/cv-analyzer` after warmup and assert latency, response shape, persistence behavior, and no private field leakage.
-- [ ] Step 38.7: Add rollback checklist — Document fallback to deterministic prose, traffic disable switch, Model API service-token rotation, and artifact path rollback.
+- [x] Step 38.7: Add rollback checklist — Document fallback to deterministic prose, traffic disable switch, Model API service-token rotation, and artifact path rollback.
 
 Acceptance Criteria:
 
-- [ ] Staging runbook includes a repeatable warmup path and expected cold/warm latency numbers.
-- [ ] Backend readiness or staging gate fails when Model API `/ready` is false or E5/TensorFlow are not warmed according to policy.
-- [ ] Demo/staging latency budget is explicit and verified with live fixture evidence.
-- [ ] E5 model cache and optional HF token behavior are documented for macOS/Linux local and container staging.
+- [x] Staging runbook includes a repeatable warmup path and expected cold/warm latency numbers.
+- [x] Backend readiness or staging gate fails when Model API `/ready` is false or E5/TensorFlow are not warmed according to policy.
+- [x] Demo/staging latency budget is explicit and verified with live fixture evidence.
+- [x] E5 model cache and optional HF token behavior are documented for macOS/Linux local and container staging.
 
 ---
 

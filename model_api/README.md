@@ -120,6 +120,8 @@ export MODEL_API_SERVICE_NAME=bisakerja-model-api
 export MODEL_API_SERVICE_TOKEN=replace-with-internal-token
 export MODEL_API_MAX_RECOMMENDATIONS=5
 export MODEL_API_TIMEOUT_MS=30000
+export MODEL_API_WARMUP_REQUIRED=true
+export MODEL_API_WARMUP_ON_STARTUP=false
 export MODEL_API_MAX_PDF_BYTES=5000000
 export MODEL_API_MAX_PDF_PAGES=10
 export MODEL_API_ENABLE_GENAI_WRAPPER=false
@@ -143,7 +145,7 @@ curl http://127.0.0.1:8000/ready
 curl -H "authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:8000/model-info
 ```
 
-`/ready.ready=true` means artifacts are verified, TensorFlow model is loaded, E5 backend is configured, PDF parser is available, and service token is configured when required. `/model-info` uses the same bearer token in staging/production. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
+`/ready.ready=true` means artifacts are verified, TensorFlow model is loaded, E5 backend is configured, PDF parser is available, service token is configured when required, and warmup is complete when `MODEL_API_WARMUP_REQUIRED=true`. `/model-info` uses the same bearer token in staging/production. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
 
 ## Internal Multipart CV Analysis Contract
 
@@ -254,7 +256,7 @@ Staging and production never fall back to rule-based scores when TensorFlow infe
 
 ## Safe Observability
 
-Logs must include operational metadata only:
+Logs must include operational metadata only. Runtime warmup and staging smoke evidence should record cold-start latency and warm inference latency for `/internal/model/cv-analysis` with this breakdown:
 
 - `requestId`
 - `modelVersion`
@@ -295,7 +297,9 @@ Run this only inside a Python `3.13.x` serving environment after `python -m pip 
 - Mount Phase 25 artifact directory read-only.
 - Set env vars explicitly in staging/production.
 - Keep Model API private behind Backend/internal routing.
-- Warm up `/health` after process start before routing inference traffic.
+- Set `SENTENCE_TRANSFORMERS_HOME` to persistent cache storage; set optional `HF_TOKEN` only when needed for Hugging Face rate limits.
+- Run `python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url "$MODEL_API_URL" --token "$MODEL_API_SERVICE_TOKEN" --latency-budget-ms 30000` before routing inference traffic.
+- Keep `MODEL_API_TIMEOUT_MS` greater than measured cold-start latency, or make warmup mandatory before traffic.
 - Keep OpenRouter disabled for core inference; wrapper GenAI remains Backend-owned.
 - Do not mutate artifacts at runtime.
 

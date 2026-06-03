@@ -10,6 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 from typing import Sequence
+import zlib
 
 from .features import normalized_skill_set
 
@@ -27,6 +28,7 @@ DATE_RE = re.compile(r"\b(?:20\d{2}|19\d{2}|jan|feb|mar|apr|may|jun|jul|aug|sep|
 TEXT_LITERAL_RE = re.compile(rb"\((?:\\.|[^\\()])*\)\s*T[Jj]")
 TEXT_ARRAY_RE = re.compile(rb"\[(.*?)\]\s*TJ", re.S)
 ARRAY_LITERAL_RE = re.compile(rb"\((?:\\.|[^\\()])*\)")
+FLATE_STREAM_RE = re.compile(rb"<<(?:.|\n|\r)*?/FlateDecode(?:.|\n|\r)*?>>\s*stream\r?\n(.*?)\r?\nendstream", re.S)
 
 
 @dataclass(frozen=True)
@@ -60,15 +62,32 @@ def _decode_pdf_literal(value: bytes) -> str:
     return inner.decode("utf-8", errors="ignore")
 
 
-def _extract_text_literals(pdf_bytes: bytes) -> str:
+def _extract_text_literals_from_stream(stream: bytes) -> list[str]:
     parts: list[str] = []
-    for match in TEXT_LITERAL_RE.finditer(pdf_bytes):
+    for match in TEXT_LITERAL_RE.finditer(stream):
         literal = match.group(0).rsplit(b")", 1)[0] + b")"
         parts.append(_decode_pdf_literal(literal))
-    for array_match in TEXT_ARRAY_RE.finditer(pdf_bytes):
+    for array_match in TEXT_ARRAY_RE.finditer(stream):
         literals = ARRAY_LITERAL_RE.findall(array_match.group(1))
         if literals:
             parts.append("".join(_decode_pdf_literal(literal) for literal in literals))
+    return parts
+
+
+def _decompressed_flate_streams(pdf_bytes: bytes) -> list[bytes]:
+    streams: list[bytes] = []
+    for match in FLATE_STREAM_RE.finditer(pdf_bytes):
+        try:
+            streams.append(zlib.decompress(match.group(1).strip()))
+        except zlib.error:
+            continue
+    return streams
+
+
+def _extract_text_literals(pdf_bytes: bytes) -> str:
+    parts = _extract_text_literals_from_stream(pdf_bytes)
+    for stream in _decompressed_flate_streams(pdf_bytes):
+        parts.extend(_extract_text_literals_from_stream(stream))
     text = "\n".join(part.strip() for part in parts if part.strip())
     return re.sub(r"[ \t]+", " ", text).strip()
 

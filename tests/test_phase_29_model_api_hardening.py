@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+import zlib
 
 from model_api.app import (
     _authorize_internal_request,
@@ -101,6 +102,15 @@ class Phase29ModelApiHardeningTest(unittest.TestCase):
         self.assertGreaterEqual(score, 85)
         self.assertEqual(issues, ())
         self.assertFalse(fallback)
+
+    def test_pdf_parser_extracts_text_from_flate_compressed_streams(self) -> None:
+        stream = zlib.compress(b"BT (Summary Backend developer) Tj (Skills Python SQL) Tj (Experience 2020) Tj ET")
+        pdf = b"%PDF-1.4\n1 0 obj<</Type /Page>>endobj\n2 0 obj<</Filter /FlateDecode /Length " + str(len(stream)).encode() + b">>stream\n" + stream + b"\nendstream\nendobj\n%%EOF"
+        evidence = parse_pdf_bytes(pdf, max_bytes=5000, max_pages=5)
+
+        self.assertIn("Backend developer", evidence.text)
+        self.assertIn("skills", evidence.section_names)
+        self.assertIn("experience", evidence.section_names)
 
     def test_pdf_parser_rejects_magic_bytes_and_scanned_empty_text_without_hallucination(self) -> None:
         bad = parse_pdf_bytes(b"not a pdf", max_bytes=100, max_pages=1)

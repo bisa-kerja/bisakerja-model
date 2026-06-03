@@ -143,6 +143,7 @@ class RuntimeConfig:
     max_pdf_bytes: int = 5_000_000
     max_pdf_pages: int = 10
     warmup_on_startup: bool = False
+    warmup_required: bool = False
     artifact_paths: ArtifactPaths = field(default_factory=ArtifactPaths.from_env)
     openrouter: OpenRouterConfig = field(default_factory=OpenRouterConfig.from_env)
 
@@ -157,9 +158,11 @@ class RuntimeConfig:
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> "RuntimeConfig":
         data = os.environ if env is None else env
+        environment = data.get("MODEL_API_ENV", "local")
+        warmup_required_default = "true" if environment.lower() in {"staging", "production", "prod"} else "false"
         return cls(
             service_name=data.get("MODEL_API_SERVICE_NAME", "bisakerja-model-api"),
-            environment=data.get("MODEL_API_ENV", "local"),
+            environment=environment,
             max_recommendations=int(data.get("MODEL_API_MAX_RECOMMENDATIONS", "5")),
             timeout_ms=int(data.get("MODEL_API_TIMEOUT_MS", "10000")),
             service_token=data.get("MODEL_API_SERVICE_TOKEN") or None,
@@ -167,6 +170,7 @@ class RuntimeConfig:
             max_pdf_bytes=int(data.get("MODEL_API_MAX_PDF_BYTES", "5000000")),
             max_pdf_pages=int(data.get("MODEL_API_MAX_PDF_PAGES", "10")),
             warmup_on_startup=data.get("MODEL_API_WARMUP_ON_STARTUP", "false").lower() == "true",
+            warmup_required=data.get("MODEL_API_WARMUP_REQUIRED", warmup_required_default).lower() == "true",
             artifact_paths=ArtifactPaths.from_env(data),
             openrouter=OpenRouterConfig.from_env(data),
         )

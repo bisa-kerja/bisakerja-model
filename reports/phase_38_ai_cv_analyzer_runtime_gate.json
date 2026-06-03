@@ -1,0 +1,39 @@
+{
+  "blockers": [],
+  "checks": {
+    "hf_e5_cache_guidance_documented": true,
+    "latency_budget_evidence_records_breakdown": true,
+    "readiness_requires_model_api_ready_and_warmup_policy": true,
+    "staging_smoke_and_rollback_documented": true,
+    "timeout_alignment_documented": true,
+    "warmup_command_exists_and_uses_sanitized_fixture": true
+  },
+  "commands": {
+    "model_api_warmup": "python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url http://127.0.0.1:8000 --token ${MODEL_API_SERVICE_TOKEN} --latency-budget-ms 30000 --output reports/ai_cv_analyzer_warmup_staging.json",
+    "phase38_gate": "python scripts/verify_phase_38_ai_cv_analyzer_runtime_gate.py --write"
+  },
+  "final_decision": "go",
+  "latency_policy": {
+    "cold_start_budget_ms": 30000,
+    "required_breakdown": [
+      "parseLatencyMs",
+      "embeddingLatencyMs",
+      "tensorflowLatencyMs",
+      "totalLatencyMs"
+    ],
+    "timeout_rule": "MODEL_API_TIMEOUT_MS must exceed measured cold-start latency or warmup is mandatory before routing traffic.",
+    "warm_inference_budget_ms": 5000
+  },
+  "phase_id": "phase_38_ai_cv_analyzer_runtime_gate",
+  "schema_version": "phase-38-ai-cv-analyzer-runtime-gate-v1",
+  "sources": [
+    "model_api/app.py",
+    "model_api/config.py",
+    "model_api/observability.py",
+    "model_api/.env.example",
+    "scripts/warmup_ai_cv_analyzer_runtime.py",
+    "docs/runbooks/ai-cv-analyzer-staging-runtime.md",
+    "docs/runbooks/release-gates.md",
+    "model_api/README.md"
+  ]
+}
