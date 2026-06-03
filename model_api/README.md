@@ -20,6 +20,7 @@ Production serving package for Phase 26. It is separate from `legacy/api` and co
 - `artifacts.py` — artifact manifest loading plus SHA-256/byte-size verification for runtime-required Phase 25 files.
 - `custom_objects.py` — Phase 25 Keras custom-object registration boundary.
 - `features.py` — approved six-feature vector order and normalization helpers.
+- `pdf_parser.py` — deterministic request-scoped PDF parsing, section/contact/date evidence, and ATS penalties.
 - `inference.py` — loaded-model service facade.
 - `validators.py` — model-core response contract validators.
 - `errors.py` — deterministic exception/error payload types.
@@ -61,12 +62,15 @@ Startup verifies manifest SHA-256 and byte-size metadata before loading the Kera
 ```bash
 export MODEL_API_ENV=staging
 export MODEL_API_SERVICE_NAME=bisakerja-model-api
+export MODEL_API_SERVICE_TOKEN=replace-with-internal-token
 export MODEL_API_MAX_RECOMMENDATIONS=5
 export MODEL_API_TIMEOUT_MS=30000
+export MODEL_API_MAX_PDF_BYTES=5000000
+export MODEL_API_MAX_PDF_PAGES=10
 export MODEL_API_ENABLE_GENAI_WRAPPER=false
 ```
 
-Set `MODEL_API_ENV=local` only for local experiments. Staging/production reject TF-IDF, local-hash, and fallback embedding backends.
+Set `MODEL_API_ENV=local` only for local experiments. Staging/production require `MODEL_API_SERVICE_TOKEN` for inference routes and reject TF-IDF, local-hash, and fallback embedding backends.
 
 ### Run API
 
@@ -128,6 +132,7 @@ Response `data` is model-core only: bounded integer scores, evidence keys, candi
 python -m unittest tests.model_api.test_phase_26_layout.Phase26LayoutTest.test_real_phase25_keras_artifact_matches_inference_smoke_fixture_predictions
 python -m unittest tests.model_api.test_phase_26_layout.Phase26LayoutTest.test_phase25_handoff_fixtures_match_recorded_contract_validation_behavior
 python -m unittest tests.model_api.test_phase_26_layout
+python -m unittest tests.test_phase_29_model_api_hardening
 ```
 
 Smoke coverage loads the real Phase 25 `.keras` artifact, runs rows from `inference_smoke_fixture.json`, checks prediction bounds, and compares positive/negative handoff validation with `model_api_handoff_validation.json`.
@@ -165,13 +170,13 @@ Backend sends:
 - `inputMode`: `UPLOAD | REFERENCE`; Backend resolves ownership before forwarding PDF bytes.
 - `compareSource`: `BOOKMARK | JOB_SEARCH | DIRECT_JOB_DETAIL`.
 - `jobRoles[]`: backend-selected target roles.
-- `cvFile`: one PDF file part only.
+- `cvFile`: one PDF file part only; magic bytes, configured size limit, and configured page limit are enforced.
 - `jobCandidates`: JSON array of backend-selected candidate jobs.
 - `rankingPolicy`: JSON policy with `maxRecommendations <= 5`, `requireCandidateJobIds=true`, `deduplicateByJobId=true`, and `backendOwnsHydration=true`.
 
 Model API returns `model-core-cv-analysis-v1` only:
 
-- `parsedCv`: parser status, page count, text length, detected sections, and extraction evidence.
+- `parsedCv`: parser status, page count, text length, detected sections, and extraction evidence. Empty/scanned PDFs use deterministic low-confidence issues; no OCR or hallucinated CV text is generated.
 - `jobFitAlignment`: bounded score plus matched/missing signals and evidence.
 - `atsFriendliness`: bounded score plus parser/format issues and evidence.
 - `overallImpression`: score/evidence for Backend wrapper copy.

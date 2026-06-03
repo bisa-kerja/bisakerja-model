@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 from dataclasses import asdict
+import json
 from typing import Any
 
 from .artifacts import ArtifactVerificationReport, verify_runtime_artifacts
@@ -29,18 +30,22 @@ from .features import (
     build_feature_vectors_for_request,
     normalized_skill_set,
 )
+from .pdf_parser import ats_score_from_pdf_evidence, normalized_skills_from_text, parse_pdf_bytes
 from .inference import InferenceService, RuntimeState, ScoreCalibrationPolicy, utc_now_iso
 from .schemas import (
     MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
     MODEL_CORE_CV_ANALYSIS_SCHEMA_VERSION,
     AtsFriendlinessCore,
+    CandidateRerankingCoreRequest,
     CvAnalysisModelCoreRequest,
     JobFitAlignmentCore,
     OverallImpressionCore,
+    SanitizedProfileInput,
     ScoreSignal,
+    parse_candidate_reranking_core_request,
     parse_cv_analysis_model_core_request,
 )
-from .schemas import ModelIdentity
+from .schemas import MODEL_CORE_CV_ANALYZER_INPUT_VERSION, ModelIdentity
 from .validators import validate_model_core_payload
 
 
@@ -85,16 +90,26 @@ def _recommendation_payload(recommendation) -> dict[str, object]:
     }
 
 
-def _candidate_skill_evidence(request: CvAnalysisModelCoreRequest) -> tuple[tuple[str, ...], tuple[str, ...]]:
-    if not request.jobCandidates:
-        return (), ()
-    profile_skills = normalized_skill_set(request.profile.normalizedSkills)
-    first_candidate_skills = normalized_skill_set(
-        (*request.jobCandidates[0].model_scoring_input.requiredSkills, *request.jobCandidates[0].model_scoring_input.requirements)
-    )
-    matched = tuple(sorted(profile_skills & first_candidate_skills))
-    missing = tuple(sorted(first_candidate_skills - profile_skills))
+def _candidate_skill_evidence(profile: SanitizedProfileInput, candidate) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    profile_skills = normalized_skill_set(profile.normalizedSkills)
+    candidate_skills = normalized_skill_set((*candidate.model_scoring_input.requiredSkills, *candidate.model_scoring_input.requirements))
+    matched = tuple(sorted(profile_skills & candidate_skills))
+    missing = tuple(sorted(candidate_skills - profile_skills))
     return matched, missing
+
+
+def _recommendation_payloads_with_evidence(recommendations, profile: SanitizedProfileInput, candidates) -> list[dict[str, object]]:
+    candidates_by_id = {candidate.jobId: candidate for candidate in candidates}
+    payloads: list[dict[str, object]] = []
+    for recommendation in recommendations:
+        payload = _recommendation_payload(recommendation)
+        candidate = candidates_by_id.get(recommendation.jobId)
+        if candidate is not None:
+            matched, missing = _candidate_skill_evidence(profile, candidate)
+            payload["matchedSkills"] = list(matched)
+            payload["missingSkills"] = list(missing)
+        payloads.append(payload)
+    return payloads
 
 
 def build_cv_analysis_response_payload(
@@ -128,7 +143,9 @@ def build_cv_analysis_response_payload(
         timeout_ms=timeout_ms,
     )
     top_score = recommendations[0].matchScore if recommendations else 0
-    matched_skills, missing_skills = _candidate_skill_evidence(request)
+    top_candidate_by_id = {candidate.jobId: candidate for candidate in request.jobCandidates}
+    top_candidate = top_candidate_by_id.get(recommendations[0].jobId) if recommendations else None
+    matched_skills, missing_skills = _candidate_skill_evidence(request.profile, top_candidate) if top_candidate is not None else ((), ())
     profile_evidence_keys = [
         key
         for key, enabled in {
@@ -189,7 +206,7 @@ def build_cv_analysis_response_payload(
             "schemaVersion": MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
             "candidateSetId": request.requestId,
             "language": request.language,
-            "recommendations": [_recommendation_payload(recommendation) for recommendation in recommendations],
+            "recommendations": _recommendation_payloads_with_evidence(recommendations, request.profile, request.jobCandidates),
             "model": _model_identity_payload(state.model_identity),
             "rankedAt": utc_now_iso(),
         },
@@ -197,6 +214,132 @@ def build_cv_analysis_response_payload(
         "analyzedAt": utc_now_iso(),
     }
     validate_model_core_payload(payload, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
+    return payload
+
+
+def build_candidate_reranking_response_payload(
+    request: CandidateRerankingCoreRequest,
+    service: InferenceService,
+    feature_config: TensorFlowFeatureConfig,
+    calibration_policy: ScoreCalibrationPolicy,
+    embedding_backend: TextEmbeddingBackend | None = None,
+    environment: str = "local",
+    timeout_ms: int | None = None,
+) -> dict[str, object]:
+    state = service.state
+    if state.model_identity is None:
+        service.require_ready()
+        state = service.state
+    if state.model_identity is None:
+        raise ModelNotReadyError("TensorFlow model identity is not available")
+
+    cv_request = CvAnalysisModelCoreRequest(
+        requestId=request.requestId,
+        inputVersion=MODEL_CORE_CV_ANALYZER_INPUT_VERSION,
+        language=request.language,
+        inputMode="UPLOAD",
+        compareSource="JOB_SEARCH",
+        profile=request.profileFeatures,
+        jobCandidates=request.jobCandidates,
+        maxRecommendations=request.maxRecommendations,
+        rankingPolicy=request.rankingPolicy,
+    )
+    candidate_vectors = build_feature_vectors_for_request(
+        cv_request,
+        feature_config=feature_config,
+        embedding_backend=embedding_backend,
+        environment=environment,
+    )
+    recommendations = service.predict_recommendations(
+        tuple(vector.normalized for vector in candidate_vectors),
+        max_recommendations=request.maxRecommendations,
+        calibration_policy=calibration_policy,
+        timeout_ms=timeout_ms,
+    )
+    payload: dict[str, object] = {
+        "requestId": request.requestId,
+        "schemaVersion": MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
+        "candidateSetId": request.candidateSetId,
+        "language": request.language,
+        "recommendations": _recommendation_payloads_with_evidence(recommendations, request.profileFeatures, request.jobCandidates),
+        "model": _model_identity_payload(state.model_identity),
+        "rankedAt": utc_now_iso(),
+    }
+    validate_model_core_payload(payload, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
+    return payload
+
+
+def _auth_error() -> dict[str, object]:
+    return {
+        "success": False,
+        "message": "Unauthorized Model API request",
+        "data": None,
+        "error": {"code": "MODEL_API_UNAUTHORIZED", "details": ["valid bearer service token required"]},
+    }
+
+
+def _authorize_internal_request(headers: Any, config: RuntimeConfig) -> dict[str, object] | None:
+    if config.environment.lower() in {"local", "test"} and config.allow_unauthenticated_local and not config.service_token:
+        return None
+    expected = config.service_token
+    authorization = headers.get("authorization") if hasattr(headers, "get") else None
+    if not expected or authorization != f"Bearer {expected}":
+        return _auth_error()
+    return None
+
+
+def _json_form_value(value: str | None, field_name: str) -> Any:
+    if value is None or not str(value).strip():
+        if field_name == "rankingPolicy":
+            return None
+        raise ContractValidationError([f"$.{field_name} is required"])
+    try:
+        return json.loads(value)
+    except json.JSONDecodeError as exc:
+        raise ContractValidationError([f"$.{field_name} must be valid JSON: {exc.msg}"]) from exc
+
+
+def _build_cv_payload_from_multipart(form: Any, pdf_bytes: bytes, runtime_config: RuntimeConfig) -> dict[str, object]:
+    job_candidates = _json_form_value(form.get("jobCandidates"), "jobCandidates")
+    ranking_policy = _json_form_value(form.get("rankingPolicy"), "rankingPolicy")
+    candidate_skill_hints: list[str] = []
+    if isinstance(job_candidates, list):
+        for candidate in job_candidates:
+            if not isinstance(candidate, dict):
+                continue
+            scoring = candidate.get("scoringInput") if isinstance(candidate.get("scoringInput"), dict) else candidate
+            for key in ("requiredSkills", "requirements"):
+                values = scoring.get(key) if isinstance(scoring, dict) else None
+                if isinstance(values, list):
+                    candidate_skill_hints.extend(str(value) for value in values if isinstance(value, str))
+
+    parsed_pdf = parse_pdf_bytes(pdf_bytes, max_bytes=runtime_config.max_pdf_bytes, max_pages=runtime_config.max_pdf_pages)
+    ats_score, detected_issues, ats_fallback = ats_score_from_pdf_evidence(parsed_pdf)
+    profile = {
+        "cvText": parsed_pdf.text,
+        "profileText": parsed_pdf.text[:2000],
+        "targetRoles": _json_form_value(form.get("jobRoles"), "jobRoles") if form.get("jobRoles") else [],
+        "normalizedSkills": list(normalized_skills_from_text(parsed_pdf.text, candidate_skill_hints)),
+        "detectedCvSectionNames": list(parsed_pdf.section_names),
+    }
+    payload: dict[str, object] = {
+        "requestId": str(form.get("requestId") or ""),
+        "inputVersion": MODEL_CORE_CV_ANALYZER_INPUT_VERSION,
+        "language": str(form.get("language") or ""),
+        "inputMode": str(form.get("inputMode") or "UPLOAD"),
+        "compareSource": str(form.get("compareSource") or ""),
+        "profile": profile,
+        "jobCandidates": job_candidates,
+        "rankingPolicy": ranking_policy,
+        "maxRecommendations": (ranking_policy or {}).get("maxRecommendations", 5) if isinstance(ranking_policy, dict) else 5,
+    }
+    payload["_parsedPdfEvidence"] = {
+        "pageCount": parsed_pdf.page_count,
+        "parseQuality": parsed_pdf.parse_quality,
+        "atsScore": ats_score,
+        "detectedIssues": list(detected_issues),
+        "fallback": ats_fallback,
+    }
     return payload
 
 
@@ -218,6 +361,7 @@ def create_app(
         raise RuntimeError("FastAPI dependency missing; install serving requirements after Step 26.13") from exc
 
     runtime_config = config or RuntimeConfig.from_env()
+    runtime_config.validate_security()
     artifact_report = verify_runtime_artifacts(runtime_config.artifact_paths)
     feature_config = TensorFlowFeatureConfig.from_path(runtime_config.artifact_paths.tensorflow_feature_config_path)
     calibration_policy = ScoreCalibrationPolicy.from_path(runtime_config.artifact_paths.score_calibration_path)
@@ -231,6 +375,8 @@ def create_app(
         app.state.feature_config = feature_config
         app.state.calibration_policy = calibration_policy
         inference_service.load_once(runtime_config.artifact_paths, artifact_report)
+        if runtime_config.warmup_on_startup and inference_service.state.ready:
+            inference_service.require_ready()
         yield
 
     app = FastAPI(title="Bisakerja Model API", version="0.1.0-phase26.4", lifespan=lifespan)
@@ -328,7 +474,10 @@ def create_app(
         }
 
     @app.post("/inference/cv-analysis")
-    def cv_analysis(payload: Any = Body(...)) -> dict[str, object]:
+    def cv_analysis(http_request: Request, payload: Any = Body(...)) -> dict[str, object]:
+        auth_error = _authorize_internal_request(http_request.headers, runtime_config)
+        if auth_error is not None:
+            return JSONResponse(status_code=401, content=auth_error)
         request = parse_cv_analysis_model_core_request(payload)
         data = build_cv_analysis_response_payload(
             request,
@@ -340,5 +489,68 @@ def create_app(
             timeout_ms=runtime_config.timeout_ms,
         )
         return {"success": True, "message": "Model-core inference completed", "data": data, "error": None}
+
+    @app.post("/inference/candidate-reranking")
+    def candidate_reranking(http_request: Request, payload: Any = Body(...)) -> dict[str, object]:
+        auth_error = _authorize_internal_request(http_request.headers, runtime_config)
+        if auth_error is not None:
+            return JSONResponse(status_code=401, content=auth_error)
+        request = parse_candidate_reranking_core_request(payload)
+        data = build_candidate_reranking_response_payload(
+            request,
+            service=inference_service,
+            feature_config=feature_config,
+            calibration_policy=calibration_policy,
+            embedding_backend=embedding_backend,
+            environment=runtime_config.environment,
+            timeout_ms=runtime_config.timeout_ms,
+        )
+        return {"success": True, "message": "Model-core candidate reranking completed", "data": data, "error": None}
+
+    @app.post("/internal/model/cv-analysis")
+    async def internal_model_cv_analysis(http_request: Request):
+        auth_error = _authorize_internal_request(http_request.headers, runtime_config)
+        if auth_error is not None:
+            return JSONResponse(status_code=401, content=auth_error)
+        content_type = http_request.headers.get("content-type", "")
+        if "multipart/form-data" not in content_type:
+            raise ContractValidationError(["Content-Type must be multipart/form-data"])
+        form = await http_request.form()
+        file_values = [value for value in form.values() if hasattr(value, "filename") and hasattr(value, "read")]
+        if len(file_values) != 1 or "cvFile" not in form:
+            raise ContractValidationError(["multipart request must include exactly one cvFile"])
+        upload = form["cvFile"]
+        if getattr(upload, "content_type", None) not in {"application/pdf", "application/octet-stream"}:
+            raise ContractValidationError(["cvFile content type must be application/pdf"])
+        pdf_bytes = await upload.read()
+        if len(pdf_bytes) > runtime_config.max_pdf_bytes:
+            raise ContractValidationError(["cvFile exceeds MODEL_API_MAX_PDF_BYTES"])
+        if not pdf_bytes.lstrip().startswith(b"%PDF"):
+            raise ContractValidationError(["cvFile must start with PDF magic bytes"])
+        payload = _build_cv_payload_from_multipart(form, pdf_bytes, runtime_config)
+        parsed_pdf_evidence = payload.pop("_parsedPdfEvidence")
+        request = parse_cv_analysis_model_core_request(payload)
+        data = build_cv_analysis_response_payload(
+            request,
+            service=inference_service,
+            feature_config=feature_config,
+            calibration_policy=calibration_policy,
+            embedding_backend=embedding_backend,
+            environment=runtime_config.environment,
+            timeout_ms=runtime_config.timeout_ms,
+        )
+        if isinstance(data.get("atsFriendliness"), dict) and isinstance(parsed_pdf_evidence, dict):
+            data["parsedCv"] = {
+                "textLength": len(request.profile.cvText),
+                "pageCount": parsed_pdf_evidence["pageCount"],
+                "parseQuality": parsed_pdf_evidence["parseQuality"],
+                "sectionNames": list(request.profile.detectedCvSectionNames),
+            }
+            data["atsFriendliness"]["score"] = parsed_pdf_evidence["atsScore"]
+            data["atsFriendliness"]["detectedIssues"] = parsed_pdf_evidence["detectedIssues"]
+            data["atsFriendliness"]["fallback"] = parsed_pdf_evidence["fallback"]
+            data["atsFriendliness"]["evidence"] = {"source": "deterministic_pdf_parser", **parsed_pdf_evidence}
+        validate_model_core_payload(data, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
+        return {"success": True, "message": "Model-core PDF inference completed", "data": data, "error": None}
 
     return app

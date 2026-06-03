@@ -138,8 +138,21 @@ class RuntimeConfig:
     environment: str = "local"
     max_recommendations: int = 5
     timeout_ms: int = 10_000
+    service_token: str | None = None
+    allow_unauthenticated_local: bool = True
+    max_pdf_bytes: int = 5_000_000
+    max_pdf_pages: int = 10
+    warmup_on_startup: bool = False
     artifact_paths: ArtifactPaths = field(default_factory=ArtifactPaths.from_env)
     openrouter: OpenRouterConfig = field(default_factory=OpenRouterConfig.from_env)
+
+    @property
+    def requires_service_token(self) -> bool:
+        return self.environment.lower() in {"staging", "production", "prod"}
+
+    def validate_security(self) -> None:
+        if self.requires_service_token and not self.service_token:
+            raise ValueError("MODEL_API_SERVICE_TOKEN is required in staging/production")
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> "RuntimeConfig":
@@ -149,6 +162,11 @@ class RuntimeConfig:
             environment=data.get("MODEL_API_ENV", "local"),
             max_recommendations=int(data.get("MODEL_API_MAX_RECOMMENDATIONS", "5")),
             timeout_ms=int(data.get("MODEL_API_TIMEOUT_MS", "10000")),
+            service_token=data.get("MODEL_API_SERVICE_TOKEN") or None,
+            allow_unauthenticated_local=data.get("MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL", "true").lower() == "true",
+            max_pdf_bytes=int(data.get("MODEL_API_MAX_PDF_BYTES", "5000000")),
+            max_pdf_pages=int(data.get("MODEL_API_MAX_PDF_PAGES", "10")),
+            warmup_on_startup=data.get("MODEL_API_WARMUP_ON_STARTUP", "false").lower() == "true",
             artifact_paths=ArtifactPaths.from_env(data),
             openrouter=OpenRouterConfig.from_env(data),
         )

@@ -875,7 +875,7 @@ Acceptance Criteria:
 
 ### Phase 29 — Model API PDF Parsing and Model-Core Inference Hardening
 
-Status: Planned
+Status: Complete
 
 Goal: Upgrade Model API from JSON-only sanitized signals to production-safe PDF intake, deterministic parsing, ATS evidence extraction, TensorFlow scoring, and model-core output for backend-provided candidates.
 
@@ -888,24 +888,24 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 29.1: Add safe env/config defaults — Provide `.env.example` for Model API with `MODEL_API_ENV`, artifact paths, `MODEL_API_SERVICE_TOKEN`, `MODEL_API_MAX_PDF_BYTES`, `MODEL_API_MAX_PDF_PAGES`, `MODEL_API_TIMEOUT_MS`, `SENTENCE_TRANSFORMERS_HOME`, `MODEL_API_ENABLE_GENAI_WRAPPER=false`, and OpenRouter vars disabled by default.
-- [ ] Step 29.2: Add internal auth middleware — Require `Authorization: Bearer <MODEL_API_SERVICE_TOKEN>` for inference endpoints in staging/production while allowing explicit local/test bypass only through safe config.
-- [ ] Step 29.3: Implement multipart PDF endpoint — Add `POST /internal/model/cv-analysis` that validates content type, file size, PDF magic bytes, one-file-only policy, required form fields, candidate JSON shape, and request ID.
-- [ ] Step 29.4: Implement deterministic PDF parser — Extract text with a pinned parser, detect page count, empty/scanned PDFs, section names, contact/date signals, formatting risk, and parse quality; never hallucinate missing CV content.
-- [ ] Step 29.5: Build profile/CV signals from parsed PDF — Convert parsed text into `SanitizedProfileInput` using `cvText`, `targetRoles`, detected sections, normalized skills, language, role family, and optional experience evidence.
-- [ ] Step 29.6: Replace ATS placeholder logic — Compute `atsFriendliness.score` and `detectedIssues` from parser evidence with transparent penalties and safe fallback for empty/scanned/failed parse.
-- [ ] Step 29.7: Fix top-candidate evidence — Derive `jobFitAlignment.matchedSkills/missingSkills` and recommendation skill evidence from the top-ranked candidate, not from the first input candidate.
-- [ ] Step 29.8: Add candidate reranking endpoint — Add `POST /inference/candidate-reranking` for backend jobs-only scoring with the same membership, max-item, score-bound, and response-contract validators.
-- [ ] Step 29.9: Add hard runtime guards — Enforce parse, embedding, and model inference timeouts; reject fallback embedding backends in staging/production; warm up TensorFlow and E5 at startup when configured.
-- [ ] Step 29.10: Expand tests — Cover PDF parser edge cases, multipart validation, auth missing/invalid token, ATS scoring, top-candidate evidence, reranking endpoint, timeout errors, and no backend-owned fields.
+- [x] Step 29.1: Add safe env/config defaults — Provide `.env.example` for Model API with `MODEL_API_ENV`, artifact paths, `MODEL_API_SERVICE_TOKEN`, `MODEL_API_MAX_PDF_BYTES`, `MODEL_API_MAX_PDF_PAGES`, `MODEL_API_TIMEOUT_MS`, `SENTENCE_TRANSFORMERS_HOME`, `MODEL_API_ENABLE_GENAI_WRAPPER=false`, and OpenRouter vars disabled by default.
+- [x] Step 29.2: Add internal auth middleware — Require `Authorization: Bearer <MODEL_API_SERVICE_TOKEN>` for inference endpoints in staging/production while allowing explicit local/test bypass only through safe config.
+- [x] Step 29.3: Implement multipart PDF endpoint — Add `POST /internal/model/cv-analysis` that validates content type, file size, PDF magic bytes, one-file-only policy, required form fields, candidate JSON shape, and request ID.
+- [x] Step 29.4: Implement deterministic PDF parser — Extract text with a pinned parser, detect page count, empty/scanned PDFs, section names, contact/date signals, formatting risk, and parse quality; never hallucinate missing CV content.
+- [x] Step 29.5: Build profile/CV signals from parsed PDF — Convert parsed text into `SanitizedProfileInput` using `cvText`, `targetRoles`, detected sections, normalized skills, language, role family, and optional experience evidence.
+- [x] Step 29.6: Replace ATS placeholder logic — Compute `atsFriendliness.score` and `detectedIssues` from parser evidence with transparent penalties and safe fallback for empty/scanned/failed parse.
+- [x] Step 29.7: Fix top-candidate evidence — Derive `jobFitAlignment.matchedSkills/missingSkills` and recommendation skill evidence from the top-ranked candidate, not from the first input candidate.
+- [x] Step 29.8: Add candidate reranking endpoint — Add `POST /inference/candidate-reranking` for backend jobs-only scoring with the same membership, max-item, score-bound, and response-contract validators.
+- [x] Step 29.9: Add hard runtime guards — Enforce parse, embedding, and model inference timeouts; reject fallback embedding backends in staging/production; warm up TensorFlow and E5 at startup when configured.
+- [x] Step 29.10: Expand tests — Cover PDF parser edge cases, multipart validation, auth missing/invalid token, ATS scoring, top-candidate evidence, reranking endpoint, timeout errors, and no backend-owned fields.
 
 Acceptance Criteria:
 
-- [ ] Model API can parse a normal PDF CV sent by Backend and build valid Phase 25 features without backend pre-parsed `cvText`.
-- [ ] Empty/scanned/malformed PDFs return deterministic safe errors or low-confidence fallback signals, never fabricated CV text.
-- [ ] All model-core scores are bounded integers `0-100`; recommendations are max `5`, unique, and restricted to backend-supplied job IDs.
-- [ ] Staging/production cannot run with missing service token, fallback embeddings, unverified artifacts, or skipped model loader.
-- [ ] Tests prove PDF endpoint, JSON endpoint, reranking endpoint, and response validators work without leaking backend-owned fields.
+- [x] Model API can parse a normal PDF CV sent by Backend and build valid Phase 25 features without backend pre-parsed `cvText`.
+- [x] Empty/scanned/malformed PDFs return deterministic safe errors or low-confidence fallback signals, never fabricated CV text.
+- [x] All model-core scores are bounded integers `0-100`; recommendations are max `5`, unique, and restricted to backend-supplied job IDs.
+- [x] Staging/production cannot run with missing service token, fallback embeddings, unverified artifacts, or skipped model loader.
+- [x] Tests prove PDF endpoint, JSON endpoint, reranking endpoint, and response validators work without leaking backend-owned fields.
 
 ---
 
