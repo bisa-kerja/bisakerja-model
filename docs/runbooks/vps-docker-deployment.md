@@ -194,6 +194,7 @@ curl -fsS http://127.0.0.1:3004/health
 
 ## Troubleshooting
 
+- `MODEL_API_ENV mismatch for deploy`: update `DEPLOY_ENV_FILE` so it contains `MODEL_API_ENV=production`, or change `EXPECTED_MODEL_API_ENV` in the workflow for a non-production target. GitHub may mask the found value as `***` when it matches a secret.
 - Build fails on dependency install: check Python/TensorFlow wheel compatibility for image platform.
 - Container exits during startup: inspect `docker compose logs --tail=150 model-api`.
 - Health fails but container runs: wait for TensorFlow and E5 model load, then check `/ready`.

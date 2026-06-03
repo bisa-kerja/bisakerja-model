@@ -188,14 +188,27 @@ jobs:
 
           cd "$REMOTE_PATH"
 
-          if ! grep -Eq '^MODEL_API_ENV=' "$RUNTIME_ENV_FILE"; then
+          actual_env="$(
+            awk -F= '
+              $1 == "MODEL_API_ENV" {
+                value=$2
+                for (i=3; i<=NF; i++) value=value "=" $i
+                gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+                gsub(/^\"|\"$/, "", value)
+                gsub(/^'\''|'\''$/, "", value)
+                print value
+                exit
+              }
+            ' "$RUNTIME_ENV_FILE"
+          )"
+
+          if [ -z "$actual_env" ]; then
             echo "MODEL_API_ENV is required in $RUNTIME_ENV_FILE" >&2
             exit 1
           fi
 
-          actual_env="$(grep -E '^MODEL_API_ENV=' "$RUNTIME_ENV_FILE" | tail -1 | cut -d= -f2- | tr -d '"' | tr -d "'")"
-          if [ "$actual_env" != "$EXPECTED_MODEL_API_ENV" ]; then
-            echo "Unexpected MODEL_API_ENV=$actual_env; expected $EXPECTED_MODEL_API_ENV" >&2
+          if [ -n "$EXPECTED_MODEL_API_ENV" ] && [ "$actual_env" != "$EXPECTED_MODEL_API_ENV" ]; then
+            echo "MODEL_API_ENV mismatch for deploy: expected $EXPECTED_MODEL_API_ENV but found $actual_env in $RUNTIME_ENV_FILE" >&2
             exit 1
           fi
 
