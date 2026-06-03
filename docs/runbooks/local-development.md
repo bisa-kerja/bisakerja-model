@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Python `3.13.x`
+- Python `3.13.11`
 - TensorFlow-compatible environment for training and serving checks
 - Repository root as working directory
 - Local Model API env file copied from template
@@ -27,19 +27,27 @@ Root `.env.example` is not required for Model API runtime. It only holds model-w
 
 ## Model API Runtime
 
+Use Python `3.13.11`, same as the TensorFlow notebook runtime:
+
 ```bash
-python -m venv .venv
+PYENV_VERSION=3.13.11 pyenv exec python -m venv .venv
 source .venv/bin/activate
+python -V
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
+export MODEL_API_ENV=local
+export MODEL_API_SERVICE_TOKEN=replace-with-local-service-token
 uvicorn model_api.app:create_app --factory --host 0.0.0.0 --port 8000
 ```
 
-Health checks:
+If you do not use `pyenv`, make sure `python -V` prints `3.13.11` before creating `.venv`.
+
+Health/readiness checks:
 
 ```bash
 curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/model-info
+curl http://127.0.0.1:8000/ready
+curl -H "authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:8000/model-info
 ```
 
 ## Training Runtime

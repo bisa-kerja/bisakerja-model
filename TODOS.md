@@ -1140,6 +1140,115 @@ Acceptance Criteria:
 
 ---
 
+### Phase 37 — Backend AI CV Analyzer GenAI Wrapper Provider Integration
+
+Status: Planned
+
+Goal: Wire an optional Backend-owned GenAI provider for AI CV Analyzer public prose while keeping Model API deterministic and preserving deterministic fallback as the safe default.
+
+Scope boundary:
+
+- Model API must keep `MODEL_API_ENABLE_GENAI_WRAPPER=false` for AI CV Analyzer core inference and must not call external GenAI.
+- Backend owns the optional GenAI call, prompt assembly, JSON parsing, OpenAPI validation, fallback, and observability.
+- GenAI must never receive raw CV bytes/text by default, service tokens, storage keys, DB URLs, auth headers, or full internal payloads.
+- GenAI output must never change model scores, model metadata, candidate IDs, recommendation order, candidate membership, or persistence identifiers.
+
+Current gap:
+
+- Backend has `buildCvAnalyzerWrapperInput`, `cvAnalyzerWrapperSystemPrompt`, wrapper output schema validation, and deterministic fallback.
+- Backend does not yet have a provider client, env config, timeout policy, or service integration that passes `wrapperResponse` into `buildPublicCvAnalysisResponse`.
+- Current public prose is deterministic fallback only; no external LLM/OpenRouter call is wired.
+
+Tasks:
+
+- [ ] Step 37.1: Add Backend GenAI config — Add explicit Backend env vars such as `AI_CV_ANALYZER_GENAI_ENABLED`, provider base URL, model name, API key env, timeout, and max retries; default disabled in local/test/staging unless intentionally enabled.
+- [ ] Step 37.2: Implement provider client — Create a Backend-owned OpenAI-compatible/OpenRouter client with request timeout, abort handling, JSON-only response parsing, sanitized logging, and no retry for expensive unsafe inference by default.
+- [ ] Step 37.3: Wire analyzer service — In `AiCvAnalyzerService.analyzeCv`, build wrapper input from model-core response, call provider only when enabled, pass provider output into `buildPublicCvAnalysisResponse`, and fallback deterministically on timeout, invalid JSON, schema drift, or safety rejection.
+- [ ] Step 37.4: Preserve safety invariants — Enforce that generated output cannot alter scores, IDs, order, model name/version, `createdAt/analyzedAt`, recommendation count, or candidate membership.
+- [ ] Step 37.5: Add red-team tests — Cover prompt injection in CV evidence, job descriptions, skills, company names, malformed JSON, markdown output, raw secret leakage, PII-like output, score mutation, candidate mutation, and provider timeout.
+- [ ] Step 37.6: Add OpenAPI contract tests — Validate both generated and fallback responses against `references/docs/generated/openapi.json` `CvAnalysis` and public response envelope.
+- [ ] Step 37.7: Update operations docs — Document when to enable GenAI, required secrets, latency/cost impact, fallback behavior, and rollback to deterministic fallback.
+
+Acceptance Criteria:
+
+- [ ] Backend can optionally generate higher-quality AI CV Analyzer prose through a provider while deterministic fallback remains the default safe path.
+- [ ] Provider failures never fail successful model-core inference unless product policy explicitly chooses fail-closed.
+- [ ] Generated output validates against OpenAPI and cannot mutate model-owned scores, candidate IDs/order, model metadata, or timestamps.
+- [ ] No raw CV text, uploaded file bytes, tokens, storage keys, DB URLs, prompts, or auth headers are sent to provider or logged.
+
+---
+
+### Phase 38 — AI CV Analyzer Staging Runtime Warmup and Performance Gate
+
+Status: Planned
+
+Goal: Make staging/demo behavior reliable after the live Model API smoke passes by adding warmup, readiness, and latency acceptance gates for TensorFlow and E5 first-load behavior.
+
+Scope boundary:
+
+- This phase does not retrain the model.
+- This phase does not change public Backend API contracts.
+- This phase focuses on operational readiness for AI CV Analyzer live staging traffic.
+
+Current gap:
+
+- Live Model API smoke now proves Python 3.13, TensorFlow/Keras, E5, artifact loading, custom objects, and endpoint behavior.
+- First live `/inference/cv-analysis` call can take around 20 seconds because E5 model weights load lazily.
+- Backend readiness currently checks Model API `/health`; strict staging should also verify Model API `/ready` and a warmed inference path before demo traffic.
+
+Tasks:
+
+- [ ] Step 38.1: Add Model API warmup command/runbook — Document and script a safe warmup that loads TensorFlow and E5 using a sanitized fixture before routing demo/staging traffic.
+- [ ] Step 38.2: Add readiness strictness — Update Backend readiness or staging gate to verify Model API `/ready.ready=true`, not only `/health` reachability.
+- [ ] Step 38.3: Add latency budget evidence — Record cold-start and warm inference latency for `/internal/model/cv-analysis`, including parse, embedding, TensorFlow, and total latency.
+- [ ] Step 38.4: Add timeout alignment check — Ensure Backend `MODEL_API_TIMEOUT_MS` is greater than cold/warm expected latency or warmup is mandatory before traffic.
+- [ ] Step 38.5: Add HF/E5 cache guidance — Document `SENTENCE_TRANSFORMERS_HOME`, optional `HF_TOKEN` for rate limits, and cache persistence for container/staging deployments.
+- [ ] Step 38.6: Add staging smoke script — Run a Backend-to-Model fixture through public `/api/v1/ai/cv-analyzer` after warmup and assert latency, response shape, persistence behavior, and no private field leakage.
+- [ ] Step 38.7: Add rollback checklist — Document fallback to deterministic prose, traffic disable switch, Model API service-token rotation, and artifact path rollback.
+
+Acceptance Criteria:
+
+- [ ] Staging runbook includes a repeatable warmup path and expected cold/warm latency numbers.
+- [ ] Backend readiness or staging gate fails when Model API `/ready` is false or E5/TensorFlow are not warmed according to policy.
+- [ ] Demo/staging latency budget is explicit and verified with live fixture evidence.
+- [ ] E5 model cache and optional HF token behavior are documented for macOS/Linux local and container staging.
+
+---
+
+### Phase 39 — Backend AI CV Analyzer Product-Copy Quality and Localization Review
+
+Status: Planned
+
+Goal: Decide whether deterministic fallback copy is sufficient for staging/demo or whether GenAI/approved localized templates are required before broader user testing.
+
+Scope boundary:
+
+- This phase covers final user-visible copy quality only, not model scoring correctness.
+- Model API remains model-core only.
+- Backend owns language policy, copy templates, GenAI wrapper output, and fallback text.
+
+Current gap:
+
+- Current deterministic fallback is safe and OpenAPI-compatible but generic.
+- Current staging policy defaults to English even when request language is `id`, based on previous safety decision.
+- Indonesian copy or richer personalized copy requires explicit product decision and tests.
+
+Tasks:
+
+- [ ] Step 39.1: Define product language policy — Decide whether `language=id` should return Indonesian copy, English copy, or bilingual-safe copy for staging/demo.
+- [ ] Step 39.2: Review fallback copy quality — Create representative CV/job fixtures and evaluate whether deterministic summaries/actionables are useful enough without GenAI.
+- [ ] Step 39.3: Add approved templates — If GenAI remains disabled, add richer deterministic templates for job fit, ATS, overall impression, actions, section reviews, and recommendation reasons.
+- [ ] Step 39.4: Add localization tests — Verify `id`/`en` behavior, no mixed-language drift, no PII leakage, and OpenAPI-compatible text lengths.
+- [ ] Step 39.5: Add product acceptance report — Produce a concise demo readiness report with before/after sample responses and remaining copy limitations.
+
+Acceptance Criteria:
+
+- [ ] Product-facing language behavior is explicit and tested.
+- [ ] Fallback copy is either accepted for staging/demo or replaced by approved templates/GenAI provider output.
+- [ ] Public responses stay schema-valid, safe, and free of raw CV text, prompt text, tokens, storage keys, and unrelated PII.
+
+---
+
 ## Suggested Execution Order
 
 1. Treat Phase 0-11 as completed design and audit baseline.
@@ -1156,6 +1265,9 @@ Acceptance Criteria:
 12. Because contract drift was found after Phase 31, complete corrective Phases 32-36 before any new AI CV Analyzer staging-ready claim.
 13. Keep AI CV Generate out of Phases 32-36 except as a documented future scope; focus current corrective work on AI CV Analyzer only.
 14. Keep wrapper/backend work out of training notebooks unless it changes the model-output contract or integration validation fixtures.
+15. Complete Phase 37 only if product needs LLM-generated AI CV Analyzer prose; otherwise keep deterministic fallback as the safe default.
+16. Complete Phase 38 before broader staging/demo traffic so E5/TensorFlow cold-start latency and readiness behavior are explicit.
+17. Complete Phase 39 before user-facing copy review, localization, or broader beta testing.
 
 ## Out of Scope for Model-Core Training Notebooks
 

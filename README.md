@@ -80,18 +80,23 @@ cp model_api/.env.example model_api/.env
 
 Root `.env.example` is optional. It only contains model-workspace orchestration defaults and the external Backend repo URL.
 
-Install Model API runtime dependencies in Python `3.13.x`:
+Install Model API runtime dependencies with Python `3.13.11`, the same version used by the TensorFlow notebook runtime:
 
 ```bash
-python -m venv .venv
+PYENV_VERSION=3.13.11 pyenv exec python -m venv .venv
 source .venv/bin/activate
+python -V
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
+If you do not use `pyenv`, make sure `python -V` prints `3.13.11` before creating `.venv`. Do not use Python `3.14` for TensorFlow/Model API smoke checks.
+
 Run Model API locally:
 
 ```bash
+export MODEL_API_ENV=local
+export MODEL_API_SERVICE_TOKEN=replace-with-local-service-token
 uvicorn model_api.app:create_app --factory --host 0.0.0.0 --port 8000
 ```
 
@@ -99,7 +104,8 @@ Check readiness:
 
 ```bash
 curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/model-info
+curl http://127.0.0.1:8000/ready
+curl -H "authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:8000/model-info
 ```
 
 Run targeted tests:
@@ -119,6 +125,7 @@ Use Python `3.13.11` for TensorFlow training and release evidence:
 ```bash
 PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
 source training/.tf-venv-3.13/bin/activate
+python -V
 python -m pip install --upgrade pip
 python -m pip install -r training/requirements.txt
 ```

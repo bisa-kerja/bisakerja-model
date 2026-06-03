@@ -305,9 +305,15 @@ class InferenceService:
             raise InferenceTimeoutError(f"TensorFlow inference timeout before prediction; timeout_ms={timeout_ms}")
 
         model_rows = [vector.as_model_row() for vector in vectors]
+        try:
+            import numpy as np  # type: ignore[import-not-found]
+
+            model_input = np.asarray(model_rows, dtype="float32")
+        except ModuleNotFoundError:  # pragma: no cover - NumPy is a serving dependency
+            model_input = model_rows
         started_at = monotonic()
         try:
-            raw_predictions = self._model.predict(model_rows, verbose=0)  # type: ignore[union-attr]
+            raw_predictions = self._model.predict(model_input, verbose=0)  # type: ignore[union-attr]
         except ModelApiError:
             raise
         except Exception as exc:  # pragma: no cover - defensive runtime wrapper

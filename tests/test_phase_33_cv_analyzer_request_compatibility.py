@@ -266,6 +266,31 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
         self.assertEqual(body["schemaVersion"], "model-core-cv-analysis-v1")
         self.assertEqual(body["candidateReranking"]["recommendations"][0]["jobId"], "job-33-001")
 
+    def test_model_info_requires_service_token_in_staging_and_ready_uses_default_e5_backend(self) -> None:
+        try:
+            from fastapi.testclient import TestClient
+        except ModuleNotFoundError:
+            self.skipTest("FastAPI serving dependencies are not installed")
+
+        identity = ModelIdentity(
+            name="phase25",
+            version="test",
+            artifact=ModelArtifactIdentity(path="artifacts/test.keras", sha256="0" * 64),
+        )
+        service = InferenceService(
+            model=FakeModel(),
+            state=RuntimeState(ready=True, model_identity=identity, artifact_manifest_phase="phase_25", message="ready"),
+        )
+        config = RuntimeConfig.from_env(
+            {"MODEL_API_ENV": "staging", "MODEL_API_SERVICE_TOKEN": "secret", "MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL": "false"}
+        )
+        client = TestClient(create_app(config=config, service=service))
+
+        self.assertEqual(client.get("/model-info").status_code, 401)
+        self.assertEqual(client.get("/model-info", headers={"authorization": "Bearer secret"}).status_code, 200)
+        ready = client.get("/ready").json()
+        self.assertTrue(ready["checks"]["e5BackendConfigured"])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -36,6 +36,8 @@ Use kernel:
 Bisakerja Model TF 3.13
 ```
 
+Create that kernel from Python `3.13.11`, not Python `3.14`. Use the same Python version for live Model API smoke tests.
+
 ## Verification Gates
 
 Run hygiene and label evidence gates before any production-ready claim:

@@ -64,22 +64,25 @@ model_api/
 
 Target runtime:
 
-- Python `3.13.x`
+- Python `3.13.11`
 - TensorFlow `2.21.x`
 - Keras `3.14.x`
 - FastAPI
 - Uvicorn
-- NumPy
+- NumPy `2.1.x`
 - SentenceTransformers with `intfloat/e5-base-v2`
 
-Install from repo root:
+Install from repo root with the same Python version used by the TensorFlow notebook runtime:
 
 ```bash
-python -m venv .venv
+PYENV_VERSION=3.13.11 pyenv exec python -m venv .venv
 source .venv/bin/activate
+python -V
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
+
+If you do not use `pyenv`, make sure `python -V` prints `3.13.11` before creating `.venv`. Do not use Python `3.14` for TensorFlow/Model API smoke checks.
 
 ## Required Artifact Paths
 
@@ -127,17 +130,20 @@ Use `MODEL_API_ENV=local` only for local experiments. Staging and production req
 ## Run API
 
 ```bash
+export MODEL_API_ENV=local
+export MODEL_API_SERVICE_TOKEN=replace-with-local-service-token
 uvicorn model_api.app:create_app --factory --host 0.0.0.0 --port 8000
 ```
 
-Health checks:
+Health/readiness checks:
 
 ```bash
 curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/model-info
+curl http://127.0.0.1:8000/ready
+curl -H "authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:8000/model-info
 ```
 
-`/health.ready=true` means artifacts are verified and runtime dependencies are available. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
+`/ready.ready=true` means artifacts are verified, TensorFlow model is loaded, E5 backend is configured, PDF parser is available, and service token is configured when required. `/model-info` uses the same bearer token in staging/production. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
 
 ## Internal Multipart CV Analysis Contract
 

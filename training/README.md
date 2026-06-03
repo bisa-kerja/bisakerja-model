@@ -74,12 +74,13 @@ Phase 13 executable cells are intentionally retired for production notebook hygi
 
 ## Runtime
 
-Use Python `3.13.11` for the TensorFlow training runtime. Python `3.14` is not reliable for this project unless compatible TensorFlow wheels are available.
+Use Python `3.13.11` for the TensorFlow training runtime. Use the same Python version for Model API serving smoke tests. Python `3.14` is not reliable for this project unless compatible TensorFlow wheels are available.
 
 ```bash
 deactivate 2>/dev/null || true
 PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
 source training/.tf-venv-3.13/bin/activate
+python -V
 python -m pip install --upgrade pip
 python -m pip install -r training/requirements.txt
 python -m pip install ipykernel jupyterlab
@@ -102,7 +103,7 @@ print('sentence_transformers: import-ok')
 PY
 ```
 
-Expected Python: `3.13.x`. Phase 25 smoke evidence records TensorFlow `2.21.0` and Keras `3.14.1`.
+Expected Python: `3.13.x`. Phase 25 smoke evidence records TensorFlow `2.21.0` and Keras `3.14.1`. Python `3.13` requires NumPy `2.1+` through `ml-dtypes`, so this workspace pins NumPy `2.1.3` for training and serving.
 
 ## Default Embedding Model
 

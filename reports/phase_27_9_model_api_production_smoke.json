@@ -1,22 +1,15 @@
 {
-  "blockers": [
-    "python_3_13_serving_runtime",
-    "serving_dependencies_importable",
-    "phase26_tests_unskipped",
-    "real_keras_custom_object_loader_smoke",
-    "live_fastapi_health_model_info_inference_smoke"
-  ],
-  "final_decision": "blocked",
+  "blockers": [],
+  "final_decision": "production-smoke-passed",
   "gates": [
     {
-      "blocker": "Current interpreter is not Python 3.13",
       "check": "python_3_13_serving_runtime",
       "evidence": {
-        "executable": "/Users/macbookpro/.pyenv/versions/3.14.2/bin/python",
+        "executable": "/Users/macbookpro/Development/bisakerja-model/.venv/bin/python",
         "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
-        "python": "3.14.2 (main, Dec 11 2025, 11:10:12) [Clang 16.0.0 (clang-1600.0.26.6)]"
+        "python": "3.13.11 (main, Jun  1 2026, 12:57:06) [Clang 16.0.0 (clang-1600.0.26.6)]"
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "check": "root_requirements_pin_serving_runtime",
@@ -24,8 +17,9 @@
         "pins": {
           "fastapi": "0.123.5",
           "keras": "3.14.1",
-          "numpy": "1.26.4",
+          "numpy": "2.1.3",
           "pydantic": "2.12.5",
+          "python-multipart": "0.0.29",
           "sentence-transformers": "5.5.1",
           "tensorflow": "2.21.0",
           "uvicorn[standard]": "0.47.0"
@@ -34,66 +28,117 @@
       "status": "PASS"
     },
     {
-      "blocker": "Install root requirements.txt in Python 3.13 env",
       "check": "serving_dependencies_importable",
       "evidence": {
         "modules": {
-          "fastapi": false,
-          "keras": false,
-          "numpy": false,
-          "sentence_transformers": false,
-          "tensorflow": false,
+          "fastapi": true,
+          "keras": true,
+          "numpy": true,
+          "sentence_transformers": true,
+          "tensorflow": true,
           "uvicorn": true
         }
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
-      "blocker": "Phase 26 tests must run with zero skips",
       "check": "phase26_tests_unskipped",
       "evidence": {
         "result": {
-          "command": "/Users/macbookpro/.pyenv/versions/3.14.2/bin/python -m unittest tests.model_api.test_phase_26_layout",
-          "elapsed_ms": 81.466,
+          "command": "/Users/macbookpro/Development/bisakerja-model/.venv/bin/python -m unittest tests.model_api.test_phase_26_layout",
+          "elapsed_ms": 2919.525,
           "returncode": 0,
           "stderr_tail": [
-            "....................s.s..............",
+            ".....................................",
             "----------------------------------------------------------------------",
-            "Ran 37 tests in 0.010s",
+            "Ran 37 tests in 2.480s",
             "",
-            "OK (skipped=2)"
+            "OK"
           ],
           "stdout_tail": []
         },
         "summary": {
           "passed": true,
-          "skipped": 2,
+          "skipped": 0,
           "tests_run": 37
         }
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "blocker": "Real .keras custom-object loader smoke not run or failed",
       "check": "real_keras_custom_object_loader_smoke",
       "evidence": {
-        "reason": "Python 3.13 with TensorFlow/Keras required",
-        "status": "not_run"
+        "command": "/Users/macbookpro/Development/bisakerja-model/.venv/bin/python /Users/macbookpro/Development/bisakerja-model/artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py /Users/macbookpro/Development/bisakerja-model/artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras /Users/macbookpro/Development/bisakerja-model/artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz /Users/macbookpro/Development/bisakerja-model/reports/phase_27_9_registered_custom_objects_smoke.json",
+        "elapsed_ms": 2273.92,
+        "returncode": 0,
+        "stderr_tail": [],
+        "stdout_tail": []
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "blocker": "Live FastAPI/TensorFlow/E5 smoke not run or failed",
       "check": "live_fastapi_health_model_info_inference_smoke",
       "evidence": {
-        "reason": "pass --run-live to execute real FastAPI/TensorFlow/E5 endpoint smoke",
-        "status": "not_run"
+        "endpoint_latency_ms": {
+          "cv_analysis": 11122.109,
+          "health": 1.308,
+          "model_info": 0.665
+        },
+        "responses": {
+          "cv_analysis": {
+            "data_keys": [
+              "atsFriendliness",
+              "candidateReranking",
+              "createdAt",
+              "jobFitAlignment",
+              "model",
+              "overallImpression",
+              "parsedCv",
+              "schemaVersion"
+            ],
+            "status_code": 200,
+            "success": true
+          },
+          "health": {
+            "body": {
+              "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+              "environment": "local",
+              "message": "ready",
+              "modelName": "bisakerja_jobfit_tf_functional_custom_v1",
+              "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+              "ready": true,
+              "service": "bisakerja-model-api"
+            },
+            "status_code": 200
+          },
+          "model_info": {
+            "model": {
+              "artifact": {
+                "format": ".keras",
+                "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+                "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+              },
+              "name": "bisakerja_jobfit_tf_functional_custom_v1",
+              "version": "jobfit_tf_phase25_gradient_tape_v1"
+            },
+            "ready": true,
+            "status_code": 200
+          }
+        },
+        "status": "PASS",
+        "total_elapsed_ms": 13338.403
       },
-      "status": "FAIL"
+      "status": "PASS"
     }
   ],
-  "generated_at": "2026-06-03T11:19:45.819420Z",
-  "latency": {},
+  "generated_at": "2026-06-03T16:22:34.740689Z",
+  "latency": {
+    "cv_analysis": 11122.109,
+    "health": 1.308,
+    "model_info": 0.665
+  },
   "phase_id": "phase_27_9_model_api_production_smoke",
   "policy": {
     "fake_model_or_fake_embedding_allowed_for_production_smoke": false,

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import os
 import platform
 import subprocess
 import sys
@@ -15,11 +16,16 @@ from time import perf_counter
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 REPORT_JSON_PATH = ROOT / "reports/phase_27_9_model_api_production_smoke.json"
 REPORT_MD_PATH = ROOT / "reports/phase_27_9_model_api_production_smoke.md"
 REQUIREMENTS_PATH = ROOT / "requirements.txt"
 HANDOFF_FIXTURES_PATH = ROOT / "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json"
 KERAS_SMOKE_SCRIPT = ROOT / "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py"
+KERAS_MODEL_PATH = ROOT / "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras"
+FEATURE_MATRIX_PATH = ROOT / "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz"
+KERAS_SMOKE_OUTPUT_PATH = ROOT / "reports/phase_27_9_registered_custom_objects_smoke.json"
 
 REQUIRED_MODULES = ("fastapi", "tensorflow", "keras", "sentence_transformers", "numpy", "uvicorn")
 PHASE26_TEST_COMMAND = [sys.executable, "-m", "unittest", "tests.model_api.test_phase_26_layout"]
@@ -116,16 +122,30 @@ def run_live_fastapi_smoke() -> dict[str, Any]:
         from model_api.app import create_app
 
         app = create_app()
-        fixture = json.loads(HANDOFF_FIXTURES_PATH.read_text(encoding="utf-8"))["positive"]["cvAnalysisCoreRequest"]
+        fixture_root = json.loads(HANDOFF_FIXTURES_PATH.read_text(encoding="utf-8"))["positive"]
+        reranking_fixture = fixture_root["candidateRerankingCoreRequest"]
+        cv_fixture = {
+            "requestId": "req_phase27_9_live_cv_analysis_smoke",
+            "inputVersion": "cv-analyzer-v1",
+            "language": reranking_fixture["language"],
+            "inputMode": "UPLOAD",
+            "compareSource": "JOB_SEARCH",
+            "profile": reranking_fixture["profileFeatures"],
+            "jobCandidates": reranking_fixture["jobCandidates"],
+            "rankingPolicy": reranking_fixture["rankingPolicy"],
+            "maxRecommendations": reranking_fixture["rankingPolicy"].get("maxRecommendations", 5),
+        }
+        service_token = os.environ.get("MODEL_API_SERVICE_TOKEN")
+        auth_headers = {"authorization": f"Bearer {service_token}"} if service_token else {}
         with TestClient(app) as client:
             health_started = perf_counter()
             health = client.get("/health")
             health_ms = round((perf_counter() - health_started) * 1000, 3)
             info_started = perf_counter()
-            model_info = client.get("/model-info")
+            model_info = client.get("/model-info", headers=auth_headers)
             model_info_ms = round((perf_counter() - info_started) * 1000, 3)
             inference_started = perf_counter()
-            inference = client.post("/inference/cv-analysis", json=fixture)
+            inference = client.post("/inference/cv-analysis", json=cv_fixture, headers=auth_headers)
             inference_ms = round((perf_counter() - inference_started) * 1000, 3)
         total_ms = round((perf_counter() - started) * 1000, 3)
         return {
@@ -158,7 +178,18 @@ def build_report(run_live: bool = False, run_tests: bool = True) -> dict[str, An
     deps_available = all(module_map.values())
     tests_result = run_command(PHASE26_TEST_COMMAND, timeout=180) if run_tests else {"returncode": None, "skipped": None, "not_run": True}
     parsed_tests = parse_unittest_result(tests_result) if run_tests else {"passed": False, "skipped": None, "tests_run": None}
-    keras_smoke = run_command([sys.executable, str(KERAS_SMOKE_SCRIPT)], timeout=180) if python_313 and deps_available and KERAS_SMOKE_SCRIPT.exists() else {"status": "not_run", "reason": "Python 3.13 with TensorFlow/Keras required"}
+    keras_smoke_command = [
+        sys.executable,
+        str(KERAS_SMOKE_SCRIPT),
+        str(KERAS_MODEL_PATH),
+        str(FEATURE_MATRIX_PATH),
+        str(KERAS_SMOKE_OUTPUT_PATH),
+    ]
+    keras_smoke = (
+        run_command(keras_smoke_command, timeout=180)
+        if python_313 and deps_available and KERAS_SMOKE_SCRIPT.exists()
+        else {"status": "not_run", "reason": "Python 3.13 with TensorFlow/Keras required"}
+    )
     live_smoke = run_live_fastapi_smoke() if run_live else {"status": "not_run", "reason": "pass --run-live to execute real FastAPI/TensorFlow/E5 endpoint smoke"}
 
     gates = [

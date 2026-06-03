@@ -80,20 +80,22 @@ Backend API is a separate repository: <https://github.com/bisa-kerja/bisakerja-a
 Current target runtime:
 
 - Python: `3.13.11`
-- Virtual environment: `training/.tf-venv-3.13`
+- Training virtual environment: `training/.tf-venv-3.13`
+- Model API virtual environment: `.venv`
 - Jupyter kernel: `Bisakerja Model TF 3.13`
 - Main Phase 25 notebook: `training/notebooks/phase_25_tensorflow_training_delivery.ipynb`
 - TensorFlow: `2.21.0`
 - Keras: `3.14.1`
+- NumPy: `2.1.3` for Python `3.13.11`
 
-Do not use Python `3.14` for Phase 25. TensorFlow `2.21.0` is not available/reliable in that runtime in this project environment.
+Use Python `3.13.11` for both notebooks and Model API serving. Do not use Python `3.14` for Phase 25 or live Model API smoke. TensorFlow `2.21.0` is not available/reliable in that runtime in this project environment. Do not pin NumPy `1.26.x` on Python `3.13`; `ml-dtypes` requires NumPy `2.1+` there.
 
 ## 1. Enter Repository Root
 
 Open a new terminal and enter the project folder:
 
 ```bash
-cd /Users/macbookpro/Development/bisakerja-model
+cd /path/to/bisakerja-model
 ```
 
 Check current directory:
@@ -102,10 +104,10 @@ Check current directory:
 pwd
 ```
 
-Expected:
+Expected path ends with:
 
 ```text
-/Users/macbookpro/Development/bisakerja-model
+bisakerja-model
 ```
 
 Check important files:
@@ -439,16 +441,19 @@ If download/cache fails, retry when internet is stable.
 
 ## 13. Model API Runtime
 
-Model API is the serving package under `model_api/`.
+Model API is the serving package under `model_api/`. Use Python `3.13.11`, same as the TensorFlow notebook runtime.
 
 Create and activate serving venv if not already active:
 
 ```bash
-python -m venv .venv
+PYENV_VERSION=3.13.11 pyenv exec python -m venv .venv
 source .venv/bin/activate
+python -V
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
+
+If you do not use `pyenv`, make sure `python -V` prints `3.13.11` before creating `.venv`.
 
 Copy Model API env template:
 
@@ -459,14 +464,17 @@ cp model_api/.env.example model_api/.env
 Start Model API:
 
 ```bash
+export MODEL_API_ENV=local
+export MODEL_API_SERVICE_TOKEN=replace-with-local-service-token
 uvicorn model_api.app:create_app --factory --host 0.0.0.0 --port 8000
 ```
 
-Check health:
+Check health/readiness:
 
 ```bash
 curl http://127.0.0.1:8000/health
-curl http://127.0.0.1:8000/model-info
+curl http://127.0.0.1:8000/ready
+curl -H "authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:8000/model-info
 ```
 
 Run targeted tests:

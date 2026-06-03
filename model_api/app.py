@@ -9,6 +9,7 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from dataclasses import asdict
 import json
+from secrets import compare_digest
 from time import perf_counter
 from typing import Any
 
@@ -26,6 +27,7 @@ from .errors import (
 )
 from .features import (
     PHASE25_FEATURE_ORDER,
+    SentenceTransformerE5Embedder,
     TensorFlowFeatureConfig,
     TextEmbeddingBackend,
     build_feature_vectors_for_request,
@@ -332,7 +334,10 @@ def _authorize_internal_request(headers: Any, config: RuntimeConfig) -> dict[str
         return None
     expected = config.service_token
     authorization = headers.get("authorization") if hasattr(headers, "get") else None
-    if not expected or authorization != f"Bearer {expected}":
+    if not expected or not isinstance(authorization, str):
+        return _auth_error()
+    expected_header = f"Bearer {expected}"
+    if not compare_digest(authorization, expected_header):
         return _auth_error()
     return None
 
@@ -476,6 +481,7 @@ def create_app(
     feature_config = TensorFlowFeatureConfig.from_path(runtime_config.artifact_paths.tensorflow_feature_config_path)
     calibration_policy = ScoreCalibrationPolicy.from_path(runtime_config.artifact_paths.score_calibration_path)
     inference_service = service or InferenceService()
+    runtime_embedding_backend = embedding_backend or SentenceTransformerE5Embedder()
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -573,7 +579,7 @@ def create_app(
         checks = {
             "artifactsVerified": bool(artifact_report.artifact_hashes),
             "tensorflowModelLoaded": state.ready and identity is not None,
-            "e5BackendConfigured": embedding_backend is not None and getattr(embedding_backend, "backend_name", "") != "local-hash",
+            "e5BackendConfigured": getattr(runtime_embedding_backend, "backend_name", "") != "local-hash",
             "pdfParserAvailable": callable(parse_pdf_bytes),
             "serviceTokenConfigured": (not runtime_config.requires_service_token) or bool(runtime_config.service_token),
         }
@@ -587,7 +593,10 @@ def create_app(
         }
 
     @app.get("/model-info")
-    def model_info() -> dict[str, object]:
+    def model_info(http_request: Request) -> dict[str, object]:
+        auth_error = _authorize_internal_request(http_request.headers, runtime_config)
+        if auth_error is not None:
+            return JSONResponse(status_code=401, content=auth_error)
         state = inference_service.state
         return {
             "ready": state.ready,
@@ -614,7 +623,7 @@ def create_app(
             service=inference_service,
             feature_config=feature_config,
             calibration_policy=calibration_policy,
-            embedding_backend=embedding_backend,
+            embedding_backend=runtime_embedding_backend,
             environment=runtime_config.environment,
             timeout_ms=runtime_config.timeout_ms,
         )
@@ -631,7 +640,7 @@ def create_app(
             service=inference_service,
             feature_config=feature_config,
             calibration_policy=calibration_policy,
-            embedding_backend=embedding_backend,
+            embedding_backend=runtime_embedding_backend,
             environment=runtime_config.environment,
             timeout_ms=runtime_config.timeout_ms,
         )
@@ -662,7 +671,7 @@ def create_app(
             service=inference_service,
             feature_config=feature_config,
             calibration_policy=calibration_policy,
-            embedding_backend=embedding_backend,
+            embedding_backend=runtime_embedding_backend,
             environment=runtime_config.environment,
             timeout_ms=runtime_config.timeout_ms,
         )
