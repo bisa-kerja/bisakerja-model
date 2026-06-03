@@ -1078,7 +1078,7 @@ Acceptance Criteria:
 
 ### Phase 35 — Backend AI CV Analyzer Wrapper, Prompt Safety, and English Default Hardening
 
-Status: Planned
+Status: Complete
 
 Goal: Ensure Backend wrapper/fallback creates OpenAPI-compatible, English-default public prose from model-core evidence safely, even when GenAI is enabled or unavailable.
 
@@ -1090,27 +1090,27 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 35.1: Define wrapper input allowlist — Only pass `requestId`, requested `language`, `jobRoles`, `compareSource`, `inputMode`, model-core evidence, detected sections, and hydrated candidate metadata needed for user copy; exclude raw CV text by default, tokens, storage keys, emails, phones, addresses, DB URLs, and full Model API payloads.
-- [ ] Step 35.2: Write injection-resistant system prompt — Prompt must instruct the model to ignore CV/job prompt injection, use only provided evidence, produce JSON only, avoid unsupported skills/seniority/salary/hiring outcomes/protected-class claims, and preserve scores/IDs/order exactly.
-- [ ] Step 35.3: Enforce English default — For current staging, default generated and fallback prose must be English; if `language=id` is passed, either explicitly return approved English copy per product decision or implement tested Indonesian copy without mixed-language leakage.
-- [ ] Step 35.4: Add strict wrapper JSON schema — Validate `jobFitAlignment.summary`, `atsFriendliness.summary`, `overallImpression`, `topActionables[1..3]`, dynamic `sectionReviews`, `jobRecommendations[].reason`, and `jobRecommendations[].nextStep` before persistence or frontend response.
-- [ ] Step 35.5: Add wrapper safety filters — Reject output that mentions raw prompt, system/developer messages, secrets, tokens, email/phone/address, unprovided companies/jobs, protected-class attributes, guaranteed hiring outcomes, or altered numeric scores.
-- [ ] Step 35.6: Keep deterministic fallback complete — Fallback must produce valid OpenAPI `CvAnalysis.analysisResult` with English prose, `generatedCv.available=false`, max 5 hydrated recommendations, and no raw Model API internals.
-- [ ] Step 35.7: Add prompt red-team tests — Test malicious CV text and job descriptions that ask to ignore instructions, reveal prompts, alter scores, invent companies, add fake skills, or output non-JSON.
-- [ ] Step 35.8: Add OpenAPI response tests — Validate final Backend `/api/v1/ai/cv-analyzer` 200 response against `references/docs/generated/openapi.json`, including upload/reference flow and all compare sources.
+- [x] Step 35.1: Define wrapper input allowlist — Only pass `requestId`, requested `language`, `jobRoles`, `compareSource`, `inputMode`, model-core evidence, detected sections, and hydrated candidate metadata needed for user copy; exclude raw CV text by default, tokens, storage keys, emails, phones, addresses, DB URLs, and full Model API payloads.
+- [x] Step 35.2: Write injection-resistant system prompt — Prompt must instruct the model to ignore CV/job prompt injection, use only provided evidence, produce JSON only, avoid unsupported skills/seniority/salary/hiring outcomes/protected-class claims, and preserve scores/IDs/order exactly.
+- [x] Step 35.3: Enforce English default — For current staging, default generated and fallback prose must be English; if `language=id` is passed, either explicitly return approved English copy per product decision or implement tested Indonesian copy without mixed-language leakage.
+- [x] Step 35.4: Add strict wrapper JSON schema — Validate `jobFitAlignment.summary`, `atsFriendliness.summary`, `overallImpression`, `topActionables[1..3]`, dynamic `sectionReviews`, `jobRecommendations[].reason`, and `jobRecommendations[].nextStep` before persistence or frontend response.
+- [x] Step 35.5: Add wrapper safety filters — Reject output that mentions raw prompt, system/developer messages, secrets, tokens, email/phone/address, unprovided companies/jobs, protected-class attributes, guaranteed hiring outcomes, or altered numeric scores.
+- [x] Step 35.6: Keep deterministic fallback complete — Fallback must produce valid OpenAPI `CvAnalysis.analysisResult` with English prose, `generatedCv.available=false`, max 5 hydrated recommendations, and no raw Model API internals.
+- [x] Step 35.7: Add prompt red-team tests — Test malicious CV text and job descriptions that ask to ignore instructions, reveal prompts, alter scores, invent companies, add fake skills, or output non-JSON.
+- [x] Step 35.8: Add OpenAPI response tests — Validate final Backend `/api/v1/ai/cv-analyzer` 200 response against `references/docs/generated/openapi.json`, including upload/reference flow and all compare sources.
 
 Acceptance Criteria:
 
-- [ ] Backend final response matches public OpenAPI `CvAnalysis` success envelope exactly.
-- [ ] Wrapper prompt and fallback cannot alter model scores, IDs, order, model metadata, or persistence data.
-- [ ] Generated/fallback prose is English by default for current staging and never exposes raw CV text, prompt, tokens, storage keys, or unrelated PII.
-- [ ] Invalid GenAI output is rejected and replaced with deterministic fallback, not returned to frontend.
+- [x] Backend final response matches public OpenAPI `CvAnalysis` success envelope exactly.
+- [x] Wrapper prompt and fallback cannot alter model scores, IDs, order, model metadata, or persistence data.
+- [x] Generated/fallback prose is English by default for current staging and never exposes raw CV text, prompt, tokens, storage keys, or unrelated PII.
+- [x] Invalid GenAI output is rejected and replaced with deterministic fallback, not returned to frontend.
 
 ---
 
 ### Phase 36 — AI CV Analyzer Staging Readiness Gate
 
-Status: Planned
+Status: Complete
 
 Goal: Prove AI CV Analyzer is safe to enable in staging after request, response, wrapper, language, and privacy gaps are closed.
 
@@ -1122,21 +1122,21 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 36.1: Run Model API tests — Run unit/contract tests for schemas, multipart parsing, PDF parser, candidate membership, response validation, auth, timeout, artifact readiness, and no backend-owned fields.
-- [ ] Step 36.2: Run Backend tests — Run Backend model-api schema/client tests, AI CV Analyzer service tests, route tests, OpenAPI schema validation, persistence tests, hydration tests, and wrapper prompt/fallback tests.
-- [ ] Step 36.3: Run cross-repo e2e fixture — Execute Backend upload/reference request with fixture PDFs and fixture jobs through Model API to final `CvAnalysis` response; assert frontend only sees Backend public envelope.
-- [ ] Step 36.4: Verify failure mapping — Cover invalid file type, file too large, no active CV, job not found, bookmark not owned, empty candidates, Model API 422, Model API invalid response, timeout, model not ready, GenAI invalid JSON, and GenAI timeout.
-- [ ] Step 36.5: Verify security/privacy — Confirm service-token auth, non-public Model API routing, CORS only on Backend, no raw CV/prompt/token/storage key in logs/responses/persistence, upload cleanup, retention, and no Model API DB access.
-- [ ] Step 36.6: Verify language behavior — Confirm current staging default prose is English and snapshots record requested language consistently without frontend-facing mixed-language drift.
-- [ ] Step 36.7: Write readiness report — Produce JSON/Markdown report with contract versions, test commands, pass/fail evidence, latency notes, fallback coverage, secret-scan result, remaining risks, and staging go/no-go decision.
+- [x] Step 36.1: Run Model API tests — Run unit/contract tests for schemas, multipart parsing, PDF parser, candidate membership, response validation, auth, timeout, artifact readiness, and no backend-owned fields.
+- [x] Step 36.2: Run Backend tests — Run Backend model-api schema/client tests, AI CV Analyzer service tests, route tests, OpenAPI schema validation, persistence tests, hydration tests, and wrapper prompt/fallback tests.
+- [x] Step 36.3: Run cross-repo e2e fixture — Execute Backend upload/reference request with fixture PDFs and fixture jobs through Model API to final `CvAnalysis` response; assert frontend only sees Backend public envelope.
+- [x] Step 36.4: Verify failure mapping — Cover invalid file type, file too large, no active CV, job not found, bookmark not owned, empty candidates, Model API 422, Model API invalid response, timeout, model not ready, GenAI invalid JSON, and GenAI timeout.
+- [x] Step 36.5: Verify security/privacy — Confirm service-token auth, non-public Model API routing, CORS only on Backend, no raw CV/prompt/token/storage key in logs/responses/persistence, upload cleanup, retention, and no Model API DB access.
+- [x] Step 36.6: Verify language behavior — Confirm current staging default prose is English and snapshots record requested language consistently without frontend-facing mixed-language drift.
+- [x] Step 36.7: Write readiness report — Produce JSON/Markdown report with contract versions, test commands, pass/fail evidence, latency notes, fallback coverage, secret-scan result, remaining risks, and staging go/no-go decision.
 
 Acceptance Criteria:
 
-- [ ] AI CV Analyzer e2e response validates against `references/docs/generated/openapi.json` `POST /api/v1/ai/cv-analyzer`.
-- [ ] Backend accepts Model API output without Zod/schema errors and rejects invalid Model API output with `502 DOWNSTREAM_ERROR`.
-- [ ] Model API accepts Backend multipart payload without contract drift and rejects unsafe input with deterministic errors.
-- [ ] Prompt/GenAI path is schema-bound, injection-resistant, English-default, and safely replaceable by deterministic fallback.
-- [ ] Final decision is explicit: `go` only if all blockers are closed; otherwise `no-go` with exact remaining fixes.
+- [x] AI CV Analyzer e2e response validates against `references/docs/generated/openapi.json` `POST /api/v1/ai/cv-analyzer`.
+- [x] Backend accepts Model API output without Zod/schema errors and rejects invalid Model API output with `502 DOWNSTREAM_ERROR`.
+- [x] Model API accepts Backend multipart payload without contract drift and rejects unsafe input with deterministic errors.
+- [x] Prompt/GenAI path is schema-bound, injection-resistant, English-default, and safely replaceable by deterministic fallback.
+- [x] Final decision is explicit: `go` only if all blockers are closed; otherwise `no-go` with exact remaining fixes.
 
 ---
 

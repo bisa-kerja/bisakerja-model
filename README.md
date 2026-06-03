@@ -139,6 +139,7 @@ python scripts/verify_phase_27_3_27_4_release_evidence.py --write
 python scripts/verify_phase_27_5_27_6_validation_expansion.py --write
 python scripts/verify_phase_27_9_model_api_production_smoke.py --write --run-live
 python scripts/verify_phase_31_release_gate.py
+python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py
 ```
 
 Some gates require TensorFlow, E5, generated artifacts, external Backend contract fixtures, or live local services.

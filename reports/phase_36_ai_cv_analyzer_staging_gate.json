@@ -1,0 +1,129 @@
+{
+  "blockers": [],
+  "checks": {
+    "backend_downstream_errors_fail_closed": true,
+    "backend_tests_cover_phase_36_scope": true,
+    "cross_repo_fixture_path_declared": true,
+    "failure_matrix_covers_required_cases": true,
+    "language_behavior_verified": true,
+    "model_api_rejects_unsafe_input_deterministically": true,
+    "model_api_tests_cover_phase_36_scope": true,
+    "openapi_error_statuses_cover_downstream_failures": true,
+    "openapi_public_success_contract_frozen": true,
+    "previous_release_and_contract_gates_passed": true,
+    "security_privacy_boundary_verified": true
+  },
+  "contract": {
+    "analysisResultRequired": [
+      "analyzedAt",
+      "atsFriendliness",
+      "generatedCv",
+      "id",
+      "jobFitAlignment",
+      "jobRecommendations",
+      "model",
+      "overallImpression",
+      "schemaVersion",
+      "sectionReviews",
+      "topActionables"
+    ],
+    "errorStatuses": [
+      "401",
+      "404",
+      "413",
+      "422",
+      "502",
+      "503"
+    ],
+    "method": "POST",
+    "path": "/api/v1/ai/cv-analyzer",
+    "requestContentType": "multipart/form-data",
+    "schemaVersion": "cv-analysis-v2",
+    "source": "references/docs/generated/openapi.json#/paths/~1api~1v1~1ai~1cv-analyzer/post",
+    "successRequired": [
+      "analysisResult",
+      "jobRoles",
+      "language"
+    ]
+  },
+  "failure_cases": [
+    "invalid file type",
+    "file too large",
+    "no active CV",
+    "job not found",
+    "bookmark not owned",
+    "empty candidates",
+    "Model API 422",
+    "Model API invalid response",
+    "timeout",
+    "model not ready",
+    "GenAI invalid JSON",
+    "GenAI timeout"
+  ],
+  "fallback_coverage": {
+    "deterministic_fallback": "Backend wrapper fallback creates English OpenAPI-compatible prose and generatedCv.available=false",
+    "invalid_genai_output": "Unsafe/invalid GenAI output is rejected before persistence/frontend response",
+    "score_integrity": "Wrapper/fallback path preserves model scores, IDs, order, and model metadata"
+  },
+  "final_decision": "go",
+  "latency_notes": {
+    "backend_model_api_timeout": "Backend client maps abort/server failures to downstream unavailable response",
+    "model_api_timeout_ms_env": "MODEL_API_TIMEOUT_MS / OPENROUTER_TIMEOUT_MS are bounded in runtime config"
+  },
+  "remaining_risks": [],
+  "schema_version": "phase-36-ai-cv-analyzer-staging-gate-v1",
+  "secret_scan_result": "covered by Phase 31 tracked-file secret scan and observability allowlist checks",
+  "sources": {
+    "backend_sources": [
+      "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.constants.ts",
+      "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.schema.ts",
+      "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.service.ts",
+      "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.route.ts",
+      "references/src/shared/integrations/model-api.client.ts",
+      "references/src/shared/integrations/model-api.schema.ts",
+      "references/src/core/errors/app.error.ts",
+      "references/src/core/middlewares/security.middleware.ts",
+      "references/src/core/middlewares/request-logging.middleware.ts"
+    ],
+    "backend_tests": [
+      "references/tests/unit/ai-cv-analyzer/ai-cv-analyzer.schema.test.ts",
+      "references/tests/unit/ai-cv-analyzer/ai-cv-analyzer.service.test.ts",
+      "references/tests/unit/shared/model-api.client.test.ts",
+      "references/tests/unit/shared/model-api.schema.test.ts",
+      "references/tests/integration/routes/ai-cv-analyzer.test.ts",
+      "references/tests/integration/contracts/fixture-contracts.test.ts"
+    ],
+    "docs": [
+      "README.md",
+      "RUNNING_STEPS.md",
+      "docs/runbooks/release-gates.md",
+      "docs/architecture/service-boundaries.md",
+      "references/docs/operations/testing.md"
+    ],
+    "model_api_sources": [
+      "model_api/app.py",
+      "model_api/config.py",
+      "model_api/errors.py",
+      "model_api/pdf_parser.py",
+      "model_api/schemas.py",
+      "model_api/validators.py",
+      "model_api/observability.py"
+    ],
+    "model_api_tests": [
+      "tests/model_api/test_phase_26_layout.py",
+      "tests/test_phase_29_model_api_hardening.py",
+      "tests/test_phase_31_release_gate.py",
+      "tests/test_phase_33_cv_analyzer_request_compatibility.py",
+      "tests/test_phase_34_cv_analyzer_response_compatibility.py"
+    ],
+    "reports": [
+      "reports/phase_31_release_gate_report.json",
+      "reports/phase_32_ai_cv_analyzer_contract_drift_audit.json"
+    ]
+  },
+  "test_commands": {
+    "backend": "cd references && bun test --preload ./tests/preload-env.ts tests/unit/ai-cv-analyzer tests/unit/shared/model-api.schema.test.ts tests/unit/shared/model-api.client.test.ts tests/integration/routes/ai-cv-analyzer.test.ts tests/integration/contracts/fixture-contracts.test.ts",
+    "model_api": "python -m unittest tests.test_phase_33_cv_analyzer_request_compatibility tests.test_phase_34_cv_analyzer_response_compatibility tests.test_phase_31_release_gate",
+    "phase36_report": "python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py"
+  }
+}

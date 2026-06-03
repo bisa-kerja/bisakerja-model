@@ -11,6 +11,7 @@ Python `unittest` coverage for Model API layout, runtime behavior, contract hard
 | `test_phase_28_*.py` | Backend/Model API contract realignment checks.                                                       |
 | `test_phase_29_*.py` | Model API hardening and deterministic error behavior.                                                |
 | `test_phase_31_*.py` | Release gate, readiness, security, privacy, and runbook coverage checks.                             |
+| `test_phase_36_*.py` | AI CV Analyzer staging readiness gate evidence checks.                                               |
 
 ## Common Commands
 
@@ -18,6 +19,7 @@ Python `unittest` coverage for Model API layout, runtime behavior, contract hard
 python -m unittest tests.model_api.test_phase_26_layout
 python -m unittest tests.test_phase_29_model_api_hardening
 python -m unittest tests.test_phase_31_release_gate
+python -m unittest tests.test_phase_36_ai_cv_analyzer_staging_gate
 python -m unittest discover tests
 ```
 

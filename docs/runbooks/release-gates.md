@@ -14,6 +14,7 @@ python scripts/verify_phase_27_9_model_api_production_smoke.py --write --run-liv
 python scripts/verify_phase_27_10_requirement_matrix.py --write
 python scripts/verify_phase_28_contract_realignment.py --write
 python scripts/verify_phase_31_release_gate.py
+python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py
 ```
 
 ## Evidence Areas
