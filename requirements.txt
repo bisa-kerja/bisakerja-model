@@ -15,4 +15,5 @@ keras==3.14.1
 numpy==2.1.3
 
 # Approved embedding runtime: intfloat/e5-base-v2 via sentence-transformers.
+# Dockerfile preinstalls CPU-only torch from the PyTorch CPU index before this line to avoid CUDA-sized runtime layers.
 sentence-transformers==5.5.1

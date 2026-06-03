@@ -12,6 +12,14 @@ on:
         required: true
         default: main
         type: string
+      deploy_enabled:
+        description: Run VPS deploy after image build
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
 
 concurrency:
   group: deploy-model-api
@@ -22,6 +30,7 @@ env:
   COMPOSE_FILE: docker-compose.production.yml
   RUNTIME_ENV_FILE: .env.production
   DEFAULT_MODEL_API_PORT: "3004"
+  STOP_MODEL_API_BEFORE_PULL: "true"
   DEPLOY_TARGET: production
   EXPECTED_MODEL_API_ENV: production
   COMPOSE_PROJECT_NAME: bisakerja-model-api
@@ -100,6 +109,7 @@ jobs:
 
   deploy:
     name: Deploy To VPS
+    if: ${{ (github.event_name == 'workflow_dispatch' && inputs.deploy_enabled == 'true') || (github.event_name == 'push' && vars.MODEL_API_CD_ENABLED != 'false') }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     needs: build-and-push
@@ -214,6 +224,18 @@ jobs:
 
           printf '%s' '${{ secrets.GHCR_READ_PACKAGES_TOKEN }}' | docker login ghcr.io -u '${{ secrets.GH_USERNAME }}' --password-stdin
 
+          if [ '${{ env.STOP_MODEL_API_BEFORE_PULL }}' = 'true' ]; then
+            MODEL_API_IMAGE="$MODEL_API_IMAGE" \
+            MODEL_API_PORT="$MODEL_API_PORT" \
+            MODEL_API_ENV_FILE="$RUNTIME_ENV_FILE" \
+            COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
+              docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" down --remove-orphans || true
+          fi
+
+          docker container prune -f
+          docker image prune -af
+          docker builder prune -af || true
+
           MODEL_API_IMAGE="$MODEL_API_IMAGE" \
           MODEL_API_PORT="$MODEL_API_PORT" \
           MODEL_API_ENV_FILE="$RUNTIME_ENV_FILE" \
@@ -229,6 +251,8 @@ jobs:
           for attempt in $(seq 1 40); do
             if curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/health" >/dev/null; then
               docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
+              docker image prune -af --filter "until=24h"
+              docker builder prune -af --filter "until=24h" || true
               exit 0
             fi
             sleep 5

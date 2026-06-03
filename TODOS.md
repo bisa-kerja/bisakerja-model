@@ -1334,6 +1334,59 @@ Acceptance Criteria:
 
 ---
 
+### Phase 42 — Backend-Owned AI CV Generate Implementation
+
+Status: Complete
+
+Goal: Implement AI CV Generate as a Backend API feature using the existing public `/api/v1/ai/cv-generate` contract, without adding CV generation responsibility to Model API.
+
+Scope boundary:
+
+- Focus on Backend API code under `references/`.
+- Keep Model API model-core only; do not add `/cv-generate` or GenAI generation to `model_api/` for this phase.
+- Keep Frontend out of scope except for preserving the existing OpenAPI response contract.
+- Backend owns auth, CV ownership, storage read, prompt orchestration, GenAI provider call, output safety, and public response envelope.
+- Model API remains owner of CV analysis/scoring/reranking only.
+
+Current gap:
+
+- Backend already exposes `POST /api/v1/ai/cv-generate`, validates request body, checks `cvFileId` ownership, and sanitizes returned markdown.
+- Backend currently delegates generation to `modelApiClient.generateCvMarkdown`, but Model API in this repository has no `/cv-generate` route and intentionally does not own GenAI calls.
+- Backend sends `storageKey` in the CV generate payload, but Model API should not read backend storage keys or own file storage access.
+- `templateHtml` is required by schema/OpenAPI, while module docs still contain contradictory optional wording.
+- Output generation needs CV evidence/text, summary, and template handling owned by Backend, similar to the AI CV Analyzer GenAI wrapper pattern.
+
+Tasks:
+
+- [x] Step 42.1: Freeze backend-owned architecture — Document that AI CV Generate is implemented in Backend API, not Model API, and that Frontend must never call Model API directly.
+- [x] Step 42.2: Replace Model API dependency — Remove or bypass `modelApiClient.generateCvMarkdown` from `AiCvGenerateService` and introduce a Backend-owned generation path.
+- [x] Step 42.3: Add CV storage access — Inject `CvFileStorage` into AI CV Generate service and reuse the AI CV Analyzer storage-read pattern to load ownership-checked CV bytes without exposing `storageKey` publicly.
+- [x] Step 42.4: Build safe CV evidence input — Extract deterministic CV text/signals from the stored PDF or reuse the latest sanitized CV analysis snapshot when available; never persist raw prompt or raw CV text unless explicitly approved.
+- [x] Step 42.5: Add GenAI client wrapper — Create an `AiCvGenerateGenAiClient` similar to `ai-cv-analyzer.genai.ts`, with timeout, retry policy, request id, provider error mapping, and no raw provider details in public errors.
+- [x] Step 42.6: Add generation prompt contract — Define a constrained prompt/input contract using sanitized CV evidence, user `summary`, `templateHtml`, language/default policy, and explicit instruction to return only safe markdown HTML.
+- [x] Step 42.7: Add deterministic fallback policy — Decide whether provider failure returns `503 SERVICE_UNAVAILABLE` only, or a minimal deterministic template-rendered markdown fallback; do not fabricate unsupported CV claims.
+- [x] Step 42.8: Harden input/output safety — Sanitize `templateHtml`, validate markdown is non-empty and within max length, reject executable HTML patterns, and ensure frontend still sanitizes before render.
+- [x] Step 42.9: Fix docs and OpenAPI metadata — Update AI CV Generate docs so `templateHtml` is consistently required, add missing `AI CV Generate` top-level OpenAPI tag if still absent, and document backend-owned generation boundary.
+- [x] Step 42.10: Add Backend unit tests — Cover ownership checks, cross-user 404, missing/expired CV, storage read failure, provider timeout/error, invalid provider response, unsafe output rejection, and no Model API call.
+- [x] Step 42.11: Add Backend route/contract tests — Cover successful `POST /api/v1/ai/cv-generate`, validation errors, auth errors, response envelope, `markdown` only response data, no `storageKey`/raw CV/prompt/token leakage, and OpenAPI schema alignment.
+- [x] Step 42.12: Run targeted Backend regression suite — Run AI CV Generate, shared GenAI/model integration, response safety, and affected route tests from `references/`; record command and result.
+
+Acceptance Criteria:
+
+- [x] `POST /api/v1/ai/cv-generate` succeeds without requiring any Model API `/cv-generate` endpoint.
+- [x] Backend performs CV ownership check and reads CV evidence internally before generation.
+- [x] Public response remains exactly `{ success, message, data: { markdown }, meta }` for success.
+- [x] Public responses and logs do not expose raw CV text, storage keys, prompts, provider raw payloads, auth headers, service tokens, DB URLs, or Model API internals.
+- [x] Unsafe or empty generated markdown is rejected with the documented error behavior.
+- [x] Docs clearly state Backend owns AI CV Generate orchestration, while Model API remains model-core only.
+- [x] Targeted Backend tests pass and verification command is recorded.
+
+Verification:
+
+- [x] `cd references && bun run typecheck && bun test --preload ./tests/preload-env.ts tests/unit/ai-cv-generate tests/integration/routes/ai-cv-generate.test.ts tests/unit/shared/model-api.client.test.ts tests/unit/shared/model-api.schema.test.ts` — passed 2026-06-04.
+
+---
+
 ## Suggested Execution Order
 
 1. Treat Phase 0-11 as completed design and audit baseline.
@@ -1355,6 +1408,7 @@ Acceptance Criteria:
 17. Complete Phase 39 before user-facing copy review, localization, or broader beta testing.
 18. Complete Phase 40 before any new AI CV Analyzer staging-ready claim, because Backend route regressions and empty-candidate policy are current blockers.
 19. Complete Phase 41 before broader staging/demo traffic, because public Backend-to-Model smoke evidence and payload hygiene must be reproducible.
+20. Implement Phase 42 for AI CV Generate after Phase 41, keeping generation backend-owned and leaving Model API unchanged unless a separate architecture decision approves Model API GenAI ownership.
 
 ## Out of Scope for Model-Core Training Notebooks
 

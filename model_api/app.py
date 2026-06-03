@@ -651,6 +651,20 @@ def create_app(
             content={"success": False, "message": "Model API error", "data": None, "error": exc.to_error_payload()},
         )
 
+    @app.get("/")
+    def root() -> dict[str, object]:
+        return {
+            "service": runtime_config.service_name,
+            "environment": runtime_config.environment,
+            "message": "Bisakerja Model API is running",
+            "endpoints": {
+                "health": "/health",
+                "ready": "/ready",
+                "modelInfo": "/model-info",
+                "cvAnalysis": "/inference/cv-analysis",
+            },
+        }
+
     @app.get("/health")
     def health() -> dict[str, object]:
         state = inference_service.state

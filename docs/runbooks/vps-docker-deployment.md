@@ -102,18 +102,26 @@ Trigger options:
 - Push to `main` or `develop`.
 - Manual `workflow_dispatch` with `deploy_branch` set to `main` or `develop`.
 
+CD toggle:
+
+- Push events deploy by default unless repository variable `MODEL_API_CD_ENABLED=false` is set.
+- Manual runs can set `deploy_enabled=false` to build and push the image without deploying to VPS.
+
 Workflow steps:
 
 1. Build Docker image from `Dockerfile`.
 2. Push tags to GHCR:
    - `<branch>`
    - `sha-<commit>`
-3. Upload `docker-compose.production.yml` to `DEPLOY_REMOTE_PATH`.
-4. Write `.env.production` from `DEPLOY_ENV_FILE`.
-5. Pull image on VPS.
-6. Restart `model-api` with Docker Compose.
-7. Poll `http://127.0.0.1:3004/health`.
-8. Print compose diagnostics on failure.
+3. Skip VPS deployment when CD is disabled.
+4. Upload `docker-compose.production.yml` to `DEPLOY_REMOTE_PATH`.
+5. Write `.env.production` from `DEPLOY_ENV_FILE`.
+6. Pull image on VPS.
+7. Stop existing `model-api` before pull when `STOP_MODEL_API_BEFORE_PULL=true` to free disk on small VPS volumes.
+8. Prune unused Docker containers, images, and build cache.
+9. Restart `model-api` with Docker Compose.
+10. Poll `http://127.0.0.1:3004/health`.
+11. Print compose diagnostics on failure.
 
 ## Nginx Reverse Proxy
 
@@ -195,7 +203,8 @@ curl -fsS http://127.0.0.1:3004/health
 ## Troubleshooting
 
 - `MODEL_API_ENV mismatch for deploy`: update `DEPLOY_ENV_FILE` so it contains `MODEL_API_ENV=production`, or change `EXPECTED_MODEL_API_ENV` in the workflow for a non-production target. GitHub may mask the found value as `***` when it matches a secret.
-- Build fails on dependency install: check Python/TensorFlow wheel compatibility for image platform.
+- Build fails on dependency install: check Python/TensorFlow wheel compatibility for image platform. The Dockerfile installs CPU-only `torch` before `sentence-transformers` to avoid CUDA-sized layers.
+- `no space left on device` during image pull/extract: run `docker system df`, then `docker image prune -af` and `docker builder prune -af`. The workflow defaults `STOP_MODEL_API_BEFORE_PULL=true`, causing short deploy downtime so the old image can be removed before pulling the new image.
 - Container exits during startup: inspect `docker compose logs --tail=150 model-api`.
 - Health fails but container runs: wait for TensorFlow and E5 model load, then check `/ready`.
 - Out-of-memory symptoms: add swap, reduce concurrency from Backend, keep `MODEL_API_MEM_LIMIT=8g`, inspect `docker stats`.
