@@ -1,0 +1,362 @@
+{
+  "backendModelApiClientContract": {
+    "backendResponsibilities": [
+      "auth, CV ownership, storage, and candidate DB retrieval",
+      "hydrate final job recommendations from Backend DB only",
+      "map model-core evidence into public CvAnalysis.analysisResult",
+      "own public envelope { success, message, data, meta }",
+      "own persistence snapshot when persistResult=true",
+      "map Model API non-2xx/invalid JSON/Zod errors into Backend errors"
+    ],
+    "expectedModelCoreResponse": {
+      "forbiddenPublicFields": [
+        "topActionables",
+        "sectionReviews",
+        "generatedCv",
+        "jobRecommendations[].title",
+        "jobRecommendations[].companyName",
+        "reason",
+        "nextStep"
+      ],
+      "requiredRoot": [
+        "schemaVersion",
+        "parsedCv",
+        "jobFitAlignment",
+        "atsFriendliness",
+        "overallImpression",
+        "candidateReranking",
+        "model",
+        "createdAt"
+      ],
+      "schemaVersion": "model-core-cv-analysis-v1",
+      "shape": "raw strict cvAnalyzerModelResponseSchema JSON, not { success, message, data, error } envelope"
+    },
+    "modelApiEndpoint": "POST /internal/model/cv-analysis",
+    "multipartRequest": {
+      "backendMetadata": "strict { title, companyName, locationDisplay, sourceUpdatedAt }",
+      "cvFile": "Blob/PDF from Backend storage; field name cvFile",
+      "fields": [
+        "requestId",
+        "language",
+        "inputMode",
+        "compareSource",
+        "jobRoles[]",
+        "cv",
+        "jobCandidates",
+        "rankingPolicy",
+        "cvFile"
+      ],
+      "jobCandidates": "JSON string; max 50; scoringInput.requirements is object array { type, value, priority }[]",
+      "jobRoles": "Backend appends repeated form fields, not JSON array string",
+      "numericSignals": "optional numeric record under scoringInput"
+    },
+    "sources": [
+      "references/src/shared/integrations/model-api.schema.ts",
+      "references/src/shared/integrations/model-api.client.ts",
+      "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.service.ts"
+    ]
+  },
+  "blockers": [],
+  "canonicalContractDecision": {
+    "aiCvGenerateScope": "AI CV Generate compatibility is separate audit scope and must not block AI CV Analyzer closure",
+    "backendOwner": "Backend owns public cv-analysis-v2 envelope, prose wrapper/fallback, hydration, generatedCv unavailable object, persistence, auth/user/CV ownership",
+    "internalResponseShape": "POST /internal/model/cv-analysis returns raw model-core JSON, not success/data envelope",
+    "languagePolicy": "Request language remains explicit id|en; product-facing staging default is English; fallback/wrapper must not silently switch to Indonesian",
+    "modelCoreOwner": "Model API owns parsedCv, jobFitAlignment evidence, atsFriendliness evidence, overallImpression evidence, candidate reranking scores, model name/version, createdAt",
+    "reviewGate": "No request/response implementation phase should start until this canonical schema and drift matrix are reviewed",
+    "securityPolicy": "Model API remains internal-only; no DB credentials, tokens, raw CV text, storage keys, artifact paths, or public hydrated job fields in public response/logs"
+  },
+  "checks": {
+    "ai_cv_generate_marked_separate": true,
+    "backend_client_contract_extracted": true,
+    "canonical_internal_shape_chosen": true,
+    "drift_matrix_complete": true,
+    "language_policy_frozen": true,
+    "model_api_actual_contract_extracted": true,
+    "ownership_boundary_clear": true,
+    "public_openapi_contract_extracted": true
+  },
+  "currentModelApiContract": {
+    "auth": "Bearer service token unless local/test unauthenticated bypass allowed",
+    "contentType": "multipart/form-data only",
+    "multipartBehavior": {
+      "cvFile": "requires exactly one cvFile; content-type application/pdf or application/octet-stream; PDF magic bytes required",
+      "jobCandidates": "form field parsed as JSON array",
+      "jobRoles": "form.get('jobRoles') then JSON parse; repeated fields from Backend are not accepted as array",
+      "rankingPolicy": "form field parsed as JSON object/null"
+    },
+    "parsedPayload": {
+      "backendMetadata": "title/companyName/location/workType/experienceLevel/postedAt/sourceUpdatedAt/source; no locationDisplay",
+      "candidateRequirements": "currently array of strings only",
+      "inputVersion": "cv-analyzer-v1 forced internally",
+      "numericFeatures": "currently accepted; numericSignals unknown",
+      "profile": "built from parsed PDF text, targetRoles, normalized skills, detected section names"
+    },
+    "responseBehavior": {
+      "atsFriendliness": "returns score, detectedIssues, fallback, evidence object; parseQuality nested in evidence/observability",
+      "candidateReranking": "nested full model-core reranking with requestId/schemaVersion/candidateSetId/language/recommendations/model/rankedAt",
+      "envelope": "returns { success: true, message, data, error: null }",
+      "model": "includes artifact metadata via dataclass identity",
+      "observability": "included in response data",
+      "overallImpression": "returns score, summary, evidenceKeys, confidenceNotes",
+      "parsedCv": "injects { textLength, pageCount, parseQuality, sectionNames }",
+      "timestamp": "uses analyzedAt in model-core payload"
+    },
+    "route": "POST /internal/model/cv-analysis",
+    "sources": [
+      "model_api/app.py",
+      "model_api/schemas.py",
+      "model_api/validators.py"
+    ],
+    "validation": {
+      "forbiddenFields": "backend/public owner keys rejected anywhere in model-core payload",
+      "recommendations": "max requested; jobId must belong to request candidate set and be unique",
+      "scoreRange": "integer 0-100"
+    }
+  },
+  "driftMatrix": [
+    {
+      "canonical": "Internal route returns raw model-core JSON; no data wrapper",
+      "current": "Model API returns success/message/data/error envelope",
+      "id": "response-envelope",
+      "impact": "Backend Zod parses envelope root and rejects",
+      "sourceOfTruth": "Backend expects raw cvAnalyzerModelResponseSchema"
+    },
+    {
+      "canonical": "Model-core uses createdAt; Backend maps to public analyzedAt",
+      "current": "Model API emits analyzedAt",
+      "id": "timestamp-createdAt-vs-analyzedAt",
+      "impact": "Strict response validation fails and timestamp ownership drifts",
+      "sourceOfTruth": "Backend model response requires createdAt; public OpenAPI uses analyzedAt after mapping"
+    },
+    {
+      "canonical": "Model-core parsedCv = status/pageCount/textLength/detectedSections/extractionEvidence",
+      "current": "Model API emits sectionNames and no status",
+      "id": "parsedCv-status-detectedSections-vs-sectionNames",
+      "impact": "Parsed CV evidence rejected/misread",
+      "sourceOfTruth": "Backend requires parsedCv.status and detectedSections"
+    },
+    {
+      "canonical": "Map parser qualities to high|medium|low|failed before response",
+      "current": "Parser emits text_ok or parser-specific quality",
+      "id": "parseQuality-enum",
+      "impact": "Enum mismatch",
+      "sourceOfTruth": "Backend allows high|medium|low|failed"
+    },
+    {
+      "canonical": "Model API accepts Backend requirement objects and derives scoring text from value",
+      "current": "Model API accepts string[]",
+      "id": "requirements-object-vs-string",
+      "impact": "Request validation fails",
+      "sourceOfTruth": "Backend sends { type, value, priority }[]"
+    },
+    {
+      "canonical": "Accept numericSignals as approved numeric feature source or remove from Backend fixture explicitly",
+      "current": "Model API scoringInput.numericFeatures",
+      "id": "numericSignals-vs-numericFeatures",
+      "impact": "Strict request rejects numericSignals",
+      "sourceOfTruth": "Backend scoringInput.numericSignals"
+    },
+    {
+      "canonical": "Allow title/companyName/locationDisplay/sourceUpdatedAt only for trace/hydration hints",
+      "current": "Model API allows nested location, not locationDisplay",
+      "id": "backendMetadata-locationDisplay",
+      "impact": "Strict request rejects safe hydration hint",
+      "sourceOfTruth": "Backend sends locationDisplay"
+    },
+    {
+      "canonical": "Model API reads all jobRoles form values; min 1 max 10",
+      "current": "Model API JSON-parses form.get('jobRoles')",
+      "id": "jobRoles-repeated-form-fields",
+      "impact": "Repeated multipart roles fail",
+      "sourceOfTruth": "Backend FormData.append('jobRoles', role)"
+    },
+    {
+      "canonical": "Model-core response contains only Backend schema fields",
+      "current": "Model API emits summarySignals/confidenceNotes/summary/evidenceKeys/fallback/observability/nested metadata",
+      "id": "strict-extra-fields",
+      "impact": "Strict response fails",
+      "sourceOfTruth": "Backend strict Zod response"
+    },
+    {
+      "canonical": "Model-core HTTP response exposes only name/version unless explicitly allowed",
+      "current": "Model API may include artifact path/hash",
+      "id": "model-artifact-metadata-exposure",
+      "impact": "Strict response failure and unnecessary internal metadata exposure",
+      "sourceOfTruth": "Backend expects model { name, version }"
+    },
+    {
+      "canonical": "Model API returns evidence/signals only; Backend wrapper owns prose",
+      "current": "Model API core has summary-style fields",
+      "id": "wrapper-output-ownership",
+      "impact": "Ownership boundary blurred",
+      "sourceOfTruth": "Backend owns prose/topActionables/sectionReviews/hydrated recommendations"
+    },
+    {
+      "canonical": "Backend maps Model API 4xx/5xx/timeout/invalid schema to public ErrorEnvelope",
+      "current": "Model API internal envelope differs",
+      "id": "error-envelope-mapping",
+      "impact": "Backend must not leak Model API internal error shape",
+      "sourceOfTruth": "Frontend sees Backend ErrorEnvelope; Model API internal errors mapped by client"
+    },
+    {
+      "canonical": "English default for wrapper/fallback; no silent Indonesian switch",
+      "current": "OpenAPI example uses id and fallback copy may mix language",
+      "id": "language-default-policy",
+      "impact": "Inconsistent product-facing prose",
+      "sourceOfTruth": "Staging product prose default English; request language explicit id|en"
+    },
+    {
+      "canonical": "Raw CV/storage keys stay internal request only; public response excludes them; logs use allowlist",
+      "current": "Request carries cv.storageKey to client serializer and response may expose observability/artifact metadata",
+      "id": "security-privacy-fields",
+      "impact": "PII/internal metadata leak risk",
+      "sourceOfTruth": "Model API internal-only; no raw CV logs/tokens/storage keys/DB creds in public response"
+    }
+  ],
+  "final_decision": "review_required",
+  "publicOpenApiContract": {
+    "analysisResult": {
+      "generatedCv": "strict { available, note }",
+      "jobRecommendations": "max 5; strict objects; jobId/companyName nullable; matchScore 0-100",
+      "model": "strict { name, version }",
+      "required": [
+        "id",
+        "schemaVersion",
+        "jobFitAlignment",
+        "atsFriendliness",
+        "overallImpression",
+        "topActionables",
+        "sectionReviews",
+        "jobRecommendations",
+        "generatedCv",
+        "model",
+        "analyzedAt"
+      ],
+      "schemaVersion": "cv-analysis-v2",
+      "scoreRange": "integer 0-100 for jobFitAlignment.score, atsFriendliness.score, jobRecommendations[].matchScore",
+      "sectionReviews": "array of strict objects; actionPoints min 1",
+      "timestamp": "analyzedAt date-time",
+      "topActionables": "1-3 strings"
+    },
+    "errorEnvelope": {
+      "required": [
+        "success",
+        "message",
+        "data",
+        "error"
+      ],
+      "schema": "ErrorEnvelope",
+      "statuses": [
+        "401",
+        "404",
+        "413",
+        "422",
+        "502",
+        "503"
+      ]
+    },
+    "method": "POST",
+    "path": "/api/v1/ai/cv-analyzer",
+    "publicDataSchema": {
+      "additionalProperties": false,
+      "properties": [
+        "analysisResult",
+        "jobRoles",
+        "language"
+      ],
+      "required": [
+        "jobRoles",
+        "language",
+        "analysisResult"
+      ]
+    },
+    "request": {
+      "fields": {
+        "compareSource": {
+          "default": "JOB_SEARCH",
+          "enum": [
+            "BOOKMARK",
+            "JOB_SEARCH",
+            "DIRECT_JOB_DETAIL"
+          ],
+          "type": "string"
+        },
+        "cvFile": {
+          "format": "binary",
+          "type": "string"
+        },
+        "cvFileId": {
+          "format": "uuid",
+          "type": "string"
+        },
+        "inputMode": {
+          "enum": [
+            "UPLOAD",
+            "REFERENCE"
+          ],
+          "type": "string"
+        },
+        "jobRoles": {
+          "maxItems": 10,
+          "minItems": 1,
+          "type": "array"
+        },
+        "language": {
+          "enum": [
+            "id",
+            "en"
+          ],
+          "type": "string"
+        },
+        "persistResult": {
+          "default": false,
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "enum": [
+                "true",
+                "false"
+              ],
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": [
+        "jobRoles",
+        "language",
+        "inputMode"
+      ]
+    },
+    "requestContentType": "multipart/form-data",
+    "source": "references/docs/generated/openapi.json#/paths/~1api~1v1~1ai~1cv-analyzer/post",
+    "successEnvelope": {
+      "additionalProperties": false,
+      "properties": [
+        "data",
+        "message",
+        "meta",
+        "success"
+      ],
+      "required": [
+        "success",
+        "message",
+        "data",
+        "meta"
+      ]
+    }
+  },
+  "schema_version": "phase-32-ai-cv-analyzer-contract-drift-audit-v1",
+  "sources": {
+    "backend_client": "references/src/shared/integrations/model-api.client.ts",
+    "backend_schema": "references/src/shared/integrations/model-api.schema.ts",
+    "backend_service": "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.service.ts",
+    "model_api_app": "model_api/app.py",
+    "model_api_schemas": "model_api/schemas.py",
+    "model_api_validators": "model_api/validators.py",
+    "openapi": "references/docs/generated/openapi.json"
+  }
+}

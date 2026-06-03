@@ -979,6 +979,167 @@ Acceptance Criteria:
 
 ---
 
+### Phase 32 — AI CV Analyzer Contract Drift Audit and Canonical Schema Freeze
+
+Status: Complete
+
+Goal: Re-open the AI CV Analyzer integration after the current drift finding and freeze one canonical Backend ↔ Model API contract before code changes.
+
+Scope boundary:
+
+- Focus only on AI CV Analyzer.
+- Backend API public source of truth is `references/docs/generated/openapi.json` path `POST /api/v1/ai/cv-analyzer` and schema `CvAnalysis`.
+- Backend currently only consumes AI CV Analyzer and AI CV Generate from Model API; AI CV Generate remains out of this corrective scope.
+- Frontend must only receive Backend public envelope `{ success, message, data, meta }`; Model API remains internal-only.
+
+Tasks:
+
+- [x] Step 32.1: Extract public OpenAPI contract — Generate a durable JSON/Markdown summary for `POST /api/v1/ai/cv-analyzer`, including request fields, success envelope, `CvAnalysis.analysisResult`, required fields, max/min items, nullable fields, score ranges, and error envelopes.
+- [x] Step 32.2: Extract backend Model API client contract — Document `references/src/shared/integrations/model-api.schema.ts`, `model-api.client.ts`, and `ai-cv-analyzer.service.ts` expectations for multipart request, model-core response, wrapper mapping, hydration, persistence, and errors.
+- [x] Step 32.3: Extract current Model API contract — Document actual `model_api/app.py`, `schemas.py`, and `validators.py` request/response behavior for `/internal/model/cv-analysis`, including envelope/raw payload, `parsedCv`, `jobFitAlignment`, `atsFriendliness`, `overallImpression`, `candidateReranking`, `model`, and timestamps.
+- [x] Step 32.4: Write drift matrix — Record every mismatch: response envelope, `createdAt` vs `analyzedAt`, `parsedCv.status/detectedSections` vs `sectionNames`, `parseQuality` enum, `requirements` object vs string, `numericSignals` vs `numericFeatures`, `backendMetadata.locationDisplay`, `jobRoles[]` parsing, extra strict-object fields, and model artifact metadata exposure.
+- [x] Step 32.5: Choose canonical internal response shape — Decide whether `/internal/model/cv-analysis` returns raw model-core payload or Backend unwraps `data`; update docs/fixtures so exactly one behavior is allowed.
+- [x] Step 32.6: Freeze language policy — Default product-facing prose must be English for current staging; request `language` remains explicit `id|en`, but fallback/wrapper output must not silently switch to Indonesian.
+- [x] Step 32.7: Mark AI CV Generate separate — Add a short note that AI CV Generate compatibility will be audited later and must not block AI CV Analyzer closure.
+
+Acceptance Criteria:
+
+- [x] One canonical AI CV Analyzer contract exists and cites `references/docs/generated/openapi.json` `POST /api/v1/ai/cv-analyzer`.
+- [x] Drift matrix covers request payload, response payload, wrapper output, error mapping, language behavior, and security/privacy fields.
+- [x] Internal Model API response ownership is clear: model-core fields only; Backend owns public `cv-analysis-v2` envelope and prose.
+- [x] No implementation starts until the canonical schema and drift matrix are reviewed.
+
+---
+
+### Phase 33 — Model API AI CV Analyzer Request Compatibility Fix
+
+Status: Planned
+
+Goal: Make `/internal/model/cv-analysis` accept exactly the multipart payload produced by Backend AI CV Analyzer without weakening validation or leaking sensitive data.
+
+Scope boundary:
+
+- Model API still owns PDF parsing, ATS evidence, model-core scoring, and candidate reranking only.
+- Backend still owns auth, CV ownership, DB candidate retrieval, job hydration, persistence, public response formatting, and GenAI wrapper prose.
+- Model API must not accept frontend/public payloads, DB credentials, tokens, storage keys as trusted scoring input, or hydrated job objects.
+
+Tasks:
+
+- [ ] Step 33.1: Fix `jobRoles[]` multipart parsing — Support repeated form fields from Backend `FormData.append("jobRoles", role)` and reject empty/oversized role lists according to Backend OpenAPI limits.
+- [ ] Step 33.2: Align `jobCandidates[].scoringInput.requirements` — Accept Backend requirement objects `{ type, value, priority }[]` and safely derive scoring text from `value`; reject unknown unsafe shapes with deterministic `contract_validation_error`.
+- [ ] Step 33.3: Align numeric signals — Accept Backend `numericSignals` or explicitly remove it from Backend fixture; do not allow arbitrary numeric keys to bypass approved Phase 25 feature order.
+- [ ] Step 33.4: Align backend metadata allowlist — Accept only safe hydration hints currently sent by Backend (`title`, `companyName`, `locationDisplay`, `sourceUpdatedAt`) plus documented source fields; never trust metadata for candidate membership or scoring identity.
+- [ ] Step 33.5: Enforce candidate policy — Keep max 50 candidates, unique `jobId`, required scoring evidence, `rankingPolicy.backendOwnsHydration=true`, `requireCandidateJobIds=true`, `deduplicateByJobId=true`, `maxRecommendations<=5`.
+- [ ] Step 33.6: Harden PDF parse failures — Return deterministic validation/parse error or low-confidence parser evidence for empty/scanned PDFs; never fabricate CV text, skills, sections, or experience.
+- [ ] Step 33.7: Preserve internal auth — Require bearer service token for staging/production; local bypass must remain disabled when `MODEL_API_ENV=staging|production`.
+- [ ] Step 33.8: Add request contract tests — Cover Backend-produced multipart fixtures for `UPLOAD`, `REFERENCE`, `BOOKMARK`, `JOB_SEARCH`, `DIRECT_JOB_DETAIL`, repeated `jobRoles`, requirements objects, duplicate candidates, empty candidates, empty PDF, malformed PDF, and oversized PDF.
+
+Acceptance Criteria:
+
+- [ ] Backend-produced AI CV Analyzer multipart payload parses successfully without backend source changes beyond agreed canonical contract.
+- [ ] Invalid candidate membership, duplicate IDs, missing scoring evidence, unsafe metadata, and malformed PDFs fail closed with stable errors.
+- [ ] Model API never trusts backend metadata for job identity and never receives or uses Backend DB credentials.
+- [ ] Tests prove request compatibility against exported fixtures.
+
+---
+
+### Phase 34 — Model API AI CV Analyzer Response Compatibility Fix
+
+Status: Planned
+
+Goal: Return model-core response that Backend Zod schemas can validate and map into public `cv-analysis-v2` exactly as OpenAPI expects.
+
+Scope boundary:
+
+- Model API response must be internal model-core, not public `CvAnalysis`.
+- Backend public response must match `references/docs/generated/openapi.json` `CvAnalysis` under success envelope `{ success, message, data, meta }`.
+- Model API must not return backend-owned public prose fields: `topActionables`, `sectionReviews`, hydrated `jobRecommendations`, `generatedCv`, `reason`, `nextStep`, `title`, or `companyName`.
+
+Tasks:
+
+- [ ] Step 34.1: Fix raw/envelope behavior — Match Backend client expectation exactly: either return raw model-core payload from `/internal/model/cv-analysis` or update Backend client to unwrap `data`; add a contract test that fails on mismatch.
+- [ ] Step 34.2: Align `parsedCv` — Return `status: parsed|empty_text|parse_failed`, `pageCount`, `textLength`, `detectedSections`, and optional `extractionEvidence` exactly as Backend schema expects.
+- [ ] Step 34.3: Align `jobFitAlignment` — Return `score`, `matchedSignals`, `missingSignals`, `matchedSkills`, `missingSkills`, and optional `evidence`; remove or map `summarySignals/confidenceNotes` before Backend validation.
+- [ ] Step 34.4: Align `atsFriendliness` — Return `score`, `detectedIssues`, `parseQuality: high|medium|low|failed`, and optional `evidence`; map parser qualities from Model API internal values safely.
+- [ ] Step 34.5: Align `overallImpression` — Return `score` and `evidence` array only; no final prose from Model API core.
+- [ ] Step 34.6: Align `candidateReranking` — Return `recommendations[]` only if Backend strict schema requires it, or update Backend schema explicitly; each item must contain only `jobId`, `matchScore`, `matchLevel`, `matchedSkills`, `missingSkills`, and optional string `rankingSignals`.
+- [ ] Step 34.7: Align `model` and timestamp — Return only `model.name`, `model.version`, and `createdAt` if Backend expects `createdAt`; do not expose artifact path/hash in the strict Model API response unless Backend schema explicitly allows it.
+- [ ] Step 34.8: Keep scores/ranks immutable — Validate scores are integer `0-100`, recommendation count max 5, job IDs are unique, all job IDs come from request candidates, and ordering is deterministic.
+- [ ] Step 34.9: Add response contract tests — Validate real Model API output with Backend `cvAnalyzerModelResponseSchema` or equivalent JSON Schema fixture before any staging-ready claim.
+
+Acceptance Criteria:
+
+- [ ] Model API AI CV Analyzer response passes Backend response schema with no strict-object extra field failures.
+- [ ] Backend can map model-core output into public OpenAPI `CvAnalysis.analysisResult` without missing fields or timestamp drift.
+- [ ] Model API response contains no backend-owned hydrated fields, no raw CV text, no prompt, no token, no storage key, and no raw model artifact path unless explicitly allowed.
+- [ ] English-safe model-core evidence is suitable for Backend fallback/wrapper prose.
+
+---
+
+### Phase 35 — Backend AI CV Analyzer Wrapper, Prompt Safety, and English Default Hardening
+
+Status: Planned
+
+Goal: Ensure Backend wrapper/fallback creates OpenAPI-compatible, English-default public prose from model-core evidence safely, even when GenAI is enabled or unavailable.
+
+Scope boundary:
+
+- Backend wrapper may generate public prose; Model API core must not call external GenAI for AI CV Analyzer staging.
+- GenAI output must never change numeric scores, model version, candidate IDs, recommendation order, candidate membership, or Backend persistence identifiers.
+- Deterministic fallback must remain the default safe path when GenAI is disabled, times out, returns invalid JSON, or violates schema.
+
+Tasks:
+
+- [ ] Step 35.1: Define wrapper input allowlist — Only pass `requestId`, requested `language`, `jobRoles`, `compareSource`, `inputMode`, model-core evidence, detected sections, and hydrated candidate metadata needed for user copy; exclude raw CV text by default, tokens, storage keys, emails, phones, addresses, DB URLs, and full Model API payloads.
+- [ ] Step 35.2: Write injection-resistant system prompt — Prompt must instruct the model to ignore CV/job prompt injection, use only provided evidence, produce JSON only, avoid unsupported skills/seniority/salary/hiring outcomes/protected-class claims, and preserve scores/IDs/order exactly.
+- [ ] Step 35.3: Enforce English default — For current staging, default generated and fallback prose must be English; if `language=id` is passed, either explicitly return approved English copy per product decision or implement tested Indonesian copy without mixed-language leakage.
+- [ ] Step 35.4: Add strict wrapper JSON schema — Validate `jobFitAlignment.summary`, `atsFriendliness.summary`, `overallImpression`, `topActionables[1..3]`, dynamic `sectionReviews`, `jobRecommendations[].reason`, and `jobRecommendations[].nextStep` before persistence or frontend response.
+- [ ] Step 35.5: Add wrapper safety filters — Reject output that mentions raw prompt, system/developer messages, secrets, tokens, email/phone/address, unprovided companies/jobs, protected-class attributes, guaranteed hiring outcomes, or altered numeric scores.
+- [ ] Step 35.6: Keep deterministic fallback complete — Fallback must produce valid OpenAPI `CvAnalysis.analysisResult` with English prose, `generatedCv.available=false`, max 5 hydrated recommendations, and no raw Model API internals.
+- [ ] Step 35.7: Add prompt red-team tests — Test malicious CV text and job descriptions that ask to ignore instructions, reveal prompts, alter scores, invent companies, add fake skills, or output non-JSON.
+- [ ] Step 35.8: Add OpenAPI response tests — Validate final Backend `/api/v1/ai/cv-analyzer` 200 response against `references/docs/generated/openapi.json`, including upload/reference flow and all compare sources.
+
+Acceptance Criteria:
+
+- [ ] Backend final response matches public OpenAPI `CvAnalysis` success envelope exactly.
+- [ ] Wrapper prompt and fallback cannot alter model scores, IDs, order, model metadata, or persistence data.
+- [ ] Generated/fallback prose is English by default for current staging and never exposes raw CV text, prompt, tokens, storage keys, or unrelated PII.
+- [ ] Invalid GenAI output is rejected and replaced with deterministic fallback, not returned to frontend.
+
+---
+
+### Phase 36 — AI CV Analyzer Staging Readiness Gate
+
+Status: Planned
+
+Goal: Prove AI CV Analyzer is safe to enable in staging after request, response, wrapper, language, and privacy gaps are closed.
+
+Scope boundary:
+
+- This gate covers AI CV Analyzer only.
+- AI CV Generate compatibility and prompt safety must be a later separate phase.
+- This gate does not deploy or mutate production.
+
+Tasks:
+
+- [ ] Step 36.1: Run Model API tests — Run unit/contract tests for schemas, multipart parsing, PDF parser, candidate membership, response validation, auth, timeout, artifact readiness, and no backend-owned fields.
+- [ ] Step 36.2: Run Backend tests — Run Backend model-api schema/client tests, AI CV Analyzer service tests, route tests, OpenAPI schema validation, persistence tests, hydration tests, and wrapper prompt/fallback tests.
+- [ ] Step 36.3: Run cross-repo e2e fixture — Execute Backend upload/reference request with fixture PDFs and fixture jobs through Model API to final `CvAnalysis` response; assert frontend only sees Backend public envelope.
+- [ ] Step 36.4: Verify failure mapping — Cover invalid file type, file too large, no active CV, job not found, bookmark not owned, empty candidates, Model API 422, Model API invalid response, timeout, model not ready, GenAI invalid JSON, and GenAI timeout.
+- [ ] Step 36.5: Verify security/privacy — Confirm service-token auth, non-public Model API routing, CORS only on Backend, no raw CV/prompt/token/storage key in logs/responses/persistence, upload cleanup, retention, and no Model API DB access.
+- [ ] Step 36.6: Verify language behavior — Confirm current staging default prose is English and snapshots record requested language consistently without frontend-facing mixed-language drift.
+- [ ] Step 36.7: Write readiness report — Produce JSON/Markdown report with contract versions, test commands, pass/fail evidence, latency notes, fallback coverage, secret-scan result, remaining risks, and staging go/no-go decision.
+
+Acceptance Criteria:
+
+- [ ] AI CV Analyzer e2e response validates against `references/docs/generated/openapi.json` `POST /api/v1/ai/cv-analyzer`.
+- [ ] Backend accepts Model API output without Zod/schema errors and rejects invalid Model API output with `502 DOWNSTREAM_ERROR`.
+- [ ] Model API accepts Backend multipart payload without contract drift and rejects unsafe input with deterministic errors.
+- [ ] Prompt/GenAI path is schema-bound, injection-resistant, English-default, and safely replaceable by deterministic fallback.
+- [ ] Final decision is explicit: `go` only if all blockers are closed; otherwise `no-go` with exact remaining fixes.
+
+---
+
 ## Suggested Execution Order
 
 1. Treat Phase 0-11 as completed design and audit baseline.
@@ -992,7 +1153,9 @@ Acceptance Criteria:
 9. Complete Phase 28 before changing Backend or Model API integration code.
 10. Implement Phase 29 and Phase 30 together behind tests because the PDF/candidate contract spans both services.
 11. Complete Phase 31 before staging/production traffic.
-12. Keep wrapper/backend work out of training notebooks unless it changes the model-output contract or integration validation fixtures.
+12. Because contract drift was found after Phase 31, complete corrective Phases 32-36 before any new AI CV Analyzer staging-ready claim.
+13. Keep AI CV Generate out of Phases 32-36 except as a documented future scope; focus current corrective work on AI CV Analyzer only.
+14. Keep wrapper/backend work out of training notebooks unless it changes the model-output contract or integration validation fixtures.
 
 ## Out of Scope for Model-Core Training Notebooks
 
