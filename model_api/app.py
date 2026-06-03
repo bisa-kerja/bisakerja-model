@@ -9,6 +9,7 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from dataclasses import asdict
 import json
+from time import perf_counter
 from typing import Any
 
 from .artifacts import ArtifactVerificationReport, verify_runtime_artifacts
@@ -30,6 +31,7 @@ from .features import (
     build_feature_vectors_for_request,
     normalized_skill_set,
 )
+from .observability import build_safe_observability_event
 from .pdf_parser import ats_score_from_pdf_evidence, normalized_skills_from_text, parse_pdf_bytes
 from .inference import InferenceService, RuntimeState, ScoreCalibrationPolicy, utc_now_iso
 from .schemas import (
@@ -112,6 +114,16 @@ def _recommendation_payloads_with_evidence(recommendations, profile: SanitizedPr
     return payloads
 
 
+def _latency_ms(started_at: float) -> int:
+    return round((perf_counter() - started_at) * 1000)
+
+
+def _attach_observability(payload: dict[str, object], **values: object) -> None:
+    event = build_safe_observability_event(**values)
+    if event:
+        payload["observability"] = event
+
+
 def build_cv_analysis_response_payload(
     request: CvAnalysisModelCoreRequest,
     service: InferenceService,
@@ -130,18 +142,23 @@ def build_cv_analysis_response_payload(
     if state.model_identity is None:
         raise ModelNotReadyError("TensorFlow model identity is not available")
 
+    total_started_at = perf_counter()
+    embedding_started_at = perf_counter()
     candidate_vectors = build_feature_vectors_for_request(
         request,
         feature_config=feature_config,
         embedding_backend=embedding_backend,
         environment=environment,
     )
+    embedding_latency_ms = _latency_ms(embedding_started_at)
+    tensorflow_started_at = perf_counter()
     recommendations = service.predict_recommendations(
         tuple(vector.normalized for vector in candidate_vectors),
         max_recommendations=request.maxRecommendations,
         calibration_policy=calibration_policy,
         timeout_ms=timeout_ms,
     )
+    tensorflow_latency_ms = _latency_ms(tensorflow_started_at)
     top_score = recommendations[0].matchScore if recommendations else 0
     top_candidate_by_id = {candidate.jobId: candidate for candidate in request.jobCandidates}
     top_candidate = top_candidate_by_id.get(recommendations[0].jobId) if recommendations else None
@@ -213,6 +230,20 @@ def build_cv_analysis_response_payload(
         "model": _model_identity_payload(state.model_identity),
         "analyzedAt": utc_now_iso(),
     }
+    _attach_observability(
+        payload,
+        requestId=request.requestId,
+        modelVersion=state.model_identity.version,
+        artifactHash=state.model_identity.artifact_sha256,
+        candidateCount=len(request.jobCandidates),
+        parseQuality="json_input",
+        parseLatencyMs=0,
+        embeddingLatencyMs=embedding_latency_ms,
+        tensorflowLatencyMs=tensorflow_latency_ms,
+        wrapperLatencyMs=0,
+        totalLatencyMs=_latency_ms(total_started_at),
+        fallbackReason="ats_section_evidence_missing" if ats.fallback else None,
+    )
     validate_model_core_payload(payload, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
     return payload
 
@@ -244,18 +275,23 @@ def build_candidate_reranking_response_payload(
         maxRecommendations=request.maxRecommendations,
         rankingPolicy=request.rankingPolicy,
     )
+    total_started_at = perf_counter()
+    embedding_started_at = perf_counter()
     candidate_vectors = build_feature_vectors_for_request(
         cv_request,
         feature_config=feature_config,
         embedding_backend=embedding_backend,
         environment=environment,
     )
+    embedding_latency_ms = _latency_ms(embedding_started_at)
+    tensorflow_started_at = perf_counter()
     recommendations = service.predict_recommendations(
         tuple(vector.normalized for vector in candidate_vectors),
         max_recommendations=request.maxRecommendations,
         calibration_policy=calibration_policy,
         timeout_ms=timeout_ms,
     )
+    tensorflow_latency_ms = _latency_ms(tensorflow_started_at)
     payload: dict[str, object] = {
         "requestId": request.requestId,
         "schemaVersion": MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
@@ -265,6 +301,19 @@ def build_candidate_reranking_response_payload(
         "model": _model_identity_payload(state.model_identity),
         "rankedAt": utc_now_iso(),
     }
+    _attach_observability(
+        payload,
+        requestId=request.requestId,
+        modelVersion=state.model_identity.version,
+        artifactHash=state.model_identity.artifact_sha256,
+        candidateCount=len(request.jobCandidates),
+        parseQuality="preparsed_profile_features",
+        parseLatencyMs=0,
+        embeddingLatencyMs=embedding_latency_ms,
+        tensorflowLatencyMs=tensorflow_latency_ms,
+        wrapperLatencyMs=0,
+        totalLatencyMs=_latency_ms(total_started_at),
+    )
     validate_model_core_payload(payload, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
     return payload
 
@@ -313,7 +362,9 @@ def _build_cv_payload_from_multipart(form: Any, pdf_bytes: bytes, runtime_config
                 if isinstance(values, list):
                     candidate_skill_hints.extend(str(value) for value in values if isinstance(value, str))
 
+    parse_started_at = perf_counter()
     parsed_pdf = parse_pdf_bytes(pdf_bytes, max_bytes=runtime_config.max_pdf_bytes, max_pages=runtime_config.max_pdf_pages)
+    parse_latency_ms = _latency_ms(parse_started_at)
     ats_score, detected_issues, ats_fallback = ats_score_from_pdf_evidence(parsed_pdf)
     profile = {
         "cvText": parsed_pdf.text,
@@ -339,6 +390,7 @@ def _build_cv_payload_from_multipart(form: Any, pdf_bytes: bytes, runtime_config
         "atsScore": ats_score,
         "detectedIssues": list(detected_issues),
         "fallback": ats_fallback,
+        "parseLatencyMs": parse_latency_ms,
     }
     return payload
 
@@ -456,6 +508,26 @@ def create_app(
             "artifactHash": None if identity is None else identity.artifact_sha256,
         }
 
+    @app.get("/ready")
+    def ready() -> dict[str, object]:
+        state = inference_service.state
+        identity = state.model_identity
+        checks = {
+            "artifactsVerified": bool(artifact_report.artifact_hashes),
+            "tensorflowModelLoaded": state.ready and identity is not None,
+            "e5BackendConfigured": embedding_backend is not None and getattr(embedding_backend, "backend_name", "") != "local-hash",
+            "pdfParserAvailable": callable(parse_pdf_bytes),
+            "serviceTokenConfigured": (not runtime_config.requires_service_token) or bool(runtime_config.service_token),
+        }
+        return {
+            "service": runtime_config.service_name,
+            "environment": runtime_config.environment,
+            "ready": all(checks.values()),
+            "checks": checks,
+            "modelVersion": None if identity is None else identity.version,
+            "artifactHash": None if identity is None else identity.artifact_sha256,
+        }
+
     @app.get("/model-info")
     def model_info() -> dict[str, object]:
         state = inference_service.state
@@ -550,6 +622,13 @@ def create_app(
             data["atsFriendliness"]["detectedIssues"] = parsed_pdf_evidence["detectedIssues"]
             data["atsFriendliness"]["fallback"] = parsed_pdf_evidence["fallback"]
             data["atsFriendliness"]["evidence"] = {"source": "deterministic_pdf_parser", **parsed_pdf_evidence}
+            existing_observability = data.get("observability") if isinstance(data.get("observability"), dict) else {}
+            data["observability"] = {
+                **existing_observability,
+                "parseQuality": parsed_pdf_evidence["parseQuality"],
+                "parseLatencyMs": parsed_pdf_evidence["parseLatencyMs"],
+                "fallbackReason": "pdf_parse_fallback" if parsed_pdf_evidence["fallback"] else existing_observability.get("fallbackReason"),
+            }
         validate_model_core_payload(data, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
         return {"success": True, "message": "Model-core PDF inference completed", "data": data, "error": None}
 

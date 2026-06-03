@@ -2,6 +2,47 @@
 
 Panduan ini menjelaskan cara menjalankan project training model Bisakerja pelan-pelan dari terminal sampai notebook bisa dipakai.
 
+## Release Gate Runbook
+
+### Local run
+
+1. Copy `.env.example`, `model_api/.env.example`, and `references/.env.example` to local untracked `.env` files.
+2. Set `MODEL_API_SERVICE_TOKEN` to a local-only value and keep `MODEL_API_ENABLE_GENAI_WRAPPER=false` unless testing the Backend wrapper fallback path.
+3. Start Model API with Python 3.13 TensorFlow/E5 runtime, then start Backend API with `MODEL_API_BASE_URL=http://localhost:8000`.
+4. Run Backend + Model API tests: `python -m unittest tests.test_phase_31_release_gate` and backend health tests from `references/`.
+
+### Staging run
+
+1. Use staging-only secrets from the deployment secret store; do not commit `.env` files.
+2. Verify `/ready` on Model API checks artifacts, TensorFlow model, E5 backend, PDF parser, and service-token config.
+3. Verify Backend `/health/ready` checks PostgreSQL, Redis, and Model API reachability.
+4. Run upload contract flow with fixture PDFs and fixture jobs through Backend `/api/v1/ai/cv-analyzer`; validate public `CvAnalysis` response and persistence records.
+
+### Failure modes
+
+- invalid PDF → deterministic `422` validation response.
+- parse failure → deterministic low-confidence parse fallback, no fabricated raw CV.
+- empty candidates → Backend deterministic no-recommendation policy before Model API call.
+- Model API timeout → deterministic `504`/AI unavailable mapping.
+- TensorFlow load failure → deterministic `503` readiness failure.
+- E5 failure → deterministic `503` readiness or inference failure.
+- GenAI wrapper failure → deterministic Backend fallback copy without changing model scores/order.
+
+### Troubleshooting
+
+- If readiness fails on Model API, inspect artifact paths, E5 backend setup, TensorFlow load logs, PDF parser dependency, and `MODEL_API_SERVICE_TOKEN` presence.
+- If Backend readiness fails, inspect `MODEL_API_BASE_URL`, service token mismatch, Redis, and PostgreSQL connectivity.
+- Verify security/privacy review items: service-token rotation guidance, raw CV log exclusion, upload cleanup, retention, path traversal defense, and non-public Model API routing.
+- Logs must include request ID, model version, artifact hash, candidate count, parse quality, latency fields, error code, and fallback reason only. Do not log raw CV text, service-token values, DB URLs, or unrelated PII.
+
+### Rollback
+
+1. Disable public analyzer traffic or route to deterministic fallback.
+2. Keep Backend DB owner; do not give Model API production DB credentials.
+3. Restore previous model artifact paths and rerun readiness plus contract tests.
+4. Rotate service-token values if any boundary exposure is suspected.
+
+
 Target runtime sekarang:
 
 - Python: `3.13.11`

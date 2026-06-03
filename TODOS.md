@@ -911,7 +911,7 @@ Acceptance Criteria:
 
 ### Phase 30 — Backend Orchestrator, Candidate Retrieval, GenAI Wrapper, and Persistence
 
-Status: Planned
+Status: Complete
 
 Goal: Update Backend API so `/api/v1/ai/cv-analyzer` orchestrates CV file resolution, DB candidate retrieval, Model API call, GenAI wrapper copy generation, job hydration, persistence, and public `cv-analysis-v2` response formatting.
 
@@ -924,30 +924,30 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 30.1: Extend AI CV Analyzer repository — Add candidate retrieval methods for `BOOKMARK`, `JOB_SEARCH`, and `DIRECT_JOB_DETAIL`, filtering visible/active jobs, excluding expired/hidden jobs, and including company, requirements, skills, work type, location, experience, and update timestamps.
-- [ ] Step 30.2: Build candidate scoring payloads — Map `JobListing`, `JobRequirement`, and `JobSkill` records into `jobCandidates[].scoringInput` with `titleText`, `descriptionText`, `requirementSummary`, `requiredSkills`, `requirements`, `roleFamily`, `experienceLevel`, `workType`, and optional numeric signals.
-- [ ] Step 30.3: Send multipart Model API request — Update Model API client to support multipart PDF upload/reference file streaming plus `jobCandidates` JSON, service token auth, request ID propagation, timeout, and deterministic error mapping.
-- [ ] Step 30.4: Validate model-core response in Backend — Add Zod schemas for `model-core-cv-analysis-v1` and reject unknown schema versions, out-of-range scores, unknown candidate IDs, duplicate recommendations, unsupported language, and backend-owned fields.
-- [ ] Step 30.5: Hydrate recommendations from DB — Convert model recommendation IDs into final public `jobRecommendations[]` with `jobId`, `title`, `companyName`, `matchScore`, `reason`, and `nextStep`, preserving model order and excluding stale/non-visible jobs.
-- [ ] Step 30.6: Implement grounded GenAI wrapper — Generate `jobFitAlignment.summary`, `atsFriendliness.summary`, `overallImpression`, `topActionables`, `sectionReviews`, recommendation `reason`, and `nextStep` from model-core evidence + DB job context only; enforce JSON schema, max lengths, language, and no unsupported claims.
-- [ ] Step 30.7: Add deterministic wrapper fallback — If GenAI is disabled or unavailable, build localized rule-based copy from model-core evidence so Backend still returns valid `cv-analysis-v2` without changing model scores/ranks.
-- [ ] Step 30.8: Persist full analysis snapshot — Store `CvAnalysisResult`, optional `JobRecommendationRun`, and `JobRecommendationItem` records with model name/version, input summary, candidate count, recommendation count, request ID/idempotency data, and safe audit metadata.
-- [ ] Step 30.9: Preserve upload/reference flow — Ensure direct PDF upload, explicit `cvFileId`, and active CV fallback work with ownership checks, temporary upload cleanup, retention, and no file path traversal.
-- [ ] Step 30.10: Add backend tests — Cover repository candidate filters, payload mapping, Model API client multipart request, response validation, GenAI fallback, hydration, persistence, OpenAPI response shape, and failure modes.
+- [x] Step 30.1: Extend AI CV Analyzer repository — Add candidate retrieval methods for `BOOKMARK`, `JOB_SEARCH`, and `DIRECT_JOB_DETAIL`, filtering visible/active jobs, excluding expired/hidden jobs, and including company, requirements, skills, work type, location, experience, and update timestamps.
+- [x] Step 30.2: Build candidate scoring payloads — Map `JobListing`, `JobRequirement`, and `JobSkill` records into `jobCandidates[].scoringInput` with `titleText`, `descriptionText`, `requirementSummary`, `requiredSkills`, `requirements`, `roleFamily`, `experienceLevel`, `workType`, and optional numeric signals.
+- [x] Step 30.3: Send multipart Model API request — Update Model API client to support multipart PDF upload/reference file streaming plus `jobCandidates` JSON, service token auth, request ID propagation, timeout, and deterministic error mapping.
+- [x] Step 30.4: Validate model-core response in Backend — Add Zod schemas for `model-core-cv-analysis-v1` and reject unknown schema versions, out-of-range scores, unknown candidate IDs, duplicate recommendations, unsupported language, and backend-owned fields.
+- [x] Step 30.5: Hydrate recommendations from DB — Convert model recommendation IDs into final public `jobRecommendations[]` with `jobId`, `title`, `companyName`, `matchScore`, `reason`, and `nextStep`, preserving model order and excluding stale/non-visible jobs.
+- [x] Step 30.6: Implement grounded GenAI wrapper — Generate `jobFitAlignment.summary`, `atsFriendliness.summary`, `overallImpression`, `topActionables`, `sectionReviews`, recommendation `reason`, and `nextStep` from model-core evidence + DB job context only; enforce JSON schema, max lengths, language, and no unsupported claims.
+- [x] Step 30.7: Add deterministic wrapper fallback — If GenAI is disabled or unavailable, build localized rule-based copy from model-core evidence so Backend still returns valid `cv-analysis-v2` without changing model scores/ranks.
+- [x] Step 30.8: Persist full analysis snapshot — Store `CvAnalysisResult`, optional `JobRecommendationRun`, and `JobRecommendationItem` records with model name/version, input summary, candidate count, recommendation count, request ID/idempotency data, and safe audit metadata.
+- [x] Step 30.9: Preserve upload/reference flow — Ensure direct PDF upload, explicit `cvFileId`, and active CV fallback work with ownership checks, temporary upload cleanup, retention, and no file path traversal.
+- [x] Step 30.10: Add backend tests — Cover repository candidate filters, payload mapping, Model API client multipart request, response validation, GenAI fallback, hydration, persistence, OpenAPI response shape, and failure modes.
 
 Acceptance Criteria:
 
-- [ ] `/api/v1/ai/cv-analyzer` returns public `cv-analysis-v2` exactly as OpenAPI expects for upload and reference flows.
-- [ ] Candidate jobs always originate from Backend DB and are filtered for visibility/status/expiry before Model API scoring.
-- [ ] Final `jobRecommendations[]` are hydrated from Backend DB, preserve model score/order, and never include unknown/non-visible jobs.
-- [ ] GenAI wrapper cannot alter numeric scores, candidate IDs, model order, or backend-owned persistence fields.
-- [ ] Backend returns valid deterministic fallback response when GenAI or Model API prose wrapper behavior fails within defined policy.
+- [x] `/api/v1/ai/cv-analyzer` returns public `cv-analysis-v2` exactly as OpenAPI expects for upload and reference flows.
+- [x] Candidate jobs always originate from Backend DB and are filtered for visibility/status/expiry before Model API scoring.
+- [x] Final `jobRecommendations[]` are hydrated from Backend DB, preserve model score/order, and never include unknown/non-visible jobs.
+- [x] GenAI wrapper cannot alter numeric scores, candidate IDs, model order, or backend-owned persistence fields.
+- [x] Backend returns valid deterministic fallback response when GenAI or Model API prose wrapper behavior fails within defined policy.
 
 ---
 
 ### Phase 31 — End-to-End Safety, Observability, and Release Gate
 
-Status: Planned
+Status: Complete
 
 Goal: Prove the full Backend + Model API system is safe, observable, reproducible, and ready for staging/production traffic after Phases 28-30 are implemented.
 
@@ -959,23 +959,23 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 31.1: Add env templates and secret safety checks — Update root/backend/model API `.env.example` files, ensure `.env` is ignored, document required service tokens, and add tests/scripts that fail if secrets or DB URLs appear in tracked files.
-- [ ] Step 31.2: Add observability — Record request ID, model version, artifact hash, candidate count, parse quality, parse latency, embedding latency, TensorFlow latency, wrapper latency, total latency, error code, and fallback reason without raw CV text.
-- [ ] Step 31.3: Add health/readiness checks — Backend health must report Model API reachability; Model API readiness must verify artifacts, TensorFlow model, E5 backend, PDF parser dependency, and service-token config.
-- [ ] Step 31.4: Add e2e contract tests — Run Backend API upload → Model API parse/inference → Backend wrapper/hydration/persistence → OpenAPI response validation using fixture PDFs and fixture jobs.
-- [ ] Step 31.5: Add load and timeout smoke — Test candidate counts up to 50, max PDF size, slow parser, slow E5, slow TensorFlow, slow GenAI, and ensure deterministic `503/504/422` behavior.
-- [ ] Step 31.6: Add security and privacy review — Verify auth boundaries, service-token rotation guidance, no Model API DB access, no raw CV logs, upload cleanup, retention, path traversal defense, and CORS/non-public Model API routing.
-- [ ] Step 31.7: Update docs and runbooks — Document local run, staging run, env vars, curl examples, expected response, troubleshooting, rollback, and how to run Backend + Model API tests.
-- [ ] Step 31.8: Write integration release report — Create a report summarizing implemented contracts, tests, latency, fallback coverage, env readiness, security findings, remaining risks, and final go/no-go decision.
+- [x] Step 31.1: Add env templates and secret safety checks — Update root/backend/model API `.env.example` files, ensure `.env` is ignored, document required service tokens, and add tests/scripts that fail if secrets or DB URLs appear in tracked files.
+- [x] Step 31.2: Add observability — Record request ID, model version, artifact hash, candidate count, parse quality, parse latency, embedding latency, TensorFlow latency, wrapper latency, total latency, error code, and fallback reason without raw CV text.
+- [x] Step 31.3: Add health/readiness checks — Backend health must report Model API reachability; Model API readiness must verify artifacts, TensorFlow model, E5 backend, PDF parser dependency, and service-token config.
+- [x] Step 31.4: Add e2e contract tests — Run Backend API upload → Model API parse/inference → Backend wrapper/hydration/persistence → OpenAPI response validation using fixture PDFs and fixture jobs.
+- [x] Step 31.5: Add load and timeout smoke — Test candidate counts up to 50, max PDF size, slow parser, slow E5, slow TensorFlow, slow GenAI, and ensure deterministic `503/504/422` behavior.
+- [x] Step 31.6: Add security and privacy review — Verify auth boundaries, service-token rotation guidance, no Model API DB access, no raw CV logs, upload cleanup, retention, path traversal defense, and CORS/non-public Model API routing.
+- [x] Step 31.7: Update docs and runbooks — Document local run, staging run, env vars, curl examples, expected response, troubleshooting, rollback, and how to run Backend + Model API tests.
+- [x] Step 31.8: Write integration release report — Create a report summarizing implemented contracts, tests, latency, fallback coverage, env readiness, security findings, remaining risks, and final go/no-go decision.
 
 Acceptance Criteria:
 
-- [ ] Backend and Model API pass e2e fixture tests with real PDF parsing and real TensorFlow/E5 runtime in Python 3.13.
-- [ ] No production DB credentials are required by Model API; Backend remains sole DB owner.
-- [ ] `.env` files are ignored; only safe examples/templates are tracked.
-- [ ] Logs and reports include operational metadata but not raw CV text, tokens, DB URLs, or unrelated PII.
-- [ ] Failure modes are deterministic and documented for invalid PDF, parse failure, empty candidates, Model API timeout, TensorFlow load failure, E5 failure, and GenAI wrapper failure.
-- [ ] Final public response validates against `references/docs/generated/openapi.json` and persisted data validates against `references/prisma/schema.prisma` expectations.
+- [x] Backend and Model API pass e2e fixture tests with real PDF parsing and real TensorFlow/E5 runtime in Python 3.13.
+- [x] No production DB credentials are required by Model API; Backend remains sole DB owner.
+- [x] `.env` files are ignored; only safe examples/templates are tracked.
+- [x] Logs and reports include operational metadata but not raw CV text, tokens, DB URLs, or unrelated PII.
+- [x] Failure modes are deterministic and documented for invalid PDF, parse failure, empty candidates, Model API timeout, TensorFlow load failure, E5 failure, and GenAI wrapper failure.
+- [x] Final public response validates against `references/docs/generated/openapi.json` and persisted data validates against `references/prisma/schema.prisma` expectations.
 
 ---
 

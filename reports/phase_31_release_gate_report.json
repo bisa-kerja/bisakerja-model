@@ -1,0 +1,53 @@
+{
+  "acceptance": {
+    "model_api_db_ownership": "Model API owns no DB credentials; Backend remains DB owner",
+    "privacy_policy": "Operational metadata only; raw CV text, tokens, DB URLs, unrelated PII excluded",
+    "python_runtime": "Python 3.13 TensorFlow/E5 runtime required for full staging gate",
+    "tracked_env_policy": "Only .env.example templates are tracked; concrete .env files are ignored"
+  },
+  "blockers": [],
+  "checks": {
+    "backend_readiness_checks_model_api": true,
+    "dotenv_files_ignored": true,
+    "e2e_contract_test_coverage_declared": true,
+    "env_templates_exist": true,
+    "failure_modes_documented": true,
+    "load_timeout_smoke_coverage_declared": true,
+    "model_api_readiness_checks_runtime_dependencies": true,
+    "observability_allowlist_complete": true,
+    "observability_excludes_raw_cv_and_tokens": true,
+    "runbooks_document_local_staging_tests_and_rollback": true,
+    "secret_scan_clean": true,
+    "security_privacy_review_declared": true,
+    "service_tokens_documented_without_real_secret": true
+  },
+  "final_decision": "passed",
+  "schema_version": "phase-31-release-gate-report-v1",
+  "secret_findings": [],
+  "sources": {
+    "code": [
+      "model_api/app.py",
+      "model_api/observability.py",
+      "references/src/modules/health/health.service.ts",
+      "references/src/modules/health/health.types.ts"
+    ],
+    "docs": [
+      "model_api/README.md",
+      "references/docs/integrations/model-api.md",
+      "references/docs/modules/ai-cv-analyzer.md",
+      "RUNNING_STEPS.md"
+    ],
+    "env_templates": [
+      ".env.example",
+      "model_api/.env.example",
+      "references/.env.example",
+      "references/.env.test.example",
+      "references/.env.production.example"
+    ],
+    "tests": [
+      "tests/test_phase_31_release_gate.py",
+      "references/tests/integration/routes/health.test.ts",
+      "references/tests/smoke/health.test.ts"
+    ]
+  }
+}
