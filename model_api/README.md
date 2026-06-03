@@ -132,6 +132,14 @@ python -m unittest tests.model_api.test_phase_26_layout
 
 Smoke coverage loads the real Phase 25 `.keras` artifact, runs rows from `inference_smoke_fixture.json`, checks prediction bounds, and compares positive/negative handoff validation with `model_api_handoff_validation.json`.
 
+Final production smoke gate:
+
+```bash
+python scripts/verify_phase_27_9_model_api_production_smoke.py --write --run-live
+```
+
+Run this only inside a Python `3.13.x` serving environment after `python -m pip install -r requirements.txt`. The gate fails if Phase 26 tests skip TensorFlow/Keras coverage, the real `.keras` custom-object loader does not run, or `/health`, `/model-info`, and `/inference/cv-analysis` are not hit with real runtime dependencies.
+
 ### Deployment notes
 
 - Build image from repo root so relative artifact and reference paths resolve.

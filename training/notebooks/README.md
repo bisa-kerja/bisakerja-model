@@ -12,3 +12,14 @@ Each notebook uses Markdown cells to describe:
 - acceptance criteria
 
 Add executable code only after the Markdown intent for that step is clear.
+
+## Production notebook hygiene
+
+Active production notebooks must be saved without error outputs. Unexecuted code cells in older planning notebooks must either be executed or intentionally retired with durable report evidence. Phase 13 executable cells are retired; the frozen evidence remains in `../../reports/phase_13_*.json`.
+
+Run the hygiene and label evidence gate before any production-ready claim:
+
+```bash
+python scripts/verify_phase_27_3_27_4_release_evidence.py --write
+python scripts/verify_phase_27_5_27_6_validation_expansion.py --write
+```

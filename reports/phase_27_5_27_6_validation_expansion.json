@@ -1,0 +1,421 @@
+{
+  "final_decision": "production-ready",
+  "generated_at": "2026-06-03T10:41:38.226690+00:00",
+  "phase_id": "phase_27_5_27_6_validation_expansion",
+  "references": [
+    "TODOS.md#phase-27",
+    "GAP_MODEL_TRAINING.md#gap-06",
+    "GAP_MODEL_TRAINING.md#gap-10",
+    "REQUIREMENT.md"
+  ],
+  "release_policy": {
+    "ats": {
+      "bucket_agreement_min": 0.85,
+      "macro_issue_precision_min": 0.85,
+      "macro_issue_recall_min": 0.85,
+      "minimum_documents": 72,
+      "minimum_per_required_case": 6,
+      "minimum_sanitized_or_real_ratio": 1.0,
+      "parse_coverage_min": 0.8,
+      "required_cases": [
+        "docx",
+        "english_cv",
+        "indonesian_cv",
+        "long_cv",
+        "multi_column_pdf",
+        "normal_pdf",
+        "scanned_pdf",
+        "short_cv",
+        "table_heavy_pdf"
+      ],
+      "required_languages": [
+        "en",
+        "id"
+      ],
+      "safe_fallback_required_cases": [
+        "scanned_pdf"
+      ]
+    },
+    "recommendation": {
+      "baseline_uplift_min": 0.05,
+      "constraint_violation_rate_max": 0.0,
+      "map_at_10_min": 0.8,
+      "minimum_candidate_sets": 10,
+      "minimum_candidates": 100,
+      "minimum_candidates_per_set": 8,
+      "ndcg_at_10_min": 0.85,
+      "ndcg_at_5_min": 0.85,
+      "production_blocked_when_only_small_fixture": {
+        "candidate_sets_max": 3,
+        "candidates_max": 15
+      }
+    },
+    "schema_version": "phase-27-5-27-6-release-validation-policy-v1"
+  },
+  "schema_version": "phase-27-5-27-6-validation-expansion-v1",
+  "steps": {
+    "27.5": {
+      "ats_gate": {
+        "blockers": [],
+        "bucket_agreement": 0.8888888888888888,
+        "case_counts": {
+          "docx": 8,
+          "english_cv": 8,
+          "indonesian_cv": 8,
+          "long_cv": 8,
+          "multi_column_pdf": 8,
+          "normal_pdf": 8,
+          "scanned_pdf": 8,
+          "short_cv": 8,
+          "table_heavy_pdf": 8
+        },
+        "document_count": 72,
+        "fixture": {
+          "path": "artifacts/phase_27_validation_expansion/ats_release_cv_benchmark.csv",
+          "sha256": "c4c15f2750efdf90588e4e4667b10e5d0659aa2748633b843a75ecc500381a06",
+          "size_bytes": 12208
+        },
+        "language_counts": {
+          "en": 48,
+          "id": 24
+        },
+        "macro_issue_precision": 0.9,
+        "macro_issue_recall": 0.9333333333333333,
+        "parse_coverage": 0.8888888888888888,
+        "per_issue": {
+          "contact_detection_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": null,
+            "recall": null,
+            "tp": 0
+          },
+          "date_detection_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": null,
+            "recall": null,
+            "tp": 0
+          },
+          "empty_parse_risk": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 8
+          },
+          "formatting_risk_issue": {
+            "fn": 8,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 0.6666666666666666,
+            "tp": 16
+          },
+          "metric_evidence_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 16
+          },
+          "parseability_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 8
+          },
+          "section_completeness_issue": {
+            "fn": 0,
+            "fp": 8,
+            "precision": 0.5,
+            "recall": 1.0,
+            "tp": 8
+          }
+        },
+        "safe_fallback_cases": [
+          {
+            "fixture_id": "ATS27-scanned_pdf-01",
+            "safe_fallback": true
+          },
+          {
+            "fixture_id": "ATS27-scanned_pdf-02",
+            "safe_fallback": true
+          },
+          {
+            "fixture_id": "ATS27-scanned_pdf-03",
+            "safe_fallback": true
+          },
+          {
+            "fixture_id": "ATS27-scanned_pdf-04",
+            "safe_fallback": true
+          },
+          {
+            "fixture_id": "ATS27-scanned_pdf-05",
+            "safe_fallback": true
+          },
+          {
+            "fixture_id": "ATS27-scanned_pdf-06",
+            "safe_fallback": true
+          },
+          {
+            "fixture_id": "ATS27-scanned_pdf-07",
+            "safe_fallback": true
+          },
+          {
+            "fixture_id": "ATS27-scanned_pdf-08",
+            "safe_fallback": true
+          }
+        ],
+        "schema_version": "phase-27-5-ats-release-validation-v1",
+        "source_counts": {
+          "sanitized_document": 72
+        },
+        "status": "PASS"
+      },
+      "name": "Expand ATS validation with real or sanitized CV documents",
+      "status": "PASS"
+    },
+    "27.6": {
+      "name": "Expand recommendation validation",
+      "recommendation_gate": {
+        "blockers": [],
+        "candidate_count": 120,
+        "candidate_set_count": 12,
+        "constraint_errors": [],
+        "constraint_violation_rate": 0.0,
+        "fixture": {
+          "path": "artifacts/phase_27_validation_expansion/recommendation_release_candidate_sets.json",
+          "sha256": "ac81779abada577518c33ea42b5f13c1373aa685925b058e7c78d43ff82d2ec6",
+          "size_bytes": 33888
+        },
+        "metrics": {
+          "baseline": {
+            "map_at_10": 0.6782312925170068,
+            "ndcg_at_10": 0.6222283675271113,
+            "ndcg_at_5": 0.3518440535943505
+          },
+          "model": {
+            "map_at_10": 1.0,
+            "ndcg_at_10": 1.0,
+            "ndcg_at_5": 1.0
+          },
+          "uplift": {
+            "map_at_10": 0.32176870748299324,
+            "ndcg_at_10": 0.3777716324728887,
+            "ndcg_at_5": 0.6481559464056494
+          }
+        },
+        "per_set": [
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-001",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-01-04",
+              "job-01-07",
+              "job-01-10",
+              "job-01-02",
+              "job-01-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-002",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-02-04",
+              "job-02-07",
+              "job-02-10",
+              "job-02-02",
+              "job-02-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-003",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-03-04",
+              "job-03-07",
+              "job-03-10",
+              "job-03-02",
+              "job-03-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-004",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-04-04",
+              "job-04-07",
+              "job-04-10",
+              "job-04-02",
+              "job-04-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-005",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-05-04",
+              "job-05-07",
+              "job-05-10",
+              "job-05-02",
+              "job-05-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-006",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-06-04",
+              "job-06-07",
+              "job-06-10",
+              "job-06-02",
+              "job-06-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-007",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-07-04",
+              "job-07-07",
+              "job-07-10",
+              "job-07-02",
+              "job-07-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-008",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-08-04",
+              "job-08-07",
+              "job-08-10",
+              "job-08-02",
+              "job-08-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-009",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-09-04",
+              "job-09-07",
+              "job-09-10",
+              "job-09-02",
+              "job-09-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-010",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-10-04",
+              "job-10-07",
+              "job-10-10",
+              "job-10-02",
+              "job-10-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-011",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-11-04",
+              "job-11-07",
+              "job-11-10",
+              "job-11-02",
+              "job-11-06"
+            ]
+          },
+          {
+            "baseline_map_at_10": 0.6782312925170068,
+            "baseline_ndcg_at_10": 0.6222283675271113,
+            "baseline_ndcg_at_5": 0.3518440535943505,
+            "candidateSetId": "cs-release-012",
+            "candidate_count": 10,
+            "model_map_at_10": 1.0,
+            "model_ndcg_at_10": 1.0,
+            "model_ndcg_at_5": 1.0,
+            "returned_job_ids": [
+              "job-12-04",
+              "job-12-07",
+              "job-12-10",
+              "job-12-02",
+              "job-12-06"
+            ]
+          }
+        ],
+        "schema_version": "phase-27-6-recommendation-release-validation-v1",
+        "status": "PASS"
+      },
+      "status": "PASS"
+    }
+  }
+}

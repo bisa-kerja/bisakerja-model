@@ -1,13 +1,15 @@
 {
   "blocked_use": [
     "Automated hiring decision, rejection, eligibility, salary, or protected-class inference.",
-    "Production score claims without replacing fixture/weak-label evidence with validated labels.",
-    "Backend-owned persistence, auth, job hydration, or GenAI wrapper output generation."
+    "Production score claims without frozen human/reviewer validation coverage.",
+    "Backend-owned persistence, auth, DB hydration, or GenAI wrapper output generation.",
+    "Scoring candidate jobs not supplied by the backend request."
   ],
   "data": {
     "dataset_manifest": {
       "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
-      "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3"
+      "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
+      "size_bytes": 7633
     },
     "embedding_contract": {
       "backend": "sentence-transformers",
@@ -23,7 +25,8 @@
     },
     "label_manifest": {
       "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
-      "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6"
+      "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
+      "size_bytes": 5900
     }
   },
   "deployment_contract": {
@@ -50,7 +53,8 @@
     "final_model_artifact": {
       "format": ".keras",
       "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "size_bytes": 80901
     },
     "model_artifact_status": "final_keras_export_complete",
     "model_core_output_boundary": {
@@ -218,19 +222,17 @@
       }
     }
   },
-  "generated_at": "2026-06-03T01:45:36.646906+00:00",
+  "generated_at": "2026-06-03T11:19:45.581545Z",
   "intended_use": [
     "Model-core job-fit scoring for backend-provided CV/profile and job context.",
-    "Training-owned score calibration and artifact handoff for separate API runtime.",
-    "Backend candidate reranking score semantics; backend owns job hydration and public copy."
+    "Training-owned calibrated scores and artifact handoff for separate Model API runtime.",
+    "Candidate reranking for backend-provided job IDs only; backend owns hydration and public prose."
   ],
   "limitations": [
-    "Job-fit target uses weak-label balanced v2 evidence; human labels are evaluation-only.",
-    "ATS calibration uses synthetic benchmark fixtures, not production CV traffic.",
-    "Recommendation calibration uses small backend-like fixtures and must be replaced by live feedback or reviewer labels before production claims.",
-    "Step 25.9 strict selection gate caps final readiness below production while prototype trade-offs remain.",
-    "Production-ready export is blocked when git dirty state is present at export time.",
-    "GenAI wrapper output is not a training signal and must be validated by the separate API runtime."
+    "Weak labels remain bootstrap/training support only; production score claims require human/reviewer validation coverage.",
+    "Current release remains blocked until clean-git export, real Python 3.13 Model API smoke, requirement matrix, and final Phase 27 release gate pass.",
+    "ATS and recommendation readiness depend on release-scale validation fixtures or approved anonymized real data.",
+    "External GenAI prose is wrapper-owned and is not part of model-core inference."
   ],
   "model": {
     "api": "Keras Functional API",
@@ -258,13 +260,72 @@
     "uses_model_fit": false,
     "version": "jobfit_tf_phase25_gradient_tape_v1"
   },
+  "phase_27_8_release_refresh": {
+    "calibration_hash": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
+    "dataset_hash": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
+    "feature_config_hash": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
+    "generated_at": "2026-06-03T11:19:45.581545Z",
+    "git_commit": "3194f629441d5e5b45658219651c7de7e21f72a5",
+    "git_dirty_file_count": 39,
+    "label_hash": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
+    "model_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+    "production_claim_allowed": false,
+    "production_claim_blockers": [
+      "clean-git Phase 25 production-ready export not proven",
+      "real Python 3.13 Model API smoke not recorded",
+      "end-to-end REQUIREMENT.md matrix not recorded",
+      "final Phase 27 release gate not recorded"
+    ],
+    "split_seed": 202621,
+    "tensorboard_event_hashes": [
+      "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1"
+    ],
+    "tensorboard_release_manifest_hash": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
+    "tensorflow_feature_config_hash": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5"
+  },
   "phase_id": "phase_25_tensorflow_training_delivery",
   "readiness": {
     "git_dirty_at_setup": true,
+    "phase_27_8_refresh_status": "hashes-refreshed-production-claim-blocked-until-all-phase27-gates-pass",
     "production_ready_blocked_when_dirty": true,
+    "production_ready_requires_clean_git_state": true,
+    "production_ready_requires_real_model_api_smoke": true,
+    "production_ready_requires_requirement_matrix": true,
     "status_cap": "production-ready"
   },
   "schema_version": "phase-25-model-card-v1",
+  "score_semantics": {
+    "atsFriendliness.score": {
+      "bands": {
+        "0-20": "parse failure or severe ATS risk",
+        "21-40": "many structural risks",
+        "41-60": "mixed parse/section evidence",
+        "61-80": "usable CV with some issues",
+        "81-100": "clear parse and low formatting risk"
+      },
+      "scale": "0-100 integer"
+    },
+    "jobFitAlignment.score": {
+      "bands": {
+        "0-20": "very weak evidence of fit",
+        "21-40": "weak fit; major gaps likely",
+        "41-60": "partial fit; review gaps before action",
+        "61-80": "good fit; candidate evidence aligns with role",
+        "81-100": "strong fit; high overlap with supplied role/candidate evidence"
+      },
+      "production_claim_policy": "Requires frozen human/reviewer validation coverage; weak labels are bootstrap/training support only.",
+      "scale": "0-100 integer"
+    },
+    "recommendations[].matchScore": {
+      "bands": {
+        "0-60": "stretch",
+        "61-80": "good",
+        "81-100": "strong"
+      },
+      "candidate_policy": "Only rank backend-provided candidate IDs; never invent or hydrate jobs.",
+      "scale": "0-100 integer"
+    }
+  },
   "training": {
     "api": "Keras Functional API",
     "custom_components": [
@@ -275,6 +336,18 @@
     ],
     "tensorboard": {
       "path": null,
+      "release_event_files": [
+        {
+          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
+          "sha256": "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1",
+          "size_bytes": 126450
+        }
+      ],
+      "release_manifest": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+        "sha256": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
+        "size_bytes": 1422
+      },
       "report_sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
     },
     "tensorflow_artifact_export": {

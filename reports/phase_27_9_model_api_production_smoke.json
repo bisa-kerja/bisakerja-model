@@ -1,0 +1,113 @@
+{
+  "blockers": [
+    "python_3_13_serving_runtime",
+    "serving_dependencies_importable",
+    "phase26_tests_unskipped",
+    "real_keras_custom_object_loader_smoke",
+    "live_fastapi_health_model_info_inference_smoke"
+  ],
+  "final_decision": "blocked",
+  "gates": [
+    {
+      "blocker": "Current interpreter is not Python 3.13",
+      "check": "python_3_13_serving_runtime",
+      "evidence": {
+        "executable": "/Users/macbookpro/.pyenv/versions/3.14.2/bin/python",
+        "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
+        "python": "3.14.2 (main, Dec 11 2025, 11:10:12) [Clang 16.0.0 (clang-1600.0.26.6)]"
+      },
+      "status": "FAIL"
+    },
+    {
+      "check": "root_requirements_pin_serving_runtime",
+      "evidence": {
+        "pins": {
+          "fastapi": "0.123.5",
+          "keras": "3.14.1",
+          "numpy": "1.26.4",
+          "pydantic": "2.12.5",
+          "sentence-transformers": "5.5.1",
+          "tensorflow": "2.21.0",
+          "uvicorn[standard]": "0.47.0"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "blocker": "Install root requirements.txt in Python 3.13 env",
+      "check": "serving_dependencies_importable",
+      "evidence": {
+        "modules": {
+          "fastapi": false,
+          "keras": false,
+          "numpy": false,
+          "sentence_transformers": false,
+          "tensorflow": false,
+          "uvicorn": true
+        }
+      },
+      "status": "FAIL"
+    },
+    {
+      "blocker": "Phase 26 tests must run with zero skips",
+      "check": "phase26_tests_unskipped",
+      "evidence": {
+        "result": {
+          "command": "/Users/macbookpro/.pyenv/versions/3.14.2/bin/python -m unittest tests.model_api.test_phase_26_layout",
+          "elapsed_ms": 81.466,
+          "returncode": 0,
+          "stderr_tail": [
+            "....................s.s..............",
+            "----------------------------------------------------------------------",
+            "Ran 37 tests in 0.010s",
+            "",
+            "OK (skipped=2)"
+          ],
+          "stdout_tail": []
+        },
+        "summary": {
+          "passed": true,
+          "skipped": 2,
+          "tests_run": 37
+        }
+      },
+      "status": "FAIL"
+    },
+    {
+      "blocker": "Real .keras custom-object loader smoke not run or failed",
+      "check": "real_keras_custom_object_loader_smoke",
+      "evidence": {
+        "reason": "Python 3.13 with TensorFlow/Keras required",
+        "status": "not_run"
+      },
+      "status": "FAIL"
+    },
+    {
+      "blocker": "Live FastAPI/TensorFlow/E5 smoke not run or failed",
+      "check": "live_fastapi_health_model_info_inference_smoke",
+      "evidence": {
+        "reason": "pass --run-live to execute real FastAPI/TensorFlow/E5 endpoint smoke",
+        "status": "not_run"
+      },
+      "status": "FAIL"
+    }
+  ],
+  "generated_at": "2026-06-03T11:19:45.819420Z",
+  "latency": {},
+  "phase_id": "phase_27_9_model_api_production_smoke",
+  "policy": {
+    "fake_model_or_fake_embedding_allowed_for_production_smoke": false,
+    "phase26_tests_must_be_unskipped": true,
+    "python_runtime": "3.13.x",
+    "real_fastapi_endpoint_smoke_required": true,
+    "real_keras_artifact_required": true,
+    "requirements_file": "requirements.txt"
+  },
+  "references": [
+    "TODOS.md#step-27.9",
+    "model_api/README.md",
+    "REQUIREMENT.md#2.2",
+    "REQUIREMENT.md#3"
+  ],
+  "schema_version": "phase-27-9-model-api-production-smoke-v1"
+}

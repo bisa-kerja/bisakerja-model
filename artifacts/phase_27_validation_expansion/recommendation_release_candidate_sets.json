@@ -1,0 +1,1446 @@
+{
+  "candidate_sets": [
+    {
+      "candidateSetId": "cs-release-001",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-01-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-01-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-01-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-01-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-01-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-01-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-01-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-01-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-01-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-01-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        }
+      ],
+      "profileFeatures": {
+        "language": "id",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "backend"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-002",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-02-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-02-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-02-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-02-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-02-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-02-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-02-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-02-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-02-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-02-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "data"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-003",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-03-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-03-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-03-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-03-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-03-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-03-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-03-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-03-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-03-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-03-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "product"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-004",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-04-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-04-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-04-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-04-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-04-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-04-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-04-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-04-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-04-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-04-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        }
+      ],
+      "profileFeatures": {
+        "language": "id",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "mobile"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-005",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-05-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-05-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-05-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-05-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-05-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-05-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-05-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-05-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-05-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-05-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "backend"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-006",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-06-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-06-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-06-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-06-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-06-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-06-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-06-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-06-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-06-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-06-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "data"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-007",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-07-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-07-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-07-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-07-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-07-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-07-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-07-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-07-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-07-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-07-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        }
+      ],
+      "profileFeatures": {
+        "language": "id",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "product"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-008",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-08-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-08-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-08-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-08-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-08-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-08-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-08-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-08-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-08-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-08-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "mobile"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-009",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-09-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-09-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-09-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-09-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-09-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-09-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-09-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-09-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-09-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "backend"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-09-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "backend"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "backend"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-010",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-10-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-10-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-10-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-10-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-10-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-10-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-10-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-10-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-10-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "data"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-10-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "data"
+        }
+      ],
+      "profileFeatures": {
+        "language": "id",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "data"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-011",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-11-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-11-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-11-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-11-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-11-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-11-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-11-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-11-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-11-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "product"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-11-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "product"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "product"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    },
+    {
+      "candidateSetId": "cs-release-012",
+      "jobCandidates": [
+        {
+          "backendOrder": 1,
+          "jobId": "job-12-01",
+          "modelScore": 35,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 2,
+          "jobId": "job-12-02",
+          "modelScore": 74,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 3,
+          "jobId": "job-12-03",
+          "modelScore": 53,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 4,
+          "jobId": "job-12-04",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 5,
+          "jobId": "job-12-05",
+          "modelScore": 34,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 6,
+          "jobId": "job-12-06",
+          "modelScore": 73,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 7,
+          "jobId": "job-12-07",
+          "modelScore": 95,
+          "relevanceLabel": 3,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 8,
+          "jobId": "job-12-08",
+          "modelScore": 54,
+          "relevanceLabel": 1,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 9,
+          "jobId": "job-12-09",
+          "modelScore": 33,
+          "relevanceLabel": 0,
+          "requiredSkills": [
+            "excel"
+          ],
+          "roleFamily": "mobile"
+        },
+        {
+          "backendOrder": 10,
+          "jobId": "job-12-10",
+          "modelScore": 75,
+          "relevanceLabel": 2,
+          "requiredSkills": [
+            "python",
+            "sql"
+          ],
+          "roleFamily": "mobile"
+        }
+      ],
+      "profileFeatures": {
+        "language": "en",
+        "normalizedSkills": [
+          "python",
+          "sql",
+          "api"
+        ],
+        "roleFamily": "mobile"
+      },
+      "source_kind": "backend_like_sanitized_relevance_fixture"
+    }
+  ],
+  "label_source": "sanitized backend-like candidate relevance labels",
+  "schema_version": "phase-27-6-recommendation-release-fixture-v1"
+}

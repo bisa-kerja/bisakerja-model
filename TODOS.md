@@ -780,6 +780,205 @@ Acceptance Criteria:
 
 ---
 
+## Production Readiness Closure Phase — Final Training and Runtime Gate
+
+Phase 25 currently proves TensorFlow training delivery and handoff at staging level. Phase 26 implements the Model API source boundary but still records runtime loader verification as pending in the current interpreter. This phase closes the remaining production blockers before any `production-ready` claim is allowed.
+
+### Phase 27 — Production Readiness Remediation, Clean Freeze, and Release Gate
+
+Source evidence:
+
+- `REQUIREMENT.md`
+- `GAP_MODEL_TRAINING.md`
+- `reports/phase_25_tensorflow_training_delivery.json`
+- `reports/phase_25_human_readable_final_report.md`
+- `artifacts/phase_25_tensorflow_training_delivery/model_card.json`
+- `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json`
+- `artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras`
+- `reports/phase_26_final_api_gate_report.json`
+- `model_api/README.md`
+
+Status: Planned
+
+Goal: Convert the current staging-ready training and source/contract-ready API evidence into a production-ready release by removing dirty-worktree, untracked-monitoring, weak-label-only, small-fixture, stale-notebook, and runtime-verification blockers.
+
+Scope boundary:
+
+- Training remains notebook-first and centered on `training/notebooks/phase_25_tensorflow_training_delivery.ipynb` unless `REQUIREMENT.md` changes.
+- Production-ready means the final model artifact, TensorBoard logs, model card, calibration, contract fixtures, API loader, tests, and docs are all reproducible from a clean commit.
+- Model-core output remains limited to scores, evidence signals, and ranking for backend-provided candidate IDs.
+- Backend auth, persistence, DB hydration, frontend rendering, and external GenAI prose generation remain outside training readiness.
+
+Tasks:
+
+- [ ] Step 27.1: Freeze a clean release baseline — Start from a clean worktree, record final git commit, remove or commit all generated Phase 25/26 changes intentionally, and make `git_dirty_at_setup=false` and `git_dirty_at_export=false` mandatory for production status.
+- [ ] Step 27.2: Make TensorBoard evidence release-visible — Store Phase 25 TensorBoard event files or a reproducible TensorBoard archive under a tracked release path, record SHA-256/byte-size in the artifact manifest, and ensure `REQUIREMENT.md` section 1.4 is satisfied without relying on ignored local files.
+- [x] Step 27.3: Repair notebook hygiene — Remove saved error outputs from older notebooks such as Phase 8, execute or intentionally retire unexecuted code cells such as Phase 13, update stale notebook indexes/README files, and add a report proving all active production notebooks are saved without error outputs.
+- [ ] Step 27.4: Upgrade label evidence beyond weak-label-only training — Define the production label policy, add or import a larger frozen human/recruiter-reviewed validation set, keep weak labels only as bootstrap/training support, and block production score claims when human labels are too small, single-reviewer, or not slice-covered.
+- [x] Step 27.5: Expand ATS validation with real or sanitized CV documents — Replace synthetic-only ATS readiness with a mixed benchmark covering normal PDF, scanned PDF/OCR fallback, multi-column PDF, table-heavy PDF, DOCX, short CV, long CV, Indonesian CV, and English CV; report parse coverage, issue precision/recall, bucket agreement, and safe fallback behavior.
+- [x] Step 27.6: Expand recommendation validation — Evaluate candidate reranking on a larger backend-like candidate-set fixture or real anonymized relevance labels, preserve candidate membership, prove NDCG/MAP uplift over backend order, and block production if metrics are based only on the current 3-set/15-candidate fixture.
+- [ ] Step 27.7: Rerun Phase 25 clean-kernel production export — Re-execute the final TensorFlow training notebook top-to-bottom in Python 3.13, verify Functional API/custom components/`tf.GradientTape`/no `model.fit()`/MAE target/TensorBoard/export/inference smoke, and write a final report whose status is `production-ready` only when every strict gate passes.
+- [x] Step 27.8: Refresh model card and artifact manifest — Update dataset hash, label hash, feature config hash, TensorBoard hash, model hash, calibration hash, git commit, split seed, intended use, blocked use, limitations, and score semantics so no stale Phase 22/25 hash or staging-only status remains.
+- [ ] Step 27.9: Run real Model API production smoke — In a Python 3.13 serving environment, install root `requirements.txt`, load the real `.keras` artifact with registered custom objects, run unskipped Phase 26 tests, start FastAPI, hit `/health`, `/model-info`, and `/inference/cv-analysis`, and record real TensorFlow/E5 latency.
+- [ ] Step 27.10: Verify `REQUIREMENT.md` end-to-end — Produce a requirement matrix proving sections 1.1-1.5, 2.1-2.2, 3.1-3.2, 4.1, and deliverables are satisfied by tracked source, artifacts, tests, logs, docs, and smoke evidence.
+- [ ] Step 27.11: Write final production gate report — Create `reports/phase_27_production_readiness_release_gate.json` and a short Markdown summary with final decision, blockers, metrics, artifact paths, runtime versions, tests run, latency, and release checklist.
+
+Acceptance Criteria:
+
+- [ ] Final training report status is `production-ready`, not `staging-ready` or `prototype-only`.
+- [ ] Final production gate fails if worktree is dirty, TensorBoard logs are missing/untracked, notebook error outputs remain, artifact hashes are stale, or API runtime smoke is skipped.
+- [ ] `REQUIREMENT.md` is fully satisfied with tracked evidence: TensorFlow architecture, custom component, `tf.GradientTape` training/evaluation loop, TensorBoard logs, MAE target, `.keras`/`SavedModel` export, inference code, REST API, GenAI secondary boundary, requirements files, and docs.
+- [ ] Model card no longer relies on weak-label-only evidence for production score claims; human/reviewer validation coverage and known limits are explicit.
+- [ ] ATS and recommendation metrics are based on release-scale fixtures or approved anonymized real data, not only small synthetic/current handoff fixtures.
+- [ ] Phase 26 API readiness decision becomes production-ready with real TensorFlow/Keras/FastAPI runtime verification, not `runtime-loader-verification-pending`.
+- [ ] Public output contract remains safe: model-core fields only, bounded scores, `id/en` language, max 5 recommendations, no invented jobs, no backend-owned hydrated fields, no auth/persistence/GenAI mutation inside core inference.
+- [ ] A reviewer can reproduce the release from a clean commit using documented commands and verify all required hashes.
+
+---
+
+## Backend + Model API Production Integration Phases
+
+These phases correct the current boundary mismatch: Backend OpenAPI receives PDF CV uploads, Backend owns auth/DB/persistence/final `cv-analysis-v2`, and Model API owns PDF parsing plus model-core scoring/ranking only. The preferred architecture is Backend-as-orchestrator; Model API must not connect directly to the production database.
+
+### Phase 28 — Backend/Model API Contract Realignment
+
+Status: Planned
+
+Goal: Freeze a safe internal contract where Backend sends a sanitized multipart PDF plus backend-selected job candidates to Model API, and Model API returns model-core output that Backend maps to the public OpenAPI `cv-analysis-v2` response.
+
+Scope boundary:
+
+- Backend owns auth, file ownership, storage, candidate retrieval, DB hydration, persistence, idempotency, public response shape, and GenAI prose wrapper.
+- Model API owns PDF parsing, CV evidence extraction, ATS issue signals, E5 feature building, TensorFlow scoring, candidate reranking, health checks, and deterministic model-core errors.
+- Model API must not receive raw DB credentials, write backend data, generate final public hydrated job fields, or decide auth/ownership.
+- Backend may send `backendMetadata` for trace/debug only; Model API must never trust it for candidate identity outside `jobId` membership.
+
+Tasks:
+
+- [ ] Step 28.1: Define final internal request contract — Document `POST /internal/model/cv-analysis` as multipart with `requestId`, `language`, `inputMode`, `compareSource`, `jobRoles[]`, `cvFile`, `jobCandidates` JSON, and `rankingPolicy` JSON.
+- [ ] Step 28.2: Define final internal response contract — Document `model-core-cv-analysis-v1` containing `parsedCv`, `jobFitAlignment`, `atsFriendliness`, `overallImpression` evidence, `candidateReranking.recommendations[]`, `model`, and timestamps; exclude public wrapper fields.
+- [ ] Step 28.3: Map OpenAPI/Prisma fields to contract owners — Create a matrix from `references/docs/generated/openapi.json` and `references/prisma/schema.prisma` covering `CvAnalysisResult`, `JobRecommendationRun`, `JobRecommendationItem`, `JobListing`, `JobRequirement`, and `JobSkill`.
+- [ ] Step 28.4: Define language and enum mapping — Freeze `id/en` for public/model API, `ID/EN` for Prisma, `UPLOAD/REFERENCE`, `BOOKMARK/JOB_SEARCH/DIRECT_JOB_DETAIL`, and `strong/good/stretch` to Prisma `STRONG/GOOD/STRETCH`.
+- [ ] Step 28.5: Define failure contracts — Specify deterministic backend behavior for Model API `422`, `503`, `504`, parse failure, empty candidate set, stale artifact, timeout, and GenAI wrapper failure.
+- [ ] Step 28.6: Add contract fixtures — Create positive/negative fixtures for direct upload PDF, active CV reference, bookmarked candidates, job-search candidates, direct-job-detail candidate, duplicate job IDs, empty PDF parse, and missing candidate evidence.
+- [ ] Step 28.7: Update durable docs — Update `model_api/README.md`, backend integration docs under `references/docs/integrations/model-api.md`, and module docs so future implementation follows one contract.
+
+Acceptance Criteria:
+
+- [ ] One internal contract clearly separates model-owned fields from backend/wrapper-owned fields.
+- [ ] Backend can map every Model API response field into final `CvAnalysis.analysisResult` without guessing or inventing jobs.
+- [ ] Model API rejects backend-owned public fields such as `title`, `companyName`, `reason`, `nextStep`, `topActionables`, `sectionReviews`, `generatedCv`, auth, persistence, and hydrated DB objects in model-core output.
+- [ ] Contract fixtures cover all public compare sources and both upload/reference CV modes.
+- [ ] Reviewer can verify the contract against OpenAPI and Prisma without reading implementation code.
+
+---
+
+### Phase 29 — Model API PDF Parsing and Model-Core Inference Hardening
+
+Status: Planned
+
+Goal: Upgrade Model API from JSON-only sanitized signals to production-safe PDF intake, deterministic parsing, ATS evidence extraction, TensorFlow scoring, and model-core output for backend-provided candidates.
+
+Scope boundary:
+
+- Model API accepts PDF bytes only from trusted Backend internal calls.
+- Model API does not persist uploaded files after request completion and does not store raw CV text beyond request-scoped logs/metrics.
+- Model API still supports JSON-only `/inference/cv-analysis` for tests/backward compatibility, but production flow uses multipart PDF endpoint.
+- No external GenAI call is allowed in core inference.
+
+Tasks:
+
+- [ ] Step 29.1: Add safe env/config defaults — Provide `.env.example` for Model API with `MODEL_API_ENV`, artifact paths, `MODEL_API_SERVICE_TOKEN`, `MODEL_API_MAX_PDF_BYTES`, `MODEL_API_MAX_PDF_PAGES`, `MODEL_API_TIMEOUT_MS`, `SENTENCE_TRANSFORMERS_HOME`, `MODEL_API_ENABLE_GENAI_WRAPPER=false`, and OpenRouter vars disabled by default.
+- [ ] Step 29.2: Add internal auth middleware — Require `Authorization: Bearer <MODEL_API_SERVICE_TOKEN>` for inference endpoints in staging/production while allowing explicit local/test bypass only through safe config.
+- [ ] Step 29.3: Implement multipart PDF endpoint — Add `POST /internal/model/cv-analysis` that validates content type, file size, PDF magic bytes, one-file-only policy, required form fields, candidate JSON shape, and request ID.
+- [ ] Step 29.4: Implement deterministic PDF parser — Extract text with a pinned parser, detect page count, empty/scanned PDFs, section names, contact/date signals, formatting risk, and parse quality; never hallucinate missing CV content.
+- [ ] Step 29.5: Build profile/CV signals from parsed PDF — Convert parsed text into `SanitizedProfileInput` using `cvText`, `targetRoles`, detected sections, normalized skills, language, role family, and optional experience evidence.
+- [ ] Step 29.6: Replace ATS placeholder logic — Compute `atsFriendliness.score` and `detectedIssues` from parser evidence with transparent penalties and safe fallback for empty/scanned/failed parse.
+- [ ] Step 29.7: Fix top-candidate evidence — Derive `jobFitAlignment.matchedSkills/missingSkills` and recommendation skill evidence from the top-ranked candidate, not from the first input candidate.
+- [ ] Step 29.8: Add candidate reranking endpoint — Add `POST /inference/candidate-reranking` for backend jobs-only scoring with the same membership, max-item, score-bound, and response-contract validators.
+- [ ] Step 29.9: Add hard runtime guards — Enforce parse, embedding, and model inference timeouts; reject fallback embedding backends in staging/production; warm up TensorFlow and E5 at startup when configured.
+- [ ] Step 29.10: Expand tests — Cover PDF parser edge cases, multipart validation, auth missing/invalid token, ATS scoring, top-candidate evidence, reranking endpoint, timeout errors, and no backend-owned fields.
+
+Acceptance Criteria:
+
+- [ ] Model API can parse a normal PDF CV sent by Backend and build valid Phase 25 features without backend pre-parsed `cvText`.
+- [ ] Empty/scanned/malformed PDFs return deterministic safe errors or low-confidence fallback signals, never fabricated CV text.
+- [ ] All model-core scores are bounded integers `0-100`; recommendations are max `5`, unique, and restricted to backend-supplied job IDs.
+- [ ] Staging/production cannot run with missing service token, fallback embeddings, unverified artifacts, or skipped model loader.
+- [ ] Tests prove PDF endpoint, JSON endpoint, reranking endpoint, and response validators work without leaking backend-owned fields.
+
+---
+
+### Phase 30 — Backend Orchestrator, Candidate Retrieval, GenAI Wrapper, and Persistence
+
+Status: Planned
+
+Goal: Update Backend API so `/api/v1/ai/cv-analyzer` orchestrates CV file resolution, DB candidate retrieval, Model API call, GenAI wrapper copy generation, job hydration, persistence, and public `cv-analysis-v2` response formatting.
+
+Scope boundary:
+
+- Backend owns the public OpenAPI contract and must return exactly `CvAnalysis` envelope shape.
+- Backend retrieves candidates from Prisma DB; Model API receives only those candidates and cannot invent or hydrate jobs.
+- Backend wrapper may use GenAI for prose fields, but must be grounded in model-core evidence and DB data.
+- If GenAI fails, Backend returns deterministic fallback copy from model-core evidence; scores/ranks must not be changed by GenAI.
+
+Tasks:
+
+- [ ] Step 30.1: Extend AI CV Analyzer repository — Add candidate retrieval methods for `BOOKMARK`, `JOB_SEARCH`, and `DIRECT_JOB_DETAIL`, filtering visible/active jobs, excluding expired/hidden jobs, and including company, requirements, skills, work type, location, experience, and update timestamps.
+- [ ] Step 30.2: Build candidate scoring payloads — Map `JobListing`, `JobRequirement`, and `JobSkill` records into `jobCandidates[].scoringInput` with `titleText`, `descriptionText`, `requirementSummary`, `requiredSkills`, `requirements`, `roleFamily`, `experienceLevel`, `workType`, and optional numeric signals.
+- [ ] Step 30.3: Send multipart Model API request — Update Model API client to support multipart PDF upload/reference file streaming plus `jobCandidates` JSON, service token auth, request ID propagation, timeout, and deterministic error mapping.
+- [ ] Step 30.4: Validate model-core response in Backend — Add Zod schemas for `model-core-cv-analysis-v1` and reject unknown schema versions, out-of-range scores, unknown candidate IDs, duplicate recommendations, unsupported language, and backend-owned fields.
+- [ ] Step 30.5: Hydrate recommendations from DB — Convert model recommendation IDs into final public `jobRecommendations[]` with `jobId`, `title`, `companyName`, `matchScore`, `reason`, and `nextStep`, preserving model order and excluding stale/non-visible jobs.
+- [ ] Step 30.6: Implement grounded GenAI wrapper — Generate `jobFitAlignment.summary`, `atsFriendliness.summary`, `overallImpression`, `topActionables`, `sectionReviews`, recommendation `reason`, and `nextStep` from model-core evidence + DB job context only; enforce JSON schema, max lengths, language, and no unsupported claims.
+- [ ] Step 30.7: Add deterministic wrapper fallback — If GenAI is disabled or unavailable, build localized rule-based copy from model-core evidence so Backend still returns valid `cv-analysis-v2` without changing model scores/ranks.
+- [ ] Step 30.8: Persist full analysis snapshot — Store `CvAnalysisResult`, optional `JobRecommendationRun`, and `JobRecommendationItem` records with model name/version, input summary, candidate count, recommendation count, request ID/idempotency data, and safe audit metadata.
+- [ ] Step 30.9: Preserve upload/reference flow — Ensure direct PDF upload, explicit `cvFileId`, and active CV fallback work with ownership checks, temporary upload cleanup, retention, and no file path traversal.
+- [ ] Step 30.10: Add backend tests — Cover repository candidate filters, payload mapping, Model API client multipart request, response validation, GenAI fallback, hydration, persistence, OpenAPI response shape, and failure modes.
+
+Acceptance Criteria:
+
+- [ ] `/api/v1/ai/cv-analyzer` returns public `cv-analysis-v2` exactly as OpenAPI expects for upload and reference flows.
+- [ ] Candidate jobs always originate from Backend DB and are filtered for visibility/status/expiry before Model API scoring.
+- [ ] Final `jobRecommendations[]` are hydrated from Backend DB, preserve model score/order, and never include unknown/non-visible jobs.
+- [ ] GenAI wrapper cannot alter numeric scores, candidate IDs, model order, or backend-owned persistence fields.
+- [ ] Backend returns valid deterministic fallback response when GenAI or Model API prose wrapper behavior fails within defined policy.
+
+---
+
+### Phase 31 — End-to-End Safety, Observability, and Release Gate
+
+Status: Planned
+
+Goal: Prove the full Backend + Model API system is safe, observable, reproducible, and ready for staging/production traffic after Phases 28-30 are implemented.
+
+Scope boundary:
+
+- This phase validates the whole local/staging flow; it does not deploy or mutate production systems.
+- Production secrets must never be committed; only `.env.example`/template files may be tracked.
+- Logs/metrics must avoid raw CV text, tokens, DB URLs, and unrelated PII.
+
+Tasks:
+
+- [ ] Step 31.1: Add env templates and secret safety checks — Update root/backend/model API `.env.example` files, ensure `.env` is ignored, document required service tokens, and add tests/scripts that fail if secrets or DB URLs appear in tracked files.
+- [ ] Step 31.2: Add observability — Record request ID, model version, artifact hash, candidate count, parse quality, parse latency, embedding latency, TensorFlow latency, wrapper latency, total latency, error code, and fallback reason without raw CV text.
+- [ ] Step 31.3: Add health/readiness checks — Backend health must report Model API reachability; Model API readiness must verify artifacts, TensorFlow model, E5 backend, PDF parser dependency, and service-token config.
+- [ ] Step 31.4: Add e2e contract tests — Run Backend API upload → Model API parse/inference → Backend wrapper/hydration/persistence → OpenAPI response validation using fixture PDFs and fixture jobs.
+- [ ] Step 31.5: Add load and timeout smoke — Test candidate counts up to 50, max PDF size, slow parser, slow E5, slow TensorFlow, slow GenAI, and ensure deterministic `503/504/422` behavior.
+- [ ] Step 31.6: Add security and privacy review — Verify auth boundaries, service-token rotation guidance, no Model API DB access, no raw CV logs, upload cleanup, retention, path traversal defense, and CORS/non-public Model API routing.
+- [ ] Step 31.7: Update docs and runbooks — Document local run, staging run, env vars, curl examples, expected response, troubleshooting, rollback, and how to run Backend + Model API tests.
+- [ ] Step 31.8: Write integration release report — Create a report summarizing implemented contracts, tests, latency, fallback coverage, env readiness, security findings, remaining risks, and final go/no-go decision.
+
+Acceptance Criteria:
+
+- [ ] Backend and Model API pass e2e fixture tests with real PDF parsing and real TensorFlow/E5 runtime in Python 3.13.
+- [ ] No production DB credentials are required by Model API; Backend remains sole DB owner.
+- [ ] `.env` files are ignored; only safe examples/templates are tracked.
+- [ ] Logs and reports include operational metadata but not raw CV text, tokens, DB URLs, or unrelated PII.
+- [ ] Failure modes are deterministic and documented for invalid PDF, parse failure, empty candidates, Model API timeout, TensorFlow load failure, E5 failure, and GenAI wrapper failure.
+- [ ] Final public response validates against `references/docs/generated/openapi.json` and persisted data validates against `references/prisma/schema.prisma` expectations.
+
+---
+
 ## Suggested Execution Order
 
 1. Treat Phase 0-11 as completed design and audit baseline.
@@ -789,12 +988,16 @@ Acceptance Criteria:
 5. Do not claim production readiness before Phase 22 calibration/export and Phase 24 final gate pass.
 6. Implement Phase 25 as the final single-notebook TensorFlow training delivery when `REQUIREMENT.md` compliance is required.
 7. Implement Phase 26 after Phase 25 artifacts exist and pass handoff validation.
-8. Keep wrapper/backend work out of training notebooks unless it changes the model-output contract or integration validation fixtures.
+8. Complete Phase 27 before making any final production-ready claim for training model or Model API runtime.
+9. Complete Phase 28 before changing Backend or Model API integration code.
+10. Implement Phase 29 and Phase 30 together behind tests because the PDF/candidate contract spans both services.
+11. Complete Phase 31 before staging/production traffic.
+12. Keep wrapper/backend work out of training notebooks unless it changes the model-output contract or integration validation fixtures.
 
-## Out of Scope
+## Out of Scope for Model-Core Training Notebooks
 
-- Implement OpenAI SDK wrapper API.
-- Implement backend persistence or auth.
-- Implement frontend rendering.
-- Hydrate final job recommendations from database.
-- Deploy or release production artifacts.
+- Backend auth, persistence, DB hydration, and public response formatting.
+- Backend GenAI wrapper implementation.
+- Frontend rendering.
+- Production deployment or release mutation.
+- Direct Model API access to production database credentials.

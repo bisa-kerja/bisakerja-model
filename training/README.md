@@ -24,14 +24,17 @@ Run and review notebooks in numeric order:
 16. `notebooks/phase_15_balanced_pair_generation_splits.ipynb`
 17. `notebooks/phase_16_human_validation_label_governance.ipynb`
 18. `notebooks/phase_17_baseline_evaluation_v2.ipynb`
-19. `notebooks/phase_18_jobfit_training_v2.ipynb` (blocked: local E5 embedding backend unavailable)
+19. `notebooks/phase_18_jobfit_training_v2.ipynb`
 20. `notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb`
-21. `notebooks/phase_19_5_jobfit_blocker_remediation.ipynb` (blocked: real E5 runtime and metric/slice gates unresolved)
-22. `notebooks/phase_20_overall_impression_signals.ipynb` (planned)
-23. `notebooks/phase_21_backend_candidate_reranking.ipynb` (planned)
-24. `notebooks/phase_22_calibration_model_card_export.ipynb` (planned)
-25. `notebooks/phase_23_model_api_contract_validation.ipynb` (planned)
+21. `notebooks/phase_19_5_jobfit_blocker_remediation.ipynb`
+22. `notebooks/phase_20_overall_impression_signals.ipynb`
+23. `notebooks/phase_21_backend_candidate_reranking.ipynb`
+24. `notebooks/phase_22_calibration_model_card_export.ipynb`
+25. `notebooks/phase_23_model_api_contract_validation.ipynb`
 26. `notebooks/phase_24_reproducibility_final_gate.ipynb`
+27. `notebooks/phase_25_tensorflow_training_delivery.ipynb`
+
+Phase 13 executable cells are intentionally retired for production notebook hygiene; durable evidence remains in `reports/phase_13_*.json`. Phase 25 is the current TensorFlow training delivery notebook for release evidence.
 
 ## Default embedding model
 
@@ -64,6 +67,18 @@ PY
 ```
 
 Python `3.14` is not a reliable TensorFlow runtime for this project unless compatible TensorFlow wheels are available.
+
+## Production release evidence gates
+
+Before any production-ready claim, verify release evidence from a clean git state:
+
+```bash
+python scripts/verify_phase_27_1_27_2_release_gate.py --write
+python scripts/verify_phase_27_3_27_4_release_evidence.py --write
+python scripts/verify_phase_27_5_27_6_validation_expansion.py --write
+```
+
+The release gates record the current git commit, exit non-zero when production status is blocked, verify TensorBoard event evidence under `artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/`, verify active notebook hygiene, and enforce the production human-label policy. TensorBoard logs in ignored local run directories are not sufficient for `REQUIREMENT.md` section 1.4 unless copied to the release path and recorded in `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json` with SHA-256 and byte size. Weak labels remain allowed only as bootstrap/training support; production score claims require larger frozen human/recruiter-reviewed slice-covered validation evidence. ATS readiness requires a release-scale real or sanitized CV benchmark covering normal PDF, scanned/OCR fallback, multi-column PDF, table-heavy PDF, DOCX, short CV, long CV, Indonesian CV, and English CV. Recommendation readiness requires a larger backend-like candidate-set fixture or anonymized relevance labels, candidate membership preservation, NDCG/MAP uplift over backend order, and no reliance on the small 3-set/15-candidate handoff fixture.
 
 ## Notebook-only rule
 

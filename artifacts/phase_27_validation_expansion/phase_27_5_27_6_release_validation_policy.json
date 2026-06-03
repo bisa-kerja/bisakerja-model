@@ -1,0 +1,44 @@
+{
+  "ats": {
+    "bucket_agreement_min": 0.85,
+    "macro_issue_precision_min": 0.85,
+    "macro_issue_recall_min": 0.85,
+    "minimum_documents": 72,
+    "minimum_per_required_case": 6,
+    "minimum_sanitized_or_real_ratio": 1.0,
+    "parse_coverage_min": 0.8,
+    "required_cases": [
+      "docx",
+      "english_cv",
+      "indonesian_cv",
+      "long_cv",
+      "multi_column_pdf",
+      "normal_pdf",
+      "scanned_pdf",
+      "short_cv",
+      "table_heavy_pdf"
+    ],
+    "required_languages": [
+      "en",
+      "id"
+    ],
+    "safe_fallback_required_cases": [
+      "scanned_pdf"
+    ]
+  },
+  "recommendation": {
+    "baseline_uplift_min": 0.05,
+    "constraint_violation_rate_max": 0.0,
+    "map_at_10_min": 0.8,
+    "minimum_candidate_sets": 10,
+    "minimum_candidates": 100,
+    "minimum_candidates_per_set": 8,
+    "ndcg_at_10_min": 0.85,
+    "ndcg_at_5_min": 0.85,
+    "production_blocked_when_only_small_fixture": {
+      "candidate_sets_max": 3,
+      "candidates_max": 15
+    }
+  },
+  "schema_version": "phase-27-5-27-6-release-validation-policy-v1"
+}

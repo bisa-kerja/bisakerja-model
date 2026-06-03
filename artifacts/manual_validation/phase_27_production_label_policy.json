@@ -1,0 +1,55 @@
+{
+  "label_sources": {
+    "allowed_for_training": [
+      "weak-label-balanced-v2 bootstrap labels",
+      "feature-derived pair labels used only to fit preliminary scorer"
+    ],
+    "forbidden": [
+      "human validation labels as model input features",
+      "single-reviewer-only validation for production score claims",
+      "weak-label-only evidence for production score accuracy claims",
+      "validation labels exposed to inference payloads or generated product copy"
+    ],
+    "required_for_production_score_claims": [
+      "frozen human or recruiter-reviewed validation labels",
+      "at least two independent reviewers per validation item",
+      "reviewer agreement metrics recorded before model-card release",
+      "slice coverage across score band, role family, language, experience band, and pair type"
+    ]
+  },
+  "minimum_release_validation_set": {
+    "minimum_items_per_required_slice_bucket": 20,
+    "minimum_items_per_score_band": 150,
+    "required_slice_dimensions": [
+      "score_band",
+      "role_family",
+      "language",
+      "experience_band",
+      "pair_type"
+    ],
+    "reviewers_per_item": 2,
+    "score_bands": [
+      "low",
+      "medium",
+      "high"
+    ],
+    "unique_items": 600
+  },
+  "policy_id": "jobfit-production-human-validation-policy-v1",
+  "production_claim_gate": {
+    "allow_production_score_claims_only_when": [
+      "minimum_release_validation_set is satisfied",
+      "all required slice dimensions are present and covered",
+      "mean weighted kappa is recorded and >= 0.60",
+      "human-label evaluation beats baseline and reports MAE/RMSE/R2/Spearman/slice stability"
+    ],
+    "block_when": [
+      "unique frozen human validation items are below threshold",
+      "any item has fewer than two independent reviewers",
+      "labels are single-reviewer, unlabeled, or not frozen",
+      "required slice dimensions are missing or under-covered",
+      "model card still frames weak-label metrics as production score evidence"
+    ]
+  },
+  "schema_version": "phase-27-production-label-policy-v1"
+}

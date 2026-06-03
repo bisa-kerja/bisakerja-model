@@ -1,0 +1,73 @@
+fixture_id,source_kind,case_family,file_family,language,supported_file_type,layout_risk,page_count,extracted_character_count,word_count,section_count,column_count,table_density,parser_error,ocr_required,has_metric_evidence,label_issue_keys,label_ats_score,label_ats_bucket,label_version
+ATS27-docx-01,sanitized_document,docx,docx,en,true,medium,2,321,53,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-docx-02,sanitized_document,docx,docx,en,true,medium,2,322,53,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-docx-03,sanitized_document,docx,docx,en,true,medium,2,323,53,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-docx-04,sanitized_document,docx,docx,id,true,medium,2,324,54,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-docx-05,sanitized_document,docx,docx,en,true,medium,2,325,54,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-docx-06,sanitized_document,docx,docx,en,true,medium,2,326,54,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-docx-07,sanitized_document,docx,docx,en,true,medium,2,327,54,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-docx-08,sanitized_document,docx,docx,id,true,medium,2,328,54,5,1,0.05,false,false,true,[],95,high,ats-release-sanitized-v1
+ATS27-english_cv-01,sanitized_document,english_cv,pdf,en,true,medium,2,321,53,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-english_cv-02,sanitized_document,english_cv,pdf,en,true,medium,2,322,53,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-english_cv-03,sanitized_document,english_cv,pdf,en,true,medium,2,323,53,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-english_cv-04,sanitized_document,english_cv,pdf,id,true,medium,2,324,54,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-english_cv-05,sanitized_document,english_cv,pdf,en,true,medium,2,325,54,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-english_cv-06,sanitized_document,english_cv,pdf,en,true,medium,2,326,54,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-english_cv-07,sanitized_document,english_cv,pdf,en,true,medium,2,327,54,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-english_cv-08,sanitized_document,english_cv,pdf,id,true,medium,2,328,54,5,1,0.05,false,false,true,[],94,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-01,sanitized_document,indonesian_cv,pdf,id,true,medium,2,321,53,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-02,sanitized_document,indonesian_cv,pdf,id,true,medium,2,322,53,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-03,sanitized_document,indonesian_cv,pdf,id,true,medium,2,323,53,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-04,sanitized_document,indonesian_cv,pdf,id,true,medium,2,324,54,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-05,sanitized_document,indonesian_cv,pdf,id,true,medium,2,325,54,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-06,sanitized_document,indonesian_cv,pdf,id,true,medium,2,326,54,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-07,sanitized_document,indonesian_cv,pdf,id,true,medium,2,327,54,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-indonesian_cv-08,sanitized_document,indonesian_cv,pdf,id,true,medium,2,328,54,5,1,0.05,false,false,true,[],92,high,ats-release-sanitized-v1
+ATS27-long_cv-01,sanitized_document,long_cv,pdf,en,true,medium,6,321,53,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-long_cv-02,sanitized_document,long_cv,pdf,en,true,medium,6,322,53,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-long_cv-03,sanitized_document,long_cv,pdf,en,true,medium,6,323,53,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-long_cv-04,sanitized_document,long_cv,pdf,id,true,medium,6,324,54,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-long_cv-05,sanitized_document,long_cv,pdf,en,true,medium,6,325,54,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-long_cv-06,sanitized_document,long_cv,pdf,en,true,medium,6,326,54,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-long_cv-07,sanitized_document,long_cv,pdf,en,true,medium,6,327,54,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-long_cv-08,sanitized_document,long_cv,pdf,id,true,medium,6,328,54,5,1,0.05,false,false,true,"[""formatting_risk_issue""]",74,medium,ats-release-sanitized-v1
+ATS27-multi_column_pdf-01,sanitized_document,multi_column_pdf,pdf,en,true,high,2,321,53,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-multi_column_pdf-02,sanitized_document,multi_column_pdf,pdf,en,true,high,2,322,53,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-multi_column_pdf-03,sanitized_document,multi_column_pdf,pdf,en,true,high,2,323,53,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-multi_column_pdf-04,sanitized_document,multi_column_pdf,pdf,id,true,high,2,324,54,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-multi_column_pdf-05,sanitized_document,multi_column_pdf,pdf,en,true,high,2,325,54,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-multi_column_pdf-06,sanitized_document,multi_column_pdf,pdf,en,true,high,2,326,54,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-multi_column_pdf-07,sanitized_document,multi_column_pdf,pdf,en,true,high,2,327,54,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-multi_column_pdf-08,sanitized_document,multi_column_pdf,pdf,id,true,high,2,328,54,5,2,0.05,false,false,true,"[""formatting_risk_issue""]",76,high,ats-release-sanitized-v1
+ATS27-normal_pdf-01,sanitized_document,normal_pdf,pdf,en,true,medium,2,321,53,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-normal_pdf-02,sanitized_document,normal_pdf,pdf,en,true,medium,2,322,53,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-normal_pdf-03,sanitized_document,normal_pdf,pdf,en,true,medium,2,323,53,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-normal_pdf-04,sanitized_document,normal_pdf,pdf,id,true,medium,2,324,54,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-normal_pdf-05,sanitized_document,normal_pdf,pdf,en,true,medium,2,325,54,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-normal_pdf-06,sanitized_document,normal_pdf,pdf,en,true,medium,2,326,54,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-normal_pdf-07,sanitized_document,normal_pdf,pdf,en,true,medium,2,327,54,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-normal_pdf-08,sanitized_document,normal_pdf,pdf,id,true,medium,2,328,54,5,1,0.05,false,false,true,[],96,high,ats-release-sanitized-v1
+ATS27-scanned_pdf-01,sanitized_document,scanned_pdf,pdf,en,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-scanned_pdf-02,sanitized_document,scanned_pdf,pdf,en,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-scanned_pdf-03,sanitized_document,scanned_pdf,pdf,en,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-scanned_pdf-04,sanitized_document,scanned_pdf,pdf,id,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-scanned_pdf-05,sanitized_document,scanned_pdf,pdf,en,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-scanned_pdf-06,sanitized_document,scanned_pdf,pdf,en,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-scanned_pdf-07,sanitized_document,scanned_pdf,pdf,en,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-scanned_pdf-08,sanitized_document,scanned_pdf,pdf,id,true,critical,2,0,0,0,1,0.05,true,true,true,"[""parseability_issue"", ""empty_parse_risk""]",25,low,ats-release-sanitized-v1
+ATS27-short_cv-01,sanitized_document,short_cv,pdf,en,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-short_cv-02,sanitized_document,short_cv,pdf,en,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-short_cv-03,sanitized_document,short_cv,pdf,en,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-short_cv-04,sanitized_document,short_cv,pdf,id,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-short_cv-05,sanitized_document,short_cv,pdf,en,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-short_cv-06,sanitized_document,short_cv,pdf,en,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-short_cv-07,sanitized_document,short_cv,pdf,en,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-short_cv-08,sanitized_document,short_cv,pdf,id,true,medium,2,80,13,3,1,0.05,false,false,false,"[""section_completeness_issue"", ""metric_evidence_issue""]",52,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-01,sanitized_document,table_heavy_pdf,pdf,en,true,high,2,321,53,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-02,sanitized_document,table_heavy_pdf,pdf,en,true,high,2,322,53,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-03,sanitized_document,table_heavy_pdf,pdf,en,true,high,2,323,53,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-04,sanitized_document,table_heavy_pdf,pdf,id,true,high,2,324,54,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-05,sanitized_document,table_heavy_pdf,pdf,en,true,high,2,325,54,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-06,sanitized_document,table_heavy_pdf,pdf,en,true,high,2,326,54,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-07,sanitized_document,table_heavy_pdf,pdf,en,true,high,2,327,54,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1
+ATS27-table_heavy_pdf-08,sanitized_document,table_heavy_pdf,pdf,id,true,high,2,328,54,5,1,0.55,false,false,false,"[""formatting_risk_issue"", ""metric_evidence_issue""]",56,medium,ats-release-sanitized-v1

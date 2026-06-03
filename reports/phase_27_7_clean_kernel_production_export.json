@@ -1,0 +1,241 @@
+{
+  "blockers": [
+    "Worktree is dirty; clean-kernel production export must be frozen from clean git state.",
+    "Phase 25 final report status is 'staging-ready', not 'production-ready'."
+  ],
+  "final_decision": "blocked",
+  "gates": [
+    {
+      "check": "required_phase25_evidence_exists",
+      "evidence": {
+        "missing_paths": []
+      },
+      "status": "PASS"
+    },
+    {
+      "blocker": "Dirty worktree",
+      "check": "clean_git_state_now",
+      "evidence": {
+        "commit": "3194f629441d5e5b45658219651c7de7e21f72a5",
+        "dirty": true,
+        "dirty_file_count": 39,
+        "sample": [
+          " M .gitignore",
+          " M TODOS.md",
+          " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+          " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+          " M model_api/README.md",
+          " M training/README.md",
+          " M training/notebooks/README.md",
+          " M training/notebooks/phase_08_overall_impression_signals.ipynb",
+          " M training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
+          "?? artifacts/manual_validation/phase_27_production_label_policy.json",
+          "?? artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/",
+          "?? artifacts/phase_27_validation_expansion/",
+          "?? reports/phase_27_10_requirement_matrix.json",
+          "?? reports/phase_27_10_requirement_matrix.md",
+          "?? reports/phase_27_1_27_2_release_gate.json",
+          "?? reports/phase_27_1_27_2_release_gate.md",
+          "?? reports/phase_27_3_27_4_notebook_label_gate.json",
+          "?? reports/phase_27_3_27_4_notebook_label_gate.md",
+          "?? reports/phase_27_5_27_6_validation_expansion.json",
+          "?? reports/phase_27_5_27_6_validation_expansion.md",
+          "?? reports/phase_27_7_clean_kernel_production_export.json",
+          "?? reports/phase_27_7_clean_kernel_production_export.md",
+          "?? reports/phase_27_8_model_card_manifest_refresh.json",
+          "?? reports/phase_27_8_model_card_manifest_refresh.md",
+          "?? reports/phase_27_9_model_api_production_smoke.json"
+        ],
+        "status": "FAIL"
+      },
+      "status": "FAIL"
+    },
+    {
+      "blocker": "Phase 25 final status not production-ready",
+      "check": "phase25_final_status_production_ready",
+      "evidence": {
+        "final_status_reasons": {
+          "baseline_readiness_cap": "production-ready",
+          "failure_count": 0,
+          "git_dirty_at_export": true,
+          "production_selection_passed": true,
+          "prototype_tradeoffs": []
+        },
+        "status": "staging-ready"
+      },
+      "status": "FAIL"
+    },
+    {
+      "check": "phase25_strict_gate_checks_pass",
+      "evidence": {
+        "checks": {
+          "api_handoff_fixtures_validated": "PASS",
+          "artifact_manifest_hashes_match_current_files": "PASS",
+          "clean_keras_reload_subprocess": "PASS",
+          "clean_kernel_top_to_bottom_reached_final_gate": "PASS",
+          "saved_notebook_has_no_error_outputs": "PASS",
+          "tensorboard_logs_exist": "PASS",
+          "training_only_genai_boundary_enforced": "PASS"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "phase25_required_step_reports_pass",
+      "evidence": {
+        "checks": {
+          "step_25_11_tensorflow_artifact_export": "PASS",
+          "step_25_5_tensorflow_architecture": "PASS",
+          "step_25_6_custom_component": "PASS",
+          "step_25_7_training_evaluation_loop": "PASS",
+          "step_25_8_tensorboard_monitoring": "PASS"
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "python_3_13_runtime_recorded",
+      "evidence": {
+        "architecture_python": "3.13.11",
+        "python": ""
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "tensorflow_functional_api",
+      "evidence": {
+        "api": "Keras Functional API"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "custom_components_present",
+      "evidence": {
+        "custom_components": [
+          "CosineInteractionLayer",
+          "HighRecallCalibrationLayer",
+          "ProductionGateCallback",
+          "WeightedHuberLoss"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "gradient_tape_loop_no_model_fit",
+      "evidence": {
+        "uses_gradient_tape": true,
+        "uses_model_fit": false
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "mae_target_le_0_02",
+      "evidence": {
+        "required_max": 0.02,
+        "test_mae": 0.0086032,
+        "validation_mae": 0.0084428
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "tensorboard_events_recorded",
+      "evidence": {
+        "event_file_count": 1
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "keras_export_and_inference_smoke",
+      "evidence": {
+        "clean_subprocess_reload": "PASS",
+        "final_model": {
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+          "size_bytes": 80901
+        },
+        "format": ".keras"
+      },
+      "status": "PASS"
+    },
+    {
+      "check": "phase25_notebook_has_no_saved_errors",
+      "evidence": {
+        "error_count": 0,
+        "errors": []
+      },
+      "status": "PASS"
+    }
+  ],
+  "generated_at": "2026-06-03T11:19:45.908138+00:00",
+  "git_state": {
+    "commit": "3194f629441d5e5b45658219651c7de7e21f72a5",
+    "dirty": true,
+    "dirty_file_count": 39,
+    "sample": [
+      " M .gitignore",
+      " M TODOS.md",
+      " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      " M model_api/README.md",
+      " M training/README.md",
+      " M training/notebooks/README.md",
+      " M training/notebooks/phase_08_overall_impression_signals.ipynb",
+      " M training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
+      "?? artifacts/manual_validation/phase_27_production_label_policy.json",
+      "?? artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/",
+      "?? artifacts/phase_27_validation_expansion/",
+      "?? reports/phase_27_10_requirement_matrix.json",
+      "?? reports/phase_27_10_requirement_matrix.md",
+      "?? reports/phase_27_1_27_2_release_gate.json",
+      "?? reports/phase_27_1_27_2_release_gate.md",
+      "?? reports/phase_27_3_27_4_notebook_label_gate.json",
+      "?? reports/phase_27_3_27_4_notebook_label_gate.md",
+      "?? reports/phase_27_5_27_6_validation_expansion.json",
+      "?? reports/phase_27_5_27_6_validation_expansion.md",
+      "?? reports/phase_27_7_clean_kernel_production_export.json",
+      "?? reports/phase_27_7_clean_kernel_production_export.md",
+      "?? reports/phase_27_8_model_card_manifest_refresh.json",
+      "?? reports/phase_27_8_model_card_manifest_refresh.md",
+      "?? reports/phase_27_9_model_api_production_smoke.json"
+    ],
+    "status": "FAIL"
+  },
+  "phase25": {
+    "final_report": "reports/phase_25_tensorflow_training_delivery.json",
+    "final_status_reasons": {
+      "baseline_readiness_cap": "production-ready",
+      "failure_count": 0,
+      "git_dirty_at_export": true,
+      "production_selection_passed": true,
+      "prototype_tradeoffs": []
+    },
+    "generated_at": "2026-06-03T01:45:40.836650+00:00",
+    "runtime": {
+      "architecture_report": {
+        "keras": "3.14.1",
+        "numpy": "2.4.6",
+        "pandas": "3.0.3",
+        "python": "3.13.11",
+        "tensorflow": "2.21.0"
+      },
+      "phase25": {}
+    },
+    "status": "staging-ready"
+  },
+  "phase_id": "phase_27_7_clean_kernel_production_export",
+  "policy": {
+    "mae_max": 0.02,
+    "model_fit_allowed": false,
+    "production_ready_requires_clean_git_state": true,
+    "production_ready_requires_phase25_status": "production-ready",
+    "python_runtime": "3.13.x",
+    "tensorboard_event_min": 1
+  },
+  "references": [
+    "TODOS.md#phase-27.7",
+    "GAP_MODEL_TRAINING.md",
+    "REQUIREMENT.md",
+    "reports/phase_25_tensorflow_training_delivery.json"
+  ],
+  "schema_version": "phase-27-7-clean-kernel-production-export-v1"
+}

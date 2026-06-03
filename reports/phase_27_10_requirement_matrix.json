@@ -1,0 +1,734 @@
+{
+  "blockers": [
+    {
+      "failed_checks": [],
+      "missing_evidence": [],
+      "requirement_id": "1.1",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "failed_checks": [],
+      "missing_evidence": [],
+      "requirement_id": "1.2",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "failed_checks": [],
+      "missing_evidence": [],
+      "requirement_id": "1.3",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "failed_checks": [],
+      "missing_evidence": [],
+      "requirement_id": "1.4",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_1_27_2_release_gate.json",
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2"
+      ]
+    },
+    {
+      "failed_checks": [],
+      "missing_evidence": [],
+      "requirement_id": "1.5",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "failed_checks": [],
+      "missing_evidence": [],
+      "requirement_id": "2.1",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_8_model_card_manifest_refresh.json"
+      ]
+    },
+    {
+      "failed_checks": [
+        "real_keras_custom_object_loader_smoke_passed"
+      ],
+      "missing_evidence": [],
+      "requirement_id": "2.2",
+      "status": "failed-gate",
+      "untracked_evidence": [
+        "reports/phase_27_9_model_api_production_smoke.json"
+      ]
+    },
+    {
+      "failed_checks": [
+        "live_fastapi_smoke_passed"
+      ],
+      "missing_evidence": [],
+      "requirement_id": "3.1",
+      "status": "failed-gate",
+      "untracked_evidence": [
+        "reports/phase_27_9_model_api_production_smoke.json"
+      ]
+    },
+    {
+      "failed_checks": [
+        "phase26_tests_unskipped_passed",
+        "live_fastapi_health_model_info_inference_smoke_passed"
+      ],
+      "missing_evidence": [],
+      "requirement_id": "3.2",
+      "status": "failed-gate",
+      "untracked_evidence": [
+        "reports/phase_27_9_model_api_production_smoke.json"
+      ]
+    },
+    {
+      "failed_checks": [
+        "runtime_smoke_production_passed"
+      ],
+      "missing_evidence": [
+        "README.md"
+      ],
+      "requirement_id": "deliverables",
+      "status": "missing-evidence",
+      "untracked_evidence": [
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2"
+      ]
+    }
+  ],
+  "coverage": {
+    "covered_ids": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "2.1",
+      "2.2",
+      "3.1",
+      "3.2",
+      "4.1",
+      "deliverables"
+    ],
+    "missing_ids": [],
+    "required_ids": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "2.1",
+      "2.2",
+      "3.1",
+      "3.2",
+      "4.1",
+      "deliverables"
+    ],
+    "row_count": 11,
+    "satisfied_count": 1
+  },
+  "final_decision": "blocked",
+  "generated_at": "2026-06-03T11:19:45.494450Z",
+  "matrix": [
+    {
+      "checks": {
+        "tensorflow_functional_api_gate_passed": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "REQUIREMENT.md",
+          "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723",
+          "size_bytes": 2599,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_25_tensorflow_architecture.json",
+          "sha256": "0596d93b257374b4453bfd3a851bcc84b609e55f4229d387038228fc80e7b1f4",
+          "size_bytes": 7866,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
+          "sha256": "d8db5fc73e8b31b542953de1a63a8bf9f355a607fe9edabba8fb554fd0d619de",
+          "size_bytes": 387745,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_7_clean_kernel_production_export.json",
+          "sha256": "dc98d7739c65f37d400365f05ef0037727e7f5e20a9e0cf50e5f93f75d2fcf63",
+          "size_bytes": 8296,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [],
+      "missing_evidence": [],
+      "notes": [],
+      "requirement": "TensorFlow deep learning architecture using Functional API or Model Subclassing.",
+      "requirement_id": "1.1",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "checks": {
+        "custom_components_present_gate_passed": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_25_custom_component.json",
+          "sha256": "bb7b0e9b53d7c777ce5690b9483d55f5a79391b88130bf8e0c381b750145a0b2",
+          "size_bytes": 4098,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/custom_objects.py",
+          "sha256": "08b8b3ef00b7867027163291312cc02b4a23af6be5c61434c112717a1d875862",
+          "size_bytes": 11266,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py",
+          "sha256": "3dc2c703929fa460acdf5468cf4e2abfccc3993f816cbe9ddcf97495eb09b657",
+          "size_bytes": 7375,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_7_clean_kernel_production_export.json",
+          "sha256": "dc98d7739c65f37d400365f05ef0037727e7f5e20a9e0cf50e5f93f75d2fcf63",
+          "size_bytes": 8296,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [],
+      "missing_evidence": [],
+      "notes": [
+        "Custom components include CosineInteractionLayer, HighRecallCalibrationLayer, ProductionGateCallback, WeightedHuberLoss"
+      ],
+      "requirement": "At least one advanced custom component: custom layer, loss, or callback.",
+      "requirement_id": "1.2",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "checks": {
+        "gradient_tape_loop_no_model_fit_gate_passed": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_25_training_evaluation_loop.json",
+          "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523",
+          "size_bytes": 10737,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
+          "sha256": "d8db5fc73e8b31b542953de1a63a8bf9f355a607fe9edabba8fb554fd0d619de",
+          "size_bytes": 387745,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_7_clean_kernel_production_export.json",
+          "sha256": "dc98d7739c65f37d400365f05ef0037727e7f5e20a9e0cf50e5f93f75d2fcf63",
+          "size_bytes": 8296,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [],
+      "missing_evidence": [],
+      "notes": [],
+      "requirement": "Full training/evaluation loop using tf.GradientTape; model.fit() not used as main training path.",
+      "requirement_id": "1.3",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "checks": {
+        "phase_27_2_tensorboard_release_gate_passed": true,
+        "tensorboard_events_recorded_gate_passed": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_25_tensorboard_monitoring.json",
+          "sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d",
+          "size_bytes": 4233,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_1_27_2_release_gate.json",
+          "sha256": "56d7bc068d996b9794a5dce5aa8025fc8b8d043217656c6d555fceb471971f26",
+          "size_bytes": 1999,
+          "tracked": false
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+          "sha256": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
+          "size_bytes": 1422,
+          "tracked": false
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
+          "sha256": "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1",
+          "size_bytes": 126450,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [],
+      "missing_evidence": [],
+      "notes": [],
+      "requirement": "TensorBoard monitoring logs are included in repository release evidence.",
+      "requirement_id": "1.4",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_1_27_2_release_gate.json",
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2"
+      ]
+    },
+    {
+      "checks": {
+        "mae_target_le_0_02_gate_passed": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_25_baseline_selection_gate.json",
+          "sha256": "d6999d851e0406917f756f8c501b48b09458ad68b764c2d82d4d2f20fa6c0ef2",
+          "size_bytes": 11164,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+          "sha256": "7ccc3852070c498c900fc561e13a8c4164e76fdd395c479af6ca08c4da587014",
+          "size_bytes": 13283,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_7_clean_kernel_production_export.json",
+          "sha256": "dc98d7739c65f37d400365f05ef0037727e7f5e20a9e0cf50e5f93f75d2fcf63",
+          "size_bytes": 8296,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [],
+      "missing_evidence": [],
+      "notes": [
+        "MAE evidence: {\"required_max\": 0.02, \"test_mae\": 0.0086032, \"validation_mae\": 0.0084428}"
+      ],
+      "requirement": "Regression MAE target <= 0.02.",
+      "requirement_id": "1.5",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_7_clean_kernel_production_export.json"
+      ]
+    },
+    {
+      "checks": {
+        "keras_export_and_inference_smoke_gate_passed": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_25_tensorflow_artifact_export.json",
+          "sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe",
+          "size_bytes": 7098,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+          "size_bytes": 80901,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+          "sha256": "f3b63f099ca5b1aad88571432ddae93e065cd41765a3a9a1c39ae727848fffb1",
+          "size_bytes": 24278,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_8_model_card_manifest_refresh.json",
+          "sha256": "9a6bff4f2d0883885be03c011c3cf1a0345d3214b4ab3220b1535a9b737b1548",
+          "size_bytes": 6413,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [],
+      "missing_evidence": [],
+      "notes": [],
+      "requirement": "Export trained model in production TensorFlow format: .keras or SavedModel.",
+      "requirement_id": "2.1",
+      "status": "tracking-blocked",
+      "untracked_evidence": [
+        "reports/phase_27_8_model_card_manifest_refresh.json"
+      ]
+    },
+    {
+      "checks": {
+        "real_keras_custom_object_loader_smoke_passed": false,
+        "source_inference_fixture_present": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "model_api/inference.py",
+          "sha256": "efe341ae0cfad4bde263f036395c542455c7a29ff48b68040d0749c495d4be91",
+          "size_bytes": 13388,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
+          "sha256": "d0d0558cb16f3db60c379c11c4d2c33f057c64f6fdd646dd00555113052ef94d",
+          "size_bytes": 1515,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+          "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7",
+          "size_bytes": 23261,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_9_model_api_production_smoke.json",
+          "sha256": "56afa25892a9cb114a2d11204ef7cd1616469f7cab68491b90f10ec3f0911add",
+          "size_bytes": 3458,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [
+        "real_keras_custom_object_loader_smoke_passed"
+      ],
+      "missing_evidence": [],
+      "notes": [
+        "Production runtime loader evidence remains tied to Step 27.9."
+      ],
+      "requirement": "Inference code loads exported model and produces JSON-compatible prediction output.",
+      "requirement_id": "2.2",
+      "status": "failed-gate",
+      "untracked_evidence": [
+        "reports/phase_27_9_model_api_production_smoke.json"
+      ]
+    },
+    {
+      "checks": {
+        "fastapi_source_present": true,
+        "live_fastapi_smoke_passed": false
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "model_api/app.py",
+          "sha256": "454f2b8ad3a205362a0f883197387cc3a398365c9aad84c20dd3f4fb0a3a6b66",
+          "size_bytes": 14385,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/README.md",
+          "sha256": "650f95dba3f356489bcb4b7fa4eaf3d6f1d8f85ab3f2164437fb6f6b0fc413aa",
+          "size_bytes": 10118,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "tests/model_api/test_phase_26_layout.py",
+          "sha256": "cda5f7e7da517e15461a5f203de2ee96aa0f8b32aac685e32b72d8d3258da702",
+          "size_bytes": 44232,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_9_model_api_production_smoke.json",
+          "sha256": "56afa25892a9cb114a2d11204ef7cd1616469f7cab68491b90f10ec3f0911add",
+          "size_bytes": 3458,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [
+        "live_fastapi_smoke_passed"
+      ],
+      "missing_evidence": [],
+      "notes": [],
+      "requirement": "REST API implemented with FastAPI or Flask.",
+      "requirement_id": "3.1",
+      "status": "failed-gate",
+      "untracked_evidence": [
+        "reports/phase_27_9_model_api_production_smoke.json"
+      ]
+    },
+    {
+      "checks": {
+        "live_fastapi_health_model_info_inference_smoke_passed": false,
+        "phase26_tests_unskipped_passed": false
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "model_api/app.py",
+          "sha256": "454f2b8ad3a205362a0f883197387cc3a398365c9aad84c20dd3f4fb0a3a6b66",
+          "size_bytes": 14385,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/schemas.py",
+          "sha256": "32a39dfdae91c3f68a682e477e6541a62d56af0033a7fc0f1587e0fa5a3e8f6d",
+          "size_bytes": 30270,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/inference.py",
+          "sha256": "efe341ae0cfad4bde263f036395c542455c7a29ff48b68040d0749c495d4be91",
+          "size_bytes": 13388,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "tests/model_api/test_phase_26_layout.py",
+          "sha256": "cda5f7e7da517e15461a5f203de2ee96aa0f8b32aac685e32b72d8d3258da702",
+          "size_bytes": 44232,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_27_9_model_api_production_smoke.json",
+          "sha256": "56afa25892a9cb114a2d11204ef7cd1616469f7cab68491b90f10ec3f0911add",
+          "size_bytes": 3458,
+          "tracked": false
+        }
+      ],
+      "failed_checks": [
+        "phase26_tests_unskipped_passed",
+        "live_fastapi_health_model_info_inference_smoke_passed"
+      ],
+      "missing_evidence": [],
+      "notes": [
+        "Fake model or fake embedding smoke is not accepted for production evidence."
+      ],
+      "requirement": "REST API loads model, accepts input, runs inference, returns JSON.",
+      "requirement_id": "3.2",
+      "status": "failed-gate",
+      "untracked_evidence": [
+        "reports/phase_27_9_model_api_production_smoke.json"
+      ]
+    },
+    {
+      "checks": {
+        "genai_boundary_artifacts_present": true
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_25_training_only_genai_boundary.json",
+          "sha256": "1bdc8af7e23989aaadb7ed0b1e8634d16809b110d37e1c8976243295781d7e32",
+          "size_bytes": 3030,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+          "sha256": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06",
+          "size_bytes": 10877,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+          "sha256": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
+          "size_bytes": 4948,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "GAP_MODEL_TRAINING.md",
+          "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67",
+          "size_bytes": 18401,
+          "tracked": true
+        }
+      ],
+      "failed_checks": [],
+      "missing_evidence": [],
+      "notes": [],
+      "requirement": "Generative AI is secondary feature or wrapper boundary, not core training mutation.",
+      "requirement_id": "4.1",
+      "status": "satisfied",
+      "untracked_evidence": []
+    },
+    {
+      "checks": {
+        "all_requirement_rows_present": true,
+        "model_card_manifest_refresh_complete": true,
+        "runtime_smoke_production_passed": false
+      },
+      "evidence": [
+        {
+          "exists": true,
+          "path": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
+          "sha256": "d8db5fc73e8b31b542953de1a63a8bf9f355a607fe9edabba8fb554fd0d619de",
+          "size_bytes": 387745,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/custom_objects.py",
+          "sha256": "08b8b3ef00b7867027163291312cc02b4a23af6be5c61434c112717a1d875862",
+          "size_bytes": 11266,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_25_training_evaluation_loop.json",
+          "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523",
+          "size_bytes": 10737,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+          "size_bytes": 80901,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/inference.py",
+          "sha256": "efe341ae0cfad4bde263f036395c542455c7a29ff48b68040d0749c495d4be91",
+          "size_bytes": 13388,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/app.py",
+          "sha256": "454f2b8ad3a205362a0f883197387cc3a398365c9aad84c20dd3f4fb0a3a6b66",
+          "size_bytes": 14385,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+          "sha256": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
+          "size_bytes": 4948,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+          "sha256": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
+          "size_bytes": 1422,
+          "tracked": false
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
+          "sha256": "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1",
+          "size_bytes": 126450,
+          "tracked": false
+        },
+        {
+          "exists": true,
+          "path": "requirements.txt",
+          "sha256": "84f801a5fe96a224eaaf328b0f2d4a522a7bd0cdac915cc3f39040ba192153bd",
+          "size_bytes": 576,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "training/README.md",
+          "sha256": "88a4fbd839cda2b3ffa78bd4c948005f173f16a639062dff0390dd0d1ee180a4",
+          "size_bytes": 5188,
+          "tracked": true
+        },
+        {
+          "exists": true,
+          "path": "model_api/README.md",
+          "sha256": "650f95dba3f356489bcb4b7fa4eaf3d6f1d8f85ab3f2164437fb6f6b0fc413aa",
+          "size_bytes": 10118,
+          "tracked": true
+        },
+        {
+          "exists": false,
+          "path": "README.md",
+          "tracked": false
+        }
+      ],
+      "failed_checks": [
+        "runtime_smoke_production_passed"
+      ],
+      "missing_evidence": [
+        "README.md"
+      ],
+      "notes": [
+        "Runtime smoke and clean tracked release evidence are required before final production-ready claim."
+      ],
+      "requirement": "Repository contains training source, custom component, GradientTape loop, model export, inference code, REST API, GenAI boundary, TensorBoard logs, docs, requirements, README.",
+      "requirement_id": "deliverables",
+      "status": "missing-evidence",
+      "untracked_evidence": [
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+        "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2"
+      ]
+    }
+  ],
+  "phase_id": "phase_27_10_requirement_matrix",
+  "policy": {
+    "all_requirement_sections_required": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "2.1",
+      "2.2",
+      "3.1",
+      "3.2",
+      "4.1",
+      "deliverables"
+    ],
+    "evidence_must_be_git_tracked_for_production_claim": true,
+    "evidence_must_exist": true,
+    "real_runtime_smoke_required_for_api_sections": true
+  },
+  "references": [
+    "TODOS.md#step-27.10",
+    "REQUIREMENT.md",
+    "GAP_MODEL_TRAINING.md"
+  ],
+  "schema_version": "phase-27-10-requirement-matrix-v1"
+}

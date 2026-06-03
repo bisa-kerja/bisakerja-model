@@ -1,20 +1,37 @@
-tasks
-.pi/
-.DS_Store
-.ipynb_checkpoints/
-reports/.ipynb_checkpoints/
-legacy/.pi/
-legacy/logs/
-references/
-artifacts/tensorboard/
+# Task runner files
+tasks/
+
+# Python virtual environments
 training/venv/
 training/notebooks/**/venv/
 training/notebooks/**/.venv/
-__pycache__/
+
+# Python cache and compiled files
+_pycache_/
 *.py[cod]
 .pytest_cache/
+.ipynb_checkpoints/
+reports/.ipynb_checkpoints/
+
+# Local project metadata
+.pi/
+legacy/.pi/
+
+# Logs
+legacy/logs/
+
+# Dataset, references, and generated artifacts
+references/
+artifacts/tensorboard/
+
+# Trained model artifacts
 models/*.keras
 !legacy/models/*.keras
+
+# Generated reports
 reports/evaluation_report_v2.json
 reports/evaluation_report_v2.md
 reports/model_card_v2.json
+
+# Operating system files
+.DS_Store
