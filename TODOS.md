@@ -1013,7 +1013,7 @@ Acceptance Criteria:
 
 ### Phase 33 — Model API AI CV Analyzer Request Compatibility Fix
 
-Status: Planned
+Status: Complete
 
 Goal: Make `/internal/model/cv-analysis` accept exactly the multipart payload produced by Backend AI CV Analyzer without weakening validation or leaking sensitive data.
 
@@ -1025,21 +1025,21 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 33.1: Fix `jobRoles[]` multipart parsing — Support repeated form fields from Backend `FormData.append("jobRoles", role)` and reject empty/oversized role lists according to Backend OpenAPI limits.
-- [ ] Step 33.2: Align `jobCandidates[].scoringInput.requirements` — Accept Backend requirement objects `{ type, value, priority }[]` and safely derive scoring text from `value`; reject unknown unsafe shapes with deterministic `contract_validation_error`.
-- [ ] Step 33.3: Align numeric signals — Accept Backend `numericSignals` or explicitly remove it from Backend fixture; do not allow arbitrary numeric keys to bypass approved Phase 25 feature order.
-- [ ] Step 33.4: Align backend metadata allowlist — Accept only safe hydration hints currently sent by Backend (`title`, `companyName`, `locationDisplay`, `sourceUpdatedAt`) plus documented source fields; never trust metadata for candidate membership or scoring identity.
-- [ ] Step 33.5: Enforce candidate policy — Keep max 50 candidates, unique `jobId`, required scoring evidence, `rankingPolicy.backendOwnsHydration=true`, `requireCandidateJobIds=true`, `deduplicateByJobId=true`, `maxRecommendations<=5`.
-- [ ] Step 33.6: Harden PDF parse failures — Return deterministic validation/parse error or low-confidence parser evidence for empty/scanned PDFs; never fabricate CV text, skills, sections, or experience.
-- [ ] Step 33.7: Preserve internal auth — Require bearer service token for staging/production; local bypass must remain disabled when `MODEL_API_ENV=staging|production`.
-- [ ] Step 33.8: Add request contract tests — Cover Backend-produced multipart fixtures for `UPLOAD`, `REFERENCE`, `BOOKMARK`, `JOB_SEARCH`, `DIRECT_JOB_DETAIL`, repeated `jobRoles`, requirements objects, duplicate candidates, empty candidates, empty PDF, malformed PDF, and oversized PDF.
+- [x] Step 33.1: Fix `jobRoles[]` multipart parsing — Support repeated form fields from Backend `FormData.append("jobRoles", role)` and reject empty/oversized role lists according to Backend OpenAPI limits.
+- [x] Step 33.2: Align `jobCandidates[].scoringInput.requirements` — Accept Backend requirement objects `{ type, value, priority }[]` and safely derive scoring text from `value`; reject unknown unsafe shapes with deterministic `contract_validation_error`.
+- [x] Step 33.3: Align numeric signals — Accept Backend `numericSignals` or explicitly remove it from Backend fixture; do not allow arbitrary numeric keys to bypass approved Phase 25 feature order.
+- [x] Step 33.4: Align backend metadata allowlist — Accept only safe hydration hints currently sent by Backend (`title`, `companyName`, `locationDisplay`, `sourceUpdatedAt`) plus documented source fields; never trust metadata for candidate membership or scoring identity.
+- [x] Step 33.5: Enforce candidate policy — Keep max 50 candidates, unique `jobId`, required scoring evidence, `rankingPolicy.backendOwnsHydration=true`, `requireCandidateJobIds=true`, `deduplicateByJobId=true`, `maxRecommendations<=5`.
+- [x] Step 33.6: Harden PDF parse failures — Return deterministic validation/parse error or low-confidence parser evidence for empty/scanned PDFs; never fabricate CV text, skills, sections, or experience.
+- [x] Step 33.7: Preserve internal auth — Require bearer service token for staging/production; local bypass must remain disabled when `MODEL_API_ENV=staging|production`.
+- [x] Step 33.8: Add request contract tests — Cover Backend-produced multipart fixtures for `UPLOAD`, `REFERENCE`, `BOOKMARK`, `JOB_SEARCH`, `DIRECT_JOB_DETAIL`, repeated `jobRoles`, requirements objects, duplicate candidates, empty candidates, empty PDF, malformed PDF, and oversized PDF.
 
 Acceptance Criteria:
 
-- [ ] Backend-produced AI CV Analyzer multipart payload parses successfully without backend source changes beyond agreed canonical contract.
-- [ ] Invalid candidate membership, duplicate IDs, missing scoring evidence, unsafe metadata, and malformed PDFs fail closed with stable errors.
-- [ ] Model API never trusts backend metadata for job identity and never receives or uses Backend DB credentials.
-- [ ] Tests prove request compatibility against exported fixtures.
+- [x] Backend-produced AI CV Analyzer multipart payload parses successfully without backend source changes beyond agreed canonical contract.
+- [x] Invalid candidate membership, duplicate IDs, missing scoring evidence, unsafe metadata, and malformed PDFs fail closed with stable errors.
+- [x] Model API never trusts backend metadata for job identity and never receives or uses Backend DB credentials.
+- [x] Tests prove request compatibility against exported fixtures.
 
 ---
 

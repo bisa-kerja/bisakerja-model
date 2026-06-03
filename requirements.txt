@@ -6,6 +6,7 @@
 fastapi==0.123.5
 uvicorn[standard]==0.47.0
 pydantic==2.12.5
+python-multipart==0.0.29
 
 # Phase 25 model runtime recorded by inference_smoke_fixture.json.
 tensorflow==2.21.0

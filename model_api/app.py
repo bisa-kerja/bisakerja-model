@@ -35,6 +35,8 @@ from .observability import build_safe_observability_event
 from .pdf_parser import ats_score_from_pdf_evidence, normalized_skills_from_text, parse_pdf_bytes
 from .inference import InferenceService, RuntimeState, ScoreCalibrationPolicy, utc_now_iso
 from .schemas import (
+    MAX_JOB_ROLE_CHARS,
+    MAX_JOB_ROLES,
     MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
     MODEL_CORE_CV_ANALYSIS_SCHEMA_VERSION,
     AtsFriendlinessCore,
@@ -348,7 +350,60 @@ def _json_form_value(value: str | None, field_name: str) -> Any:
         raise ContractValidationError([f"$.{field_name} must be valid JSON: {exc.msg}"]) from exc
 
 
+def _form_string_values(form: Any, field_name: str) -> list[str]:
+    if hasattr(form, "getlist"):
+        values = list(form.getlist(field_name))
+    else:
+        value = form.get(field_name) if hasattr(form, "get") else None
+        values = value if isinstance(value, list) else ([] if value is None else [value])
+    return [value for value in values if isinstance(value, str)]
+
+
+def _job_roles_from_multipart(form: Any) -> list[str]:
+    raw_values = _form_string_values(form, "jobRoles")
+    if len(raw_values) == 1 and raw_values[0].lstrip().startswith("["):
+        parsed = _json_form_value(raw_values[0], "jobRoles")
+        raw_values = parsed if isinstance(parsed, list) else []
+    roles: list[str] = []
+    errors: list[str] = []
+    for index, value in enumerate(raw_values):
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"$.jobRoles[{index}] must be non-empty string")
+            continue
+        role = value.strip()
+        if len(role) > MAX_JOB_ROLE_CHARS:
+            errors.append(f"$.jobRoles[{index}] max length {MAX_JOB_ROLE_CHARS}; actual={len(role)}")
+        roles.append(role)
+    if not roles:
+        errors.append("$.jobRoles must contain at least 1 role")
+    if len(roles) > MAX_JOB_ROLES:
+        errors.append(f"$.jobRoles max items {MAX_JOB_ROLES}; actual={len(roles)}")
+    if errors:
+        raise ContractValidationError(errors)
+    return roles
+
+
+def _candidate_requirement_hints(values: Any) -> list[str]:
+    hints: list[str] = []
+    if not isinstance(values, list):
+        return hints
+    for value in values:
+        if isinstance(value, str):
+            hints.append(value)
+        elif isinstance(value, dict) and isinstance(value.get("value"), str):
+            hints.append(value["value"])
+    return hints
+
+
+def _validate_pdf_upload_bytes(pdf_bytes: bytes, runtime_config: RuntimeConfig) -> None:
+    if len(pdf_bytes) > runtime_config.max_pdf_bytes:
+        raise ContractValidationError(["cvFile exceeds MODEL_API_MAX_PDF_BYTES"])
+    if not pdf_bytes.lstrip().startswith(b"%PDF"):
+        raise ContractValidationError(["cvFile must start with PDF magic bytes"])
+
+
 def _build_cv_payload_from_multipart(form: Any, pdf_bytes: bytes, runtime_config: RuntimeConfig) -> dict[str, object]:
+    _validate_pdf_upload_bytes(pdf_bytes, runtime_config)
     job_candidates = _json_form_value(form.get("jobCandidates"), "jobCandidates")
     ranking_policy = _json_form_value(form.get("rankingPolicy"), "rankingPolicy")
     candidate_skill_hints: list[str] = []
@@ -357,19 +412,23 @@ def _build_cv_payload_from_multipart(form: Any, pdf_bytes: bytes, runtime_config
             if not isinstance(candidate, dict):
                 continue
             scoring = candidate.get("scoringInput") if isinstance(candidate.get("scoringInput"), dict) else candidate
-            for key in ("requiredSkills", "requirements"):
-                values = scoring.get(key) if isinstance(scoring, dict) else None
-                if isinstance(values, list):
-                    candidate_skill_hints.extend(str(value) for value in values if isinstance(value, str))
+            if not isinstance(scoring, dict):
+                continue
+            required_skills = scoring.get("requiredSkills")
+            if isinstance(required_skills, list):
+                candidate_skill_hints.extend(str(value) for value in required_skills if isinstance(value, str))
+            candidate_skill_hints.extend(_candidate_requirement_hints(scoring.get("requirements")))
 
     parse_started_at = perf_counter()
     parsed_pdf = parse_pdf_bytes(pdf_bytes, max_bytes=runtime_config.max_pdf_bytes, max_pages=runtime_config.max_pdf_pages)
+    if not parsed_pdf.text.strip():
+        raise ContractValidationError(["cvFile has no extractable PDF text"])
     parse_latency_ms = _latency_ms(parse_started_at)
     ats_score, detected_issues, ats_fallback = ats_score_from_pdf_evidence(parsed_pdf)
     profile = {
         "cvText": parsed_pdf.text,
         "profileText": parsed_pdf.text[:2000],
-        "targetRoles": _json_form_value(form.get("jobRoles"), "jobRoles") if form.get("jobRoles") else [],
+        "targetRoles": _job_roles_from_multipart(form),
         "normalizedSkills": list(normalized_skills_from_text(parsed_pdf.text, candidate_skill_hints)),
         "detectedCvSectionNames": list(parsed_pdf.section_names),
     }
@@ -412,6 +471,7 @@ def create_app(
     except ModuleNotFoundError as exc:  # pragma: no cover - depends on optional runtime deps
         raise RuntimeError("FastAPI dependency missing; install serving requirements after Step 26.13") from exc
 
+    globals()["Request"] = Request
     runtime_config = config or RuntimeConfig.from_env()
     runtime_config.validate_security()
     artifact_report = verify_runtime_artifacts(runtime_config.artifact_paths)
@@ -595,10 +655,7 @@ def create_app(
         if getattr(upload, "content_type", None) not in {"application/pdf", "application/octet-stream"}:
             raise ContractValidationError(["cvFile content type must be application/pdf"])
         pdf_bytes = await upload.read()
-        if len(pdf_bytes) > runtime_config.max_pdf_bytes:
-            raise ContractValidationError(["cvFile exceeds MODEL_API_MAX_PDF_BYTES"])
-        if not pdf_bytes.lstrip().startswith(b"%PDF"):
-            raise ContractValidationError(["cvFile must start with PDF magic bytes"])
+        _validate_pdf_upload_bytes(pdf_bytes, runtime_config)
         payload = _build_cv_payload_from_multipart(form, pdf_bytes, runtime_config)
         parsed_pdf_evidence = payload.pop("_parsedPdfEvidence")
         request = parse_cv_analysis_model_core_request(payload)
