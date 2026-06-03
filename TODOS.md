@@ -1217,7 +1217,7 @@ Acceptance Criteria:
 
 ### Phase 39 — Backend AI CV Analyzer Product-Copy Quality and Localization Review
 
-Status: Planned
+Status: Complete
 
 Goal: Decide whether deterministic fallback copy is sufficient for staging/demo or whether GenAI/approved localized templates are required before broader user testing.
 
@@ -1235,17 +1235,17 @@ Current gap:
 
 Tasks:
 
-- [ ] Step 39.1: Define product language policy — Decide whether `language=id` should return Indonesian copy, English copy, or bilingual-safe copy for staging/demo.
-- [ ] Step 39.2: Review fallback copy quality — Create representative CV/job fixtures and evaluate whether deterministic summaries/actionables are useful enough without GenAI.
-- [ ] Step 39.3: Add approved templates — If GenAI remains disabled, add richer deterministic templates for job fit, ATS, overall impression, actions, section reviews, and recommendation reasons.
-- [ ] Step 39.4: Add localization tests — Verify `id`/`en` behavior, no mixed-language drift, no PII leakage, and OpenAPI-compatible text lengths.
-- [ ] Step 39.5: Add product acceptance report — Produce a concise demo readiness report with before/after sample responses and remaining copy limitations.
+- [x] Step 39.1: Define product language policy — Decide whether `language=id` should return Indonesian copy, English copy, or bilingual-safe copy for staging/demo.
+- [x] Step 39.2: Review fallback copy quality — Create representative CV/job fixtures and evaluate whether deterministic summaries/actionables are useful enough without GenAI.
+- [x] Step 39.3: Add approved templates — If GenAI remains disabled, add richer deterministic templates for job fit, ATS, overall impression, actions, section reviews, and recommendation reasons.
+- [x] Step 39.4: Add localization tests — Verify `id`/`en` behavior, no mixed-language drift, no PII leakage, and OpenAPI-compatible text lengths.
+- [x] Step 39.5: Add product acceptance report — Produce a concise demo readiness report with before/after sample responses and remaining copy limitations.
 
 Acceptance Criteria:
 
-- [ ] Product-facing language behavior is explicit and tested.
-- [ ] Fallback copy is either accepted for staging/demo or replaced by approved templates/GenAI provider output.
-- [ ] Public responses stay schema-valid, safe, and free of raw CV text, prompt text, tokens, storage keys, and unrelated PII.
+- [x] Product-facing language behavior is explicit and tested.
+- [x] Fallback copy is either accepted for staging/demo or replaced by approved templates/GenAI provider output.
+- [x] Public responses stay schema-valid, safe, and free of raw CV text, prompt text, tokens, storage keys, and unrelated PII.
 
 ---
 

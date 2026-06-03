@@ -1,0 +1,49 @@
+{
+  "blockers": [],
+  "checks": {
+    "approved_copy_has_no_localization_drift_or_sensitive_literals": true,
+    "backend_uses_approved_template_copy": true,
+    "copy_safety_filters_and_pii_tests_present": true,
+    "fallback_templates_cover_public_fields": true,
+    "genai_boundary_remains_validated_and_optional": true,
+    "language_policy_explicit": true,
+    "localization_tests_cover_id_en_behavior": true,
+    "schema_length_limits_match_public_contract": true
+  },
+  "commands": {
+    "backend_copy_tests": "cd references && bun test --preload ./tests/preload-env.ts tests/unit/ai-cv-analyzer/ai-cv-analyzer.service.test.ts",
+    "phase39_gate": "python scripts/verify_phase_39_product_copy_localization.py --write"
+  },
+  "final_decision": "go",
+  "language_policy": {
+    "genai_default": "disabled_or_strictly_validated_before_persistence",
+    "requested_language_en": "return English public copy",
+    "requested_language_id": "return English public copy until Indonesian localization is product-approved",
+    "staging_default": "english_safe_copy"
+  },
+  "phase_id": "phase_39_product_copy_localization",
+  "remaining_limitations": [
+    "English-only public copy for id requests during staging/demo.",
+    "Deterministic copy cannot add richer personalization beyond sanitized model evidence and backend job metadata.",
+    "Indonesian localization still needs product-approved templates or validated GenAI output."
+  ],
+  "review_result": {
+    "fallback_copy_decision": "accepted_for_staging_demo_with_english_safe_copy",
+    "genai": "optional; output must pass schema, score/order preservation, and safety filters before use",
+    "indonesian_localization": "deferred_until_product_approved_templates_or_genai_provider_output"
+  },
+  "sample_before_after": {
+    "after": "Your CV shows relevant evidence in TypeScript, PostgreSQL. Strengthen proof for Docker to improve role fit.",
+    "before": "CV shows fit through TypeScript, PostgreSQL, with gaps in Docker."
+  },
+  "schema_version": "phase-39-product-copy-localization-v1",
+  "sources": [
+    "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.service.ts",
+    "references/tests/unit/ai-cv-analyzer/ai-cv-analyzer.service.test.ts",
+    "references/src/shared/integrations/model-api.schema.ts",
+    "artifacts/phase_39_product_copy_localization/approved_fallback_templates.json",
+    "docs/runbooks/ai-cv-analyzer-product-copy-localization.md",
+    "GAP_MODEL_TRAINING.md",
+    "REQUIREMENT.md"
+  ]
+}
