@@ -1,0 +1,644 @@
+{
+  "acceptance": {
+    "artifact_manifest_hashes_required_and_training_artifacts": true,
+    "exported_model_loads_without_hidden_state": true,
+    "model_card_has_required_fields": true,
+    "score_meanings_backed_by_calibration_evidence": true
+  },
+  "artifact_manifest_sha256": "fea0debb87847b1b6b885cab84b07ed4f35e4a4c833fb1d6ecdda2171422f83a",
+  "calibration_metrics": {
+    "atsFriendliness.score": {
+      "bucket_agreement": 0.9,
+      "ece_points": 4.2,
+      "mae": 4.2,
+      "mce_points": 16.0,
+      "passed": true,
+      "row_count": 10,
+      "within_10_points_rate": 0.9
+    },
+    "jobFitAlignment.score": {
+      "bucket_agreement": 0.915,
+      "ece_points": 0.4595,
+      "mae": 2.2225,
+      "mce_points": 13.8064,
+      "passed": true,
+      "row_count": 200,
+      "within_10_points_rate": 0.92
+    },
+    "recommendations[].matchScore": {
+      "bucket_agreement": 1.0,
+      "ece_points": 3.0667,
+      "mae": 3.4667,
+      "mce_points": 8.5,
+      "passed": true,
+      "row_count": 15,
+      "within_10_points_rate": 0.9333
+    }
+  },
+  "calibration_tables": {
+    "atsFriendliness.score": [
+      {
+        "avg_predicted": null,
+        "avg_target": null,
+        "bucket": "0-20",
+        "bucket_agreement": null,
+        "count": 0,
+        "mae": null,
+        "within_10_points_rate": null
+      },
+      {
+        "avg_predicted": 35.0,
+        "avg_target": 35.0,
+        "bucket": "21-40",
+        "bucket_agreement": 1.0,
+        "count": 4,
+        "mae": 0.0,
+        "within_10_points_rate": 1.0
+      },
+      {
+        "avg_predicted": null,
+        "avg_target": null,
+        "bucket": "41-60",
+        "bucket_agreement": null,
+        "count": 0,
+        "mae": null,
+        "within_10_points_rate": null
+      },
+      {
+        "avg_predicted": 72.0,
+        "avg_target": 56.0,
+        "bucket": "61-80",
+        "bucket_agreement": 0.5,
+        "count": 2,
+        "mae": 16.0,
+        "within_10_points_rate": 0.5
+      },
+      {
+        "avg_predicted": 91.0,
+        "avg_target": 88.5,
+        "bucket": "81-100",
+        "bucket_agreement": 1.0,
+        "count": 4,
+        "mae": 2.5,
+        "within_10_points_rate": 1.0
+      }
+    ],
+    "jobFitAlignment.score": [
+      {
+        "avg_predicted": 4.5753,
+        "avg_target": 3.916,
+        "bucket": "0-20",
+        "bucket_agreement": 1.0,
+        "count": 20,
+        "mae": 0.7517,
+        "within_10_points_rate": 1.0
+      },
+      {
+        "avg_predicted": 35.2436,
+        "avg_target": 49.05,
+        "bucket": "21-40",
+        "bucket_agreement": 0.0,
+        "count": 2,
+        "mae": 13.8064,
+        "within_10_points_rate": 0.0
+      },
+      {
+        "avg_predicted": 50.9028,
+        "avg_target": 50.9225,
+        "bucket": "41-60",
+        "bucket_agreement": 1.0,
+        "count": 79,
+        "mae": 0.7433,
+        "within_10_points_rate": 1.0
+      },
+      {
+        "avg_predicted": 71.6053,
+        "avg_target": 71.0477,
+        "bucket": "61-80",
+        "bucket_agreement": 0.7969,
+        "count": 64,
+        "mae": 4.8777,
+        "within_10_points_rate": 0.7969
+      },
+      {
+        "avg_predicted": 98.3458,
+        "avg_target": 98.742,
+        "bucket": "81-100",
+        "bucket_agreement": 0.9429,
+        "count": 35,
+        "mae": 0.8848,
+        "within_10_points_rate": 0.9714
+      }
+    ],
+    "recommendations[].matchScore": [
+      {
+        "avg_predicted": 16.5,
+        "avg_target": 15.0,
+        "bucket": "0-20",
+        "bucket_agreement": 1.0,
+        "count": 4,
+        "mae": 2.5,
+        "within_10_points_rate": 1.0
+      },
+      {
+        "avg_predicted": 26.5,
+        "avg_target": 35.0,
+        "bucket": "21-40",
+        "bucket_agreement": 1.0,
+        "count": 2,
+        "mae": 8.5,
+        "within_10_points_rate": 0.5
+      },
+      {
+        "avg_predicted": null,
+        "avg_target": null,
+        "bucket": "41-60",
+        "bucket_agreement": null,
+        "count": 0,
+        "mae": null,
+        "within_10_points_rate": null
+      },
+      {
+        "avg_predicted": 73.25,
+        "avg_target": 72.0,
+        "bucket": "61-80",
+        "bucket_agreement": 1.0,
+        "count": 4,
+        "mae": 1.75,
+        "within_10_points_rate": 1.0
+      },
+      {
+        "avg_predicted": 93.6,
+        "avg_target": 90.0,
+        "bucket": "81-100",
+        "bucket_agreement": 1.0,
+        "count": 5,
+        "mae": 3.6,
+        "within_10_points_rate": 1.0
+      }
+    ]
+  },
+  "dirty_worktree_at_export": true,
+  "export_paths": {
+    "artifact_manifest": "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json",
+    "calibration": "artifacts/phase_22_calibration_model_card_export/score_calibration.json",
+    "feature_config": "artifacts/phase_22_calibration_model_card_export/feature_config.json",
+    "label_manifest": "artifacts/phase_22_calibration_model_card_export/label_manifest.json",
+    "model_card": "artifacts/phase_22_calibration_model_card_export/model_card.json",
+    "schema": "artifacts/phase_22_calibration_model_card_export/model_core_schema.json"
+  },
+  "generated_at": "2026-06-02T06:00:35.448237+00:00",
+  "model_card_summary": {
+    "blocked_use": [
+      "Production hiring decision automation",
+      "User-facing production score claims without calibration evidence",
+      "Backend-owned hydration or OpenAI wrapper copy generation",
+      "Automated rejection, hiring eligibility, salary prediction, or protected-class inference."
+    ],
+    "dataset_hash": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+    "feature_config": {
+      "candidate_reranking": {
+        "max_recommendations": 5,
+        "requires_backend_job_candidates": true,
+        "static_job_index_allowed": false
+      },
+      "embedding_model": "intfloat/e5-base-v2",
+      "embedding_prefixes": {
+        "job": "passage:",
+        "profile_cv": "query:"
+      },
+      "normalized_features": [
+        "skill_overlap",
+        "requirement_coverage",
+        "role_match",
+        "experience_match",
+        "experience_gap_years",
+        "language",
+        "role_family",
+        "experience_band"
+      ],
+      "schema_version": "feature-config-v1",
+      "score_outputs": [
+        "jobFitAlignment.score",
+        "atsFriendliness.score",
+        "recommendations[].matchScore"
+      ],
+      "split_seed": 202621
+    },
+    "git_commit": "8355d24bc49bb91bb24ee8320cf0b4fffb76219c",
+    "intended_use": "Model-core CV analysis scoring, ATS evidence scoring, overall impression evidence, and backend-provided candidate reranking.",
+    "label_version": "human-validation-v1",
+    "limitations": [
+      "ID and MIXED language slices remain smaller than EN and need more validation labels.",
+      "Recommendation calibration uses backend-like fixture labels until larger production relevance labels are available.",
+      "Scores are model-core evidence signals, not hiring outcomes or eligibility claims."
+    ],
+    "metrics": {
+      "ats": {
+        "bucket_agreement": 1.0,
+        "macro_issue_precision": 1.0,
+        "macro_issue_recall": 1.0,
+        "per_issue": {
+          "contact_detection_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": null,
+            "recall": null,
+            "tp": 0
+          },
+          "date_detection_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": null,
+            "recall": null,
+            "tp": 0
+          },
+          "empty_parse_risk": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 3
+          },
+          "formatting_risk_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 9
+          },
+          "metric_evidence_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 6
+          },
+          "parseability_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 3
+          },
+          "section_completeness_issue": {
+            "fn": 0,
+            "fp": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "tp": 3
+          },
+          "unsupported_file_type": {
+            "fn": 0,
+            "fp": 0,
+            "precision": null,
+            "recall": null,
+            "tp": 0
+          }
+        },
+        "score_max": 100,
+        "score_min": 35
+      },
+      "calibration": {
+        "atsFriendliness.score": {
+          "bucket_agreement": 0.9,
+          "ece_points": 4.2,
+          "mae": 4.2,
+          "mce_points": 16.0,
+          "passed": true,
+          "row_count": 10,
+          "within_10_points_rate": 0.9
+        },
+        "jobFitAlignment.score": {
+          "bucket_agreement": 0.915,
+          "ece_points": 0.4595,
+          "mae": 2.2225,
+          "mce_points": 13.8064,
+          "passed": true,
+          "row_count": 200,
+          "within_10_points_rate": 0.92
+        },
+        "recommendations[].matchScore": {
+          "bucket_agreement": 1.0,
+          "ece_points": 3.0667,
+          "mae": 3.4667,
+          "mce_points": 8.5,
+          "passed": true,
+          "row_count": 15,
+          "within_10_points_rate": 0.9333
+        }
+      },
+      "jobfit_selected_model": {
+        "test": {
+          "high_fit_recall": 1.0,
+          "mae": 1.2134453410559114,
+          "predicted_high_count": 101,
+          "r2": 0.9888024700016572,
+          "rmse": 3.0846506825968403,
+          "row_count": 540,
+          "score_band_agreement": 0.9777777777777777,
+          "spearman": 0.9941647476914681,
+          "true_high_count": 90
+        },
+        "train": {
+          "high_fit_recall": 1.0,
+          "mae": 0.9123722731155846,
+          "predicted_high_count": 453,
+          "r2": 0.9927678418608983,
+          "rmse": 2.4830223217833773,
+          "row_count": 2520,
+          "score_band_agreement": 0.9865079365079366,
+          "spearman": 0.9947905569849019,
+          "true_high_count": 420
+        },
+        "validation": {
+          "high_fit_recall": 1.0,
+          "mae": 1.2127512022719138,
+          "predicted_high_count": 99,
+          "r2": 0.9840818513078482,
+          "rmse": 3.736960603319374,
+          "row_count": 540,
+          "score_band_agreement": 0.9796296296296296,
+          "spearman": 0.9942644428226389,
+          "true_high_count": 90
+        }
+      },
+      "recommendations": {
+        "map_at_10": 1.0,
+        "ndcg_at_10": 1.0,
+        "ndcg_at_5": 1.0
+      }
+    },
+    "split_seed": 202621
+  },
+  "phase_id": "phase_22_calibration_model_card_export",
+  "runtime_load_check": {
+    "environment_requirements": {
+      "core_runtime": [
+        "json",
+        "hashlib",
+        "pathlib"
+      ],
+      "model_runtime": [
+        "joblib-compatible selected scorer artifact",
+        "sentence-transformers with intfloat/e5-base-v2 for embedding generation"
+      ],
+      "path_policy": "all manifest paths are repository-relative",
+      "python": "3.10+"
+    },
+    "errors": [],
+    "loaded_files": [
+      "artifact_manifest.json",
+      "feature_config.json",
+      "label_manifest.json",
+      "model_card.json",
+      "model_core_schema.json",
+      "score_calibration.json"
+    ],
+    "passed": true
+  },
+  "schema_version": "calibration-model-card-export-v1",
+  "slice_calibration": [
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 0.0,
+      "mae": 0.0,
+      "mce_points": 0.0,
+      "output": "atsFriendliness.score",
+      "passed": true,
+      "row_count": 4,
+      "slice_key": "case_family",
+      "slice_value": "scanned_pdf",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 0.8333,
+      "ece_points": 7.0,
+      "mae": 7.0,
+      "mce_points": 16.0,
+      "output": "atsFriendliness.score",
+      "passed": true,
+      "row_count": 6,
+      "slice_key": "fallback",
+      "slice_value": "False",
+      "within_10_points_rate": 0.8333
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 0.0,
+      "mae": 0.0,
+      "mce_points": 0.0,
+      "output": "atsFriendliness.score",
+      "passed": true,
+      "row_count": 4,
+      "slice_key": "fallback",
+      "slice_value": "True",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 0.9196,
+      "ece_points": 0.9626,
+      "mae": 2.1426,
+      "mce_points": 13.8064,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 112,
+      "slice_key": "language",
+      "slice_value": "EN",
+      "within_10_points_rate": 0.9286
+    },
+    {
+      "bucket_agreement": 0.907,
+      "ece_points": 1.3142,
+      "mae": 2.3607,
+      "mce_points": 4.4641,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 86,
+      "slice_key": "language",
+      "slice_value": "UNKNOWN",
+      "within_10_points_rate": 0.907
+    },
+    {
+      "bucket_agreement": 0.963,
+      "ece_points": 1.1775,
+      "mae": 1.9659,
+      "mce_points": 1.6916,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 27,
+      "slice_key": "role_family",
+      "slice_value": "backend",
+      "within_10_points_rate": 0.963
+    },
+    {
+      "bucket_agreement": 0.9706,
+      "ece_points": 0.6631,
+      "mae": 0.73,
+      "mce_points": 15.64,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 34,
+      "slice_key": "role_family",
+      "slice_value": "cloud",
+      "within_10_points_rate": 0.9706
+    },
+    {
+      "bucket_agreement": 0.9655,
+      "ece_points": 0.8802,
+      "mae": 1.3259,
+      "mce_points": 3.2013,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 29,
+      "slice_key": "role_family",
+      "slice_value": "data",
+      "within_10_points_rate": 0.9655
+    },
+    {
+      "bucket_agreement": 0.7714,
+      "ece_points": 2.0025,
+      "mae": 4.2815,
+      "mce_points": 4.2757,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 35,
+      "slice_key": "role_family",
+      "slice_value": "other",
+      "within_10_points_rate": 0.8286
+    },
+    {
+      "bucket_agreement": 0.8095,
+      "ece_points": 4.3379,
+      "mae": 4.5399,
+      "mce_points": 13.8064,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 21,
+      "slice_key": "role_family",
+      "slice_value": "security",
+      "within_10_points_rate": 0.8095
+    },
+    {
+      "bucket_agreement": 0.9565,
+      "ece_points": 1.1637,
+      "mae": 1.4476,
+      "mce_points": 5.3639,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 23,
+      "slice_key": "role_family",
+      "slice_value": "software_engineering",
+      "within_10_points_rate": 0.9565
+    },
+    {
+      "bucket_agreement": 0.9677,
+      "ece_points": 1.0063,
+      "mae": 1.6024,
+      "mce_points": 3.7119,
+      "output": "jobFitAlignment.score",
+      "passed": true,
+      "row_count": 31,
+      "slice_key": "role_family",
+      "slice_value": "web",
+      "within_10_points_rate": 0.9355
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 3.2,
+      "mae": 3.2,
+      "mce_points": 6.0,
+      "output": "recommendations[].matchScore",
+      "passed": true,
+      "row_count": 5,
+      "slice_key": "candidateSetId",
+      "slice_value": "cs-backend-001",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 4.6,
+      "mae": 4.6,
+      "mce_points": 8.5,
+      "output": "recommendations[].matchScore",
+      "passed": true,
+      "row_count": 5,
+      "slice_key": "candidateSetId",
+      "slice_value": "cs-backend-002",
+      "within_10_points_rate": 0.8
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 1.8,
+      "mae": 2.6,
+      "mce_points": 3.0,
+      "output": "recommendations[].matchScore",
+      "passed": true,
+      "row_count": 5,
+      "slice_key": "candidateSetId",
+      "slice_value": "cs-backend-003",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 5.6667,
+      "mae": 5.6667,
+      "mce_points": 5.6667,
+      "output": "recommendations[].matchScore",
+      "passed": true,
+      "row_count": 3,
+      "slice_key": "rank",
+      "slice_value": "1",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 2.0,
+      "mae": 2.0,
+      "mce_points": 5.0,
+      "output": "recommendations[].matchScore",
+      "passed": true,
+      "row_count": 3,
+      "slice_key": "rank",
+      "slice_value": "2",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 0.0,
+      "mae": 0.6667,
+      "mce_points": 0.0,
+      "output": "recommendations[].matchScore",
+      "passed": true,
+      "row_count": 3,
+      "slice_key": "rank",
+      "slice_value": "3",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 3.6667,
+      "mae": 3.6667,
+      "mce_points": 4.0,
+      "output": "recommendations[].matchScore",
+      "passed": true,
+      "row_count": 3,
+      "slice_key": "rank",
+      "slice_value": "4",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "bucket_agreement": 1.0,
+      "ece_points": 5.3333,
+      "mae": 5.3333,
+      "mce_points": 14.0,
+      "output": "recommendations[].matchScore",
+      "passed": false,
+      "row_count": 3,
+      "slice_key": "rank",
+      "slice_value": "5",
+      "within_10_points_rate": 0.6667
+    }
+  ],
+  "status": "complete"
+}

@@ -1,0 +1,19 @@
+# Notebook runtime noise
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Local virtual environments
+venv/
+.venv/
+.tf-venv/
+.tf-venv-3.13/
+notebooks/**/venv/
+notebooks/**/.venv/
+
+# Large generated model artifacts should be stored outside notebook source unless intentionally versioned.
+*.keras
+*.h5
+*.onnx
+*.npy
+*.parquet

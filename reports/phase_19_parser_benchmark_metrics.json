@@ -1,0 +1,58 @@
+{
+  "by_case_family": {
+    "docx": {
+      "empty_text_rate": 0.0,
+      "mean_extraction_coverage": 1.0,
+      "row_count": 3,
+      "section_detection_accuracy": 1.0
+    },
+    "long_cv": {
+      "empty_text_rate": 0.0,
+      "mean_extraction_coverage": 1.0,
+      "row_count": 3,
+      "section_detection_accuracy": 1.0
+    },
+    "multi_column_pdf": {
+      "empty_text_rate": 0.0,
+      "mean_extraction_coverage": 1.0,
+      "row_count": 3,
+      "section_detection_accuracy": 1.0
+    },
+    "normal_pdf": {
+      "empty_text_rate": 0.0,
+      "mean_extraction_coverage": 1.0,
+      "row_count": 3,
+      "section_detection_accuracy": 1.0
+    },
+    "scanned_pdf": {
+      "empty_text_rate": 1.0,
+      "mean_extraction_coverage": 0.0,
+      "row_count": 3,
+      "section_detection_accuracy": 0.0
+    },
+    "short_cv": {
+      "empty_text_rate": 0.0,
+      "mean_extraction_coverage": 1.0,
+      "row_count": 3,
+      "section_detection_accuracy": 0.0
+    },
+    "table_heavy_pdf": {
+      "empty_text_rate": 0.0,
+      "mean_extraction_coverage": 1.0,
+      "row_count": 3,
+      "section_detection_accuracy": 1.0
+    }
+  },
+  "generated_at": "2026-06-02T04:52:49.348915+00:00",
+  "overall": {
+    "critical_parse_failure_label_count": 3,
+    "critical_parse_failure_recall": 1.0,
+    "empty_text_rate_all": 0.14285714285714285,
+    "empty_text_rate_supported": 0.14285714285714285,
+    "mean_extraction_coverage": 0.8571428571428571,
+    "row_count": 21,
+    "section_detection_accuracy": 0.7142857142857143
+  },
+  "phase_id": "phase_19_ats_friendliness_benchmark_scorer",
+  "schema_version": "ats-benchmark-scorer-v1"
+}

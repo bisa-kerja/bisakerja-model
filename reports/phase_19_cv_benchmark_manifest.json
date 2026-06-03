@@ -1,0 +1,36 @@
+{
+  "artifact": {
+    "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+    "row_count": 21,
+    "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+  },
+  "case_counts": {
+    "docx": 3,
+    "long_cv": 3,
+    "multi_column_pdf": 3,
+    "normal_pdf": 3,
+    "scanned_pdf": 3,
+    "short_cv": 3,
+    "table_heavy_pdf": 3
+  },
+  "generated_at": "2026-06-02T04:52:49.317125+00:00",
+  "label_version": "ats-issue-labels-v1",
+  "locked": true,
+  "missing_cases": [],
+  "phase_id": "phase_19_ats_friendliness_benchmark_scorer",
+  "privacy": {
+    "contains_raw_personal_cv_data": false,
+    "fixture_type": "synthetic_non_personal"
+  },
+  "required_case_families": [
+    "normal_pdf",
+    "scanned_pdf",
+    "multi_column_pdf",
+    "table_heavy_pdf",
+    "short_cv",
+    "long_cv",
+    "docx"
+  ],
+  "schema_version": "ats-benchmark-scorer-v1",
+  "status": "complete"
+}

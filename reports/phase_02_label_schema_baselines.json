@@ -1,0 +1,392 @@
+{
+  "acceptance": {
+    "baselines_defined_before_model_training": true,
+    "label_components_documented_before_pair_generation": true,
+    "manual_validation_sample_plan_exists": true
+  },
+  "ats_label_components": [
+    {
+      "component": "parseability",
+      "detected_issue_keys": [
+        "empty_text",
+        "low_text_coverage",
+        "scanned_or_image_only"
+      ],
+      "direction": "higher_is_better",
+      "missing_policy": "Empty parse is a hard issue and cannot receive high ATS score.",
+      "scoring_rule": "Full readable text receives high score; partial parse receives medium score; empty/scanned/unreadable parse receives low score.",
+      "source_evidence": "text extraction result, extracted character count, page count, parser warnings",
+      "weight": 0.3
+    },
+    {
+      "component": "section_completeness",
+      "detected_issue_keys": [
+        "missing_skills_section",
+        "missing_experience_section",
+        "missing_education_section"
+      ],
+      "direction": "higher_is_better",
+      "missing_policy": "Unknown section headings require conservative score and review flag.",
+      "scoring_rule": "Score by required section coverage for target role; missing critical sections reduce score.",
+      "source_evidence": "detected sections such as summary, experience, education, skills, projects, certifications",
+      "weight": 0.2
+    },
+    {
+      "component": "contact_detection",
+      "detected_issue_keys": [
+        "missing_email",
+        "missing_phone",
+        "missing_portfolio_or_profile_link"
+      ],
+      "direction": "higher_is_better",
+      "missing_policy": "Do not store raw contact values in labels; store boolean evidence only.",
+      "scoring_rule": "Score by presence of reachable contact fields without exposing raw PII in labels.",
+      "source_evidence": "email, phone, portfolio, LinkedIn/GitHub URL evidence where available",
+      "weight": 0.15
+    },
+    {
+      "component": "date_detection",
+      "detected_issue_keys": [
+        "missing_dates",
+        "ambiguous_dates",
+        "inconsistent_date_order"
+      ],
+      "direction": "higher_is_better",
+      "missing_policy": "Unknown date formats are issues until locale-aware parsing is defined.",
+      "scoring_rule": "Score by parseable date coverage for experience entries and education entries.",
+      "source_evidence": "employment/education date ranges and duration parse evidence",
+      "weight": 0.1
+    },
+    {
+      "component": "metric_evidence",
+      "detected_issue_keys": [
+        "low_quantified_impact",
+        "generic_responsibility_only"
+      ],
+      "direction": "higher_is_better",
+      "missing_policy": "Do not invent metrics; absence is a quality issue, not a reason to generate fake evidence.",
+      "scoring_rule": "Score by presence and density of quantified achievements in experience/project sections.",
+      "source_evidence": "numbers, percentages, scale indicators, impact metrics, project outcomes in CV text",
+      "weight": 0.15
+    },
+    {
+      "component": "formatting_risk",
+      "detected_issue_keys": [
+        "table_heavy_layout",
+        "multi_column_risk",
+        "excessive_graphics",
+        "unsupported_file_type"
+      ],
+      "direction": "lower_risk_is_better",
+      "missing_policy": "When layout evidence is unavailable, record unknown_format_risk and keep confidence low.",
+      "scoring_rule": "Start from 1.0 and subtract bounded risk penalties for format patterns known to reduce ATS extraction reliability.",
+      "source_evidence": "parser layout signals, table density, multi-column risk, excessive graphics, file type, text order anomalies",
+      "weight": 0.1
+    }
+  ],
+  "ats_weight_sum": 1.0,
+  "baseline_acceptance_policy": {
+    "must_run_before_complex_training": true,
+    "ranking_extension": "Recommendation experiments must also compare NDCG@5, NDCG@10, MAP@10, and candidate ordering examples against best ranking baseline.",
+    "selection_gate": "A stronger model must improve MAE by at least 15-25% over the best valid baseline and show positive R2/Spearman before promotion beyond prototype.",
+    "slice_requirement": "Report metrics by role family, language, experience band, pair type, and score band."
+  },
+  "baseline_model_catalog": [
+    {
+      "acceptance_use": "Minimum sanity baseline; complex model must beat it materially.",
+      "allowed_inputs": "training labels only",
+      "baseline": "constant_mean",
+      "fit_rule": "Predict the training-set mean for every validation example.",
+      "leakage_control": "Mean must be computed from training split only.",
+      "required_metrics": [
+        "MAE",
+        "RMSE",
+        "R2",
+        "score_band_agreement"
+      ],
+      "target": "job_fit_label_v2 and ats_label_v1 when labels exist"
+    },
+    {
+      "acceptance_use": "Robust constant baseline for skewed labels.",
+      "allowed_inputs": "training labels only",
+      "baseline": "constant_median",
+      "fit_rule": "Predict the training-set median for every validation example.",
+      "leakage_control": "Median must be computed from training split only.",
+      "required_metrics": [
+        "MAE",
+        "RMSE",
+        "R2",
+        "score_band_agreement"
+      ],
+      "target": "job_fit_label_v2 and ats_label_v1 when labels exist"
+    },
+    {
+      "acceptance_use": "Proves whether exact skill matching already explains labels.",
+      "allowed_inputs": "normalized candidate skills and normalized job required skills",
+      "baseline": "skill_overlap_only",
+      "fit_rule": "Predict normalized skill-overlap score directly, optionally calibrated on training split only.",
+      "leakage_control": "No generated fit_score, profile_id, job_id, company, application outcome, or validation labels.",
+      "required_metrics": [
+        "MAE",
+        "RMSE",
+        "R2",
+        "Spearman",
+        "score_band_agreement",
+        "slice_metrics"
+      ],
+      "target": "job_fit_label_v2"
+    },
+    {
+      "acceptance_use": "Proves whether semantic text similarity beats exact skill overlap.",
+      "allowed_inputs": "profile/CV text embedding and job text embedding from versioned text construction",
+      "baseline": "cosine_only",
+      "fit_rule": "Predict clipped cosine similarity or train-only calibrated cosine score.",
+      "leakage_control": "Embedding text must exclude labels, wrapper summaries, and hydrated recommendation details.",
+      "required_metrics": [
+        "MAE",
+        "RMSE",
+        "R2",
+        "Spearman",
+        "score_band_agreement",
+        "slice_metrics"
+      ],
+      "target": "job_fit_label_v2"
+    },
+    {
+      "acceptance_use": "Best transparent comparator before neural scorer or feature-augmented scorer.",
+      "allowed_inputs": "documented scalar features: skill overlap, cosine, experience gap, role match, requirement coverage, ATS component scores",
+      "baseline": "simple_regression",
+      "fit_rule": "Fit linear/ridge regression or logistic-style band model on training split only with fixed random seed.",
+      "leakage_control": "Features must be generated before manual validation labels are inspected; no identifiers or product copy.",
+      "required_metrics": [
+        "MAE",
+        "RMSE",
+        "R2",
+        "Spearman",
+        "score_band_agreement",
+        "slice_metrics",
+        "coefficient_review"
+      ],
+      "target": "job_fit_label_v2 and optional ats_label_v1 with separate feature sets"
+    }
+  ],
+  "blocked_until_later_phases": [
+    "Phase 3 must define normalization rules before labels are generated.",
+    "Phase 4 must generate balanced pairs with leakage-safe splits before baseline evaluation.",
+    "Phase 5 must run this baseline catalog before model training.",
+    "Phase 7 must build controlled ATS benchmark samples before production ATS claims.",
+    "Phase 10 must calibrate score bands before production score semantics are finalized."
+  ],
+  "generated_at_utc": "2026-06-01T07:34:31.796703+00:00",
+  "inputs": {
+    "openapi": "references/docs/generated/openapi.json",
+    "phase1_report": "reports/phase_01_data_audit_contracts.json",
+    "todo_scope": "Phase 2 \u2014 Label Schema and Baseline Definitions"
+  },
+  "jobfit_label_components": [
+    {
+      "component": "skill_overlap",
+      "direction": "higher_is_better",
+      "leakage_control": "Do not use fit_score, profile_id, job_id, company name, bookmarked/applied status, or validation labels.",
+      "missing_policy": "Record empty_skills flag and use 0.0 until skill extraction is fixed.",
+      "model_evidence_output": "matchedSkills, missingSkills",
+      "scoring_rule": "Jaccard-style exact overlap after Phase 3 skill normalization; score 0 when either side has no reliable skill evidence.",
+      "source_evidence": "normalized profile/CV skills and normalized job requirements skills",
+      "weight": 0.3
+    },
+    {
+      "component": "semantic_similarity",
+      "direction": "higher_is_better",
+      "leakage_control": "Build text from source profile/CV/job fields only, not generated summaries or labels.",
+      "missing_policy": "Record empty_text flag and use 0.0 if either text side is empty after parsing.",
+      "model_evidence_output": "summarySignals, confidenceNotes",
+      "scoring_rule": "Cosine similarity scaled to 0.0-1.0 after text construction policy is versioned.",
+      "source_evidence": "profile/CV text embedding and job text embedding",
+      "weight": 0.2
+    },
+    {
+      "component": "experience_match",
+      "direction": "higher_is_better",
+      "leakage_control": "Do not infer seniority from target label or post-hoc model prediction.",
+      "missing_policy": "Record unknown_experience flag and use neutral 0.5 only for label drafting; Phase 3 must replace silent fallback with explicit unknown handling.",
+      "model_evidence_output": "experienceMatch, confidenceNotes",
+      "scoring_rule": "Score 1.0 for exact or above-minimum match, degrade by bounded gap size, score 0.0 for clear underqualification beyond allowed tolerance.",
+      "source_evidence": "normalized candidate experience and normalized job seniority/experience requirement",
+      "weight": 0.15
+    },
+    {
+      "component": "role_match",
+      "direction": "higher_is_better",
+      "leakage_control": "Role family taxonomy must be derived before split labels are reviewed.",
+      "missing_policy": "Record unknown_role flag and use neutral 0.5 only when no role evidence exists.",
+      "model_evidence_output": "roleMatch, summarySignals",
+      "scoring_rule": "Exact role-family match receives high score, adjacent role-family receives medium score, unrelated role receives low score.",
+      "source_evidence": "normalized job title/category and candidate target role/profile title/CV headline when available",
+      "weight": 0.15
+    },
+    {
+      "component": "requirement_coverage",
+      "direction": "higher_is_better",
+      "leakage_control": "Requirement coverage cannot use wrapper-generated topActionables or sectionReviews.",
+      "missing_policy": "Record empty_requirements flag and exclude missing job requirements from denominator instead of rewarding unknown data.",
+      "model_evidence_output": "matchedRequirements, missingRequirements, missingSignals",
+      "scoring_rule": "Covered required evidence divided by required evidence count, with critical requirements allowed to carry higher local weight.",
+      "source_evidence": "job requirement summary, required skills, CV/profile evidence, and extracted project/experience claims",
+      "weight": 0.2
+    }
+  ],
+  "jobfit_weight_sum": 1.0,
+  "manual_validation_plan": {
+    "ats_sampling": {
+      "case_families": [
+        "normal_pdf",
+        "scanned_pdf",
+        "multi_column_pdf",
+        "docx",
+        "table_heavy_cv",
+        "very_short_cv",
+        "overly_long_cv"
+      ],
+      "minimum_bootstrap_cases_per_issue_family": 10,
+      "preferred_cases_per_issue_family": 30,
+      "review_fields": [
+        "parseability_rating",
+        "section_completeness_rating",
+        "contact_detected",
+        "dates_detected",
+        "metric_evidence_rating",
+        "formatting_risk_rating",
+        "final_ats_band",
+        "detected_issue_keys",
+        "reviewer_confidence"
+      ],
+      "sampling_rule": "Use controlled benchmark files and real/synthetic CVs with documented license/consent; keep raw PII out of labels."
+    },
+    "job_fit_sampling": {
+      "bands": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "minimum_bootstrap_cases_per_band": 30,
+      "preferred_cases_per_band": 100,
+      "review_fields": [
+        "skill_overlap_rating",
+        "semantic_alignment_rating",
+        "experience_match_rating",
+        "role_match_rating",
+        "requirement_coverage_rating",
+        "final_job_fit_band",
+        "reviewer_confidence",
+        "notes"
+      ],
+      "sampling_rule": "Sample from locked validation/test groups after split assignment; include high-fit positives, medium-fit adjacent cases, hard negatives, and random negatives.",
+      "strata": [
+        "score_band",
+        "role_family",
+        "language",
+        "experience_band",
+        "pair_type"
+      ]
+    },
+    "label_manifest": {
+      "artifact_name": "manual_validation_manifest_v1",
+      "label_version": "jobfit_ats_manual_validation_v1",
+      "primary_use": "validation_and_calibration_evidence_only",
+      "storage_policy": "Store review IDs, split name, band, role family, language, pair type, anonymized evidence pointers, reviewer labels, and adjudication status. Do not store raw contact PII."
+    },
+    "leakage_controls": [
+      "Manual labels cannot be used during Phase 3 normalization decisions for the same validation examples.",
+      "Training code must ignore manual-review columns unless a later label version intentionally includes them.",
+      "Group isolation by profile_id must remain intact after manual sampling.",
+      "No wrapper-generated topActionables, sectionReviews, or hydrated job details may enter labels.",
+      "Reviewer notes are qualitative audit data, not model features."
+    ],
+    "review_workflow": [
+      "Freeze candidate IDs, split names, and source artifact hashes before review.",
+      "Give reviewers only source evidence needed for the label, not model prediction internals or future validation labels.",
+      "Use two independent reviewers for calibration subset and adjudicate disagreements.",
+      "Record inter-reviewer agreement before changing label schema or score bands.",
+      "Publish aggregate validation report without exposing raw CV contact data."
+    ]
+  },
+  "openapi_score_constraints": {
+    "atsFriendliness.score": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "jobFitAlignment.score": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "jobRecommendations[].matchScore": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "optional_jobfit_components": [
+    {
+      "allowed_future_weight_cap": 0.05,
+      "component": "preference_match_optional",
+      "default_core_weight": 0.0,
+      "leakage_control": "Never hydrate job details from static model artifacts; backend owns visibility, freshness, and final job detail.",
+      "missing_policy": "Do not penalize when preferences are absent; keep outside core jobFitAlignment label.",
+      "owner": "backend_candidate_context_or_phase_09_reranking",
+      "scoring_rule": "Use only as candidate-reranking metadata or bounded preference score after backend contract approval.",
+      "source_evidence": "backend-provided user preferences such as location, work type, employment type, salary range, and candidate set constraints"
+    }
+  ],
+  "schema_version": "phase-02-label-schema-baselines-v1",
+  "score_band_policy": [
+    {
+      "api_max": 34,
+      "api_min": 0,
+      "band": "low",
+      "match_level": "low",
+      "normalized_max": 0.34,
+      "normalized_min": 0.0,
+      "product_meaning_ats": "CV has serious parseability, structure, contact/date, metric, or formatting issues that can block reliable screening.",
+      "product_meaning_jobfit": "Major skill, role, experience, or requirement gaps. User should treat the role as aspirational or needing substantial preparation.",
+      "training_requirement": "Pair generation must include true low cases and hard negatives, not only random weak pairs."
+    },
+    {
+      "api_max": 64,
+      "api_min": 35,
+      "band": "medium",
+      "match_level": "medium",
+      "normalized_max": 0.64,
+      "normalized_min": 0.35,
+      "product_meaning_ats": "CV is mostly parseable but has issues that can reduce ranking or hide important evidence.",
+      "product_meaning_jobfit": "Partial match with clear strengths and visible gaps. User may apply after targeted improvements.",
+      "training_requirement": "Pair generation must include adjacent-role and partial-skill cases, not only extremes."
+    },
+    {
+      "api_max": 100,
+      "api_min": 65,
+      "band": "high",
+      "match_level": "high",
+      "normalized_max": 1.0,
+      "normalized_min": 0.65,
+      "product_meaning_ats": "CV is parseable, structured, contact/date evidence is detectable, and formatting risk is low.",
+      "product_meaning_jobfit": "Strong match with most critical evidence present. Remaining gaps should be specific and actionable.",
+      "training_requirement": "Validation and training splits must contain high-fit/high-quality examples before any model can claim full-range scoring."
+    }
+  ],
+  "score_policy_notes": {
+    "calibration_status": "draft_policy_not_production_calibrated",
+    "current_snapshot_warning": "Legacy weak labels had no high-fit samples above the high-band threshold, so Phase 4 must create balanced pairs before training.",
+    "phase_10_requirement": "Replace or confirm these thresholds only after calibration diagnostics and score-bucket error are reported."
+  },
+  "score_range": {
+    "api_contract": "integer 0-100",
+    "api_max": 100,
+    "api_min": 0,
+    "normalized_max": 1.0,
+    "normalized_min": 0.0,
+    "training_contract": "float 0.0-1.0 before final API scaling"
+  },
+  "source_snapshot": "legacy"
+}

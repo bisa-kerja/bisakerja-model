@@ -1,0 +1,601 @@
+{
+  "acceptance": {
+    "fallback_policy_exists": true,
+    "impression_rules_are_grounded_in_model_signals": true,
+    "wrapper_boundary_is_clear": true
+  },
+  "allowed_input_signals": [
+    {
+      "must_not_infer": [
+        "hiring_likelihood",
+        "interview_probability",
+        "candidate_quality_beyond_target_job"
+      ],
+      "required_evidence": [
+        "core_score",
+        "model_version",
+        "score_range_0_100"
+      ],
+      "safe_use": "Select score band language only after Phase 10 calibration; before calibration use as draft evidence with confidence note.",
+      "signal": "jobFitAlignment.score",
+      "source_contract": "phase_06.output_signal_contract.score"
+    },
+    {
+      "must_not_infer": [
+        "unstated_skill",
+        "personality_trait",
+        "culture_fit"
+      ],
+      "required_evidence": [
+        "signal_key",
+        "source_evidence_key"
+      ],
+      "safe_use": "Mention observed strengths such as role match, strong skill overlap, experience match, or requirement coverage.",
+      "signal": "jobFitAlignment.summarySignals",
+      "source_contract": "phase_06.output_signal_contract.summarySignals"
+    },
+    {
+      "must_not_infer": [
+        "candidate_inability",
+        "career_seniority_downgrade",
+        "unverified_experience_gap"
+      ],
+      "required_evidence": [
+        "signal_key",
+        "source_evidence_key"
+      ],
+      "safe_use": "Mention observed gaps such as missing required skill, experience gap, low requirement coverage, or unknown language.",
+      "signal": "jobFitAlignment.missingSignals",
+      "source_contract": "phase_06.output_signal_contract.missingSignals"
+    },
+    {
+      "must_not_infer": [
+        "skill_proficiency",
+        "years_of_skill_experience",
+        "certification"
+      ],
+      "required_evidence": [
+        "candidate_skill_source",
+        "job_skill_source",
+        "normalization_rule"
+      ],
+      "safe_use": "Name matched skills only when the normalized candidate skill and job skill intersection exists.",
+      "signal": "jobFitAlignment.matchedSkills",
+      "source_contract": "phase_06.output_signal_contract.matchedSkills"
+    },
+    {
+      "must_not_infer": [
+        "candidate_cannot_learn_skill",
+        "job_disqualification"
+      ],
+      "required_evidence": [
+        "job_required_skill_source",
+        "candidate_skill_absence_check"
+      ],
+      "safe_use": "Name missing required job skills only when they appear in job requirements and are absent from normalized candidate evidence.",
+      "signal": "jobFitAlignment.missingSkills",
+      "source_contract": "phase_06.output_signal_contract.missingSkills"
+    },
+    {
+      "must_not_infer": [
+        "job_fit",
+        "candidate_competence",
+        "applicant_tracking_system_outcome"
+      ],
+      "required_evidence": [
+        "ats_core_score",
+        "component_scores",
+        "score_range_0_100"
+      ],
+      "safe_use": "Mention CV/ATS quality band only after Phase 10 calibration; before calibration use as draft evidence with caveat.",
+      "signal": "atsFriendliness.score",
+      "source_contract": "phase_07.output_contract.score"
+    },
+    {
+      "must_not_infer": [
+        "raw_contact_value",
+        "document_authenticity",
+        "employment_verification"
+      ],
+      "required_evidence": [
+        "issueKey",
+        "family",
+        "severity",
+        "sourceEvidenceKeys"
+      ],
+      "safe_use": "Mention ATS risks only from stable issue keys and severity.",
+      "signal": "atsFriendliness.detectedIssues",
+      "source_contract": "phase_07.output_contract.detectedIssues"
+    },
+    {
+      "must_not_infer": [
+        "job_availability",
+        "company_preference",
+        "salary_fit",
+        "location_fit_without_policy"
+      ],
+      "required_evidence": [
+        "job_id_or_request_id",
+        "source_field"
+      ],
+      "safe_use": "Mention target role or requirement only when present in the request/job record.",
+      "signal": "targetJobEvidence",
+      "source_contract": "job title, role family, required skills, requirements, and description text available to model core"
+    },
+    {
+      "must_not_infer": [
+        "fluency",
+        "nationality",
+        "preferred_work_language"
+      ],
+      "required_evidence": [
+        "normalized_language",
+        "language_source_or_marker_counts"
+      ],
+      "safe_use": "Choose or flag localization mode; UNKNOWN must trigger fallback or wrapper locale decision.",
+      "signal": "languageSignal",
+      "source_contract": "phase_03.language_normalization_policy"
+    }
+  ],
+  "blocked_until_later_phases": [
+    "Production score-band wording requires Phase 10 calibration evidence.",
+    "API wrapper implementation must enforce evidence ledger, fallback, and quality checks before release.",
+    "Manual review is required for PII, unsupported skill, unsupported seniority, or language mismatch failures."
+  ],
+  "core_output_contract": {
+    "model_owned_fields": [
+      {
+        "field": "templateId",
+        "grounding_rule": "Chosen deterministically from allowed signals, fallback triggers, and quality checks.",
+        "range": [
+          "ats_risk_dominant_v1",
+          "confidence_limited_v1",
+          "fit_strength_with_minor_gaps_v1",
+          "low_fit_or_missing_requirements_v1",
+          "mixed_fit_actionable_gaps_v1"
+        ],
+        "type": "string"
+      },
+      {
+        "field": "strengthSignals",
+        "grounding_rule": "Each item must map to summarySignals or matchedSkills with sourceEvidenceKeys.",
+        "item_shape": {
+          "label": "display-safe evidence label",
+          "sourceEvidenceKeys": "array[string]"
+        },
+        "range": "0-3 observed strengths",
+        "type": "array[object]"
+      },
+      {
+        "field": "gapSignals",
+        "grounding_rule": "Each item must map to missingSignals or missingSkills with sourceEvidenceKeys.",
+        "item_shape": {
+          "label": "display-safe evidence label",
+          "sourceEvidenceKeys": "array[string]"
+        },
+        "range": "0-3 observed gaps",
+        "type": "array[object]"
+      },
+      {
+        "field": "atsRiskSignals",
+        "grounding_rule": "Each item must map to Phase 7 detectedIssues and must not expose raw PII.",
+        "item_shape": {
+          "issueKey": "stable Phase 7 issue key",
+          "severity": "low | medium | high | critical",
+          "sourceEvidenceKeys": "array[string]"
+        },
+        "range": "0-3 observed ATS risks",
+        "type": "array[object]"
+      },
+      {
+        "field": "fallbackReason",
+        "grounding_rule": "Set when fallback trigger fires; wrapper must render uncertainty instead of normal template.",
+        "range": [
+          "empty_cv_parse",
+          "low_confidence_model_output",
+          "missing_job_target",
+          "no_strength_or_gap_signal",
+          "unknown_language"
+        ],
+        "type": "string | null"
+      },
+      {
+        "field": "languageMode",
+        "grounding_rule": "Derived from Phase 3 language normalization; UNKNOWN delegates locale choice to wrapper with caveat.",
+        "range": [
+          "EN",
+          "ID",
+          "MIXED",
+          "UNKNOWN"
+        ],
+        "type": "ID | EN | MIXED | UNKNOWN"
+      },
+      {
+        "field": "confidenceNotes",
+        "grounding_rule": "Only data quality, parser, calibration, language, or out-of-distribution notes.",
+        "range": "0-5 diagnostic notes",
+        "type": "array[string]"
+      },
+      {
+        "field": "evidenceLedger",
+        "grounding_rule": "Every rendered slot must identify source path and sourceEvidenceKeys.",
+        "item_shape": {
+          "slot": "template slot name",
+          "sourceEvidenceKeys": "array[string]",
+          "sourcePath": "core signal path"
+        },
+        "range": "one row per rendered slot",
+        "type": "array[object]"
+      }
+    ],
+    "not_model_owned_fields": [
+      "final prose tone",
+      "localized product copy",
+      "topActionables",
+      "sectionReviews",
+      "jobRecommendations",
+      "hydrated job details",
+      "auth",
+      "persistence",
+      "request validation",
+      "OpenAPI envelope"
+    ],
+    "public_api_mapping": {
+      "analysisResult.atsFriendliness.summary": "Rendered separately by wrapper from ATS signals; not an input to overall impression core.",
+      "analysisResult.jobFitAlignment.summary": "Rendered separately by wrapper from job-fit signals; not an input to overall impression core.",
+      "analysisResult.overallImpression": "API wrapper renders one concise string from templateId, evidence-backed slots, fallbackReason, languageMode, and confidenceNotes."
+    },
+    "schema_version": "overall-impression-core-v1",
+    "wrapper_requirements": [
+      "Render only slots with evidenceLedger entries.",
+      "Drop optional clauses whose evidence is missing.",
+      "Prefer fallback copy when fallbackReason is not null.",
+      "Keep the public value a string as required by OpenAPI.",
+      "Do not read generated jobFitAlignment.summary or atsFriendliness.summary as evidence."
+    ]
+  },
+  "fallback_policy": [
+    {
+      "allowed_evidence": [
+        "parser_status",
+        "extracted_character_count",
+        "ats_issue_key.empty_text",
+        "ats_issue_key.ocr_required"
+      ],
+      "blocked_claims": [
+        "job_fit_strength",
+        "missing_skill",
+        "seniority",
+        "skill_proficiency",
+        "hiring_outcome"
+      ],
+      "fallback_id": "empty_cv_parse",
+      "safe_summary_intent": "Explain that the CV could not be read well enough for a reliable overall impression.",
+      "trigger": "empty_text issue, extracted_character_count below minimum, or parser_status indicates failed parse",
+      "wrapper_guidance": "Render a short parseability caveat and ask for a readable CV; do not summarize job fit."
+    },
+    {
+      "allowed_evidence": [
+        "atsFriendliness.detectedIssues",
+        "atsFriendliness.score",
+        "general_cv_text_coverage"
+      ],
+      "blocked_claims": [
+        "target_role_alignment",
+        "missing_required_skill",
+        "requirement_coverage",
+        "job_specific_seniority"
+      ],
+      "fallback_id": "missing_job_target",
+      "safe_summary_intent": "Summarize only CV/ATS signals and state that job-specific fit cannot be assessed.",
+      "trigger": "no job title, role target, requirements, or candidate job context is supplied",
+      "wrapper_guidance": "Use generic 'target role' wording only when product UX requires a placeholder; otherwise state missing job target."
+    },
+    {
+      "allowed_evidence": [
+        "languageSignal.UNKNOWN",
+        "marker_counts",
+        "trusted_source_language_absent"
+      ],
+      "blocked_claims": [
+        "language_fluency",
+        "nationality",
+        "preferred_work_language",
+        "localized_skill_translation_without_alias"
+      ],
+      "fallback_id": "unknown_language",
+      "safe_summary_intent": "Keep wording language-neutral or use user/request locale while flagging language uncertainty.",
+      "trigger": "normalized language is UNKNOWN or language evidence conflicts across sources",
+      "wrapper_guidance": "Prefer configured UI locale; do not translate skill names unless alias table supports it."
+    },
+    {
+      "allowed_evidence": [
+        "confidenceNotes",
+        "observed matchedSkills",
+        "observed detectedIssues"
+      ],
+      "blocked_claims": [
+        "precise_score_semantics",
+        "unqualified_claim",
+        "strong_recommendation",
+        "career_level_claim"
+      ],
+      "fallback_id": "low_confidence_model_output",
+      "safe_summary_intent": "Show limited impression and list only strongest observed evidence with caveat.",
+      "trigger": "confidenceNotes contain low_text_coverage, out_of_distribution_role, unknown_experience, unstable_score, or calibration_missing",
+      "wrapper_guidance": "Use confidence_limited_v1 template and avoid decisive language."
+    },
+    {
+      "allowed_evidence": [
+        "score_presence",
+        "empty_signal_sets"
+      ],
+      "blocked_claims": [
+        "strength",
+        "gap",
+        "ATS risk",
+        "seniority",
+        "hiring_outcome"
+      ],
+      "fallback_id": "no_strength_or_gap_signal",
+      "safe_summary_intent": "State that there is not enough explainable evidence to produce an impression.",
+      "trigger": "score exists but summarySignals, missingSignals, matchedSkills, missingSkills, and detectedIssues are empty",
+      "wrapper_guidance": "Render a minimal uncertainty message and log quality check failure for review."
+    }
+  ],
+  "forbidden_inferences": [
+    {
+      "category": "skills",
+      "rule": "Do not mention a skill unless it is in matchedSkills, missingSkills, or target job requirements with source evidence."
+    },
+    {
+      "category": "seniority",
+      "rule": "Do not claim junior, mid, senior, lead, or manager unless target role/seniority or normalized experience evidence explicitly supports it."
+    },
+    {
+      "category": "employment_history",
+      "rule": "Do not infer tenure, employer quality, gaps, promotions, or verified work history from CV text unless explicit evidence exists."
+    },
+    {
+      "category": "protected_attributes",
+      "rule": "Never infer age, gender, religion, ethnicity, marital status, health, disability, or nationality."
+    },
+    {
+      "category": "hiring_outcome",
+      "rule": "Never claim ATS pass/fail, interview chance, hiring probability, or recruiter preference."
+    },
+    {
+      "category": "backend_owned_fields",
+      "rule": "Do not use topActionables, sectionReviews, hydrated job details, auth, persistence, or wrapper summaries as model evidence."
+    },
+    {
+      "category": "private_contact_values",
+      "rule": "Do not render raw email, phone, URL, address, or other PII in impression text."
+    }
+  ],
+  "generated_at_utc": "2026-06-01T09:49:52.878346+00:00",
+  "inputs": {
+    "openapi_json": "references/docs/generated/openapi.json",
+    "phase3_report": "reports/phase_03_normalization_feature_design.json",
+    "phase6_report": "reports/phase_06_jobfit_training_experiments.json",
+    "phase7_report": "reports/phase_07_ats_friendliness_scoring.json"
+  },
+  "prohibited_template_claims": [
+    "will pass ATS",
+    "will get interview",
+    "is senior-level",
+    "has unstated skill",
+    "is a strong culture fit",
+    "verified employment history",
+    "raw contact value"
+  ],
+  "promotion_gate": {
+    "blocking_checks_must_pass": [
+      "rendered_slot_has_evidence",
+      "no_hallucinated_skills",
+      "seniority_claim_supported",
+      "language_mode_consistent",
+      "fallback_trigger_enforced",
+      "no_hiring_or_ats_outcome_claim",
+      "no_pii_rendering",
+      "ats_jobfit_boundary_respected"
+    ],
+    "current_decision": "GO for grounded signal and wrapper design; NO-GO for production copy claims until Phase 10 calibration and wrapper implementation checks exist.",
+    "manual_review_required_for": [
+      "fallback rates above expected threshold",
+      "unknown language or low text coverage clusters",
+      "any detected PII rendering",
+      "any unsupported seniority or skill claim"
+    ],
+    "phase10_dependency": "Score-band wording and confidence semantics must be calibrated before release claims are finalized."
+  },
+  "quality_checks": [
+    {
+      "check_id": "rendered_slot_has_evidence",
+      "condition": "Every rendered slot has an evidenceLedger entry with sourcePath and non-empty sourceEvidenceKeys.",
+      "fail_action": "Drop the slot; if required slot missing, render fallback confidence_limited_v1.",
+      "prevents": "unsupported_claim",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "no_hallucinated_skills",
+      "condition": "Every skill token in the rendered string appears in matchedSkills, missingSkills, target job required skills, or approved alias table.",
+      "fail_action": "Remove skill mention and log evidence mismatch; block release if repeated.",
+      "prevents": "hallucinated_skills",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "seniority_claim_supported",
+      "condition": "Any junior/mid/senior/lead/manager wording has explicit source evidence from target role, normalized experience, or job requirement.",
+      "fail_action": "Replace with neutral target-role wording.",
+      "prevents": "unsupported_seniority_claim",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "language_mode_consistent",
+      "condition": "Rendered locale matches languageMode or wrapper UI locale when languageMode is UNKNOWN; skill aliases are not translated without alias evidence.",
+      "fail_action": "Use wrapper locale fallback and preserve original skill labels.",
+      "prevents": "language_mismatch",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "fallback_trigger_enforced",
+      "condition": "If fallbackReason is set, only the matching fallback template may render.",
+      "fail_action": "Replace normal template with fallback output.",
+      "prevents": "unsafe_confident_summary",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "no_hiring_or_ats_outcome_claim",
+      "condition": "Rendered string contains no pass/fail, interview chance, recruiter preference, or hiring probability language.",
+      "fail_action": "Reject rendered string and log prohibited phrase.",
+      "prevents": "unsupported_outcome_claim",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "no_pii_rendering",
+      "condition": "Rendered string contains no raw email, phone, URL, address, or identifier values from CV/contact evidence.",
+      "fail_action": "Remove PII-bearing phrase and force manual review.",
+      "prevents": "privacy_leak",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "ats_jobfit_boundary_respected",
+      "condition": "ATS evidence describes CV quality only; job-fit evidence describes alignment only.",
+      "fail_action": "Split or remove mixed claim.",
+      "prevents": "signal_boundary_mixup",
+      "severity": "blocking"
+    },
+    {
+      "check_id": "length_and_clause_limit",
+      "condition": "Rendered impression stays concise and uses no more than one strength clause, one gap clause, and one risk/caveat clause.",
+      "fail_action": "Trim lowest-priority optional clause.",
+      "prevents": "overly_broad_summary",
+      "severity": "warning"
+    }
+  ],
+  "schema_version": "phase-08-overall-impression-signals-v1",
+  "setup_summary": {
+    "ats_issue_key_count": 22,
+    "ats_model_owned_fields": [
+      "componentScores",
+      "confidenceNotes",
+      "detectedIssues",
+      "score"
+    ],
+    "inherited_blockers": [
+      "Classifier training is blocked until benchmark labels exist with enough examples per issue family.",
+      "Complex JobFitAlignment training must wait for a materialized balanced pair dataset with high-fit validation/test coverage.",
+      "Production ATS score semantics require Phase 10 calibration evidence.",
+      "Production score semantics must wait for Phase 10 calibration.",
+      "Promotion must wait for human validation labels or equivalent trusted validation evidence.",
+      "Ranking-objective promotion must wait for backend-like candidate sets and relevance labels.",
+      "Release claims are blocked until empty-text and critical parse failures receive manual review."
+    ],
+    "jobfit_model_owned_fields": [
+      "confidenceNotes",
+      "matchedSkills",
+      "missingSignals",
+      "missingSkills",
+      "score",
+      "summarySignals"
+    ],
+    "language_values": [
+      "EN",
+      "ID",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "public_overall_impression_schema": {
+      "type": "string"
+    }
+  },
+  "slot_policy": {
+    "ats_risk_evidence": "One critical/high ATS issue or concise aggregate from detectedIssues; no raw PII.",
+    "available_strength_evidence": "Optional observed strength; omit if none exists.",
+    "confidence_caveat": "Data-quality or model-confidence note from confidenceNotes, parser status, unknown language, or missing job target.",
+    "strength_evidence": "One or two items from summarySignals or matchedSkills with source evidence.",
+    "target_role_or_job_context": "Use explicit target role, job title, or generic 'target role/job' fallback; never infer seniority from title text alone.",
+    "top_gap_evidence": "One or two items from missingSignals or missingSkills with source evidence."
+  },
+  "summary_templates": [
+    {
+      "condition": "jobfit_band in high_or_upper_medium and at least one matched_skill or strength signal exists",
+      "evidence_rule": "strength_evidence must come from summarySignals or matchedSkills; gap/risk clauses omitted when evidence is absent.",
+      "optional_slots": [
+        "top_gap_evidence",
+        "ats_risk_evidence",
+        "confidence_caveat"
+      ],
+      "required_slots": [
+        "target_role_or_job_context",
+        "strength_evidence"
+      ],
+      "template_en": "Strong alignment for {target_role_or_job_context} based on {strength_evidence}; review {top_gap_evidence} and {ats_risk_evidence} before applying.",
+      "template_id": "fit_strength_with_minor_gaps_v1",
+      "template_id_locale": "Kesesuaian kuat untuk {target_role_or_job_context} berdasarkan {strength_evidence}; tinjau {top_gap_evidence} dan {ats_risk_evidence} sebelum melamar."
+    },
+    {
+      "condition": "jobfit_band in medium and at least one strength plus one gap exists",
+      "evidence_rule": "Both strength and gap evidence must have distinct sourceEvidenceKeys.",
+      "optional_slots": [
+        "ats_risk_evidence",
+        "confidence_caveat"
+      ],
+      "required_slots": [
+        "target_role_or_job_context",
+        "strength_evidence",
+        "top_gap_evidence"
+      ],
+      "template_en": "Moderate alignment for {target_role_or_job_context}: {strength_evidence} is supported, while {top_gap_evidence} needs attention.",
+      "template_id": "mixed_fit_actionable_gaps_v1",
+      "template_id_locale": "Kesesuaian sedang untuk {target_role_or_job_context}: {strength_evidence} sudah terlihat, sementara {top_gap_evidence} perlu diperbaiki."
+    },
+    {
+      "condition": "jobfit_band in low or multiple required gaps are present",
+      "evidence_rule": "Do not say the candidate is unqualified; describe only observed missing requirements or low coverage.",
+      "optional_slots": [
+        "available_strength_evidence",
+        "ats_risk_evidence",
+        "confidence_caveat"
+      ],
+      "required_slots": [
+        "target_role_or_job_context",
+        "top_gap_evidence"
+      ],
+      "template_en": "Current evidence shows limited alignment for {target_role_or_job_context}, mainly because {top_gap_evidence}.",
+      "template_id": "low_fit_or_missing_requirements_v1",
+      "template_id_locale": "Bukti saat ini menunjukkan kesesuaian terbatas untuk {target_role_or_job_context}, terutama karena {top_gap_evidence}."
+    },
+    {
+      "condition": "critical or high ATS issue exists, regardless of job-fit score",
+      "evidence_rule": "ATS risk evidence must come from detectedIssues with severity high or critical.",
+      "optional_slots": [
+        "strength_evidence",
+        "top_gap_evidence",
+        "target_role_or_job_context"
+      ],
+      "required_slots": [
+        "ats_risk_evidence"
+      ],
+      "template_en": "The main limitation is CV readability or structure: {ats_risk_evidence}. Use job-fit signals only after the CV can be parsed reliably.",
+      "template_id": "ats_risk_dominant_v1",
+      "template_id_locale": "Batasan utama ada pada keterbacaan atau struktur CV: {ats_risk_evidence}. Gunakan sinyal job-fit setelah CV dapat diparse dengan andal."
+    },
+    {
+      "condition": "low confidence note, unknown language, missing job target, or incomplete parser evidence exists",
+      "evidence_rule": "Fallback or caveat must be rendered when required role, language, parser, or confidence evidence is missing.",
+      "optional_slots": [
+        "available_strength_evidence",
+        "top_gap_evidence",
+        "ats_risk_evidence"
+      ],
+      "required_slots": [
+        "confidence_caveat"
+      ],
+      "template_en": "The impression is limited because {confidence_caveat}. Only the observed signals should be used for decisions.",
+      "template_id": "confidence_limited_v1",
+      "template_id_locale": "Impresi ini terbatas karena {confidence_caveat}. Gunakan hanya sinyal yang benar-benar teramati untuk keputusan."
+    }
+  ]
+}

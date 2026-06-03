@@ -1,0 +1,228 @@
+{
+  "ats_benchmark": {
+    "bucket_counts": {
+      "high": 12,
+      "low": 3,
+      "medium": 6
+    },
+    "label_versions": [
+      "ats-issue-labels-v1"
+    ],
+    "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+    "required_issue_keys": [
+      "parseability_issue",
+      "section_completeness_issue",
+      "contact_detection_issue",
+      "date_detection_issue",
+      "metric_evidence_issue",
+      "formatting_risk_issue",
+      "empty_parse_risk"
+    ],
+    "row_count": 21,
+    "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+  },
+  "candidate_set_fixtures": {
+    "candidate_set_id": "candidate_set_phase23",
+    "output_jobs_subset_of_input": true,
+    "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
+    "request_job_count": 3,
+    "response_recommendation_count": 2,
+    "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3"
+  },
+  "failures": [],
+  "feature_quality": {
+    "checks": {
+      "embedding_cache_mismatch_rejected": true,
+      "embedding_cache_validation_passes": true,
+      "experience_no_observed_fallthrough": true,
+      "language_values_supported": true,
+      "skill_alias_verification": {
+        "ReactJS": true,
+        "analisis data": true,
+        "k8s": true
+      },
+      "text_builder_fixtures_non_empty": true
+    },
+    "normalization_report_path": "reports/phase_14_normalization_feature_builder.json",
+    "report_path": "reports/phase_14_feature_quality_report.json",
+    "supported_normalized_languages": [
+      "EN",
+      "ID",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "unknown_experience_observed_value_count": 0,
+    "unknown_language_rate": 0.2904003859141341
+  },
+  "generated_at": "2026-06-03T01:44:23.865719+00:00",
+  "human_validation": {
+    "band_counts": {
+      "high": 80,
+      "low": 80,
+      "medium": 80
+    },
+    "evaluation_only": true,
+    "label_versions": [
+      "human-validation-v1"
+    ],
+    "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+    "review_item_count": 120,
+    "reviewer_count": 2,
+    "row_count": 240,
+    "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+  },
+  "pair_dataset": {
+    "job_count": 813,
+    "label_versions": [
+      "weak-label-balanced-v2"
+    ],
+    "language_counts": {
+      "EN": 2260,
+      "ID": 22,
+      "MIXED": 14,
+      "UNKNOWN": 1304
+    },
+    "pair_type_counts": {
+      "cross_role_confusing": 600,
+      "hard_negative": 600,
+      "high_fit_positive": 600,
+      "medium_fit": 600,
+      "random_negative": 600,
+      "same_role_different_seniority": 600
+    },
+    "path": "artifacts/pairs_v2.parquet",
+    "profile_count": 920,
+    "row_count": 3600,
+    "schema_versions": [
+      "pairs-v2-balanced-splits-v1"
+    ],
+    "score_band_counts": {
+      "high": 600,
+      "low": 2398,
+      "medium": 602
+    },
+    "score_range": [
+      0.0,
+      1.0
+    ],
+    "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+    "split_counts": {
+      "test": 540,
+      "train": 2520,
+      "validation": 540
+    }
+  },
+  "passed": true,
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-data-feature-reuse-v1",
+  "source_artifacts": {
+    "pairs_v2": {
+      "bytes": 250630,
+      "path": "artifacts/pairs_v2.parquet",
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    },
+    "phase13_model_core_schema_contracts": {
+      "bytes": 5192,
+      "path": "reports/phase_13_model_core_schema_contracts.json",
+      "sha256": "74d284763860704a5b8d82cf95d00eaae8ecf50a85668ab47ab058ebf638350b"
+    },
+    "phase13_snapshot_manifests": {
+      "bytes": 14700,
+      "path": "reports/phase_13_snapshot_manifests.json",
+      "sha256": "6ce9dad49415cb95efd29bb3d18e31dd4b9f609dc9c78f4ef3285fa08ff63153"
+    },
+    "phase14_feature_quality_report": {
+      "bytes": 1885,
+      "path": "reports/phase_14_feature_quality_report.json",
+      "sha256": "9e4fcc7db30153a138c46080dd028f647de7390364b806b8bf2295285a8fe6bc"
+    },
+    "phase14_normalization_report": {
+      "bytes": 731,
+      "path": "reports/phase_14_normalization_feature_builder.json",
+      "sha256": "ba547fd6c75b96cbc2ad2a26de9326d890ff01dc4d6d625bd66a52724df222e1"
+    },
+    "phase15_leakage_report": {
+      "bytes": 579,
+      "path": "reports/phase_15_leakage_report.json",
+      "sha256": "680eb1ae920e7559b66765519379c680095f4b55782ae077de1eb94e0ea75c78"
+    },
+    "phase15_pair_distribution_diagnostics": {
+      "bytes": 16650,
+      "path": "reports/phase_15_pair_distribution_diagnostics.json",
+      "sha256": "ca84b3e112744416998b9d169dc48abadb07f420868269b88983671054d2fa71"
+    },
+    "phase16_human_labels_frozen": {
+      "bytes": 133097,
+      "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+      "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+    },
+    "phase16_label_manifest": {
+      "bytes": 3069,
+      "path": "reports/phase_16_label_manifest.json",
+      "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd"
+    },
+    "phase19_ats_benchmark": {
+      "bytes": 16367,
+      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+    },
+    "phase19_ats_issue_labels": {
+      "bytes": 2519,
+      "path": "reports/phase_19_ats_issue_labels.json",
+      "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+    },
+    "phase23_contract_fixtures": {
+      "bytes": 14874,
+      "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
+      "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3"
+    }
+  },
+  "split_isolation": {
+    "leaking_profile_count": 0,
+    "phase15_report_path": "reports/phase_15_leakage_report.json",
+    "split_profile_counts": {
+      "test": 140,
+      "train": 634,
+      "validation": 146
+    }
+  },
+  "status": "complete",
+  "validation_checks": [
+    {
+      "check": "artifact_files_present",
+      "status": "PASS"
+    },
+    {
+      "check": "pairs_v2_hash_matches_phase15",
+      "status": "PASS"
+    },
+    {
+      "check": "phase14_normalization_reused",
+      "status": "PASS"
+    },
+    {
+      "check": "profile_split_isolation",
+      "status": "PASS"
+    },
+    {
+      "check": "normalized_languages_supported",
+      "status": "PASS"
+    },
+    {
+      "check": "pair_skill_evidence_non_empty",
+      "status": "PASS"
+    },
+    {
+      "check": "human_labels_hash_and_join",
+      "status": "PASS"
+    },
+    {
+      "check": "ats_benchmark_labels_valid",
+      "status": "PASS"
+    },
+    {
+      "check": "candidate_fixture_membership",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "generated_at": "2026-06-03T01:45:36.137378+00:00",
+  "hash_references": {
+    "event_files_manifest_hash": "61143734f97f15898f50c6fb55b3fe76aa26f7529aabb4cca9110cd8dfc23d75",
+    "feature_matrix": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
+      "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5"
+    },
+    "predictions": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
+      "sha256": "2aa9a5b4266252dfe4dee634e44e0eb5713123bc1deff714cd9da3ace25be16a"
+    },
+    "tensorboard_manifest": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
+      "sha256": "8a036986f2abfb03f538f90bcc29cd035546ba7a61046c09edcb14610b2c8725"
+    },
+    "training_history": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
+      "sha256": "432705c47b2dd867ac4196c69d88314c1f90597fb90198668771810d1c29954e"
+    },
+    "training_report": {
+      "path": "reports/phase_25_training_evaluation_loop.json",
+      "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523"
+    }
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-tensorboard-monitoring-v1",
+  "status": "complete",
+  "tensorboard": {
+    "event_file_count": 1,
+    "event_files": [
+      {
+        "bytes": 126450,
+        "path": "artifacts/tensorboard/phase_25_tensorflow_training_delivery/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
+        "sha256": "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1"
+      }
+    ],
+    "log_root": "artifacts/tensorboard/phase_25_tensorflow_training_delivery",
+    "max_event_bytes": 20971520,
+    "max_event_files": 16,
+    "run_dir": "artifacts/tensorboard/phase_25_tensorflow_training_delivery/jobfit_tf_phase25_gradient_tape_v1_20260603T014424",
+    "run_id": "jobfit_tf_phase25_gradient_tape_v1_20260603T014424",
+    "total_event_bytes": 126450
+  },
+  "verification": {
+    "missing_histogram_groups": [],
+    "missing_scalar_groups": [],
+    "step_25_7_failures": [],
+    "step_25_7_status": "complete",
+    "tensorflow_version": "2.21.0"
+  },
+  "written_summaries": {
+    "histogram_count": 9,
+    "histogram_sample_limit": 512,
+    "histograms": [
+      "histogram/feature/e5_cosine",
+      "histogram/feature/experience_gap_years_clipped",
+      "histogram/feature/experience_match",
+      "histogram/feature/requirement_coverage",
+      "histogram/feature/role_match",
+      "histogram/feature/skill_overlap",
+      "histogram/prediction_0_1",
+      "histogram/residual_0_1",
+      "histogram/target_0_1"
+    ],
+    "scalar_count": 44,
+    "scalars": [
+      "final/test/high_fit_recall",
+      "final/test/loss",
+      "final/test/mae",
+      "final/test/mae_0_100",
+      "final/test/r2",
+      "final/test/rmse",
+      "final/test/rmse_0_100",
+      "final/test/score_band_agreement",
+      "final/test/spearman",
+      "final/train/high_fit_recall",
+      "final/train/loss",
+      "final/train/mae",
+      "final/train/mae_0_100",
+      "final/train/r2",
+      "final/train/rmse",
+      "final/train/rmse_0_100",
+      "final/train/score_band_agreement",
+      "final/train/spearman",
+      "final/validation/high_fit_recall",
+      "final/validation/loss",
+      "final/validation/mae",
+      "final/validation/mae_0_100",
+      "final/validation/r2",
+      "final/validation/rmse",
+      "final/validation/rmse_0_100",
+      "final/validation/score_band_agreement",
+      "final/validation/spearman",
+      "gate/custom_callback_called",
+      "gate/custom_layer_in_graph",
+      "gate/custom_loss_used",
+      "gate/gradient_tape_primary_loop",
+      "gate/keras_candidate_reload_smoke",
+      "gate/model_fit_not_used",
+      "gate/prediction_bounds_0_1",
+      "gate/required_metrics_present",
+      "gate/test_mae_le_0_02",
+      "gate/validation_mae_le_0_02",
+      "learning_rate/adam",
+      "loss/train",
+      "loss/validation",
+      "mae/train",
+      "mae/validation",
+      "r2/validation",
+      "rmse/validation"
+    ]
+  }
+}

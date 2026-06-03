@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "embedding_cache_mismatch_rejected": true,
+    "embedding_cache_validation_passes": true,
+    "experience_no_observed_fallthrough": true,
+    "language_values_supported": true,
+    "skill_alias_verification": {
+      "ReactJS": true,
+      "analisis data": true,
+      "k8s": true
+    },
+    "text_builder_fixtures_non_empty": true
+  },
+  "generated_at": "2026-06-02T04:45:50.294317+00:00",
+  "passed": true,
+  "phase_id": "phase_14_normalization_feature_builder",
+  "report_paths": {
+    "embedding_manifest": "reports/phase_14_embedding_manifest.json",
+    "feature_quality": "reports/phase_14_feature_quality_report.json"
+  },
+  "schema_version": "normalization-feature-builder-v1",
+  "status": "complete"
+}

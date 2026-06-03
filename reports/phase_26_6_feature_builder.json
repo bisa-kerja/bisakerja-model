@@ -1,0 +1,43 @@
+{
+  "schema_version": "phase-26-feature-builder-report-v1",
+  "phase_id": "phase_26_model_api_loader_inference_endpoint",
+  "step_id": "26.6",
+  "status": "complete",
+  "feature_order": [
+    "e5_cosine",
+    "skill_overlap",
+    "requirement_coverage",
+    "role_match",
+    "experience_match",
+    "experience_gap_years_clipped"
+  ],
+  "e5_contract": {
+    "backend": "sentence-transformers",
+    "model": "intfloat/e5-base-v2",
+    "profile_prefix": "query:",
+    "job_prefix": "passage:",
+    "normalized_embeddings": true,
+    "staging_production_fallbacks_forbidden": [
+      "tf-idf",
+      "tfidf",
+      "local-hash",
+      "local_hash",
+      "hash"
+    ]
+  },
+  "normalization_source": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+  "implemented_files": [
+    "model_api/features.py",
+    "tests/model_api/test_phase_26_layout.py",
+    "model_api/README.md"
+  ],
+  "validation": {
+    "command": "python -m unittest tests.model_api.test_phase_26_layout",
+    "result": "27 tests passed, 1 skipped"
+  },
+  "non_goals": [
+    "No TensorFlow batch prediction implemented in this step",
+    "No response score calibration implemented in this step",
+    "No external GenAI or OpenRouter call used for core inference"
+  ]
+}

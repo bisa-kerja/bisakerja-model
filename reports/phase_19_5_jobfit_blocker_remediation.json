@@ -1,0 +1,27 @@
+{
+  "acceptance_checks": {
+    "human_label_audit_completed": true,
+    "human_labels_trusted_for_phase20": true,
+    "no_blocking_slice_risks": true,
+    "phase17_phase18_real_e5_manifests": true,
+    "phase18_not_blocked_by_e5_gate": true,
+    "selected_model_meets_metric_floor_or_tradeoff": true,
+    "skill_signal_examples_clean": true,
+    "slice_risk_report_completed": true
+  },
+  "blockers": [],
+  "generated_at": "2026-06-02T05:18:16.722466+00:00",
+  "next_actions": [],
+  "phase_id": "phase_19_5_jobfit_blocker_remediation",
+  "reports": {
+    "clean_skill_signal_examples": "reports/phase_19_5_clean_skill_signal_examples.json",
+    "e5_runtime_manifest": "reports/phase_19_5_e5_runtime_manifest.json",
+    "human_validation_audit": "reports/phase_19_5_human_validation_audit.json",
+    "production_gate_report": "reports/phase_19_5_production_gate_report.json",
+    "rerun_evidence_report": "reports/phase_19_5_rerun_evidence_report.json",
+    "selection_floor_report": "reports/phase_19_5_selection_floor_report.json",
+    "slice_risk_report": "reports/phase_19_5_slice_risk_report.json"
+  },
+  "schema_version": "jobfit-blocker-remediation-v1",
+  "status": "complete"
+}

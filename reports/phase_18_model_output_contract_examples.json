@@ -1,0 +1,643 @@
+{
+  "examples": [
+    {
+      "confidenceNotes": [
+        "higher_confidence_multiple_alignment_signals"
+      ],
+      "matchedSkills": [
+        "apis",
+        "python"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "and data pipelines for large-scale ai workflows",
+            "remote python developer building backend systems"
+          ]
+        }
+      ],
+      "missingSkills": [
+        "and data pipelines for large-scale ai workflows",
+        "remote python developer building backend systems"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "01615c9fbc72105740e3d29d",
+      "score": 73,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.1667
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.5
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "medium_confidence_partial_alignment_signals"
+      ],
+      "matchedSkills": [
+        "deep learning",
+        "machine learning",
+        "python",
+        "sql"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "artificial intelligence",
+            "computer vision",
+            "data engineering",
+            "data integration",
+            "data mining",
+            "maximum 5 years of experience",
+            "microsoft sql server",
+            "minimum 3 years of experience"
+          ]
+        }
+      ],
+      "missingSkills": [
+        "artificial intelligence",
+        "computer vision",
+        "data engineering",
+        "data integration",
+        "data mining",
+        "maximum 5 years of experience",
+        "microsoft sql server",
+        "minimum 3 years of experience"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "0166ae25d7d439bd9544c625",
+      "score": 82,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.25
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.3333
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "low_confidence_sparse_alignment_signals"
+      ],
+      "matchedSkills": [],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "ck",
+            "cve analysis",
+            "cyber kill chain",
+            "edr",
+            "incident response",
+            "log analysis",
+            "mitre att",
+            "requires 1 to 3 years of experience in cybersecurity",
+            "security alerts",
+            "security operation center"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 5.0
+        }
+      ],
+      "missingSkills": [
+        "ck",
+        "cve analysis",
+        "cyber kill chain",
+        "edr",
+        "incident response",
+        "log analysis",
+        "mitre att",
+        "requires 1 to 3 years of experience in cybersecurity",
+        "security alerts",
+        "security operation center"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "006392896cb950c3d5f609e1",
+      "score": 5,
+      "summarySignals": [
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.1667
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "low_confidence_sparse_alignment_signals"
+      ],
+      "matchedSkills": [],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "and opportunities for growth",
+            "competitive package",
+            "cutting-edge software solutions",
+            "join our dynamic team in jakarta",
+            "programming"
+          ]
+        }
+      ],
+      "missingSkills": [
+        "and opportunities for growth",
+        "competitive package",
+        "cutting-edge software solutions",
+        "join our dynamic team in jakarta",
+        "programming"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "00a966e544d41f358d7a5703",
+      "score": 0,
+      "summarySignals": [
+        {
+          "key": "experience_match",
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "higher_confidence_multiple_alignment_signals"
+      ],
+      "matchedSkills": [
+        "data analysis",
+        "machine learning",
+        "python"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "capable of analytical thinking and critical thinking",
+            "data mining",
+            "information systems",
+            "microsoft dynamic nav",
+            "minimum 2 years of experience in the same scope",
+            "minimum s1 in informatics engineering",
+            "r programming language",
+            "sql",
+            "tangerang",
+            "understanding of data analysis techniques"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 1.0
+        }
+      ],
+      "missingSkills": [
+        "capable of analytical thinking and critical thinking",
+        "data mining",
+        "information systems",
+        "microsoft dynamic nav",
+        "minimum 2 years of experience in the same scope",
+        "minimum s1 in informatics engineering",
+        "r programming language",
+        "sql",
+        "tangerang",
+        "understanding of data analysis techniques"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "05a03fa4d4a2d56108e65834",
+      "score": 49,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.1154
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.1579
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.8333
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "medium_confidence_partial_alignment_signals"
+      ],
+      "matchedSkills": [
+        "data analysis",
+        "python"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "bachelor s degree in statistics or related field",
+            "sql"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 1.5
+        }
+      ],
+      "missingSkills": [
+        "bachelor s degree in statistics or related field",
+        "sql"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "0673192ae6b88c754adee5ed",
+      "score": 70,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.1667
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.5
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.75
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "higher_confidence_multiple_alignment_signals"
+      ],
+      "matchedSkills": [
+        "aws",
+        "cd",
+        "ci",
+        "docker",
+        "kubernetes"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "3-5 years of experience",
+            "amazon web services aws",
+            "jenkins"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 1.0
+        }
+      ],
+      "missingSkills": [
+        "3-5 years of experience",
+        "amazon web services aws",
+        "jenkins"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "00f50eb7d8160b7f0bd637f3",
+      "score": 100,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.3846
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.625
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.8333
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "higher_confidence_multiple_alignment_signals"
+      ],
+      "matchedSkills": [
+        "data analysis",
+        "python"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "bachelor s degree in statistics or related field",
+            "sql"
+          ]
+        }
+      ],
+      "missingSkills": [
+        "bachelor s degree in statistics or related field",
+        "sql"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "04d85689f90054fdc7edfa10",
+      "score": 73,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.1667
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.5
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "higher_confidence_multiple_alignment_signals"
+      ],
+      "matchedSkills": [
+        "network security"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "network and security management experience"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 4.5
+        }
+      ],
+      "missingSkills": [
+        "network and security management experience"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "00eb3f0e4e6c4ba3f1e4a4e0",
+      "score": 30,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.1
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.5
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "low_confidence_sparse_alignment_signals"
+      ],
+      "matchedSkills": [],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "akan segera berakhir",
+            "and delivering network",
+            "and infrastructure solution",
+            "developing new business opportunities",
+            "drive enterprise growth by managing key accounts",
+            "expires soon"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 4.5
+        }
+      ],
+      "missingSkills": [
+        "akan segera berakhir",
+        "and delivering network",
+        "and infrastructure solution",
+        "developing new business opportunities",
+        "drive enterprise growth by managing key accounts",
+        "expires soon"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "015c4b7d3b2df2e3cfd0531d",
+      "score": 5,
+      "summarySignals": [
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "higher_confidence_multiple_alignment_signals"
+      ],
+      "matchedSkills": [
+        "javascript",
+        "node.js",
+        "react",
+        "sql"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "c++",
+            "jquery",
+            "maximum 3 years of experience",
+            "minimum 1 years of experience",
+            "mongodb",
+            "mysql",
+            "postgresql"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 3.5
+        }
+      ],
+      "missingSkills": [
+        "c++",
+        "jquery",
+        "maximum 3 years of experience",
+        "minimum 1 years of experience",
+        "mongodb",
+        "mysql",
+        "postgresql"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "01e976659c5111905d2fba09",
+      "score": 49,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.25
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.3636
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.4167
+        }
+      ]
+    },
+    {
+      "confidenceNotes": [
+        "higher_confidence_multiple_alignment_signals"
+      ],
+      "matchedSkills": [
+        "java",
+        "python",
+        "sql"
+      ],
+      "missingSignals": [
+        {
+          "key": "missing_skills",
+          "values": [
+            "c++",
+            "laravel",
+            "microsoft sql server",
+            "must have 1-3 years of experience",
+            "mysql",
+            "node.js",
+            "php",
+            "postgresql"
+          ]
+        },
+        {
+          "key": "experience_gap_years",
+          "value": 2.5
+        }
+      ],
+      "missingSkills": [
+        "c++",
+        "laravel",
+        "microsoft sql server",
+        "must have 1-3 years of experience",
+        "mysql",
+        "node.js",
+        "php",
+        "postgresql"
+      ],
+      "model": {
+        "name": "phase_18_jobfit_training_v2",
+        "version": "jobfit-training-v2"
+      },
+      "pairId": "02267294066a50f582b404da",
+      "score": 51,
+      "summarySignals": [
+        {
+          "key": "skill_overlap",
+          "value": 0.1875
+        },
+        {
+          "key": "requirement_coverage",
+          "value": 0.2727
+        },
+        {
+          "key": "role_match",
+          "value": 1.0
+        },
+        {
+          "key": "experience_match",
+          "value": 0.5833
+        }
+      ]
+    }
+  ],
+  "generated_at": "2026-06-02T05:17:58.376983+00:00",
+  "phase_id": "phase_18_jobfit_training_v2",
+  "schema_version": "jobfit-training-v2",
+  "selected_model": "high_recall_calibrated_scorer"
+}

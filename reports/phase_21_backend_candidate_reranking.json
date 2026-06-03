@@ -1,0 +1,766 @@
+{
+  "acceptance": {
+    "backend_owns_hydration_and_copy": true,
+    "model_never_invents_jobs": true,
+    "ranking_metrics_beat_baseline": true,
+    "static_job_index_not_required": true
+  },
+  "candidate_count": 15,
+  "candidate_set_count": 3,
+  "constraint_results": [
+    {
+      "candidateSetId": "cs-backend-001",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "candidateSetId": "cs-backend-002",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "candidateSetId": "cs-backend-003",
+      "errors": [],
+      "passed": true
+    }
+  ],
+  "constraint_violation_rate": 0.0,
+  "contract_boundary": {
+    "backend_wrapper_owned_fields": [
+      "availability",
+      "company",
+      "companyName",
+      "hydratedJob",
+      "location",
+      "nextStep",
+      "reason",
+      "title",
+      "visibility"
+    ],
+    "job_index_required_for_production_output": false,
+    "model_core_fields": [
+      "jobId",
+      "matchScore",
+      "matchLevel",
+      "matchedSkills",
+      "missingSkills",
+      "rankingSignals"
+    ],
+    "public_contract_observed": true,
+    "public_cv_response_cap": 5
+  },
+  "generated_at": "2026-06-02T05:52:17.295389+00:00",
+  "input_schema": {
+    "jobCandidateRequiredFields": [
+      "jobId",
+      "requiredSkills",
+      "roleFamily",
+      "experienceBand",
+      "semanticSimilarity",
+      "requirementCoverage"
+    ],
+    "ownerBoundary": {
+      "backendOwns": [
+        "candidate retrieval",
+        "job visibility",
+        "job availability",
+        "title/company/detail hydration",
+        "public reason copy",
+        "public nextStep copy"
+      ],
+      "modelOwns": [
+        "rank supplied candidates only",
+        "emit jobId, matchScore, matchLevel, matchedSkills, missingSkills, rankingSignals"
+      ]
+    },
+    "profileFeatures": [
+      "profileId",
+      "normalizedSkills",
+      "roleFamily",
+      "experienceBand",
+      "language",
+      "embeddingText"
+    ],
+    "rankingPolicy": {
+      "deduplicateByJobId": true,
+      "maxRecommendations": 5,
+      "productionStaticJobIndexAllowed": false,
+      "requireCandidateJobIds": true
+    },
+    "requiredFields": [
+      "requestId",
+      "candidateSetId",
+      "profileFeatures",
+      "rankingPolicy",
+      "jobCandidates"
+    ],
+    "schemaVersion": "backend-candidate-reranking-v1"
+  },
+  "label_manifest": {
+    "allowedValues": {
+      "0": "not relevant",
+      "1": "weak relevance",
+      "2": "good relevance",
+      "3": "strong relevance"
+    },
+    "inferenceUse": "forbidden",
+    "labelSource": "backend_like_manual_review_fixture",
+    "labelVersion": "candidate-relevance-v1",
+    "splitPolicy": "candidateSetId grouped evaluation; no candidate-set rows split across folds"
+  },
+  "metrics": {
+    "baseline": {
+      "baseline": "backend_candidate_order",
+      "map_at_10": 0.6189814814814815,
+      "ndcg_at_10": 0.6851909684631768,
+      "ndcg_at_5": 0.6851909684631768
+    },
+    "baseline_by_candidate_set": [
+      {
+        "candidateSetId": "cs-backend-001",
+        "map_at_10": 0.5888888888888889,
+        "ndcg_at_10": 0.6809593189246838,
+        "ndcg_at_5": 0.6809593189246838
+      },
+      {
+        "candidateSetId": "cs-backend-002",
+        "map_at_10": 0.6791666666666667,
+        "ndcg_at_10": 0.6936542675401632,
+        "ndcg_at_5": 0.6936542675401632
+      },
+      {
+        "candidateSetId": "cs-backend-003",
+        "map_at_10": 0.5888888888888889,
+        "ndcg_at_10": 0.6809593189246838,
+        "ndcg_at_5": 0.6809593189246838
+      }
+    ],
+    "model": {
+      "map_at_10": 1.0,
+      "ndcg_at_10": 1.0,
+      "ndcg_at_5": 1.0
+    },
+    "model_by_candidate_set": [
+      {
+        "candidateSetId": "cs-backend-001",
+        "map_at_10": 1.0,
+        "ndcg_at_10": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      {
+        "candidateSetId": "cs-backend-002",
+        "map_at_10": 1.0,
+        "ndcg_at_10": 1.0,
+        "ndcg_at_5": 1.0
+      },
+      {
+        "candidateSetId": "cs-backend-003",
+        "map_at_10": 1.0,
+        "ndcg_at_10": 1.0,
+        "ndcg_at_5": 1.0
+      }
+    ],
+    "release_thresholds": {
+      "baseline_uplift_min": 0.05,
+      "constraint_violation_rate_max": 0.0,
+      "map_at_10_min": 0.8,
+      "ndcg_at_10_min": 0.85,
+      "ndcg_at_5_min": 0.85
+    },
+    "uplift": {
+      "map_at_10": 0.38101851851851853,
+      "ndcg_at_10": 0.31480903153682316,
+      "ndcg_at_5": 0.31480903153682316
+    }
+  },
+  "negative_constraint_errors": [
+    {
+      "check": "no_unknown_job_id",
+      "unknownIds": [
+        "job-invented-999"
+      ]
+    },
+    {
+      "check": "no_duplicate_job_id",
+      "duplicateIds": [
+        "job-ds-002"
+      ]
+    },
+    {
+      "check": "score_range",
+      "jobId": "job-invented-999",
+      "score": 101
+    },
+    {
+      "check": "match_level",
+      "jobId": "job-invented-999",
+      "matchLevel": "excellent"
+    },
+    {
+      "check": "wrapper_owned_field_exported",
+      "jobId": "job-invented-999"
+    },
+    {
+      "check": "max_item_count",
+      "count": 7,
+      "max": 5
+    }
+  ],
+  "phase_id": "phase_21_backend_candidate_reranking",
+  "reranked_outputs": [
+    {
+      "candidateSetId": "cs-backend-001",
+      "model": {
+        "name": "phase_21_backend_candidate_reranking",
+        "version": "backend-candidate-reranking-v1"
+      },
+      "recommendations": [
+        {
+          "jobId": "job-ds-002",
+          "matchLevel": "strong",
+          "matchScore": 96,
+          "matchedSkills": [
+            "machine learning",
+            "python",
+            "sql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.92
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.9
+            }
+          ]
+        },
+        {
+          "jobId": "job-ds-003",
+          "matchLevel": "good",
+          "matchScore": 77,
+          "matchedSkills": [
+            "deep learning",
+            "python"
+          ],
+          "missingSkills": [
+            "computer vision"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.6667
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.84
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.7
+            }
+          ]
+        },
+        {
+          "jobId": "job-ds-005",
+          "matchLevel": "good",
+          "matchScore": 73,
+          "matchedSkills": [
+            "python",
+            "sql"
+          ],
+          "missingSkills": [
+            "statistics"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.6667
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.77
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 0.65
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.64
+            }
+          ]
+        },
+        {
+          "jobId": "job-ds-004",
+          "matchLevel": "stretch",
+          "matchScore": 19,
+          "matchedSkills": [],
+          "missingSkills": [
+            "excel",
+            "reporting"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.42
+            },
+            {
+              "key": "role_match",
+              "value": 0.0
+            },
+            {
+              "key": "experience_match",
+              "value": 0.65
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.25
+            },
+            {
+              "key": "low_evidence_confidence",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job-ds-001",
+          "matchLevel": "stretch",
+          "matchScore": 15,
+          "matchedSkills": [],
+          "missingSkills": [
+            "java",
+            "spring"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.31
+            },
+            {
+              "key": "role_match",
+              "value": 0.0
+            },
+            {
+              "key": "experience_match",
+              "value": 0.65
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.2
+            },
+            {
+              "key": "low_evidence_confidence",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req-21-001"
+    },
+    {
+      "candidateSetId": "cs-backend-002",
+      "model": {
+        "name": "phase_21_backend_candidate_reranking",
+        "version": "backend-candidate-reranking-v1"
+      },
+      "recommendations": [
+        {
+          "jobId": "job-be-002",
+          "matchLevel": "strong",
+          "matchScore": 95,
+          "matchedSkills": [
+            "apis",
+            "postgresql",
+            "python"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.9
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.88
+            }
+          ]
+        },
+        {
+          "jobId": "job-be-005",
+          "matchLevel": "strong",
+          "matchScore": 91,
+          "matchedSkills": [
+            "apis",
+            "docker",
+            "python"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.82
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.75
+            }
+          ]
+        },
+        {
+          "jobId": "job-be-003",
+          "matchLevel": "good",
+          "matchScore": 72,
+          "matchedSkills": [
+            "docker",
+            "python"
+          ],
+          "missingSkills": [
+            "kubernetes"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.6667
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.78
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 0.65
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.62
+            }
+          ]
+        },
+        {
+          "jobId": "job-be-001",
+          "matchLevel": "stretch",
+          "matchScore": 32,
+          "matchedSkills": [],
+          "missingSkills": [
+            "mysql",
+            "php"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.46
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 0.65
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.25
+            },
+            {
+              "key": "low_evidence_confidence",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job-be-004",
+          "matchLevel": "stretch",
+          "matchScore": 21,
+          "matchedSkills": [],
+          "missingSkills": [
+            "react",
+            "typescript"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.38
+            },
+            {
+              "key": "role_match",
+              "value": 0.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.3
+            },
+            {
+              "key": "low_evidence_confidence",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req-21-002"
+    },
+    {
+      "candidateSetId": "cs-backend-003",
+      "model": {
+        "name": "phase_21_backend_candidate_reranking",
+        "version": "backend-candidate-reranking-v1"
+      },
+      "recommendations": [
+        {
+          "jobId": "job-sec-002",
+          "matchLevel": "strong",
+          "matchScore": 96,
+          "matchedSkills": [
+            "incident response",
+            "log analysis",
+            "security alerts"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.91
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.9
+            }
+          ]
+        },
+        {
+          "jobId": "job-sec-005",
+          "matchLevel": "strong",
+          "matchScore": 90,
+          "matchedSkills": [
+            "incident response",
+            "python"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.8
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.72
+            }
+          ]
+        },
+        {
+          "jobId": "job-sec-003",
+          "matchLevel": "good",
+          "matchScore": 71,
+          "matchedSkills": [
+            "log analysis",
+            "python"
+          ],
+          "missingSkills": [
+            "siem"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.6667
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.74
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            },
+            {
+              "key": "experience_match",
+              "value": 0.65
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.62
+            }
+          ]
+        },
+        {
+          "jobId": "job-sec-001",
+          "matchLevel": "stretch",
+          "matchScore": 19,
+          "matchedSkills": [],
+          "missingSkills": [
+            "linux",
+            "networking"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.35
+            },
+            {
+              "key": "role_match",
+              "value": 0.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.22
+            },
+            {
+              "key": "low_evidence_confidence",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job-sec-004",
+          "matchLevel": "stretch",
+          "matchScore": 13,
+          "matchedSkills": [],
+          "missingSkills": [
+            "crm",
+            "sales"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.2
+            },
+            {
+              "key": "role_match",
+              "value": 0.0
+            },
+            {
+              "key": "experience_match",
+              "value": 1.0
+            },
+            {
+              "key": "requirement_coverage",
+              "value": 0.1
+            },
+            {
+              "key": "low_evidence_confidence",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req-21-003"
+    }
+  ],
+  "schema_version": "backend-candidate-reranking-v1",
+  "source_reports": [
+    "reports/phase_09_candidate_reranking.json",
+    "reports/phase_18_model_output_contract_examples.json",
+    "references/docs/modules/ai-job-recommendations.md",
+    "references/docs/modules/ai-cv-analyzer.md"
+  ],
+  "status": "complete"
+}

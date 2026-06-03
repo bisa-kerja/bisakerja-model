@@ -1,0 +1,81 @@
+{
+  "phase_id": "phase_26_model_api_loader_inference_endpoint",
+  "step_id": "26.3",
+  "step_name": "Custom object registration",
+  "status": "complete",
+  "source_references": [
+    "TODOS.md#Phase-26",
+    "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py",
+    "artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",
+    "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+    "references/docs/generated/openapi.json",
+    "references/prisma/schema.prisma"
+  ],
+  "implementation": {
+    "module": "model_api/custom_objects.py",
+    "lazy_runtime_imports": true,
+    "importable_without_tensorflow_or_keras": true,
+    "registered_package": "BisakerjaPhase25",
+    "custom_objects": [
+      "CosineInteractionLayer",
+      "WeightedHuberLoss",
+      "ProductionGateCallback",
+      "HighRecallCalibrationLayer"
+    ],
+    "registered_names": [
+      "BisakerjaPhase25>CosineInteractionLayer",
+      "BisakerjaPhase25>WeightedHuberLoss",
+      "BisakerjaPhase25>ProductionGateCallback",
+      "BisakerjaPhase25>HighRecallCalibrationLayer"
+    ],
+    "load_model_helper": "load_phase25_keras_model(model_path)",
+    "load_model_compile": false,
+    "source_smoke_script_imported_at_runtime": false
+  },
+  "model_artifact_check": {
+    "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+    "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+    "referenced_custom_objects_detected_in_config": [
+      "BisakerjaPhase25>CosineInteractionLayer",
+      "BisakerjaPhase25>HighRecallCalibrationLayer"
+    ]
+  },
+  "boundary_checks": {
+    "phase_25_artifacts_mutated": false,
+    "training_notebook_modified": false,
+    "backend_db_access_added": false,
+    "auth_or_persistence_added": false,
+    "external_genai_call_added_for_core_inference": false,
+    "fastapi_startup_loader_added": false,
+    "tensorflow_required_for_lightweight_imports": false
+  },
+  "changed_files": {
+    "model_api/__init__.py": {
+      "sha256": "e6d6d9da8996b40d7a1907470873a17b9a62e1ca7b8ab5f373c4f6920f85d53c"
+    },
+    "model_api/custom_objects.py": {
+      "sha256": "08b8b3ef00b7867027163291312cc02b4a23af6be5c61434c112717a1d875862"
+    },
+    "tests/model_api/test_phase_26_layout.py": {
+      "sha256": "598f354886880f766fddc4908bc72fdc4776dae740b04be4780eed0a4928010b"
+    },
+    "TODOS.md": {
+      "step_26_3_checked": true
+    }
+  },
+  "verification": {
+    "commands": [
+      {
+        "command": "python -m unittest tests.model_api.test_phase_26_layout",
+        "status": "pass",
+        "result": "Ran 17 tests in 0.006s; OK (skipped=1)",
+        "skip_reason": "TensorFlow/Keras not installed locally, so real .keras load test skipped after verifying deterministic registration error path."
+      },
+      {
+        "command": "python -m py_compile model_api/__init__.py model_api/custom_objects.py tests/model_api/test_phase_26_layout.py",
+        "status": "pass"
+      }
+    ]
+  },
+  "next_step": "26.4 Startup model loader"
+}

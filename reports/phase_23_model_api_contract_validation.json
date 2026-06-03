@@ -1,0 +1,335 @@
+{
+  "acceptance": {
+    "backend_wrapper_only_fields_remain_outside_training_artifacts": true,
+    "invalid_model_output_rejected_before_persistence_or_user_response": true,
+    "model_core_output_maps_to_cv_analysis_v2_without_raw_internals": true,
+    "notebook_contract_checks_include_positive_and_negative_fixtures": true
+  },
+  "fallbackChecks": {
+    "all_fallbacks_pass": true,
+    "all_required_fallbacks_present": true
+  },
+  "fallbackValidation": [
+    {
+      "checks": {
+        "does_not_expose_raw_internals": true,
+        "has_expected_action": true,
+        "not_persisted": true
+      },
+      "expectedAction": "backend_returns_retryable_error_or_safe_processing_message",
+      "name": "timeout",
+      "passed": true
+    },
+    {
+      "checks": {
+        "does_not_expose_raw_internals": true,
+        "has_expected_action": true,
+        "not_persisted": true
+      },
+      "expectedAction": "backend_returns_service_unavailable_without_partial_scores",
+      "name": "model_unavailable",
+      "passed": true
+    },
+    {
+      "checks": {
+        "does_not_expose_raw_internals": true,
+        "hard_validator_rejects": true,
+        "has_expected_action": true,
+        "not_persisted": true
+      },
+      "expectedAction": "reject_before_persistence_or_user_response",
+      "name": "invalid_model_output",
+      "passed": true
+    },
+    {
+      "checks": {
+        "does_not_expose_raw_internals": true,
+        "empty_parse_detected": true,
+        "has_expected_action": true,
+        "safe_to_persist_fallback": true
+      },
+      "expectedAction": "return_safe_empty_parse_fallback_with_no_skill_claims",
+      "name": "empty_cv_parse",
+      "passed": true
+    },
+    {
+      "checks": {
+        "confidence_note_present": true,
+        "does_not_expose_raw_internals": true,
+        "has_expected_action": true,
+        "safe_to_persist_bounded_output": true
+      },
+      "expectedAction": "allow_bounded_low_confidence_output_with_visible_confidence_note",
+      "name": "low_confidence",
+      "passed": true
+    }
+  ],
+  "fixtureChecks": {
+    "negative_fixtures_present": true,
+    "positive_cv_has_required_outputs": true,
+    "positive_cv_language_maps_to_openapi": true,
+    "positive_rerank_has_required_outputs": true
+  },
+  "generatedAt": "2026-06-02T06:07:17.296442+00:00",
+  "integrationBoundary": {
+    "backendWrapperOwns": [
+      "availability",
+      "companyName",
+      "generatedCv",
+      "hydratedJob",
+      "nextStep",
+      "reason",
+      "sectionReviews",
+      "title",
+      "topActionables",
+      "visibility"
+    ],
+    "modelCoreOwns": [
+      "atsFriendliness",
+      "jobFitAlignment",
+      "overallImpression",
+      "recommendations"
+    ],
+    "persistenceRule": "persist only outputs that pass hard validators; never persist invalid model output",
+    "rawInternalsRule": "do not expose raw evidence internals directly in public response; backend wrapper renders product-safe copy"
+  },
+  "modelCoreContract": {
+    "candidateRerankingRequest": {
+      "candidateRequired": [
+        "jobId",
+        "roleTitle",
+        "requirements",
+        "skills"
+      ],
+      "maxCandidates": 25,
+      "required": [
+        "requestId",
+        "candidateSetId",
+        "language",
+        "profile",
+        "jobCandidates"
+      ]
+    },
+    "candidateRerankingResponse": {
+      "forbiddenFields": [
+        "availability",
+        "companyName",
+        "generatedCv",
+        "hydratedJob",
+        "nextStep",
+        "reason",
+        "sectionReviews",
+        "title",
+        "topActionables",
+        "visibility"
+      ],
+      "maxRecommendations": 5,
+      "required": [
+        "requestId",
+        "schemaVersion",
+        "recommendations",
+        "model",
+        "rankedAt"
+      ],
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "cvAnalysisRequest": {
+      "cv": [
+        "fileId",
+        "mimeType",
+        "sizeBytes",
+        "parser"
+      ],
+      "language": [
+        "EN",
+        "ID"
+      ],
+      "maxJobRoles": 10,
+      "required": [
+        "requestId",
+        "inputVersion",
+        "language",
+        "jobRoles",
+        "cv"
+      ]
+    },
+    "cvAnalysisResponse": {
+      "forbiddenFields": [
+        "availability",
+        "companyName",
+        "generatedCv",
+        "hydratedJob",
+        "nextStep",
+        "reason",
+        "sectionReviews",
+        "title",
+        "topActionables",
+        "visibility"
+      ],
+      "required": [
+        "requestId",
+        "schemaVersion",
+        "jobFitAlignment",
+        "atsFriendliness",
+        "overallImpression",
+        "model",
+        "analyzedAt"
+      ],
+      "schemaVersion": "model-core-cv-analysis-v1",
+      "scoreFields": [
+        "jobFitAlignment.score",
+        "atsFriendliness.score",
+        "overallImpression.score"
+      ]
+    },
+    "mappingPolicy": {
+      "backendOwned": [
+        "availability",
+        "companyName",
+        "generatedCv",
+        "hydratedJob",
+        "nextStep",
+        "reason",
+        "sectionReviews",
+        "title",
+        "topActionables",
+        "visibility"
+      ],
+      "backendSchemaVersion": "cv-analysis-v2",
+      "languageMapping": {
+        "EN": "en",
+        "ID": "id"
+      },
+      "modelOwned": [
+        "atsFriendliness",
+        "jobFitAlignment",
+        "overallImpression",
+        "recommendations"
+      ]
+    },
+    "schemaVersion": "model-api-contract-validation-v1",
+    "sources": {
+      "cvAnalyzerDoc": "references/docs/modules/ai-cv-analyzer.md",
+      "openapi": "references/docs/generated/openapi.json",
+      "phase22ModelCoreSchema": "artifacts/phase_22_calibration_model_card_export/model_core_schema.json"
+    }
+  },
+  "notes": [
+    "Backend still owns public topActionables, sectionReviews, generatedCv, job hydration, reason, and nextStep copy.",
+    "Model-core recommendations only rank backend-supplied candidate job IDs.",
+    "Fallback cases define integration behavior; backend implementation must map them to actual HTTP errors/responses."
+  ],
+  "phase": 23,
+  "phaseId": "phase_23_model_api_contract_validation",
+  "readinessStatus": "ready_for_backend_integration_fixture_review",
+  "schemaChecks": {
+    "doc_mentions_model_api": true,
+    "has_openapi_cv_analysis_v2": true,
+    "phase22_forbidden_fields_loaded": true,
+    "wrapper_fields_excluded_from_cv_response": true,
+    "wrapper_fields_excluded_from_reranking_response": true
+  },
+  "schemaVersion": "model-api-contract-validation-v1",
+  "sources": {
+    "cvAnalyzerDoc": "references/docs/modules/ai-cv-analyzer.md",
+    "openapi": "references/docs/generated/openapi.json",
+    "phase22ModelCoreSchema": "artifacts/phase_22_calibration_model_card_export/model_core_schema.json"
+  },
+  "validationChecks": {
+    "all_negative_fixtures_rejected": true,
+    "positive_has_zero_violations": true,
+    "required_checks_covered": true
+  },
+  "validationResults": {
+    "negative": {
+      "cv_invalid_language": [
+        {
+          "check": "language_enum",
+          "value": "JP"
+        }
+      ],
+      "cv_missing_model_metadata": [
+        {
+          "check": "required_response_field",
+          "field": "model"
+        },
+        {
+          "check": "model_metadata",
+          "value": null
+        }
+      ],
+      "cv_score_out_of_range": [
+        {
+          "check": "score_bounds",
+          "field": "jobFitAlignment.score"
+        }
+      ],
+      "cv_wrapper_owned_field": [
+        {
+          "check": "wrapper_owned_field",
+          "paths": [
+            "$.topActionables"
+          ]
+        }
+      ],
+      "rerank_duplicate_job": [
+        {
+          "check": "duplicate_recommendations",
+          "jobIds": [
+            "job_backend_1"
+          ]
+        }
+      ],
+      "rerank_too_many_items": [
+        {
+          "check": "duplicate_recommendations",
+          "jobIds": [
+            "job_backend_1",
+            "job_fullstack_1"
+          ]
+        },
+        {
+          "check": "max_item_count",
+          "count": 6
+        }
+      ],
+      "rerank_unknown_job": [
+        {
+          "check": "candidate_membership",
+          "unknownIds": [
+            "job_not_in_candidate_set"
+          ]
+        }
+      ],
+      "rerank_wrapper_owned_field": [
+        {
+          "check": "wrapper_owned_field",
+          "paths": [
+            "$.recommendations[0].title"
+          ]
+        }
+      ]
+    },
+    "positive": {
+      "cvRequest": [],
+      "cvResponse": [],
+      "rerankingRequest": [],
+      "rerankingResponse": []
+    },
+    "summary": {
+      "coveredChecks": [
+        "candidate_membership",
+        "duplicate_recommendations",
+        "language_enum",
+        "max_item_count",
+        "model_metadata",
+        "required_response_field",
+        "score_bounds",
+        "wrapper_owned_field"
+      ],
+      "negativeFixtureCount": 8,
+      "negativeRejectedCount": 8,
+      "positiveViolationCount": 0
+    }
+  }
+}

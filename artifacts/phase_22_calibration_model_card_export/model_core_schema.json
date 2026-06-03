@@ -1,0 +1,46 @@
+{
+  "forbidden_model_core_fields": [
+    "title",
+    "companyName",
+    "visibility",
+    "availability",
+    "reason",
+    "nextStep",
+    "topActionables",
+    "sectionReviews"
+  ],
+  "outputs": {
+    "atsFriendliness": {
+      "detectedIssues": "array[string]",
+      "evidence": "object",
+      "fallback": "boolean",
+      "score": "integer 0-100"
+    },
+    "jobFitAlignment": {
+      "confidenceNotes": "array[string]",
+      "matchedSkills": "array[string]",
+      "missingSkills": "array[string]",
+      "score": "integer 0-100",
+      "summarySignals": "array[object]"
+    },
+    "overallImpression": {
+      "confidenceNotes": "array[string]",
+      "evidenceKeys": "array[string]",
+      "score": "integer 0-100",
+      "summary": "string"
+    },
+    "recommendations": {
+      "jobId": "backend-supplied string",
+      "matchLevel": [
+        "strong",
+        "good",
+        "stretch"
+      ],
+      "matchScore": "integer 0-100",
+      "matchedSkills": "array[string]",
+      "missingSkills": "array[string]",
+      "rankingSignals": "array[object]"
+    }
+  },
+  "schema_version": "model-core-export-schema-v1"
+}

@@ -1,0 +1,157 @@
+{
+  "acceptance_criteria": {
+    "legacy_pairs_v1_not_production_training_evidence": true,
+    "no_profile_id_in_multiple_splits": true,
+    "required_pair_types_present_overall_and_eval": true,
+    "validation_and_test_high_fit_minimums_met": true
+  },
+  "artifact": {
+    "path": "artifacts/pairs_v2.parquet",
+    "row_count": 3600,
+    "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+  },
+  "coverage": {
+    "blockers": [],
+    "failures": [],
+    "high_fit_counts": {
+      "test": 90,
+      "train": 420,
+      "validation": 90
+    },
+    "high_fit_minimums": {
+      "test": 50,
+      "validation": 50
+    },
+    "pair_type_counts": {
+      "cross_role_confusing": {
+        "test": 90,
+        "train": 420,
+        "validation": 90
+      },
+      "hard_negative": {
+        "test": 90,
+        "train": 420,
+        "validation": 90
+      },
+      "high_fit_positive": {
+        "test": 90,
+        "train": 420,
+        "validation": 90
+      },
+      "medium_fit": {
+        "test": 90,
+        "train": 420,
+        "validation": 90
+      },
+      "random_negative": {
+        "test": 90,
+        "train": 420,
+        "validation": 90
+      },
+      "same_role_different_seniority": {
+        "test": 90,
+        "train": 420,
+        "validation": 90
+      }
+    },
+    "passed": true,
+    "score_band_counts": {
+      "high": {
+        "test": 90,
+        "train": 420,
+        "validation": 90
+      },
+      "low": {
+        "test": 359,
+        "train": 1679,
+        "validation": 360
+      },
+      "medium": {
+        "test": 91,
+        "train": 421,
+        "validation": 90
+      }
+    }
+  },
+  "diagnostics_report": "reports/phase_15_pair_distribution_diagnostics.json",
+  "generated_at": "2026-06-02T04:47:02.156673+00:00",
+  "leakage": {
+    "artifact": {
+      "path": "artifacts/pairs_v2.parquet",
+      "row_count": 3600,
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    },
+    "generated_at": "2026-06-02T04:47:02.115696+00:00",
+    "leaking_profile_count": 0,
+    "leaking_profiles_sample": [],
+    "pair_count": 3600,
+    "passed": true,
+    "profile_count": 920,
+    "schema_version": "pairs-v2-balanced-splits-v1",
+    "split_pair_counts": {
+      "test": 540,
+      "train": 2520,
+      "validation": 540
+    },
+    "split_profile_counts": {
+      "test": 140,
+      "train": 634,
+      "validation": 146
+    }
+  },
+  "legacy_pairs_policy": {
+    "legacy_artifact": "legacy/artifacts/pairs.parquet",
+    "production_training_evidence": false,
+    "reason": "Phase 15 materializes full-range pairs_v2 with split-safe metadata; legacy weak-label pairs remain historical baseline evidence only."
+  },
+  "pair_generation_config": {
+    "high_fit_minimum_by_eval_split": {
+      "test": 50,
+      "validation": 50
+    },
+    "label_version": "weak-label-balanced-v2",
+    "required_pair_types": [
+      "high_fit_positive",
+      "medium_fit",
+      "hard_negative",
+      "random_negative",
+      "same_role_different_seniority",
+      "cross_role_confusing"
+    ],
+    "score_bands": {
+      "high": [
+        0.7,
+        1.0
+      ],
+      "low": [
+        0.0,
+        0.399999
+      ],
+      "medium": [
+        0.4,
+        0.699999
+      ]
+    },
+    "seed": 202615,
+    "split_targets_per_pair_type": {
+      "test": 90,
+      "train": 420,
+      "validation": 90
+    }
+  },
+  "phase_id": "phase_15_balanced_pair_generation_splits",
+  "schema_version": "pairs-v2-balanced-splits-v1",
+  "source_files": {
+    "jobs": {
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "row_count": 2073,
+      "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565"
+    },
+    "profiles": {
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "row_count": 69929,
+      "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494"
+    }
+  },
+  "status": "complete"
+}

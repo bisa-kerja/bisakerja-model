@@ -1,0 +1,1262 @@
+{
+  "acceptance": {
+    "best_baseline_is_known_before_model_training": true,
+    "training_readiness_decision_is_explicit": true,
+    "weak_slices_are_documented": true
+  },
+  "blocked_until_later_phases": [
+    "Phase 6 complex job-fit training must wait for balanced pairs, high-fit coverage, and stronger labels.",
+    "Phase 9 recommendation ranking must wait for backend candidate-set labels or realistic candidate sets.",
+    "Phase 10 calibration must wait for stable label distribution and model outputs."
+  ],
+  "error_inspection": {
+    "baseline": "simple_ridge_regression",
+    "error_policy": "Examples are diagnostic only because labels are weak and high-fit labels are absent.",
+    "false_high_examples": [
+      {
+        "experience_match_score": 0.4,
+        "job_id": "e84fda68-400a-4c9f-a7cc-74f4b9555feb",
+        "job_role": "devops engineer",
+        "prediction": 0.15143899226593793,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "43650",
+        "profile_role": "cloud engineer",
+        "residual": 0.07773899226593793,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.09168574792819374,
+        "skill_overlap_score": 0.13333333333333333,
+        "target": 0.0737
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "9922ee42-0c23-4921-b32f-ce4e196ebacf",
+        "job_role": "software engineering manager",
+        "prediction": 0.19519611777127396,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "experience gap"
+        ],
+        "profile_id": "5865",
+        "profile_role": "cloud engineer",
+        "residual": 0.07189611777127396,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.1100461926961232,
+        "skill_overlap_score": 0.21428571428571427,
+        "target": 0.1233
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "ee680e5f-6d49-429c-adf1-2286bd9ebb6d",
+        "job_role": "devops engineer",
+        "prediction": 0.1874006839460194,
+        "probable_root_causes": [
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "88262",
+        "profile_role": "cloud engineer",
+        "residual": 0.06990068394601939,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.09024837759935006,
+        "skill_overlap_score": 0.2,
+        "target": 0.1175
+      },
+      {
+        "experience_match_score": 0.6,
+        "job_id": "37ab78f6-f531-42bb-9077-86d32ec47b1f",
+        "job_role": "it web developer programmer staff",
+        "prediction": 0.1846620191294781,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "profile/job role-family mismatch",
+          "low text similarity"
+        ],
+        "profile_id": "88262",
+        "profile_role": "cloud engineer",
+        "residual": 0.06466201912947811,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.015913616564311228,
+        "skill_overlap_score": 0.06666666666666667,
+        "target": 0.12
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "f7699a36-8f89-41c3-b348-e880cf2fa612",
+        "job_role": "devops engineer",
+        "prediction": 0.23394614524584476,
+        "probable_root_causes": [
+          "experience gap"
+        ],
+        "profile_id": "49157",
+        "profile_role": "cloud engineer",
+        "residual": 0.06394614524584474,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.11462515988647781,
+        "skill_overlap_score": 0.2857142857142857,
+        "target": 0.17
+      },
+      {
+        "experience_match_score": 0.6,
+        "job_id": "18acd2eb-347f-4375-963e-e88e540b4368",
+        "job_role": "big data engineer spv level",
+        "prediction": 0.1789101350909198,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "low text similarity"
+        ],
+        "profile_id": "71119",
+        "profile_role": "ml engineer",
+        "residual": 0.0589101350909198,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.02414676558923861,
+        "skill_overlap_score": 0.05555555555555555,
+        "target": 0.12
+      },
+      {
+        "experience_match_score": 0.6,
+        "job_id": "40f7561b-9380-4905-b8f6-77ef1531fa94",
+        "job_role": "data engineer",
+        "prediction": 0.17884990551682492,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "low text similarity"
+        ],
+        "profile_id": "9641",
+        "profile_role": "business analyst",
+        "residual": 0.058849905516824924,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.01903509106555092,
+        "skill_overlap_score": 0.05555555555555555,
+        "target": 0.12
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "ebfdde96-a7d0-4414-8eb9-eeed593fa629",
+        "job_role": "senior software engineer",
+        "prediction": 0.17408344296283726,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "64383",
+        "profile_role": "cloud engineer",
+        "residual": 0.056583442962837266,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.050244389049769474,
+        "skill_overlap_score": 0.17647058823529413,
+        "target": 0.1175
+      }
+    ],
+    "false_low_examples": [
+      {
+        "experience_match_score": 0.0,
+        "job_id": "76eef643-350e-421c-9b91-d1442679e960",
+        "job_role": "data analyst crm management lead",
+        "prediction": 0.0,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "57313",
+        "profile_role": "data scientist",
+        "residual": -0.0883,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.055244658014156796,
+        "skill_overlap_score": 0.08333333333333333,
+        "target": 0.0883
+      },
+      {
+        "experience_match_score": 0.0,
+        "job_id": "7fc41495-f020-44cc-b0dd-616d983be5cd",
+        "job_role": "ai software engineer",
+        "prediction": 0.0,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "profile/job role-family mismatch",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "56248",
+        "profile_role": "backend developer",
+        "residual": -0.0838,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.018717819045536092,
+        "skill_overlap_score": 0.08333333333333333,
+        "target": 0.0838
+      },
+      {
+        "experience_match_score": 1.0,
+        "job_id": "254aef8c-a6b7-4dd4-ad68-cd0ba388c31f",
+        "job_role": "software engineer",
+        "prediction": 0.452707089920499,
+        "probable_root_causes": [
+          "profile/job role-family mismatch"
+        ],
+        "profile_id": "88585",
+        "profile_role": "web developer",
+        "residual": -0.08059291007950098,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.15474933727109522,
+        "skill_overlap_score": 0.3,
+        "target": 0.5333
+      },
+      {
+        "experience_match_score": 0.19999999999999996,
+        "job_id": "5562ae9b-4441-44d8-91d3-946ad922604f",
+        "job_role": "qa - lead engineering automation",
+        "prediction": 0.1064351510552244,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "85633",
+        "profile_role": "backend developer",
+        "residual": -0.050864848944775595,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.02543908788038279,
+        "skill_overlap_score": 0.18181818181818182,
+        "target": 0.1573
+      },
+      {
+        "experience_match_score": 1.0,
+        "job_id": "cf250eb4-b567-4dbd-b769-91bc0706795e",
+        "job_role": "full stack engineer python react",
+        "prediction": 0.4246617045533189,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "low text similarity"
+        ],
+        "profile_id": "92342",
+        "profile_role": "backend developer",
+        "residual": -0.05033829544668106,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.06466725673883847,
+        "skill_overlap_score": 0.25,
+        "target": 0.475
+      },
+      {
+        "experience_match_score": 1.0,
+        "job_id": "41d274a7-c450-4dd1-be9e-638171ec263e",
+        "job_role": "unknown",
+        "prediction": 0.37950988950940423,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "low text similarity"
+        ],
+        "profile_id": "986",
+        "profile_role": "cloud engineer",
+        "residual": -0.04779011049059578,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.04951542424926409,
+        "skill_overlap_score": 0.16666666666666666,
+        "target": 0.4273
+      },
+      {
+        "experience_match_score": 0.8,
+        "job_id": "8becbcb9-4755-4fa0-9812-827d433133ca",
+        "job_role": "fullstack engineer",
+        "prediction": 0.35435988356637993,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "low text similarity"
+        ],
+        "profile_id": "97738",
+        "profile_role": "web developer",
+        "residual": -0.04654011643362005,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.05959055427712266,
+        "skill_overlap_score": 0.25,
+        "target": 0.4009
+      },
+      {
+        "experience_match_score": 1.0,
+        "job_id": "281e697e-dd66-4ebc-b1fc-d29a5659d061",
+        "job_role": "fullstack developer",
+        "prediction": 0.37246205231081975,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "low text similarity"
+        ],
+        "profile_id": "99053",
+        "profile_role": "cloud engineer",
+        "residual": -0.04423794768918027,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.038578221741176526,
+        "skill_overlap_score": 0.15384615384615385,
+        "target": 0.4167
+      }
+    ],
+    "highest_absolute_error_examples": [
+      {
+        "experience_match_score": 0.0,
+        "job_id": "76eef643-350e-421c-9b91-d1442679e960",
+        "job_role": "data analyst crm management lead",
+        "prediction": 0.0,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "57313",
+        "profile_role": "data scientist",
+        "residual": -0.0883,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.055244658014156796,
+        "skill_overlap_score": 0.08333333333333333,
+        "target": 0.0883
+      },
+      {
+        "experience_match_score": 0.0,
+        "job_id": "7fc41495-f020-44cc-b0dd-616d983be5cd",
+        "job_role": "ai software engineer",
+        "prediction": 0.0,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "profile/job role-family mismatch",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "56248",
+        "profile_role": "backend developer",
+        "residual": -0.0838,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.018717819045536092,
+        "skill_overlap_score": 0.08333333333333333,
+        "target": 0.0838
+      },
+      {
+        "experience_match_score": 1.0,
+        "job_id": "254aef8c-a6b7-4dd4-ad68-cd0ba388c31f",
+        "job_role": "software engineer",
+        "prediction": 0.452707089920499,
+        "probable_root_causes": [
+          "profile/job role-family mismatch"
+        ],
+        "profile_id": "88585",
+        "profile_role": "web developer",
+        "residual": -0.08059291007950098,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.15474933727109522,
+        "skill_overlap_score": 0.3,
+        "target": 0.5333
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "e84fda68-400a-4c9f-a7cc-74f4b9555feb",
+        "job_role": "devops engineer",
+        "prediction": 0.15143899226593793,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "43650",
+        "profile_role": "cloud engineer",
+        "residual": 0.07773899226593793,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.09168574792819374,
+        "skill_overlap_score": 0.13333333333333333,
+        "target": 0.0737
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "9922ee42-0c23-4921-b32f-ce4e196ebacf",
+        "job_role": "software engineering manager",
+        "prediction": 0.19519611777127396,
+        "probable_root_causes": [
+          "profile/job role-family mismatch",
+          "experience gap"
+        ],
+        "profile_id": "5865",
+        "profile_role": "cloud engineer",
+        "residual": 0.07189611777127396,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.1100461926961232,
+        "skill_overlap_score": 0.21428571428571427,
+        "target": 0.1233
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "ee680e5f-6d49-429c-adf1-2286bd9ebb6d",
+        "job_role": "devops engineer",
+        "prediction": 0.1874006839460194,
+        "probable_root_causes": [
+          "experience gap",
+          "low text similarity"
+        ],
+        "profile_id": "88262",
+        "profile_role": "cloud engineer",
+        "residual": 0.06990068394601939,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.09024837759935006,
+        "skill_overlap_score": 0.2,
+        "target": 0.1175
+      },
+      {
+        "experience_match_score": 0.6,
+        "job_id": "37ab78f6-f531-42bb-9077-86d32ec47b1f",
+        "job_role": "it web developer programmer staff",
+        "prediction": 0.1846620191294781,
+        "probable_root_causes": [
+          "low exact skill overlap",
+          "profile/job role-family mismatch",
+          "low text similarity"
+        ],
+        "profile_id": "88262",
+        "profile_role": "cloud engineer",
+        "residual": 0.06466201912947811,
+        "role_match_score": 0.0,
+        "semantic_similarity_score": 0.015913616564311228,
+        "skill_overlap_score": 0.06666666666666667,
+        "target": 0.12
+      },
+      {
+        "experience_match_score": 0.4,
+        "job_id": "f7699a36-8f89-41c3-b348-e880cf2fa612",
+        "job_role": "devops engineer",
+        "prediction": 0.23394614524584476,
+        "probable_root_causes": [
+          "experience gap"
+        ],
+        "profile_id": "49157",
+        "profile_role": "cloud engineer",
+        "residual": 0.06394614524584474,
+        "role_match_score": 1.0,
+        "semantic_similarity_score": 0.11462515988647781,
+        "skill_overlap_score": 0.2857142857142857,
+        "target": 0.17
+      }
+    ]
+  },
+  "generated_at_utc": "2026-06-01T09:11:23.586864+00:00",
+  "inputs": {
+    "pairs_parquet": "legacy/artifacts/pairs.parquet",
+    "phase2_report": "reports/phase_02_label_schema_baselines.json",
+    "phase3_report": "reports/phase_03_normalization_feature_design.json",
+    "phase4_report": "reports/phase_04_pair_generation_splits.json",
+    "todo_scope": "Phase 5 \u2014 Baseline Evaluation Notebook"
+  },
+  "ranking_baselines": {
+    "metrics": [
+      {
+        "baseline": "simple_ridge_regression",
+        "evaluated_profile_groups": 423,
+        "map_at_10": 1.0,
+        "ndcg_at_10": 0.9997640248364117,
+        "ndcg_at_5": 0.9995762260732286,
+        "relevance_source": "legacy_fit_score_weak_proxy",
+        "skipped_profile_groups": 0,
+        "split": "validation"
+      },
+      {
+        "baseline": "cosine_only_tfidf",
+        "evaluated_profile_groups": 423,
+        "map_at_10": 0.7450564971751413,
+        "ndcg_at_10": 0.9105885878913791,
+        "ndcg_at_5": 0.7903961463625409,
+        "relevance_source": "legacy_fit_score_weak_proxy",
+        "skipped_profile_groups": 0,
+        "split": "validation"
+      },
+      {
+        "baseline": "skill_overlap_only",
+        "evaluated_profile_groups": 423,
+        "map_at_10": 0.923728813559322,
+        "ndcg_at_10": 0.895927947358174,
+        "ndcg_at_5": 0.7483244852326485,
+        "relevance_source": "legacy_fit_score_weak_proxy",
+        "skipped_profile_groups": 0,
+        "split": "validation"
+      },
+      {
+        "baseline": "constant_mean",
+        "evaluated_profile_groups": 423,
+        "map_at_10": 0.33985068603712676,
+        "ndcg_at_10": 0.8823767822359391,
+        "ndcg_at_5": 0.7273658265895807,
+        "relevance_source": "legacy_fit_score_weak_proxy",
+        "skipped_profile_groups": 0,
+        "split": "validation"
+      },
+      {
+        "baseline": "constant_median",
+        "evaluated_profile_groups": 423,
+        "map_at_10": 0.33985068603712676,
+        "ndcg_at_10": 0.8823767822359391,
+        "ndcg_at_5": 0.7273658265895807,
+        "relevance_source": "legacy_fit_score_weak_proxy",
+        "skipped_profile_groups": 0,
+        "split": "validation"
+      }
+    ],
+    "metrics_are_proxy_only": true,
+    "ordering_examples": [
+      {
+        "baseline": "simple_ridge_regression",
+        "profile_id": "88585",
+        "top_by_label": [
+          {
+            "best_prediction": 0.452707089920499,
+            "job_id": "254aef8c-a6b7-4dd4-ad68-cd0ba388c31f",
+            "job_role": "software engineer",
+            "target": 0.5333
+          },
+          {
+            "best_prediction": 0.28935149804914817,
+            "job_id": "e680c463-5a8d-4a38-8d2e-69c75c7c03c9",
+            "job_role": "java full-stack developer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.2891110365236767,
+            "job_id": "8788f2cc-2d3f-4d2b-a17a-e4cb000e3264",
+            "job_role": "ai agent developer ai automation engineer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.289017357410711,
+            "job_id": "938a8fac-4004-49b3-a32f-3754d7935964",
+            "job_role": "system analyst",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.2890167780640803,
+            "job_id": "d495628d-58e0-4fad-b554-ab64debe1c19",
+            "job_role": "it finance systems architect nspb",
+            "target": 0.3
+          }
+        ],
+        "top_by_prediction": [
+          {
+            "best_prediction": 0.452707089920499,
+            "job_id": "254aef8c-a6b7-4dd4-ad68-cd0ba388c31f",
+            "job_role": "software engineer",
+            "target": 0.5333
+          },
+          {
+            "best_prediction": 0.28935149804914817,
+            "job_id": "e680c463-5a8d-4a38-8d2e-69c75c7c03c9",
+            "job_role": "java full-stack developer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.2891110365236767,
+            "job_id": "8788f2cc-2d3f-4d2b-a17a-e4cb000e3264",
+            "job_role": "ai agent developer ai automation engineer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.289017357410711,
+            "job_id": "938a8fac-4004-49b3-a32f-3754d7935964",
+            "job_role": "system analyst",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.2890167780640803,
+            "job_id": "d495628d-58e0-4fad-b554-ab64debe1c19",
+            "job_role": "it finance systems architect nspb",
+            "target": 0.3
+          }
+        ]
+      },
+      {
+        "baseline": "simple_ridge_regression",
+        "profile_id": "35142",
+        "top_by_label": [
+          {
+            "best_prediction": 0.3385862774236286,
+            "job_id": "08caf20c-485e-4774-950d-c7ce680554d7",
+            "job_role": "staff system engineer",
+            "target": 0.3636
+          },
+          {
+            "best_prediction": 0.28931723933685766,
+            "job_id": "3307df87-4053-42f6-abed-ccabf7cc668d",
+            "job_role": "intern system analyst - mcu ops",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.2890410801594928,
+            "job_id": "79c8c7ef-9d94-4cda-9fd8-7a7bd70e75a7",
+            "job_role": "mobile front-end developer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.28937347337087516,
+            "job_id": "a84c54d7-659a-4194-8333-8cf468183e1c",
+            "job_role": "sales data analyst staff",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.21878163543562362,
+            "job_id": "d6265c6d-e77d-4907-935b-0790ca7f240b",
+            "job_role": "fullstack developer middle",
+            "target": 0.21
+          }
+        ],
+        "top_by_prediction": [
+          {
+            "best_prediction": 0.3385862774236286,
+            "job_id": "08caf20c-485e-4774-950d-c7ce680554d7",
+            "job_role": "staff system engineer",
+            "target": 0.3636
+          },
+          {
+            "best_prediction": 0.28937347337087516,
+            "job_id": "a84c54d7-659a-4194-8333-8cf468183e1c",
+            "job_role": "sales data analyst staff",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.28931723933685766,
+            "job_id": "3307df87-4053-42f6-abed-ccabf7cc668d",
+            "job_role": "intern system analyst - mcu ops",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.2890410801594928,
+            "job_id": "79c8c7ef-9d94-4cda-9fd8-7a7bd70e75a7",
+            "job_role": "mobile front-end developer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.21878163543562362,
+            "job_id": "d6265c6d-e77d-4907-935b-0790ca7f240b",
+            "job_role": "fullstack developer middle",
+            "target": 0.21
+          }
+        ]
+      },
+      {
+        "baseline": "simple_ridge_regression",
+        "profile_id": "41765",
+        "top_by_label": [
+          {
+            "best_prediction": 0.35680171163430213,
+            "job_id": "dbfa3a86-d42d-42eb-8fd0-2f7849d5ab9e",
+            "job_role": "fullstack developer internship",
+            "target": 0.3875
+          },
+          {
+            "best_prediction": 0.3569440466633491,
+            "job_id": "4c18670c-301d-44dc-9c92-e6c5b2bb7626",
+            "job_role": "web developer",
+            "target": 0.3875
+          },
+          {
+            "best_prediction": 0.2890518754418977,
+            "job_id": "4917e2ca-72f2-41ae-a085-752cc83f4afa",
+            "job_role": "devops engineer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.289039172286336,
+            "job_id": "d9288e23-4cde-4d76-976d-95a029fb281e",
+            "job_role": "it support specialist",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.28906369585045566,
+            "job_id": "02dfc988-a59e-42b9-a87a-a6f5ee9bb766",
+            "job_role": "it support staff",
+            "target": 0.3
+          }
+        ],
+        "top_by_prediction": [
+          {
+            "best_prediction": 0.3569440466633491,
+            "job_id": "4c18670c-301d-44dc-9c92-e6c5b2bb7626",
+            "job_role": "web developer",
+            "target": 0.3875
+          },
+          {
+            "best_prediction": 0.35680171163430213,
+            "job_id": "dbfa3a86-d42d-42eb-8fd0-2f7849d5ab9e",
+            "job_role": "fullstack developer internship",
+            "target": 0.3875
+          },
+          {
+            "best_prediction": 0.28906369585045566,
+            "job_id": "02dfc988-a59e-42b9-a87a-a6f5ee9bb766",
+            "job_role": "it support staff",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.2890518754418977,
+            "job_id": "4917e2ca-72f2-41ae-a085-752cc83f4afa",
+            "job_role": "devops engineer",
+            "target": 0.3
+          },
+          {
+            "best_prediction": 0.289039172286336,
+            "job_id": "d9288e23-4cde-4d76-976d-95a029fb281e",
+            "job_role": "it support specialist",
+            "target": 0.3
+          }
+        ]
+      }
+    ],
+    "proxy_relevance": "legacy fit_score; MAP@10 binary proxy uses fit_score >= 0.35 because high-fit labels are absent"
+  },
+  "regression_baselines": {
+    "best_baseline_by_validation_mae": "simple_ridge_regression",
+    "feature_columns": [
+      "skill_overlap_score",
+      "semantic_similarity_score",
+      "experience_match_score",
+      "role_match_score"
+    ],
+    "metrics": [
+      {
+        "baseline": "simple_ridge_regression",
+        "mae": 0.01694628043914999,
+        "r2": 0.9604648053060449,
+        "rmse": 0.0205946074741984,
+        "score_band_agreement": 0.9877551020408163,
+        "spearman": 0.9581409241771239,
+        "split": "test"
+      },
+      {
+        "baseline": "constant_median",
+        "mae": 0.08500736961451245,
+        "r2": -0.0006449901494935961,
+        "rmse": 0.10360998018143464,
+        "score_band_agreement": 0.9802721088435374,
+        "spearman": NaN,
+        "split": "test"
+      },
+      {
+        "baseline": "constant_mean",
+        "mae": 0.08613328307727586,
+        "r2": -2.660359620687558e-05,
+        "rmse": 0.1035779603737103,
+        "score_band_agreement": 0.9802721088435374,
+        "spearman": NaN,
+        "split": "test"
+      },
+      {
+        "baseline": "cosine_only_tfidf",
+        "mae": 0.19320807287873798,
+        "r2": -3.4511779619879324,
+        "rmse": 0.21852395747523376,
+        "score_band_agreement": 0.9802721088435374,
+        "spearman": 0.16981315961440038,
+        "split": "test"
+      },
+      {
+        "baseline": "skill_overlap_only",
+        "mae": 0.19689588429133445,
+        "r2": -3.614800138280711,
+        "rmse": 0.22250410433478787,
+        "score_band_agreement": 0.9800453514739229,
+        "spearman": 0.0637217317393487,
+        "split": "test"
+      },
+      {
+        "baseline": "simple_ridge_regression",
+        "mae": 0.01726078006981349,
+        "r2": 0.9579090970833964,
+        "rmse": 0.021016879423409764,
+        "score_band_agreement": 0.992434988179669,
+        "spearman": 0.9649904957896672,
+        "split": "validation"
+      },
+      {
+        "baseline": "constant_median",
+        "mae": 0.08239789598108746,
+        "r2": -0.007741902571887671,
+        "rmse": 0.10283685115308977,
+        "score_band_agreement": 0.9843971631205674,
+        "spearman": NaN,
+        "split": "validation"
+      },
+      {
+        "baseline": "constant_mean",
+        "mae": 0.08341492053815709,
+        "r2": -0.003259824833426128,
+        "rmse": 0.1026079054239728,
+        "score_band_agreement": 0.9843971631205674,
+        "spearman": NaN,
+        "split": "validation"
+      },
+      {
+        "baseline": "cosine_only_tfidf",
+        "mae": 0.18671673432422614,
+        "r2": -3.293287318401382,
+        "rmse": 0.2122604537874447,
+        "score_band_agreement": 0.9843971631205674,
+        "spearman": 0.16600187956846346,
+        "split": "validation"
+      },
+      {
+        "baseline": "skill_overlap_only",
+        "mae": 0.1906514505655348,
+        "r2": -3.474824765712963,
+        "rmse": 0.21670160506179204,
+        "score_band_agreement": 0.9843971631205674,
+        "spearman": 0.042637618286094074,
+        "split": "validation"
+      }
+    ],
+    "simple_ridge_coefficients": {
+      "experience_match_score": 0.09913534804639124,
+      "role_match_score": 5.422754087710022e-05,
+      "semantic_similarity_score": 0.000263535937119577,
+      "skill_overlap_score": 0.018781808721560368
+    }
+  },
+  "setup_summary": {
+    "missing_phase4_required_columns": [
+      "pair_id",
+      "pair_type",
+      "split",
+      "score_band",
+      "job_fit_score",
+      "skill_overlap_score",
+      "semantic_similarity_score",
+      "experience_match_score",
+      "role_match_score",
+      "requirement_coverage_score",
+      "language",
+      "profile_role_family",
+      "job_role_family",
+      "profile_experience_band",
+      "job_experience_band",
+      "matched_skills",
+      "missing_skills",
+      "unknown_language",
+      "unknown_experience",
+      "empty_skills",
+      "empty_text",
+      "label_version",
+      "feature_config_version",
+      "source_dataset_hash"
+    ],
+    "prototype_limitations": [
+      "Legacy pairs use weak-label fit_score instead of balanced Phase 4 job_fit_score.",
+      "Explicit Phase 4 split, pair_type, language, semantic similarity, and requirement coverage columns are missing.",
+      "High-fit labels are absent when using the Phase 2 high-band threshold."
+    ],
+    "rows": 30000,
+    "score_band_counts": {
+      "low": 29443,
+      "medium": 557
+    },
+    "source_pair_artifact": "legacy/artifacts/pairs.parquet",
+    "split_counts": {
+      "test": 4410,
+      "train": 21360,
+      "validation": 4230
+    }
+  },
+  "slice_analysis": {
+    "baseline": "simple_ridge_regression",
+    "metrics": [
+      {
+        "mae": 0.034645933421152714,
+        "r2": 0.52321948990166,
+        "rmse": 0.03666076747534937,
+        "rows": 804,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_experience_band",
+        "slice_value": "mid_level",
+        "spearman": 0.9117941030156117
+      },
+      {
+        "mae": 0.030417825840403593,
+        "r2": -0.14959188551189384,
+        "rmse": 0.03191407953576411,
+        "rows": 66,
+        "score_band_agreement": 0.5151515151515151,
+        "slice_column": "score_band",
+        "slice_value": "medium",
+        "spearman": 0.9079591210948978
+      },
+      {
+        "mae": 0.024841190705516943,
+        "r2": -1.3969492875871725,
+        "rmse": 0.02562178276756895,
+        "rows": 430,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_experience_band",
+        "slice_value": "senior",
+        "spearman": 0.2744264478910989
+      },
+      {
+        "mae": 0.02245204837758822,
+        "r2": 0.9350727154996221,
+        "rmse": 0.02498855321547725,
+        "rows": 172,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_role_family",
+        "slice_value": "product",
+        "spearman": 0.9531751575845159
+      },
+      {
+        "mae": 0.0204477681264275,
+        "r2": 0.9448526174999803,
+        "rmse": 0.02471482512162738,
+        "rows": 228,
+        "score_band_agreement": 0.9824561403508771,
+        "slice_column": "job_role_family",
+        "slice_value": "backend",
+        "spearman": 0.9773363296808936
+      },
+      {
+        "mae": 0.019507567981281244,
+        "r2": 0.9457644032444532,
+        "rmse": 0.023831046507420794,
+        "rows": 335,
+        "score_band_agreement": 0.9940298507462687,
+        "slice_column": "job_role_family",
+        "slice_value": "cloud_devops",
+        "spearman": 0.9719027626853742
+      },
+      {
+        "mae": 0.01944659308170998,
+        "r2": 0.9441096185317989,
+        "rmse": 0.02288904675937446,
+        "rows": 71,
+        "score_band_agreement": 0.9859154929577465,
+        "slice_column": "job_role_family",
+        "slice_value": "mobile",
+        "spearman": 0.971899184159603
+      },
+      {
+        "mae": 0.01923256353368176,
+        "r2": 0.9106258466554371,
+        "rmse": 0.02344226543993127,
+        "rows": 1210,
+        "score_band_agreement": 0.9991735537190083,
+        "slice_column": "profile_experience_band",
+        "slice_value": "entry",
+        "spearman": 0.9160859080666606
+      },
+      {
+        "mae": 0.01849750519222895,
+        "r2": 0.9606133538964992,
+        "rmse": 0.02205861147120341,
+        "rows": 164,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_role_family",
+        "slice_value": "security",
+        "spearman": 0.9619174939769191
+      },
+      {
+        "mae": 0.01812367168617399,
+        "r2": 0.9573253869437717,
+        "rmse": 0.02199099459674954,
+        "rows": 680,
+        "score_band_agreement": 0.9897058823529412,
+        "slice_column": "profile_role_family",
+        "slice_value": "backend",
+        "spearman": 0.9692995391740515
+      },
+      {
+        "mae": 0.017496034118559756,
+        "r2": 0.9562933581728852,
+        "rmse": 0.021540218510229723,
+        "rows": 720,
+        "score_band_agreement": 0.9930555555555556,
+        "slice_column": "profile_role_family",
+        "slice_value": "cloud_devops",
+        "spearman": 0.9608983034627803
+      },
+      {
+        "mae": 0.017270895011020658,
+        "r2": 0.9600185884563363,
+        "rmse": 0.020867167512667036,
+        "rows": 490,
+        "score_band_agreement": 0.9857142857142858,
+        "slice_column": "profile_role_family",
+        "slice_value": "frontend",
+        "spearman": 0.9673445646689437
+      },
+      {
+        "mae": 0.01726078006981349,
+        "r2": 0.9579090970833964,
+        "rmse": 0.021016879423409764,
+        "rows": 4230,
+        "score_band_agreement": 0.992434988179669,
+        "slice_column": "language",
+        "slice_value": "UNKNOWN",
+        "spearman": 0.9649904957896672
+      },
+      {
+        "mae": 0.01726078006981349,
+        "r2": 0.9579090970833964,
+        "rmse": 0.021016879423409764,
+        "rows": 4230,
+        "score_band_agreement": 0.992434988179669,
+        "slice_column": "pair_type",
+        "slice_value": "legacy_weak_pair",
+        "spearman": 0.9649904957896672
+      },
+      {
+        "mae": 0.01705223899852172,
+        "r2": 0.9571838429475984,
+        "rmse": 0.020798241979623593,
+        "rows": 4164,
+        "score_band_agreement": 1.0,
+        "slice_column": "score_band",
+        "slice_value": "low",
+        "spearman": 0.9632685987942846
+      },
+      {
+        "mae": 0.016935521293995563,
+        "r2": 0.9581026454919865,
+        "rmse": 0.02059113686992013,
+        "rows": 2340,
+        "score_band_agreement": 0.9944444444444445,
+        "slice_column": "profile_role_family",
+        "slice_value": "data",
+        "spearman": 0.9640845196853861
+      },
+      {
+        "mae": 0.016903702064755614,
+        "r2": 0.9512091699794835,
+        "rmse": 0.0203744870375002,
+        "rows": 137,
+        "score_band_agreement": 0.9854014598540146,
+        "slice_column": "job_role_family",
+        "slice_value": "design",
+        "spearman": 0.9528061186258235
+      },
+      {
+        "mae": 0.01679259332253523,
+        "r2": 0.9607070134917822,
+        "rmse": 0.020101878748441483,
+        "rows": 319,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_role_family",
+        "slice_value": "qa",
+        "spearman": 0.9594368970972761
+      },
+      {
+        "mae": 0.01674894271824672,
+        "r2": 0.9616496149354957,
+        "rmse": 0.02030431020371476,
+        "rows": 1481,
+        "score_band_agreement": 0.9925725860904794,
+        "slice_column": "job_role_family",
+        "slice_value": "other",
+        "spearman": 0.9604779457025004
+      },
+      {
+        "mae": 0.016470760867402696,
+        "r2": 0.9630843509943581,
+        "rmse": 0.01996260439945958,
+        "rows": 3020,
+        "score_band_agreement": 0.9897350993377484,
+        "slice_column": "profile_experience_band",
+        "slice_value": "junior",
+        "spearman": 0.9347885929432452
+      },
+      {
+        "mae": 0.016302173401655233,
+        "r2": 0.9571417943362851,
+        "rmse": 0.020151820095310174,
+        "rows": 1062,
+        "score_band_agreement": 0.9905838041431262,
+        "slice_column": "job_role_family",
+        "slice_value": "data",
+        "spearman": 0.9579763179741614
+      },
+      {
+        "mae": 0.01436469439250097,
+        "r2": 0.954437200941262,
+        "rmse": 0.018246724797055844,
+        "rows": 261,
+        "score_band_agreement": 0.9923371647509579,
+        "slice_column": "job_role_family",
+        "slice_value": "frontend",
+        "spearman": 0.9563814625808649
+      },
+      {
+        "mae": 0.011507362223408547,
+        "r2": 0.9487359410851246,
+        "rmse": 0.012990186872394421,
+        "rows": 2996,
+        "score_band_agreement": 0.9893190921228304,
+        "slice_column": "job_experience_band",
+        "slice_value": "junior",
+        "spearman": 0.9117100958374659
+      }
+    ],
+    "slice_evidence_notes": {
+      "experience_band": "Derived from legacy numeric profile_exp/job_exp columns.",
+      "language": "Placeholder UNKNOWN because legacy pair artifact has no audited language column.",
+      "pair_type": "Placeholder legacy_weak_pair because Phase 4 pair taxonomy has not been materialized.",
+      "role_family": "Derived from source role/title text for diagnostics only."
+    },
+    "weak_slices_min_30_rows": [
+      {
+        "mae": 0.034645933421152714,
+        "r2": 0.52321948990166,
+        "rmse": 0.03666076747534937,
+        "rows": 804,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_experience_band",
+        "slice_value": "mid_level",
+        "spearman": 0.9117941030156117
+      },
+      {
+        "mae": 0.030417825840403593,
+        "r2": -0.14959188551189384,
+        "rmse": 0.03191407953576411,
+        "rows": 66,
+        "score_band_agreement": 0.5151515151515151,
+        "slice_column": "score_band",
+        "slice_value": "medium",
+        "spearman": 0.9079591210948978
+      },
+      {
+        "mae": 0.024841190705516943,
+        "r2": -1.3969492875871725,
+        "rmse": 0.02562178276756895,
+        "rows": 430,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_experience_band",
+        "slice_value": "senior",
+        "spearman": 0.2744264478910989
+      },
+      {
+        "mae": 0.02245204837758822,
+        "r2": 0.9350727154996221,
+        "rmse": 0.02498855321547725,
+        "rows": 172,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_role_family",
+        "slice_value": "product",
+        "spearman": 0.9531751575845159
+      },
+      {
+        "mae": 0.0204477681264275,
+        "r2": 0.9448526174999803,
+        "rmse": 0.02471482512162738,
+        "rows": 228,
+        "score_band_agreement": 0.9824561403508771,
+        "slice_column": "job_role_family",
+        "slice_value": "backend",
+        "spearman": 0.9773363296808936
+      },
+      {
+        "mae": 0.019507567981281244,
+        "r2": 0.9457644032444532,
+        "rmse": 0.023831046507420794,
+        "rows": 335,
+        "score_band_agreement": 0.9940298507462687,
+        "slice_column": "job_role_family",
+        "slice_value": "cloud_devops",
+        "spearman": 0.9719027626853742
+      },
+      {
+        "mae": 0.01944659308170998,
+        "r2": 0.9441096185317989,
+        "rmse": 0.02288904675937446,
+        "rows": 71,
+        "score_band_agreement": 0.9859154929577465,
+        "slice_column": "job_role_family",
+        "slice_value": "mobile",
+        "spearman": 0.971899184159603
+      },
+      {
+        "mae": 0.01923256353368176,
+        "r2": 0.9106258466554371,
+        "rmse": 0.02344226543993127,
+        "rows": 1210,
+        "score_band_agreement": 0.9991735537190083,
+        "slice_column": "profile_experience_band",
+        "slice_value": "entry",
+        "spearman": 0.9160859080666606
+      },
+      {
+        "mae": 0.01849750519222895,
+        "r2": 0.9606133538964992,
+        "rmse": 0.02205861147120341,
+        "rows": 164,
+        "score_band_agreement": 1.0,
+        "slice_column": "job_role_family",
+        "slice_value": "security",
+        "spearman": 0.9619174939769191
+      },
+      {
+        "mae": 0.01812367168617399,
+        "r2": 0.9573253869437717,
+        "rmse": 0.02199099459674954,
+        "rows": 680,
+        "score_band_agreement": 0.9897058823529412,
+        "slice_column": "profile_role_family",
+        "slice_value": "backend",
+        "spearman": 0.9692995391740515
+      },
+      {
+        "mae": 0.017496034118559756,
+        "r2": 0.9562933581728852,
+        "rmse": 0.021540218510229723,
+        "rows": 720,
+        "score_band_agreement": 0.9930555555555556,
+        "slice_column": "profile_role_family",
+        "slice_value": "cloud_devops",
+        "spearman": 0.9608983034627803
+      },
+      {
+        "mae": 0.017270895011020658,
+        "r2": 0.9600185884563363,
+        "rmse": 0.020867167512667036,
+        "rows": 490,
+        "score_band_agreement": 0.9857142857142858,
+        "slice_column": "profile_role_family",
+        "slice_value": "frontend",
+        "spearman": 0.9673445646689437
+      }
+    ]
+  },
+  "training_readiness_gate": {
+    "best_baseline": "simple_ridge_regression",
+    "best_validation_metrics": {
+      "baseline": "simple_ridge_regression",
+      "mae": 0.01726078006981349,
+      "r2": 0.9579090970833964,
+      "rmse": 0.021016879423409764,
+      "score_band_agreement": 0.992434988179669,
+      "spearman": 0.9649904957896672,
+      "split": "validation"
+    },
+    "blockers": [
+      "Balanced Phase 4 pair metadata columns are missing from the available pair artifact.",
+      "Validation/test splits have no high-fit examples under the Phase 2 high-band threshold.",
+      "Validation split is missing at least one score band.",
+      "Test split is missing at least one score band.",
+      "True recommendation relevance labels and backend candidate sets are not available; ranking metrics are proxy-only.",
+      "Human-labeled validation data is not available; legacy fit_score remains weak-label prototype evidence."
+    ],
+    "decision": "NO_GO_FIX_PAIR_GENERATION_AND_LABELS_FIRST",
+    "high_fit_test_count": 0,
+    "high_fit_validation_count": 0,
+    "rationale": "Baseline evaluation is complete for the available legacy weak-label artifact, but evidence is not strong enough to start complex model training.",
+    "relative_mae_improvement_vs_constant_mean": 0.7930732300833666,
+    "required_next_actions": [
+      "Materialize Phase 4 balanced pair dataset with required metadata columns.",
+      "Add high-fit positive pairs to validation and test splits.",
+      "Add audited language, pair_type, role-family, and experience-band slices to the pair artifact.",
+      "Add human/manual validation sample before claiming production readiness.",
+      "Add backend candidate-set ranking labels before using NDCG/MAP as production recommendation evidence."
+    ],
+    "test_score_bands": [
+      "low",
+      "medium"
+    ],
+    "validation_score_bands": [
+      "low",
+      "medium"
+    ]
+  }
+}

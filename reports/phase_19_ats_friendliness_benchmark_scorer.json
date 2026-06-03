@@ -1,0 +1,51 @@
+{
+  "acceptance_criteria": {
+    "ats_friendliness_score_and_detected_issues_are_evidence_backed": true,
+    "ats_precision_recall_and_bucket_agreement_meet_release_thresholds": true,
+    "empty_text_rate_on_supported_documents_under_release_threshold": true,
+    "unsupported_scanned_empty_parse_cases_trigger_safe_fallback_outputs": true
+  },
+  "artifact": {
+    "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+    "row_count": 21,
+    "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+  },
+  "benchmark_manifest": {
+    "path": "reports/phase_19_cv_benchmark_manifest.json",
+    "sha256": "b09f2fd20d387586b5143cb1ff3791c1b56faf4bfcf0a8c5b94134a656ff473d"
+  },
+  "blockers": [],
+  "errors_fallbacks": {
+    "path": "reports/phase_19_issue_errors_fallbacks.json",
+    "sha256": "92f677efb1f229191b1a27c5bd999762f29bc3f403476639e5ec629f959f4b4d"
+  },
+  "generated_at": "2026-06-02T04:52:49.423110+00:00",
+  "issue_labels": {
+    "path": "reports/phase_19_ats_issue_labels.json",
+    "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+  },
+  "notes": [
+    "Synthetic fixtures contain no personal CV data.",
+    "Backend/API wrapper remains owner of product copy and final response mapping.",
+    "Real CV benchmark documents can replace synthetic fixtures by preserving the manifest schema."
+  ],
+  "parser_metrics": {
+    "path": "reports/phase_19_parser_benchmark_metrics.json",
+    "sha256": "c6138d7e1302659f284081564ff3d6ccdc24ba453c046cb79d15d5982219891e"
+  },
+  "phase_id": "phase_19_ats_friendliness_benchmark_scorer",
+  "release_thresholds": {
+    "bucket_agreement": 0.8,
+    "critical_parse_failure_recall": 1.0,
+    "empty_text_rate_supported_max": 0.2,
+    "macro_issue_precision": 0.85,
+    "macro_issue_recall": 0.85
+  },
+  "schema_version": "ats-benchmark-scorer-v1",
+  "scorer_metrics": {
+    "path": "reports/phase_19_ats_scorer_metrics.json",
+    "sha256": "9fba73b66e04dde2b0a5ba0c3efc18665d3762804f580c591e75f12269161086"
+  },
+  "selected_scorer": "transparent_rule_based_ats_scorer",
+  "status": "complete"
+}

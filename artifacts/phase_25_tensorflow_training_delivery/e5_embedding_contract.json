@@ -1,0 +1,129 @@
+{
+  "cache": {
+    "metadata": {
+      "backend": "sentence-transformers",
+      "cache_note": "Production-eligible E5 cache; no TF-IDF/local-hash fallback.",
+      "embedding_dimension": 768,
+      "embedding_model": "intfloat/e5-base-v2",
+      "generated_at": "2026-06-02T07:46:01.081126+00:00",
+      "job_prefix": "passage:",
+      "normalized_embeddings": true,
+      "pairs_sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+      "profile_prefix": "query:",
+      "row_count": 3600,
+      "schema_version": "phase-25-e5-embedding-contract-v1",
+      "sentence_transformers_version": "5.5.1",
+      "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
+    },
+    "path": "artifacts/phase_25_tensorflow_training_delivery/embeddings/e5_pair_embeddings_v1.npz",
+    "sha256": "bbf4c6013e4bdd678f672eaf14180223db1bc574edb8a102c88fcf288adde35d",
+    "status": "validated_existing"
+  },
+  "embedding_contract": {
+    "backend": "sentence-transformers",
+    "batch_size": 64,
+    "embedding_dimension": 768,
+    "embedding_model": "intfloat/e5-base-v2",
+    "fallback_policy": "TF-IDF, local-hash, and any fallback backend are forbidden for staging or production evidence.",
+    "job_prefix": "passage:",
+    "normalized_embeddings": true,
+    "production_eligible_e5": true,
+    "profile_prefix": "query:",
+    "sentence_transformers_version": "5.5.1"
+  },
+  "embedding_stats": {
+    "cosine_max": 0.8880079388618469,
+    "cosine_mean": 0.8013250231742859,
+    "cosine_min": 0.7108200192451477,
+    "passage_norm_max": 1.000000238418579,
+    "passage_norm_min": 0.9999999403953552,
+    "query_norm_max": 1.000000238418579,
+    "query_norm_min": 0.9999999403953552
+  },
+  "failures": [],
+  "features": {
+    "columns": [
+      "pair_id",
+      "split",
+      "e5_cosine",
+      "embedding_model",
+      "source_text_hash",
+      "schema_version"
+    ],
+    "path": "artifacts/phase_25_tensorflow_training_delivery/e5_pair_features.parquet",
+    "row_count": 3600,
+    "sha256": "5e64066d2dadab8b814ffa96cadd061178f0877cd66289dc89e9b850cf9d2c57",
+    "split_counts": {
+      "test": 540,
+      "train": 2520,
+      "validation": 540
+    }
+  },
+  "generated_at": "2026-06-03T01:44:24.047279+00:00",
+  "passed": true,
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-e5-embedding-contract-v1",
+  "source_text_contract": {
+    "empty_job_text_count": 0,
+    "empty_profile_text_count": 0,
+    "jobs_path": "legacy/dataset/indotech_job_cleaned.csv",
+    "pair_count": 3600,
+    "pairs_path": "artifacts/pairs_v2.parquet",
+    "pairs_sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+    "profiles_path": "legacy/dataset/techtalent_profile_cleaned.csv",
+    "raw_job_text_count": 0,
+    "raw_profile_text_count": 0,
+    "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
+  },
+  "status": "complete",
+  "upstream_evidence": {
+    "phase17_embedding_manifest": {
+      "path": "reports/phase_17_embedding_manifest.json",
+      "production_eligible_e5": true,
+      "sha256": "517558eabb701432daab54cdc83add13df203e601bdae3c3a964ad7c8b55ab72",
+      "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
+    },
+    "phase18_embedding_manifest": {
+      "path": "reports/phase_18_embedding_manifest.json",
+      "production_eligible_e5": true,
+      "sha256": "55296386621e4d30ffe802dbc84f48ecaac96b888ae443f60c1a81ac454e0b64",
+      "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
+    },
+    "phase19_5_e5_runtime_manifest": {
+      "path": "reports/phase_19_5_e5_runtime_manifest.json",
+      "production_eligible_e5": true,
+      "sha256": "1cefadfe8ed498ac378f0101eb39979f50957b5b9560f6f2f995d27c234db845",
+      "source_text_hash": null
+    }
+  },
+  "validation_checks": [
+    {
+      "check": "real_sentence_transformers_e5_backend",
+      "status": "PASS"
+    },
+    {
+      "check": "query_passage_prefixes",
+      "status": "PASS"
+    },
+    {
+      "check": "source_text_hash_matches_phase17_phase18",
+      "status": "PASS"
+    },
+    {
+      "check": "cache_metadata_matches_pairs_and_text_hash",
+      "status": "PASS"
+    },
+    {
+      "check": "fixed_embedding_shape_3600x768",
+      "status": "PASS"
+    },
+    {
+      "check": "finite_normalized_embeddings",
+      "status": "PASS"
+    },
+    {
+      "check": "fallback_backend_forbidden",
+      "status": "PASS"
+    }
+  ]
+}

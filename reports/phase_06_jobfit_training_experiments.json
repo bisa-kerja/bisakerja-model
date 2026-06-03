@@ -1,0 +1,428 @@
+{
+  "acceptance": {
+    "experiment_matrix_complete_before_code_is_run": true,
+    "model_selection_gates_are_explicit": true,
+    "output_signal_contract_matches_product_boundary": true
+  },
+  "blocked_until_later_phases": [
+    "Complex JobFitAlignment training must wait for a materialized balanced pair dataset with high-fit validation/test coverage.",
+    "Promotion must wait for human validation labels or equivalent trusted validation evidence.",
+    "Production score semantics must wait for Phase 10 calibration.",
+    "Ranking-objective promotion must wait for backend-like candidate sets and relevance labels."
+  ],
+  "experiment_matrix": [
+    {
+      "comparison_role": "reference_floor",
+      "experiment_id": "jobfit_linear_feature_baseline_v1",
+      "label_source": "Phase 2 job-fit score; weak labels allowed only as prototype evidence.",
+      "metrics": [
+        "mae",
+        "rmse",
+        "r2",
+        "spearman",
+        "score_band_agreement"
+      ],
+      "model_family": "linear_baseline",
+      "objective": "Regression on transparent normalized scalar features.",
+      "promotion_gate": "Must remain in report as a minimum floor for all complex scorers.",
+      "required_features": [
+        "skill_overlap_score",
+        "semantic_similarity_score",
+        "experience_match_score",
+        "role_match_score",
+        "requirement_coverage_score"
+      ],
+      "train_status": "reference_only_until_balanced_pairs_exist"
+    },
+    {
+      "comparison_role": "semantic_similarity_floor",
+      "experiment_id": "jobfit_cosine_only_baseline_v1",
+      "label_source": "Same split and labels as complex scorers.",
+      "metrics": [
+        "mae",
+        "rmse",
+        "r2",
+        "spearman",
+        "score_band_agreement",
+        "ndcg_at_5",
+        "ndcg_at_10",
+        "map_at_10"
+      ],
+      "model_family": "cosine_only_baseline",
+      "objective": "Regression/ranking using only profile-CV and job text embedding cosine similarity.",
+      "promotion_gate": "Complex models must beat this baseline on regression and ranking metrics.",
+      "required_features": [
+        "profile_cv_embedding",
+        "job_embedding",
+        "embedding_model_version"
+      ],
+      "train_status": "planned_no_complex_training"
+    },
+    {
+      "comparison_role": "candidate_complex_scorer",
+      "experiment_id": "jobfit_neural_embedding_scorer_v1",
+      "label_source": "Balanced Phase 4/next pair artifact with low/medium/high coverage and group-safe splits.",
+      "metrics": [
+        "mae",
+        "rmse",
+        "r2",
+        "spearman",
+        "score_band_agreement",
+        "ndcg_at_5",
+        "ndcg_at_10",
+        "map_at_10"
+      ],
+      "model_family": "neural_scorer",
+      "objective": "Learn non-linear interactions between profile-CV embedding and job embedding for score prediction.",
+      "promotion_gate": "Eligible only after it beats best baseline and passes slice stability gates.",
+      "required_features": [
+        "profile_cv_embedding",
+        "job_embedding",
+        "embedding_difference",
+        "embedding_product"
+      ],
+      "train_status": "blocked_by_phase5_no_go"
+    },
+    {
+      "comparison_role": "primary_jobfit_candidate",
+      "experiment_id": "jobfit_feature_augmented_scorer_v1",
+      "label_source": "Balanced pair labels plus manual validation labels when available.",
+      "metrics": [
+        "mae",
+        "rmse",
+        "r2",
+        "spearman",
+        "score_band_agreement",
+        "ndcg_at_5",
+        "ndcg_at_10",
+        "map_at_10",
+        "slice_mae_delta",
+        "high_fit_recall"
+      ],
+      "model_family": "feature_augmented_scorer",
+      "objective": "Combine embedding interactions with normalized skill, experience, role, language, and requirement coverage features.",
+      "promotion_gate": "Primary candidate if it clears global, ranking, and slice gates without unsupported signals.",
+      "required_features": [
+        "profile_cv_embedding",
+        "job_embedding",
+        "skill_overlap_score",
+        "experience_gap",
+        "role_match_score",
+        "requirement_coverage_score",
+        "language",
+        "pair_type"
+      ],
+      "train_status": "blocked_by_phase5_no_go"
+    },
+    {
+      "comparison_role": "optional_ranking_experiment",
+      "experiment_id": "jobfit_pairwise_ranking_objective_v1",
+      "label_source": "Backend-like candidate sets with relevance labels or manual ranking review.",
+      "metrics": [
+        "ndcg_at_5",
+        "ndcg_at_10",
+        "map_at_10",
+        "unknown_job_id_rate",
+        "duplicate_job_id_rate"
+      ],
+      "model_family": "ranking_objective",
+      "objective": "Optimize ordering among backend-provided candidate jobs for each profile/CV context.",
+      "promotion_gate": "Cannot replace score model unless candidate-set constraints and ranking uplift pass.",
+      "required_features": [
+        "candidate_set_id",
+        "profile_id",
+        "job_id",
+        "profile_cv_embedding",
+        "job_embedding",
+        "candidate_relevance_label",
+        "candidate_rank_group"
+      ],
+      "train_status": "blocked_until_candidate_sets_and_relevance_labels_exist"
+    }
+  ],
+  "generated_at_utc": "2026-06-01T09:22:10.537866+00:00",
+  "input_feature_contract": [
+    {
+      "feature": "profile_cv_embedding",
+      "leakage_rule": "must not include target score, public API summary, manual validation note, or backend product copy",
+      "missing_policy": "fail training row if both profile and CV text are empty; otherwise record source_text_coverage",
+      "range_or_shape": "embedding_dim from embedding_model_version; L2-normalized before cosine features",
+      "source_evidence": "profile text plus parsed CV text when available",
+      "type": "float_vector",
+      "validation_check": "embedding exists, finite values only, embedding_model_version recorded"
+    },
+    {
+      "feature": "job_embedding",
+      "leakage_rule": "must not include backend hydration fields unavailable to model core at inference",
+      "missing_policy": "fail row if job text is empty; keep stale/inactive job filtering outside model training unless source snapshot labels it",
+      "range_or_shape": "same dimension and model version as profile_cv_embedding",
+      "source_evidence": "job title, role, required skills, requirements, and description text",
+      "type": "float_vector",
+      "validation_check": "same embedding_model_version as profile_cv_embedding"
+    },
+    {
+      "feature": "normalized_skill_overlap",
+      "leakage_rule": "skill aliases must come from versioned dictionary, not validation labels",
+      "missing_policy": "empty skill lists produce 0.0 plus empty_skills flags",
+      "range_or_shape": "0.0-1.0",
+      "source_evidence": "Phase 3 normalized profile/CV skills and job skills",
+      "type": "float",
+      "validation_check": "all raw skills normalized with alias version and unknown-skill count reported"
+    },
+    {
+      "feature": "experience_gap",
+      "leakage_rule": "must not infer seniority from target label or output score",
+      "missing_policy": "UNKNOWN experience gets explicit missing indicator and conservative gap feature",
+      "range_or_shape": "candidate years minus required years; clipped diagnostic buckets allowed for model input",
+      "source_evidence": "Phase 3 mapped experience values",
+      "type": "float",
+      "validation_check": "no observed Phase 3 experience value falls through silently"
+    },
+    {
+      "feature": "role_match",
+      "leakage_rule": "must not use job recommendation rank or backend search position",
+      "missing_policy": "missing profile role becomes UNKNOWN role family and score 0.0 unless CV role evidence exists",
+      "range_or_shape": "0.0-1.0 score plus optional role_family category",
+      "source_evidence": "normalized profile target role, CV role evidence, job title, and job role family",
+      "type": "float_or_category",
+      "validation_check": "role family vocabulary version recorded"
+    },
+    {
+      "feature": "requirement_coverage",
+      "leakage_rule": "manual reviewer comments must never become coverage features",
+      "missing_policy": "empty job requirements produce null coverage and missing_requirement flag, not 1.0",
+      "range_or_shape": "0.0-1.0",
+      "source_evidence": "job requirements matched against profile/CV skills, tools, education, experience, and evidence text",
+      "type": "float",
+      "validation_check": "coverage denominator and unmatched requirement count recorded"
+    },
+    {
+      "feature": "pair_metadata",
+      "leakage_rule": "IDs may be used for grouping/audit only, never as predictive model features",
+      "missing_policy": "training blocked if split, pair_type, label_version, or score_band is missing",
+      "range_or_shape": "pair_type, split, profile_id, job_id, language, score_band, label_version",
+      "source_evidence": "Phase 4 pair-generation and split policy",
+      "type": "object",
+      "validation_check": "profile_id is isolated across splits and high-fit coverage exists in validation/test"
+    }
+  ],
+  "inputs": {
+    "openapi_json": "references/docs/generated/openapi.json",
+    "phase2_report": "reports/phase_02_label_schema_baselines.json",
+    "phase3_report": "reports/phase_03_normalization_feature_design.json",
+    "phase4_report": "reports/phase_04_pair_generation_splits.json",
+    "phase5_report": "reports/phase_05_baseline_evaluation.json"
+  },
+  "output_signal_contract": {
+    "model_owned_fields": [
+      {
+        "field": "score",
+        "grounding_rule": "Derived from calibrated job-fit model output only; no wrapper sentiment or backend ranking position.",
+        "range": [
+          0,
+          100
+        ],
+        "type": "integer"
+      },
+      {
+        "field": "summarySignals",
+        "grounding_rule": "Only observed alignment evidence such as role_match, strong_skill_overlap, experience_match, and requirement_coverage.",
+        "range": "0-8 short evidence keys",
+        "type": "array[string]"
+      },
+      {
+        "field": "missingSignals",
+        "grounding_rule": "Only observed gaps such as missing_required_skill, experience_gap, low_requirement_coverage, or unknown_language.",
+        "range": "0-8 short evidence keys",
+        "type": "array[string]"
+      },
+      {
+        "field": "matchedSkills",
+        "grounding_rule": "Intersection of normalized candidate skills and job skills/requirements with source evidence.",
+        "range": "0-20 normalized display skills",
+        "type": "array[string]"
+      },
+      {
+        "field": "missingSkills",
+        "grounding_rule": "Required job skills not found in normalized profile/CV evidence.",
+        "range": "0-20 normalized display skills",
+        "type": "array[string]"
+      },
+      {
+        "field": "confidenceNotes",
+        "grounding_rule": "Data-quality and model-confidence notes such as low_text_coverage, unknown_experience, unknown_language, or out_of_distribution_role.",
+        "range": "0-5 diagnostic notes",
+        "type": "array[string]"
+      }
+    ],
+    "not_model_owned_fields": [
+      "topActionables",
+      "sectionReviews",
+      "overallImpression",
+      "jobRecommendations.title",
+      "jobRecommendations.companyName",
+      "auth",
+      "persistence",
+      "hydratedJobDetails"
+    ],
+    "public_api_mapping": {
+      "jobFitAlignment.score": "core.score rounded/clipped to integer 0-100 after Phase 10 calibration",
+      "jobFitAlignment.summary": "API wrapper renders from summarySignals, missingSignals, confidenceNotes, matchedSkills, and missingSkills"
+    },
+    "schema_version": "jobfit-alignment-core-v1"
+  },
+  "schema_version": "phase-06-jobfit-training-experiments-v1",
+  "selection_criteria": {
+    "baseline_reference": {
+      "best_validation_baseline": "simple_ridge_regression",
+      "best_validation_mae": 0.01726078006981349,
+      "source_report": "reports/phase_05_baseline_evaluation.json"
+    },
+    "contract_safety_gates": {
+      "boundary": "model output must not include topActionables, sectionReviews, hydrated job details, auth, or persistence fields",
+      "calibration_dependency": "Phase 10 calibration required before production score semantics are claimed",
+      "grounding": "matchedSkills and missingSkills must appear in normalized source evidence",
+      "score_range": "all scores clipped/calibrated to integer 0-100"
+    },
+    "current_gate_result": {
+      "decision": "NO-GO for training run; GO for experiment plan completion",
+      "reasons": [
+        "Balanced Phase 4 pair metadata columns are missing from the available pair artifact.",
+        "Human-labeled validation data is not available; legacy fit_score remains weak-label prototype evidence.",
+        "Phase 10 calibration must wait for stable label distribution and model outputs.",
+        "Phase 6 complex job-fit training must wait for balanced pairs, high-fit coverage, and stronger labels.",
+        "Phase 9 recommendation ranking must wait for backend candidate-set labels or realistic candidate sets.",
+        "Test split is missing at least one score band.",
+        "True recommendation relevance labels and backend candidate sets are not available; ranking metrics are proxy-only.",
+        "Validation split is missing at least one score band.",
+        "Validation/test splits have no high-fit examples under the Phase 2 high-band threshold."
+      ]
+    },
+    "minimum_global_gates": {
+      "mae_improvement_vs_best_baseline": ">= 20%",
+      "r2": ">= 0.15 on validation and positive on test",
+      "score_band_agreement": ">= best baseline and reported by low/medium/high band",
+      "spearman": ">= 0.35 on validation and test"
+    },
+    "ranking_gates": {
+      "candidate_constraints": "unknown_job_id_rate == 0 and duplicate_job_id_rate == 0 for backend-provided candidate sets",
+      "map_at_10": ">= best ranking baseline and reported by candidate-set size",
+      "ndcg_at_10": ">= best ranking baseline + 15% when candidate labels exist"
+    },
+    "slice_stability_gates": {
+      "language_policy": "ID, EN, MIXED, and UNKNOWN reported separately; UNKNOWN is never hidden inside EN",
+      "max_slice_regression": "no critical slice may regress by more than 10% MAE versus best baseline without documented exception",
+      "minimum_high_fit_coverage": {
+        "minimum_manual_review_candidates_per_split": 30,
+        "minimum_test_examples": 300,
+        "minimum_validation_examples": 300,
+        "overall_min_share": 0.2,
+        "overall_preferred_share": 0.4,
+        "release_gate": "Do not train a full-range scorer if validation or test split has too few high-fit examples to evaluate the 65-100 score band."
+      },
+      "required_slices": [
+        "role_family",
+        "language",
+        "experience_band",
+        "pair_type",
+        "score_band"
+      ]
+    }
+  },
+  "setup_summary": {
+    "best_validation_baseline": {
+      "baseline": "simple_ridge_regression",
+      "mae": 0.01726078006981349,
+      "r2": 0.9579090970833964,
+      "rmse": 0.021016879423409764,
+      "score_band_agreement": 0.992434988179669,
+      "spearman": 0.9649904957896672,
+      "split": "validation"
+    },
+    "inherited_blockers": [
+      "Balanced Phase 4 pair metadata columns are missing from the available pair artifact.",
+      "Human-labeled validation data is not available; legacy fit_score remains weak-label prototype evidence.",
+      "Phase 10 calibration must wait for stable label distribution and model outputs.",
+      "Phase 6 complex job-fit training must wait for balanced pairs, high-fit coverage, and stronger labels.",
+      "Phase 9 recommendation ranking must wait for backend candidate-set labels or realistic candidate sets.",
+      "Test split is missing at least one score band.",
+      "True recommendation relevance labels and backend candidate sets are not available; ranking metrics are proxy-only.",
+      "Validation split is missing at least one score band.",
+      "Validation/test splits have no high-fit examples under the Phase 2 high-band threshold."
+    ],
+    "phase5_readiness_decision": "NO_GO_FIX_PAIR_GENERATION_AND_LABELS_FIRST",
+    "public_jobfit_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "score",
+        "summary"
+      ],
+      "type": "object"
+    }
+  },
+  "training_protocol": {
+    "batch_strategy": {
+      "default_batch_size": 256,
+      "ranking_batches": "group candidate jobs by profile_id/candidate_set_id for pairwise or listwise objectives",
+      "stratification": "preserve score_band and pair_type coverage when feasible"
+    },
+    "checkpoint_naming": {
+      "model_path_template": "models/jobfit_alignment/{experiment_id}/{run_id}/model.keras",
+      "report_path_template": "reports/jobfit_alignment/{experiment_id}/{run_id}/metrics.json",
+      "run_id_fields": [
+        "date",
+        "label_version",
+        "feature_config_version",
+        "split_seed",
+        "git_commit"
+      ]
+    },
+    "current_decision": "do_not_train_complex_models",
+    "decision_reason": "Phase 5 readiness gate is no-go; balanced pairs, high-fit validation/test examples, and human validation labels are missing.",
+    "early_stopping_policy": {
+      "max_epochs_without_review": 50,
+      "min_delta": 0.001,
+      "monitor": "validation_mae for score models; validation_ndcg_at_10 for ranking models",
+      "patience_epochs": 5,
+      "restore_best_weights": true
+    },
+    "failure_recovery": [
+      "Fail before training when required feature columns, split names, label_version, or high-fit validation/test rows are missing.",
+      "Keep failed run reports with error reason and input hashes; do not overwrite best checkpoints.",
+      "Resume only from immutable dataset hash and matching feature config version.",
+      "Never mark gate passed if only weak-label prototype metrics are available."
+    ],
+    "seeds": [
+      20260601,
+      20260617,
+      20260701
+    ],
+    "split_use": {
+      "group_isolation": "profile_id must not cross splits",
+      "test": "single final evaluation after model selection",
+      "train": "fit model parameters only",
+      "validation": "select hyperparameters, early stopping, and best checkpoint"
+    },
+    "training_blockers": [
+      "Balanced Phase 4 pair metadata columns are missing from the available pair artifact.",
+      "Human-labeled validation data is not available; legacy fit_score remains weak-label prototype evidence.",
+      "Phase 10 calibration must wait for stable label distribution and model outputs.",
+      "Phase 6 complex job-fit training must wait for balanced pairs, high-fit coverage, and stronger labels.",
+      "Phase 9 recommendation ranking must wait for backend candidate-set labels or realistic candidate sets.",
+      "Test split is missing at least one score band.",
+      "True recommendation relevance labels and backend candidate sets are not available; ranking metrics are proxy-only.",
+      "Validation split is missing at least one score band.",
+      "Validation/test splits have no high-fit examples under the Phase 2 high-band threshold."
+    ]
+  }
+}

@@ -1,0 +1,248 @@
+{
+  "schema_version": "training-audit-v1",
+  "generated_at": "2026-06-01T05:26:14.838441+00:00",
+  "source_snapshot": "legacy",
+  "artifact_inventory": {
+    "models/model_jobfit_v1.keras": {
+      "logical_path": "models/model_jobfit_v1.keras",
+      "actual_path": "legacy/models/model_jobfit_v1.keras",
+      "exists": true,
+      "size_bytes": 4506778,
+      "sha256": "0d47e689392aa9f5e45a9efc1a71bedbbbecc1de4827ba29591423ee7c6aa17b",
+      "modified_at": "2026-05-28T15:31:18+00:00"
+    },
+    "artifacts/pairs.parquet": {
+      "logical_path": "artifacts/pairs.parquet",
+      "actual_path": "legacy/artifacts/pairs.parquet",
+      "exists": true,
+      "size_bytes": 542922,
+      "sha256": "00126d53904c136a5106e8c9fe68f837d6707298f0435c2437309f482d7e0864",
+      "modified_at": "2026-05-28T15:16:46+00:00",
+      "rows": 30000,
+      "columns": [
+        "profile_id",
+        "job_id",
+        "profile_text",
+        "job_text",
+        "profile_skills",
+        "job_skills",
+        "profile_exp",
+        "job_exp",
+        "fit_score"
+      ]
+    },
+    "artifacts/job_index.json": {
+      "logical_path": "artifacts/job_index.json",
+      "actual_path": "legacy/artifacts/job_index.json",
+      "exists": true,
+      "size_bytes": 467334,
+      "sha256": "3bd2130212eade240d16aa1aabb5e142fe7d4c5b3e0aad30db41891b61e81d2a",
+      "modified_at": "2026-05-28T13:01:06+00:00",
+      "json_type": "dict",
+      "entries": 2073,
+      "sample_keys": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    "cache/all_job_embeddings.npy": {
+      "logical_path": "cache/all_job_embeddings.npy",
+      "actual_path": "legacy/cache/all_job_embeddings.npy",
+      "exists": true,
+      "size_bytes": 3184256,
+      "sha256": "72cef692066d74d565b2395a51dc932bc8161e97e0880d2bddfbe08e702f0d0f",
+      "modified_at": "2026-05-28T13:01:06+00:00",
+      "shape": [
+        2073,
+        384
+      ],
+      "dtype": "float32"
+    },
+    "cache/job_embeddings.npy": {
+      "logical_path": "cache/job_embeddings.npy",
+      "actual_path": "legacy/cache/job_embeddings.npy",
+      "exists": true,
+      "size_bytes": 46080128,
+      "sha256": "3b37f1bf53b0d63c505bc09d75c40830871b718ff135bc50d9721685c6fe59e5",
+      "modified_at": "2026-05-28T15:29:12+00:00",
+      "shape": [
+        30000,
+        384
+      ],
+      "dtype": "float32"
+    },
+    "cache/profile_embeddings.npy": {
+      "logical_path": "cache/profile_embeddings.npy",
+      "actual_path": "legacy/cache/profile_embeddings.npy",
+      "exists": true,
+      "size_bytes": 46080128,
+      "sha256": "c590b813955a935dad36d1f3e54b48e9e30052fe6a1cf05d1472d750224cb507",
+      "modified_at": "2026-05-28T15:29:08+00:00",
+      "shape": [
+        30000,
+        384
+      ],
+      "dtype": "float32"
+    },
+    "reports/model_card.json": {
+      "logical_path": "reports/model_card.json",
+      "actual_path": "legacy/reports/model_card.json",
+      "exists": true,
+      "size_bytes": 527,
+      "sha256": "bd5509cdb0cfb69095c4bfed7e860f2d10a1d2c78e6d9e09cb617c8dccf7564b",
+      "modified_at": "2026-05-28T15:31:18+00:00",
+      "json_type": "dict",
+      "entries": 10,
+      "top_level_keys": [
+        "model_name",
+        "version",
+        "embedding_model",
+        "embedding_dim",
+        "training_pairs",
+        "val_pairs",
+        "metrics",
+        "gate_passed",
+        "trained_at",
+        "artifacts"
+      ]
+    }
+  },
+  "dataset_row_counts": {
+    "pairs_total": 30000,
+    "unique_profiles_in_pairs": 3000,
+    "unique_jobs_in_pairs": 2071,
+    "train_pairs": 25500,
+    "val_pairs": 4500,
+    "split_strategy": {
+      "type": "GroupShuffleSplit",
+      "group_column": "profile_id",
+      "test_size": 0.15,
+      "random_state": 42
+    },
+    "jobs_dataset": {
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "exists": true,
+      "size_bytes": 2059443,
+      "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565",
+      "modified_at": "2026-05-19T03:27:46+00:00",
+      "rows": 2073
+    },
+    "profiles_dataset": {
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "exists": true,
+      "size_bytes": 14535093,
+      "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494",
+      "modified_at": "2026-05-19T03:27:34+00:00",
+      "rows": 69929
+    }
+  },
+  "label_distribution": {
+    "overall": {
+      "count": 30000,
+      "min": 0.03,
+      "max": 0.5545,
+      "mean": 0.206089,
+      "median": 0.21,
+      "std": 0.103143,
+      "p25": 0.12,
+      "p75": 0.3,
+      "bands": {
+        "low": 29302,
+        "medium": 557,
+        "high": 0
+      },
+      "unbanded_count": 141
+    },
+    "train": {
+      "count": 25500,
+      "min": 0.03,
+      "max": 0.5333,
+      "mean": 0.206502,
+      "median": 0.21,
+      "std": 0.102982,
+      "p25": 0.12,
+      "p75": 0.3,
+      "bands": {
+        "low": 24902,
+        "medium": 473,
+        "high": 0
+      },
+      "unbanded_count": 125
+    },
+    "validation": {
+      "count": 4500,
+      "min": 0.03,
+      "max": 0.5545,
+      "mean": 0.20375,
+      "median": 0.21,
+      "std": 0.104032,
+      "p25": 0.12,
+      "p75": 0.3,
+      "bands": {
+        "low": 4400,
+        "medium": 84,
+        "high": 0
+      },
+      "unbanded_count": 16
+    }
+  },
+  "current_metrics": {
+    "mae": 0.0844,
+    "accuracy": 0.802,
+    "r2": -0.0038
+  },
+  "baseline_metrics": {
+    "label_target": "fit_score",
+    "evaluation_split": "validation",
+    "tolerance": 0.15,
+    "constant_mean": {
+      "train_label_mean": 0.206502,
+      "mae": 0.085552,
+      "accuracy_at_tolerance_0_15": 0.800667,
+      "r2": -0.0007,
+      "prediction_mean": 0.206502,
+      "prediction_median": 0.206502
+    },
+    "constant_median": {
+      "train_label_median": 0.21,
+      "mae": 0.084368,
+      "accuracy_at_tolerance_0_15": 0.801778,
+      "r2": -0.00361,
+      "prediction_mean": 0.21,
+      "prediction_median": 0.21
+    },
+    "skill_jaccard_only": {
+      "mae": 0.192715,
+      "accuracy_at_tolerance_0_15": 0.339778,
+      "r2": -3.435032,
+      "prediction_mean": 0.011186,
+      "prediction_median": 0.0
+    },
+    "cosine_embedding_only": {
+      "note": "Row-wise cosine(profile_embedding, job_embedding), clipped to [0, 1].",
+      "mae": 0.292163,
+      "accuracy_at_tolerance_0_15": 0.148,
+      "r2": -8.53008,
+      "prediction_mean": 0.495397,
+      "prediction_median": 0.490751
+    }
+  },
+  "gate_assessment": {
+    "model_card_gate_passed": true,
+    "model_card_gate_type": "prototype",
+    "production_gate_passed": false,
+    "blockers": [
+      "Current gate only checks MAE <= 0.10 and accuracy >= 0.75 at tolerance \u00b10.15.",
+      "Current R\u00b2 is -0.0038; negative R\u00b2 means model does not beat mean baseline on validation.",
+      "No high-fit labels above 0.65 in current pair dataset."
+    ]
+  }
+}

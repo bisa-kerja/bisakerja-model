@@ -1,0 +1,53 @@
+{
+  "phase_id": "phase_26_5_request_schemas",
+  "status": "complete",
+  "implemented_at": "2026-06-03T00:00:00Z",
+  "scope": {
+    "request_schemas": [
+      "CvAnalysisModelCoreRequest",
+      "CandidateRerankingCoreRequest",
+      "SanitizedProfileInput",
+      "CandidateJobInput",
+      "CandidateScoringInput",
+      "CandidateBackendMetadata",
+      "RankingPolicy"
+    ],
+    "parsers": [
+      "parse_cv_analysis_model_core_request",
+      "parse_candidate_reranking_core_request"
+    ]
+  },
+  "contract_alignment": {
+    "backend_openapi_reference": "references/docs/generated/openapi.json",
+    "backend_prisma_reference": "references/prisma/schema.prisma",
+    "language_enum": ["id", "en"],
+    "db_language_mapping": {"ID": "id", "EN": "en"},
+    "input_modes": ["UPLOAD", "REFERENCE"],
+    "compare_sources": ["BOOKMARK", "JOB_SEARCH", "DIRECT_JOB_DETAIL"],
+    "max_recommendations": 5,
+    "max_candidates": 50
+  },
+  "validation_rules": [
+    "root request payload must be an object",
+    "requestId is required and non-empty",
+    "language must be id or en",
+    "CV analysis inputVersion must be cv-analyzer-v1",
+    "candidate reranking schemaVersion must be model-core-candidate-reranking-request-v1",
+    "profile payload must include sanitized CV/profile text or extracted signals",
+    "jobCandidates must contain at least one candidate and no duplicate jobId values",
+    "candidate scoring inputs are model-owned and must be present",
+    "backend hydration metadata is accepted only inside backendMetadata",
+    "top-level backend hydration fields such as title/companyName are rejected",
+    "ranking policy must require backend candidate IDs and deduplication"
+  ],
+  "openrouter_boundary": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "models_url": "https://openrouter.ai/models",
+    "core_inference_uses_external_genai": false,
+    "note": "OpenRouter remains wrapper-owned prose support only; request schemas do not require external GenAI."
+  },
+  "verification": {
+    "command": "python -m unittest tests.model_api.test_phase_26_layout",
+    "result": "23 tests passed, 1 skipped"
+  }
+}

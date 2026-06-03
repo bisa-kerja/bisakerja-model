@@ -1,0 +1,173 @@
+{
+  "checks": {
+    "analysis_required_fields_present": true,
+    "analysis_schema_version_cv_analysis_v2": true,
+    "ats_score_bounds_0_100": true,
+    "boundary_rows_cover_required_areas": true,
+    "has_AnalyzeCvMultipartRequest": true,
+    "has_CvAnalysis": true,
+    "job_recommendations_max_5": true,
+    "jobfit_score_bounds_0_100": true,
+    "openapi_exists": true,
+    "overall_impression_is_string": true,
+    "phase23_contract_exists": true,
+    "request_job_roles_1_to_10": true,
+    "request_language_enum_id_en": true,
+    "request_optional_fields_present": true,
+    "request_required_fields_present": true,
+    "requirement_rows_cover_assignment_sections": true
+  },
+  "generatedAt": "2026-06-03T01:44:23.823503+00:00",
+  "openapiBoundary": [
+    {
+      "contract_area": "AnalyzeCvMultipartRequest",
+      "owner": "Backend API",
+      "public_fields": "jobRoles, language, inputMode, compareSource, persistResult, cvFileId, cvFile",
+      "training_boundary": "Input contract only; backend validates multipart, auth, ownership, file limits, and persistence before Model API call."
+    },
+    {
+      "contract_area": "CvAnalysis.analysisResult",
+      "owner": "Backend API + Model core",
+      "public_fields": "id, schemaVersion, jobFitAlignment, atsFriendliness, overallImpression, topActionables, sectionReviews, jobRecommendations, generatedCv, model, analyzedAt",
+      "training_boundary": "Notebook exports model-core fields and fixtures; backend maps wrapper-owned public response fields."
+    },
+    {
+      "contract_area": "jobFitAlignment",
+      "owner": "Model core for score/signals; wrapper for final copy.",
+      "public_fields": "score 0-100, summary",
+      "training_boundary": "Model owns score and grounded alignment signals; wrapper may render product-safe summary copy."
+    },
+    {
+      "contract_area": "atsFriendliness",
+      "owner": "Model core for score/issues; wrapper for final copy.",
+      "public_fields": "score 0-100, summary",
+      "training_boundary": "Model owns score and detected ATS issues; wrapper may render concise summary copy."
+    },
+    {
+      "contract_area": "overallImpression",
+      "owner": "Model core for grounded signal; wrapper for final UX wording.",
+      "public_fields": "string",
+      "training_boundary": "Model/training exports deterministic, evidence-grounded impression signal; wrapper may localize or polish without changing facts."
+    },
+    {
+      "contract_area": "jobRecommendations",
+      "owner": "Backend API for retrieval/hydration/copy; model core for scoring/ranking.",
+      "public_fields": "jobId, title, companyName, matchScore, reason, nextStep; max 5",
+      "training_boundary": "Backend supplies candidate set and hydrates job details. Model only ranks provided candidate IDs and emits bounded match scores/signals."
+    }
+  ],
+  "phase23MappingPolicy": {
+    "backendOwned": [
+      "availability",
+      "companyName",
+      "generatedCv",
+      "hydratedJob",
+      "nextStep",
+      "reason",
+      "sectionReviews",
+      "title",
+      "topActionables",
+      "visibility"
+    ],
+    "backendSchemaVersion": "cv-analysis-v2",
+    "languageMapping": {
+      "EN": "en",
+      "ID": "id"
+    },
+    "modelOwned": [
+      "atsFriendliness",
+      "jobFitAlignment",
+      "overallImpression",
+      "recommendations"
+    ]
+  },
+  "phaseId": "phase_25_tensorflow_training_delivery",
+  "requirementMatrix": [
+    {
+      "evidence": "Architecture summary, input tensor contract, selected model artifact.",
+      "owner": "Notebook",
+      "requirement": "1.1 TensorFlow deep learning architecture",
+      "section_or_deliverable": "Step 25.5 builds Functional API or Model Subclassing job-fit scorer."
+    },
+    {
+      "evidence": "Registered custom object with get_config() and reload check.",
+      "owner": "Notebook",
+      "requirement": "1.2 Custom component",
+      "section_or_deliverable": "Step 25.6 implements serializable custom layer/loss/callback."
+    },
+    {
+      "evidence": "Loop metrics for train, validation, test, slices, and gates.",
+      "owner": "Notebook",
+      "requirement": "1.3 Custom training loop",
+      "section_or_deliverable": "Step 25.7 trains/evaluates with tf.GradientTape; model.fit() not used as main path."
+    },
+    {
+      "evidence": "Log path, hash references, scalar metrics, selected histograms.",
+      "owner": "Notebook",
+      "requirement": "1.4 TensorBoard monitoring",
+      "section_or_deliverable": "Step 25.8 writes bounded TensorBoard logs under artifacts/tensorboard/."
+    },
+    {
+      "evidence": "MAE <= 0.02 or readiness capped below production.",
+      "owner": "Notebook",
+      "requirement": "1.5 Regression target MAE <= 0.02",
+      "section_or_deliverable": "Step 25.9 applies strict selection gate on normalized 0-1 target."
+    },
+    {
+      "evidence": "Artifact path, SHA-256, reload without hidden kernel state.",
+      "owner": "Notebook",
+      "requirement": "2.1 Export model",
+      "section_or_deliverable": "Step 25.11 exports .keras or SavedModel."
+    },
+    {
+      "evidence": "Bounded JSON-compatible model-core outputs.",
+      "owner": "Notebook",
+      "requirement": "2.2 Inference",
+      "section_or_deliverable": "Step 25.11 runs clean inference smoke tests; Step 25.12 exports JSON fixtures."
+    },
+    {
+      "evidence": "Handoff fixtures and model-core contract.",
+      "owner": "Separate Model API deliverable",
+      "requirement": "3.1 FastAPI/Flask REST API",
+      "section_or_deliverable": "Notebook does not run a server; it exports schemas, model artifact, and fixtures for API code."
+    },
+    {
+      "evidence": "Validated fixture request/response examples aligned with OpenAPI.",
+      "owner": "Separate Model API deliverable",
+      "requirement": "3.2 API loads model, accepts input, runs inference, returns JSON",
+      "section_or_deliverable": "API code must consume Step 25.11 artifact and Step 25.12 fixtures."
+    },
+    {
+      "evidence": "Deterministic summary signals and wrapper handoff contract.",
+      "owner": "Backend/API wrapper",
+      "requirement": "4.1 Generative AI secondary feature",
+      "section_or_deliverable": "Step 25.13 documents GenAI boundary; no external GenAI call from training cells."
+    },
+    {
+      "evidence": "Final report and artifact manifest.",
+      "owner": "Notebook plus separate API source",
+      "requirement": "5 Deliverables",
+      "section_or_deliverable": "Steps 25.1-25.15 produce training source, custom component, GradientTape loop, TensorBoard logs, TensorFlow artifact, inference fixtures, reports, and README/deployment references."
+    }
+  ],
+  "schemaVersion": "phase-25-requirement-contract-matrix-v1",
+  "sources": {
+    "gapModelTraining": {
+      "path": "GAP_MODEL_TRAINING.md",
+      "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67"
+    },
+    "openapi": {
+      "path": "references/docs/generated/openapi.json",
+      "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+    },
+    "phase23Contract": {
+      "path": "artifacts/phase_23_model_api_contract_validation/model_core_contract.json",
+      "sha256": "345f6a9b86cef6ba462a7dbbc73d90469805a172c8ea4c040caed2e8e7d218b8"
+    },
+    "requirement": {
+      "path": "REQUIREMENT.md",
+      "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723"
+    }
+  },
+  "status": "passed"
+}

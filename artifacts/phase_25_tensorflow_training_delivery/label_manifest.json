@@ -1,0 +1,169 @@
+{
+  "generated_at": "2026-06-03T01:45:36.646906+00:00",
+  "labels": {
+    "atsFriendliness.score": {
+      "api_scale": "0-100",
+      "label_version": "ats-issue-labels-v1",
+      "source": "phase_19_cv_benchmark.label_ats_score",
+      "synthetic_fixture_only": true
+    },
+    "jobFitAlignment.score": {
+      "api_scale": "0-100",
+      "human_validation": "evaluation_only",
+      "label_version": "weak-label-balanced-v2",
+      "source": "pairs_v2.job_fit_score",
+      "training_scale": "0-1"
+    },
+    "recommendations[].matchScore": {
+      "inference_use": "forbidden",
+      "label_version": "candidate-relevance-v1",
+      "relevance_to_score_anchor": {
+        "0": 15.0,
+        "1": 35.0,
+        "2": 72.0,
+        "3": 90.0
+      },
+      "source": "phase_21 backend-like manual review fixture relevanceLabel"
+    }
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "restrictions": [
+    "Do not use human validation labels as training features.",
+    "Do not expose candidate relevance labels at inference time.",
+    "Do not claim production hiring-decision automation from weak labels or synthetic fixtures."
+  ],
+  "schema_version": "phase-25-label-manifest-v1",
+  "source_label_manifests": {
+    "phase16": {
+      "path": "reports/phase_16_label_manifest.json",
+      "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd",
+      "summary": {
+        "agreement": {
+          "disagreement_flag_rate": 0.0,
+          "exact_band_agreement_pairwise": [
+            {
+              "exact_band_agreement": 1.0,
+              "overlap": 120,
+              "reviewer_a": "phase16_reviewer_a",
+              "reviewer_b": "phase16_reviewer_b"
+            }
+          ],
+          "mean_exact_band_agreement": 1.0,
+          "mean_weighted_kappa": 1.0,
+          "overlap_item_count": 120,
+          "status": "complete",
+          "weighted_kappa_pairwise": [
+            {
+              "overlap": 120,
+              "reviewer_a": "phase16_reviewer_a",
+              "reviewer_b": "phase16_reviewer_b",
+              "weighted_kappa": 1.0
+            }
+          ]
+        },
+        "blockers": [],
+        "evaluation_only_policy": {
+          "manual_labels_allowed_uses": [
+            "evaluation",
+            "agreement_reporting",
+            "model_card_evidence",
+            "production_readiness_gates"
+          ],
+          "manual_labels_are_model_inputs": false,
+          "manual_labels_blocked_uses": [
+            "training_features",
+            "embedding_text",
+            "prompt_context",
+            "backend_owned_user_copy"
+          ]
+        },
+        "generated_at": "2026-06-02T04:47:17.876431+00:00",
+        "guidelines": {
+          "covers": [
+            "job_fit_score_bands",
+            "ats_issue_labels",
+            "recommendation_relevance",
+            "unsupported_claim_rejection",
+            "evidence_notes",
+            "disagreement_flags",
+            "evaluation_only_policy"
+          ],
+          "path": "reports/phase_16_reviewer_guidelines.md",
+          "sha256": "c0cc41922f7f779c01a041bfa5926cd14f305a21711d7c6a92264b662886e944"
+        },
+        "human_labels": {
+          "evaluation_only": true,
+          "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+          "reviewer_count": 2,
+          "reviewer_job_fit_band_counts": {
+            "high": 80,
+            "low": 80,
+            "medium": 80
+          },
+          "row_count": 240,
+          "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+        },
+        "label_version": "human-validation-v1",
+        "manifest": {
+          "path": "reports/phase_16_label_manifest.json"
+        },
+        "manual_label_coverage": {
+          "human_labeled_validation_set_covers_low_medium_high": true,
+          "label_version_and_manifest_hash_ready_for_model_card": true,
+          "manual_labels_never_used_as_model_input_features": true,
+          "reviewer_agreement_reported": true
+        },
+        "phase_id": "phase_16_human_validation_label_governance",
+        "review_queue": {
+          "contains_training_rows": false,
+          "path": "artifacts/manual_validation/phase_16_review_queue.csv",
+          "row_count": 120,
+          "score_band_counts": {
+            "high": 40,
+            "low": 40,
+            "medium": 40
+          },
+          "sha256": "dee7fad8410ad1f25b47cbd4d2faf67d84a2c4d485039072838ab7bfb58b0d7f",
+          "source_pairs": {
+            "path": "artifacts/pairs_v2.parquet",
+            "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+          },
+          "split_counts": {
+            "test": 60,
+            "validation": 60
+          },
+          "split_score_band_counts": {
+            "test:high": 20,
+            "test:low": 20,
+            "test:medium": 20,
+            "validation:high": 20,
+            "validation:low": 20,
+            "validation:medium": 20
+          }
+        },
+        "schema_version": "human-validation-label-governance-v1",
+        "status": "complete"
+      }
+    },
+    "phase19": {
+      "path": "reports/phase_19_ats_issue_labels.json",
+      "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+    },
+    "phase21": {
+      "path": "reports/phase_21_backend_candidate_reranking.json",
+      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
+      "summary": {
+        "allowedValues": {
+          "0": "not relevant",
+          "1": "weak relevance",
+          "2": "good relevance",
+          "3": "strong relevance"
+        },
+        "inferenceUse": "forbidden",
+        "labelSource": "backend_like_manual_review_fixture",
+        "labelVersion": "candidate-relevance-v1",
+        "splitPolicy": "candidateSetId grouped evaluation; no candidate-set rows split across folds"
+      }
+    }
+  }
+}

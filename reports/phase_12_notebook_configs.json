@@ -1,0 +1,109 @@
+{
+  "ats_quality_v1": {
+    "allow_missing_source_artifacts_until_phase": 19,
+    "issue_taxonomy": [
+      "parseability",
+      "section_completeness",
+      "contact_detection",
+      "date_detection",
+      "metric_evidence",
+      "formatting_risk",
+      "empty_parse_risk"
+    ],
+    "label_version": "ats-quality-label-v1",
+    "model_version": "ats-quality-v1-notebook-bootstrap",
+    "output_artifact_paths": {
+      "artifact_manifest": "reports/artifact_manifest_ats_quality_v1.json",
+      "ats_quality_report": "reports/phase_19_ats_friendliness_benchmark_scorer.json",
+      "model_card": "reports/model_card_ats_quality_v1.json"
+    },
+    "schema_version": "notebook-config-v1",
+    "source_artifact_paths": {
+      "ats_issue_labels": "reports/phase_19_ats_issue_labels.json",
+      "ats_scorer_metrics": "reports/phase_19_ats_scorer_metrics.json",
+      "cv_benchmark_manifest": "reports/phase_19_cv_benchmark_manifest.json"
+    },
+    "split_seed": 202612
+  },
+  "jobfit_v2": {
+    "approved_features": [
+      "e5_cosine",
+      "skill_overlap",
+      "requirement_coverage",
+      "role_match",
+      "experience_match",
+      "experience_gap_years",
+      "language"
+    ],
+    "embedding_contract": {
+      "embedding_model": "intfloat/e5-base-v2",
+      "fallback_policy": "TF-IDF or local-hash fallback is local-plumbing-only and must fail staging/production readiness gates.",
+      "job_prefix": "passage:",
+      "normalized_embeddings": true,
+      "profile_cv_prefix": "query:"
+    },
+    "label_version": "weak-label-balanced-v2",
+    "legacy_reference_artifact_paths": {
+      "legacy_job_embeddings": "legacy/cache/all_job_embeddings.npy",
+      "legacy_job_index": "legacy/artifacts/job_index.json",
+      "legacy_model": "legacy/models/model_jobfit_v1.keras",
+      "legacy_pairs": "legacy/artifacts/pairs.parquet"
+    },
+    "model_version": "jobfit-v2-e5-notebook-bootstrap",
+    "output_artifact_paths": {
+      "artifact_manifest": "reports/artifact_manifest_jobfit_v2.json",
+      "baseline_v2": "reports/phase_17_baseline_evaluation_v2.json",
+      "model_card": "reports/model_card_jobfit_v2.json",
+      "pair_distribution_diagnostics": "reports/phase_15_pair_distribution_diagnostics.json",
+      "pair_generation_report": "reports/phase_15_balanced_pair_generation_splits.json",
+      "pair_leakage_report": "reports/phase_15_leakage_report.json",
+      "pairs_v2_dataset": "artifacts/pairs_v2.parquet"
+    },
+    "schema_version": "notebook-config-v1",
+    "source_artifact_paths": {
+      "pairs_v2": "artifacts/pairs_v2.parquet",
+      "phase_16_human_labels": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+      "phase_17_embedding_manifest": "reports/phase_17_embedding_manifest.json",
+      "phase_18_embedding_manifest": "reports/phase_18_embedding_manifest.json",
+      "phase_18_model_metrics": "reports/phase_18_model_metrics.json"
+    },
+    "split_seed": 202612
+  },
+  "shared_features_schema_v1": {
+    "label_version": "shared-label-boundary-v1",
+    "language_values": [
+      "ID",
+      "EN",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "model_owned_outputs": [
+      "jobFitAlignment",
+      "atsFriendliness",
+      "overallImpression"
+    ],
+    "model_version": "shared-feature-schema-v1",
+    "output_artifact_paths": {
+      "config_report": "reports/phase_12_notebook_configs.json",
+      "runtime_report": "reports/phase_12_repository_hygiene_runtime_bootstrap.json"
+    },
+    "schema_version": "notebook-config-v1",
+    "score_range": {
+      "max": 100,
+      "min": 0
+    },
+    "source_artifact_paths": {
+      "current_pairs_v2": "artifacts/pairs_v2.parquet",
+      "legacy_jobs": "legacy/dataset/indotech_job_cleaned.csv",
+      "legacy_model_card": "legacy/reports/model_card.json",
+      "legacy_profiles": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "openapi_contract": "references/docs/generated/openapi.json"
+    },
+    "split_seed": 202612,
+    "wrapper_owned_outputs": [
+      "topActionables",
+      "sectionReviews",
+      "hydratedJobDetails"
+    ]
+  }
+}

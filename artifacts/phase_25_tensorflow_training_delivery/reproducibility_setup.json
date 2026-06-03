@@ -1,0 +1,301 @@
+{
+  "artifactPaths": {
+    "exportDir": "artifacts/phase_25_tensorflow_training_delivery/export",
+    "fixtureDir": "artifacts/phase_25_tensorflow_training_delivery/fixtures",
+    "modelDir": "artifacts/models/phase_25_tensorflow_training_delivery",
+    "phase25ArtifactDir": "artifacts/phase_25_tensorflow_training_delivery",
+    "setupArtifact": "artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
+    "setupReport": "reports/phase_25_reproducibility_setup.json",
+    "tensorboardDir": "artifacts/tensorboard/phase_25_tensorflow_training_delivery"
+  },
+  "checks": {
+    "artifact_paths_defined": true,
+    "config_versions_present": true,
+    "e5_contract_present": true,
+    "e5_contract_production_eligible": true,
+    "label_versions_present": true,
+    "required_files_exist": true,
+    "required_files_have_hashes": true,
+    "required_setup_dependencies_installed": true,
+    "split_seed_is_integer": true
+  },
+  "configVersions": {
+    "datasetManifestVersion": "phase-25-dataset-manifest-v1",
+    "featureConfigVersion": "phase-25-feature-config-v1",
+    "labelManifestVersion": "phase-25-label-manifest-v1",
+    "modelVersion": "jobfit-tensorflow-phase25-v1",
+    "phase12JobfitSchemaVersion": "notebook-config-v1",
+    "phase12SharedSchemaVersion": "notebook-config-v1",
+    "phase17EmbeddingSchemaVersion": "baseline-evaluation-v2",
+    "phase22FeatureSchemaVersion": "feature-config-v1",
+    "setupSchemaVersion": "phase-25-reproducibility-setup-v1"
+  },
+  "datasetAndContractHashes": [
+    {
+      "exists": true,
+      "path": "TODOS.md",
+      "role": "todo_plan",
+      "sha256": "18d82e122b7b0150152db9fc47a6265b5da46e351c1abab0d02226142ce687be"
+    },
+    {
+      "exists": true,
+      "path": "REQUIREMENT.md",
+      "role": "requirement",
+      "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723"
+    },
+    {
+      "exists": true,
+      "path": "GAP_MODEL_TRAINING.md",
+      "role": "gap_model_training",
+      "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67"
+    },
+    {
+      "exists": true,
+      "path": "references/docs/generated/openapi.json",
+      "role": "openapi",
+      "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_12_notebook_configs.json",
+      "role": "phase12_configs",
+      "sha256": "e8901a4dee6938cea0462eb2260cd94e06676f119d921b280b7f1c852b242b62"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_13_snapshot_manifests.json",
+      "role": "phase13_snapshot_manifest",
+      "sha256": "6ce9dad49415cb95efd29bb3d18e31dd4b9f609dc9c78f4ef3285fa08ff63153"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_14_feature_quality_report.json",
+      "role": "phase14_feature_quality",
+      "sha256": "9e4fcc7db30153a138c46080dd028f647de7390364b806b8bf2295285a8fe6bc"
+    },
+    {
+      "exists": true,
+      "path": "artifacts/pairs_v2.parquet",
+      "role": "phase15_pairs",
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_15_leakage_report.json",
+      "role": "phase15_leakage",
+      "sha256": "680eb1ae920e7559b66765519379c680095f4b55782ae077de1eb94e0ea75c78"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_16_label_manifest.json",
+      "role": "phase16_label_manifest",
+      "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd"
+    },
+    {
+      "exists": true,
+      "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+      "role": "phase16_human_labels",
+      "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_17_embedding_manifest.json",
+      "role": "phase17_embedding_manifest",
+      "sha256": "517558eabb701432daab54cdc83add13df203e601bdae3c3a964ad7c8b55ab72"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_18_embedding_manifest.json",
+      "role": "phase18_embedding_manifest",
+      "sha256": "55296386621e4d30ffe802dbc84f48ecaac96b888ae443f60c1a81ac454e0b64"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_19_ats_issue_labels.json",
+      "role": "phase19_ats_labels",
+      "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_19_cv_benchmark_manifest.json",
+      "role": "phase19_cv_benchmark",
+      "sha256": "b09f2fd20d387586b5143cb1ff3791c1b56faf4bfcf0a8c5b94134a656ff473d"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_21_backend_candidate_reranking.json",
+      "role": "phase21_candidate_reranking",
+      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef"
+    },
+    {
+      "exists": true,
+      "path": "artifacts/phase_22_calibration_model_card_export/feature_config.json",
+      "role": "phase22_feature_config",
+      "sha256": "ea2b1db13617d7684b35ff167a068dd3353c4596422fb236a0a78df6d42c2585"
+    },
+    {
+      "exists": true,
+      "path": "artifacts/phase_22_calibration_model_card_export/label_manifest.json",
+      "role": "phase22_label_manifest",
+      "sha256": "56592660cc4f0b7e2c0725067db8541ca076869d4e49e2bbc99cdb97b6bdcc09"
+    },
+    {
+      "exists": true,
+      "path": "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json",
+      "role": "phase22_artifact_manifest",
+      "sha256": "fea0debb87847b1b6b885cab84b07ed4f35e4a4c833fb1d6ecdda2171422f83a"
+    },
+    {
+      "exists": true,
+      "path": "artifacts/phase_23_model_api_contract_validation/model_core_contract.json",
+      "role": "phase23_contract",
+      "sha256": "345f6a9b86cef6ba462a7dbbc73d90469805a172c8ea4c040caed2e8e7d218b8"
+    },
+    {
+      "exists": true,
+      "path": "reports/phase_24_reproducibility_final_gate.json",
+      "role": "phase24_final_gate",
+      "sha256": "44bfb9029b87ff656d0b1c3166cb98053f08665280959be9fab6c9b4e7307cfa"
+    }
+  ],
+  "dependencies": [
+    {
+      "distribution": "numpy",
+      "importName": "numpy",
+      "installed": true,
+      "requiredNow": true,
+      "version": "2.4.6"
+    },
+    {
+      "distribution": "pandas",
+      "importName": "pandas",
+      "installed": true,
+      "requiredNow": true,
+      "version": "3.0.3"
+    },
+    {
+      "distribution": "pyarrow",
+      "importName": "pyarrow",
+      "installed": true,
+      "requiredNow": true,
+      "version": "24.0.0"
+    },
+    {
+      "distribution": "scikit-learn",
+      "importName": "sklearn",
+      "installed": true,
+      "requiredNow": true,
+      "version": "1.8.0"
+    },
+    {
+      "distribution": "scipy",
+      "importName": "scipy",
+      "installed": true,
+      "requiredNow": true,
+      "version": "1.17.1"
+    },
+    {
+      "distribution": "tensorflow",
+      "importName": "tensorflow",
+      "installed": true,
+      "requiredNow": false,
+      "version": "2.21.0"
+    },
+    {
+      "distribution": "tensorboard",
+      "importName": "tensorboard",
+      "installed": true,
+      "requiredNow": false,
+      "version": "2.20.0"
+    },
+    {
+      "distribution": "sentence-transformers",
+      "importName": "sentence_transformers",
+      "installed": true,
+      "requiredNow": false,
+      "version": "5.5.1"
+    }
+  ],
+  "embeddingContract": {
+    "embeddingDimension": 768,
+    "embeddingModel": "intfloat/e5-base-v2",
+    "jobPrefix": "passage:",
+    "normalizedEmbeddings": true,
+    "productionEligibleE5": true,
+    "profileCvPrefix": "query:"
+  },
+  "generatedAt": "2026-06-03T01:44:23.679060+00:00",
+  "labelVersions": {
+    "atsQualityLabel": "ats-quality-label-v1",
+    "exportLabel": "human-validation-v1",
+    "humanValidationLabel": "human-validation-v1",
+    "jobfitWeakLabel": "weak-label-balanced-v2",
+    "sharedBoundaryLabel": "shared-label-boundary-v1"
+  },
+  "phaseId": "phase_25_tensorflow_training_delivery",
+  "runtime": {
+    "gitCommit": "1a6dd0c",
+    "gitDirtyAtSetup": true,
+    "gitDirtyPathCount": 43,
+    "gitDirtyPaths": [
+      "ODOS.md",
+      "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      "artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
+      "artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",
+      "artifacts/phase_25_tensorflow_training_delivery/custom_component_smoke_model.keras",
+      "artifacts/phase_25_tensorflow_training_delivery/data_feature_reuse.json",
+      "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+      "artifacts/phase_25_tensorflow_training_delivery/e5_embedding_contract.json",
+      "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+      "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
+      "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+      "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      "artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
+      "artifacts/phase_25_tensorflow_training_delivery/requirement_contract_matrix.json",
+      "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      "artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
+      "artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      "reports/phase_25_baseline_selection_gate.json",
+      "reports/phase_25_calibration_model_card_export.json",
+      "reports/phase_25_custom_component.json",
+      "reports/phase_25_data_feature_reuse.json",
+      "reports/phase_25_e5_embedding_contract.json",
+      "reports/phase_25_human_readable_final_report.json",
+      "reports/phase_25_human_readable_final_report.md",
+      "reports/phase_25_model_api_handoff_fixtures.json",
+      "reports/phase_25_reproducibility_setup.json",
+      "reports/phase_25_requirement_contract_matrix.json",
+      "reports/phase_25_tensorboard_monitoring.json",
+      "reports/phase_25_tensorflow_architecture.json",
+      "reports/phase_25_tensorflow_artifact_export.json",
+      "reports/phase_25_tensorflow_training_delivery.json",
+      "reports/phase_25_training_evaluation_loop.json",
+      "reports/phase_25_training_only_genai_boundary.json",
+      "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
+      "model_api/",
+      "reports/phase_26_1_api_package_layout.json",
+      "tests/"
+    ],
+    "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.11 (main, Jun  1 2026, 12:57:06) [Clang 16.0.0 (clang-1600.0.26.6)]"
+  },
+  "schemaVersion": "phase-25-reproducibility-setup-v1",
+  "seeds": {
+    "numpy": 202625,
+    "python": 202625,
+    "splitSeed": 202621,
+    "tensorflow": 202625
+  },
+  "status": "passed_with_warnings",
+  "warnings": {
+    "gitDirtyAtSetup": true,
+    "missingFutureTrainingDependencies": [],
+    "productionReadyBlockedWhenDirty": true
+  }
+}

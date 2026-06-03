@@ -1,0 +1,206 @@
+{
+  "acceptance": {
+    "artifact_manifest_hashes_complete": true,
+    "calibration_tables_cover_required_buckets": true,
+    "calibration_tables_cover_required_outputs": true,
+    "dataset_manifest_exported_with_hash": true,
+    "feature_config_exported_with_hash": true,
+    "label_manifest_exported_with_hash": true,
+    "model_card_has_required_fields": true
+  },
+  "artifact_manifest_sha256": "ec6bfc01af9cca3c37671c8ec8ff000e55a2a253e4b38535f32ab7df5fc80c40",
+  "bucket_checks": [
+    {
+      "all_buckets_present": true,
+      "buckets": [
+        "0-20",
+        "21-40",
+        "41-60",
+        "61-80",
+        "81-100"
+      ],
+      "output": "jobFitAlignment.score",
+      "split": "test"
+    },
+    {
+      "all_buckets_present": true,
+      "buckets": [
+        "0-20",
+        "21-40",
+        "41-60",
+        "61-80",
+        "81-100"
+      ],
+      "output": "jobFitAlignment.score",
+      "split": "train"
+    },
+    {
+      "all_buckets_present": true,
+      "buckets": [
+        "0-20",
+        "21-40",
+        "41-60",
+        "61-80",
+        "81-100"
+      ],
+      "output": "jobFitAlignment.score",
+      "split": "validation"
+    },
+    {
+      "all_buckets_present": true,
+      "buckets": [
+        "0-20",
+        "21-40",
+        "41-60",
+        "61-80",
+        "81-100"
+      ],
+      "output": "atsFriendliness.score",
+      "split": "benchmark"
+    },
+    {
+      "all_buckets_present": true,
+      "buckets": [
+        "0-20",
+        "21-40",
+        "41-60",
+        "61-80",
+        "81-100"
+      ],
+      "output": "recommendations[].matchScore",
+      "split": "candidate_fixture"
+    }
+  ],
+  "calibration_metrics": {
+    "atsFriendliness.score": {
+      "benchmark": {
+        "bucket_agreement": 1.0,
+        "ece_points": 0.0,
+        "mae_points": 0.0,
+        "mce_points": 0.0,
+        "passed": true,
+        "rmse_points": 0.0,
+        "row_count": 21,
+        "within_10_points_rate": 1.0
+      }
+    },
+    "jobFitAlignment.score": {
+      "test": {
+        "bucket_agreement": 0.9685,
+        "ece_points": 0.533,
+        "mae_points": 0.8603,
+        "mce_points": 3.0195,
+        "passed": true,
+        "rmse_points": 2.9776,
+        "row_count": 540,
+        "within_10_points_rate": 0.9759
+      },
+      "train": {
+        "bucket_agreement": 0.9786,
+        "ece_points": 0.405,
+        "mae_points": 0.6729,
+        "mce_points": 1.944,
+        "passed": true,
+        "rmse_points": 2.5668,
+        "row_count": 2520,
+        "within_10_points_rate": 0.9849
+      },
+      "validation": {
+        "bucket_agreement": 0.9722,
+        "ece_points": 0.3469,
+        "mae_points": 0.8443,
+        "mce_points": 1.955,
+        "passed": true,
+        "rmse_points": 3.3282,
+        "row_count": 540,
+        "within_10_points_rate": 0.9741
+      }
+    },
+    "recommendations[].matchScore": {
+      "candidate_fixture": {
+        "bucket_agreement": 0.8,
+        "ece_points": 4.5333,
+        "mae_points": 5.3333,
+        "mce_points": 10.8,
+        "passed": true,
+        "rmse_points": 7.7028,
+        "row_count": 15,
+        "within_10_points_rate": 0.8667
+      }
+    }
+  },
+  "export_hashes": {
+    "artifact_manifest": "ec6bfc01af9cca3c37671c8ec8ff000e55a2a253e4b38535f32ab7df5fc80c40",
+    "calibration_tables_csv": "1236b81ed4366331dc6e2904fbef0ea6d9a85d1ae3a9f6f5420c02dd8e1b8cf1",
+    "dataset_manifest": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
+    "feature_config": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
+    "label_manifest": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
+    "model_card": "f5ee680ae54dc4fca2d83dca3d24b62608e604b02320e775ecdb2c9d6ddcfc22",
+    "report": "82b315d217af29a7878a90e1f52886e80da9416972c55c0fab255e6c8d634d3a",
+    "score_calibration": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236"
+  },
+  "export_paths": {
+    "artifact_manifest": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+    "calibration_tables_csv": "artifacts/phase_25_tensorflow_training_delivery/score_calibration_tables.csv",
+    "dataset_manifest": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+    "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+    "label_manifest": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+    "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+    "report": "reports/phase_25_calibration_model_card_export.json",
+    "score_calibration": "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json"
+  },
+  "generated_at": "2026-06-03T01:45:36.646906+00:00",
+  "model_card_summary": {
+    "blocked_use": [
+      "Automated hiring decision, rejection, eligibility, salary, or protected-class inference.",
+      "Production score claims without replacing fixture/weak-label evidence with validated labels.",
+      "Backend-owned persistence, auth, job hydration, or GenAI wrapper output generation."
+    ],
+    "limitations": [
+      "Job-fit target uses weak-label balanced v2 evidence; human labels are evaluation-only.",
+      "ATS calibration uses synthetic benchmark fixtures, not production CV traffic.",
+      "Recommendation calibration uses small backend-like fixtures and must be replaced by live feedback or reviewer labels before production claims.",
+      "Step 25.9 strict selection gate caps final readiness below production while prototype trade-offs remain.",
+      "Production-ready export is blocked when git dirty state is present at export time."
+    ],
+    "model": {
+      "api": "Keras Functional API",
+      "custom_components": [
+        "CosineInteractionLayer",
+        "WeightedHuberLoss",
+        "ProductionGateCallback",
+        "HighRecallCalibrationLayer"
+      ],
+      "input_shape": [
+        null,
+        6
+      ],
+      "name": "bisakerja_jobfit_tf_functional_custom_v1",
+      "output_shape": [
+        null,
+        1
+      ],
+      "parameter_count": 11777,
+      "score_scale": {
+        "api": "0-100",
+        "training": "0-1"
+      },
+      "uses_gradient_tape": true,
+      "uses_model_fit": false,
+      "version": "jobfit_tf_phase25_gradient_tape_v1"
+    },
+    "readiness": {
+      "git_dirty_at_setup": true,
+      "production_ready_blocked_when_dirty": true,
+      "status_cap": "production-ready"
+    }
+  },
+  "notes": [
+    "Calibration buckets are predicted-score buckets and always include 0-20, 21-40, 41-60, 61-80, and 81-100 rows, even when sparse.",
+    "Recommendation calibration uses Phase 21 backend-candidate fixtures; production calibration must replace fixture labels with real feedback or recruiter review labels.",
+    "Strict production readiness remains capped by Step 25.9 selection gate when prototype trade-offs remain."
+  ],
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-calibration-model-card-export-v1",
+  "status": "complete"
+}

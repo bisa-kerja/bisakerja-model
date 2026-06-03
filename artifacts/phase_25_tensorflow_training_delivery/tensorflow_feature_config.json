@@ -1,0 +1,60 @@
+{
+  "approved_features": [
+    "e5_cosine",
+    "skill_overlap",
+    "requirement_coverage",
+    "role_match",
+    "experience_match",
+    "experience_gap_years_clipped"
+  ],
+  "feature_policy": {
+    "normalization_fit_split": "train",
+    "uses_e5_derived_similarity": true,
+    "uses_manual_human_labels_as_training_features": false,
+    "uses_raw_embedding_vectors": false,
+    "uses_wrapper_or_backend_owned_fields": false
+  },
+  "generated_at": "2026-06-03T01:44:24.220786+00:00",
+  "model_name": "bisakerja_jobfit_tf_functional_v1",
+  "model_version": "jobfit_tf_phase25_v1",
+  "normalization": {
+    "mean": {
+      "e5_cosine": 0.8016536831855774,
+      "experience_gap_years_clipped": 2.772420644760132,
+      "experience_match": 0.5379297137260437,
+      "requirement_coverage": 0.28650063276290894,
+      "role_match": 0.6666666865348816,
+      "skill_overlap": 0.1191290095448494
+    },
+    "std": {
+      "e5_cosine": 0.03460521623492241,
+      "experience_gap_years_clipped": 2.02809476852417,
+      "experience_match": 0.3380161225795746,
+      "requirement_coverage": 0.2504653334617615,
+      "role_match": 0.4714091122150421,
+      "skill_overlap": 0.11099953204393387
+    }
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-tensorflow-architecture-v1",
+  "source_artifacts": {
+    "e5_contract": {
+      "path": "reports/phase_25_e5_embedding_contract.json",
+      "sha256": "36f818d0983891c22f307ff882fb7e0a5bd2fed369f829fdf8a1d06f0e57a54b"
+    },
+    "e5_pair_features": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/e5_pair_features.parquet",
+      "sha256": "5e64066d2dadab8b814ffa96cadd061178f0877cd66289dc89e9b850cf9d2c57"
+    },
+    "pairs_v2": {
+      "path": "artifacts/pairs_v2.parquet",
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    }
+  },
+  "target": {
+    "api_scale": "0-100",
+    "api_transform": "score_0_100 = score_0_1 * 100",
+    "column": "job_fit_score",
+    "training_scale": "0-1"
+  }
+}

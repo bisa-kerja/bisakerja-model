@@ -1,0 +1,103 @@
+{
+  "checks": {
+    "config": {
+      "embedding_model": "all-MiniLM-L6-v2",
+      "label_version": "weak-label-v1",
+      "model_name": "bisakerja_jobfit",
+      "model_version": "v2",
+      "passed": true,
+      "paths": {
+        "checkpoint_model": "models/checkpoint_jobfit_v2.keras",
+        "evaluation_markdown": "reports/evaluation_report_v2.md",
+        "evaluation_report": "reports/evaluation_report_v2.json",
+        "job_embeddings": "legacy/cache/job_embeddings.npy",
+        "model": "legacy/models/model_jobfit_v1.keras",
+        "model_card": "reports/model_card_v2.json",
+        "pairs": "legacy/artifacts/pairs.parquet",
+        "profile_embeddings": "legacy/cache/profile_embeddings.npy",
+        "trained_model": "models/model_jobfit_v2.keras"
+      },
+      "split_seed": 42
+    },
+    "dataset": {
+      "columns": [
+        "profile_id",
+        "job_id",
+        "profile_text",
+        "job_text",
+        "profile_skills",
+        "job_skills",
+        "profile_exp",
+        "job_exp",
+        "fit_score"
+      ],
+      "pairs_total": 30000,
+      "passed": true,
+      "train_rows": 25500,
+      "validation_rows": 4500
+    },
+    "entrypoints": {
+      "evaluate_prog": "python -m training.evaluate",
+      "passed": true,
+      "train_prog": "python -m training.train"
+    },
+    "environment": {
+      "executable": "/Users/macbookpro/.pyenv/versions/3.14.2/bin/python",
+      "modules": {
+        "numpy": {
+          "available": true
+        },
+        "pandas": {
+          "available": true
+        },
+        "pyarrow": {
+          "available": true
+        },
+        "sklearn": {
+          "available": true
+        },
+        "tensorflow": {
+          "available": false
+        }
+      },
+      "passed": true,
+      "python": "3.14.2"
+    },
+    "file_inventory": {
+      "checked": [
+        "training/__init__.py",
+        "training/configs/jobfit_v2.yaml",
+        "training/configs/cv_quality_v1.yaml",
+        "training/data/build_pairs.py",
+        "training/data/normalize_experience.py",
+        "training/data/normalize_skills.py",
+        "training/features/text_builder.py",
+        "training/features/embedding.py",
+        "training/features/skill_alias.py",
+        "training/models/model_def.py",
+        "training/model_def.py",
+        "training/models/jobfit_ranker.py",
+        "training/models/ats_quality.py",
+        "training/evaluation/baselines.py",
+        "training/evaluation/metrics.py",
+        "training/evaluation/calibration.py",
+        "training/evaluation/report.py",
+        "training/export/export_model.py",
+        "training/export/export_model_card.py",
+        "training/train.py",
+        "training/evaluate.py"
+      ],
+      "missing": [],
+      "passed": true
+    },
+    "tensorflow_model_load": {
+      "passed": false,
+      "reason": "TensorFlow is not installed in the active Python environment.",
+      "skipped": true
+    }
+  },
+  "config": "training/configs/jobfit_v2.yaml",
+  "generated_at": "2026-06-01T05:49:52.911507+00:00",
+  "required_checks_passed": true,
+  "schema_version": "training-phase1-verification-v1"
+}

@@ -1,0 +1,502 @@
+{
+  "acceptance": {
+    "final_readiness_status_is_evidence_based": true,
+    "next_actions_are_clear": true,
+    "remaining_risks_are_documented": true
+  },
+  "contract_review": {
+    "allowed_model_core_responsibilities": [
+      "Calibrated jobFitAlignment score and grounded matched/missing alignment signals.",
+      "ATS friendliness score and detected issue keys after benchmark validation.",
+      "Grounded overallImpression signal or template slots based only on observed evidence.",
+      "Recommendation jobId, matchScore, matchLevel, matchedSkills, missingSkills, and rankingSignals for backend-provided candidates only."
+    ],
+    "boundary_status": "design_boundary_clear_release_enforcement_blocked",
+    "forbidden_model_core_responsibilities": [
+      "topActionables product copy ownership",
+      "sectionReviews product copy ownership",
+      "job detail hydration or stale static job details",
+      "auth, ownership, persistence, request validation, or OpenAI wrapper orchestration",
+      "unsupported skills, seniority, hiring outcome, or ATS outcome claims"
+    ],
+    "model_owned_fields": [
+      "jobFitAlignment.score",
+      "jobFitAlignment.summarySignals",
+      "jobFitAlignment.missingSignals",
+      "jobFitAlignment.matchedSkills",
+      "jobFitAlignment.missingSkills",
+      "atsFriendliness.score",
+      "atsFriendliness.detectedIssues",
+      "overallImpression.score",
+      "overallImpression.summary",
+      "recommendations[].jobId",
+      "recommendations[].matchScore",
+      "recommendations[].matchLevel",
+      "recommendations[].matchedSkills",
+      "recommendations[].missingSkills",
+      "recommendations[].rankingSignals"
+    ],
+    "required_enforcement_controls": [
+      "Backend response validator for score range, recommendation membership, duplicate job IDs, and max item count.",
+      "Wrapper evidence ledger checks before rendering public copy.",
+      "Artifact manifest and model card hash validation before serving.",
+      "Fallback policy for low confidence, missing target job, empty CV parse, unknown language, and sparse calibration buckets."
+    ],
+    "review_result": "pass_design_contract_no_go_release_without_enforcement",
+    "wrapper_or_backend_fields": [
+      "topActionables",
+      "sectionReviews",
+      "generatedCv",
+      "jobRecommendations[].title",
+      "jobRecommendations[].companyName",
+      "jobRecommendations[].reason",
+      "jobRecommendations[].nextStep",
+      "job detail hydration",
+      "auth and ownership",
+      "request validation",
+      "persistence",
+      "OpenAI wrapper orchestration"
+    ]
+  },
+  "gate_metric_review": [
+    {
+      "current_evidence": {
+        "best_legacy_weak_label_baseline": {
+          "baseline": "simple_ridge_regression",
+          "mae": 0.01726078006981349,
+          "r2": 0.9579090970833964,
+          "rmse": 0.021016879423409764,
+          "score_band_agreement": 0.992434988179669,
+          "spearman": 0.9649904957896672,
+          "split": "validation"
+        },
+        "high_fit_test_count": 0,
+        "high_fit_validation_count": 0,
+        "human_labeled_validation_available": false,
+        "relative_mae_improvement_vs_constant_mean": 0.7930732300833666
+      },
+      "gate": "jobFitAlignment regression metrics",
+      "gate_result": "fail_release_gate",
+      "next_action": "Materialize balanced pairs, add trusted validation labels, then rerun baseline and model comparison.",
+      "reason": "Metrics are available only for legacy weak labels and validation/test splits have no high-fit examples.",
+      "required_threshold": {
+        "mae_improvement_vs_best_baseline": ">= 20%",
+        "r2": ">= 0.15 on validation and positive on test",
+        "score_band_agreement": ">= best baseline and reported by low/medium/high band",
+        "spearman": ">= 0.35 on validation and test"
+      }
+    },
+    {
+      "current_evidence": {
+        "benchmark_labels_available": false,
+        "minimum_coverage_policy": {
+          "bootstrap_cases_per_required_case": 10,
+          "critical_failure_review_share": 1.0,
+          "double_review_minimum_share": 0.2,
+          "preferred_cases_per_required_case": 30
+        },
+        "required_case_families_defined": 7
+      },
+      "gate": "ATS friendliness benchmark metrics",
+      "gate_result": "fail_release_gate",
+      "next_action": "Create locked CV benchmark, label issue taxonomy, report precision/recall, bucket agreement, empty-text rate, and failure review.",
+      "reason": "ATS issue labels and controlled benchmark results do not exist yet.",
+      "required_threshold": [
+        {
+          "formula": "true_positive_issue / predicted_issue",
+          "level": "per_issue_key_and_macro_average",
+          "metric": "issue_precision"
+        },
+        {
+          "formula": "true_positive_issue / labeled_issue",
+          "level": "per_issue_key_and_macro_average",
+          "metric": "issue_recall"
+        },
+        {
+          "formula": "predicted_low_medium_high == reviewer_low_medium_high",
+          "level": "global_and_by_case_family",
+          "metric": "score_bucket_agreement"
+        },
+        {
+          "formula": "empty_text_predictions / total_files",
+          "level": "global_by_parser_and_case_family",
+          "metric": "empty_text_rate"
+        },
+        {
+          "formula": "detected_empty_or_scanned_or_unsupported / labeled_critical_parse_failures",
+          "level": "critical_issue_family",
+          "metric": "critical_failure_recall"
+        },
+        {
+          "formula": "reviewer_disagreements / double_reviewed_cases",
+          "level": "global_and_by_issue_family",
+          "metric": "review_disagreement_rate"
+        }
+      ]
+    },
+    {
+      "current_evidence": {
+        "backend_candidate_sets_available": false,
+        "current_status": {
+          "reason": "Recommendation ranking must wait for backend candidate-set labels or realistic candidate sets.",
+          "status": "design_complete_training_blocked"
+        },
+        "relevance_labels_available": false
+      },
+      "gate": "Recommendation reranking metrics",
+      "gate_result": "fail_release_gate",
+      "next_action": "Collect candidate-set ranking labels and enforce membership, uniqueness, score range, and max-item constraints.",
+      "reason": "NDCG/MAP cannot be production evidence without backend-like candidate sets and relevance labels.",
+      "required_threshold": [
+        {
+          "metric": "NDCG@5",
+          "purpose": "Measure top-five ordering quality for public CV Analyzer cap."
+        },
+        {
+          "metric": "NDCG@10",
+          "purpose": "Measure broader candidate ordering before public cap or standalone internal response."
+        },
+        {
+          "metric": "MAP@10",
+          "purpose": "Measure precision of relevant jobs in top ten when relevance is binary or thresholded."
+        },
+        {
+          "metric": "constraint_violation_rates",
+          "purpose": "Prove ranking never invents or duplicates jobs."
+        }
+      ]
+    },
+    {
+      "current_evidence": {
+        "required_slices": [
+          "role_family",
+          "language",
+          "experience_band",
+          "pair_type",
+          "score_band"
+        ],
+        "test_score_bands": [
+          "low",
+          "medium"
+        ],
+        "validation_score_bands": [
+          "low",
+          "medium"
+        ]
+      },
+      "gate": "Robustness and language slices",
+      "gate_result": "fail_release_gate",
+      "next_action": "Report MAE, band agreement, and regression checks by role, language, experience band, pair type, and score band.",
+      "reason": "Current validation/test evidence is missing high-fit band coverage and audited slice metadata.",
+      "required_threshold": {
+        "language_policy": "ID, EN, MIXED, and UNKNOWN reported separately; UNKNOWN is never hidden inside EN",
+        "max_slice_regression": "no critical slice may regress by more than 10% MAE versus best baseline without documented exception",
+        "minimum_high_fit_coverage": {
+          "minimum_manual_review_candidates_per_split": 30,
+          "minimum_test_examples": 300,
+          "minimum_validation_examples": 300,
+          "overall_min_share": 0.2,
+          "overall_preferred_share": 0.4,
+          "release_gate": "Do not train a full-range scorer if validation or test split has too few high-fit examples to evaluate the 65-100 score band."
+        },
+        "required_slices": [
+          "role_family",
+          "language",
+          "experience_band",
+          "pair_type",
+          "score_band"
+        ]
+      }
+    },
+    {
+      "current_evidence": {
+        "current_blockers": [
+          "Legacy validation/test splits have no high-fit examples under Phase 2 threshold.",
+          "Production ATS calibration waits for manual benchmark labels and required file-case coverage.",
+          "Recommendation matchScore calibration waits for backend-like candidate sets and relevance labels.",
+          "Human-labeled validation data is not available; weak labels remain prototype-only evidence."
+        ],
+        "deployment_decision": "design_complete_deployment_not_ready",
+        "outputs_to_calibrate": [
+          "jobFitAlignment.score",
+          "atsFriendliness.score",
+          "recommendations[].matchScore"
+        ]
+      },
+      "gate": "Calibration and score semantics",
+      "gate_result": "fail_release_gate",
+      "next_action": "Run calibration diagnostics after verified model outputs, ATS labels, and candidate-set labels exist.",
+      "reason": "Calibration tables, plots, bucket errors, and trusted labels are not available for promoted scores.",
+      "required_threshold": [
+        {
+          "formula": "sum(bucket_count / total_count * abs(mean_predicted_score - mean_label_score))",
+          "metric": "ECE",
+          "use": "Global calibration error per score."
+        },
+        {
+          "formula": "max(abs(mean_predicted_score - mean_label_score)) across buckets",
+          "metric": "MCE",
+          "use": "Worst bucket calibration error."
+        },
+        {
+          "formula": "predicted_bucket == label_or_reviewer_bucket",
+          "metric": "bucket_agreement",
+          "use": "User-facing band stability."
+        },
+        {
+          "formula": "abs(predicted_score - label_score) <= 10",
+          "metric": "within_10_points_rate",
+          "use": "Tolerance-based score reliability."
+        }
+      ]
+    }
+  ],
+  "generated_at_utc": "2026-06-02T04:43:05.237820+00:00",
+  "known_blockers": [
+    "API wrapper implementation must enforce evidence ledger, fallback, and quality checks before release.",
+    "Artifact manifest must be regenerated at export time with immutable hashes for every inference artifact.",
+    "Backend response validator must enforce candidate membership, uniqueness, score range, and max item constraints.",
+    "Balanced Phase 4 pair metadata columns are missing from the available pair artifact.",
+    "Classifier training is blocked until benchmark labels exist with enough examples per issue family.",
+    "Complex JobFitAlignment training must wait for a materialized balanced pair dataset with high-fit validation/test coverage.",
+    "Human-labeled validation data is not available; legacy fit_score remains weak-label prototype evidence.",
+    "Legacy weak-label fit_score remains prototype-only evidence and must not define high-fit pair selection.",
+    "Manual review is required for PII, unsupported skill, unsupported seniority, or language mismatch failures.",
+    "Manual validation labels must be sampled after group-safe split assignment and must not leak into training features.",
+    "Pair rows are not generated in this planning notebook; implementation code must satisfy this schema before Phase 5 baselines.",
+    "Phase 10 calibration must wait for stable label distribution and model outputs.",
+    "Phase 10 must calibrate score bands before production score semantics are finalized.",
+    "Phase 10 must calibrate score meanings after feature and label distributions are stable.",
+    "Phase 3 must define normalization rules before labels are generated.",
+    "Phase 4 must generate balanced pairs using these normalization policies and publish feature-quality metrics.",
+    "Phase 4 must generate balanced pairs with leakage-safe splits before baseline evaluation.",
+    "Phase 5 must compare baselines across pair_type, role_family, language, experience, and score_band slices before model training.",
+    "Phase 5 must compare baselines using these normalized features before complex model training.",
+    "Phase 5 must run this baseline catalog before model training.",
+    "Phase 6 complex job-fit training must wait for balanced pairs, high-fit coverage, and stronger labels.",
+    "Phase 7 must build controlled ATS benchmark samples before production ATS claims.",
+    "Phase 7 must evaluate ATS text extraction quality before production ATS claims.",
+    "Phase 9 recommendation ranking must wait for backend candidate-set labels or realistic candidate sets.",
+    "Production ATS score semantics require Phase 10 calibration evidence.",
+    "Production matchLevel and matchScore semantics require calibration evidence.",
+    "Production model card cannot be marked release-ready until dataset hash, label version, split seed, feature config, metrics, limitations, and calibration report are populated from a verified run.",
+    "Production score semantics must wait for Phase 10 calibration.",
+    "Production score-band wording requires Phase 10 calibration evidence.",
+    "Production score-band wording requires calibration tables and plots with low/medium/high or 0-20 bucket coverage.",
+    "Promotion must wait for human validation labels or equivalent trusted validation evidence.",
+    "Ranking-objective promotion must wait for backend-like candidate sets and relevance labels.",
+    "Recommendation matchScore calibration waits for backend-like candidate sets and relevance labels.",
+    "Release claims are blocked until empty-text and critical parse failures receive manual review.",
+    "Test split is missing at least one score band.",
+    "Training promotion requires backend-like candidate sets with relevance labels or approved weak labels.",
+    "True recommendation relevance labels and backend candidate sets are not available; ranking metrics are proxy-only.",
+    "Validation split is missing at least one score band.",
+    "Validation/test splits have no high-fit examples under the Phase 2 high-band threshold.",
+    "Wrapper copy for reasons and next steps must remain grounded in rankingSignals, matchedSkills, and missingSkills."
+  ],
+  "pipeline_review": [
+    {
+      "component": "Reproducibility snapshot",
+      "documentation_acceptance_complete": true,
+      "gate_note": "Snapshot complete, but risks require later controls before release.",
+      "phase": 0,
+      "release_ready": false,
+      "report_path": "reports/phase_00_reproducibility_snapshot.json"
+    },
+    {
+      "component": "Data audit and output contracts",
+      "documentation_acceptance_complete": true,
+      "gate_note": "Proceed to Phase 2 label schema and baseline definitions; do not start new model training yet.",
+      "phase": 1,
+      "release_ready": false,
+      "report_path": "reports/phase_01_data_audit_contracts.json"
+    },
+    {
+      "component": "Label schema and baseline definitions",
+      "documentation_acceptance_complete": true,
+      "gate_note": "Label and baseline schema complete; manual validation labels still required before production claims.",
+      "phase": 2,
+      "release_ready": false,
+      "report_path": "reports/phase_02_label_schema_baselines.json"
+    },
+    {
+      "component": "Normalization and feature design",
+      "documentation_acceptance_complete": true,
+      "gate_note": "Normalization and feature design complete; must be materialized into versioned configs before serving.",
+      "phase": 3,
+      "release_ready": false,
+      "report_path": "reports/phase_03_normalization_feature_design.json"
+    },
+    {
+      "component": "Pair generation and split strategy",
+      "documentation_acceptance_complete": true,
+      "gate_note": "Balanced pair design complete; materialized full-range pair artifact still required.",
+      "phase": 4,
+      "release_ready": false,
+      "report_path": "reports/phase_04_pair_generation_splits.json"
+    },
+    {
+      "component": "Baseline evaluation",
+      "documentation_acceptance_complete": true,
+      "gate_note": "NO_GO_FIX_PAIR_GENERATION_AND_LABELS_FIRST",
+      "phase": 5,
+      "release_ready": false,
+      "report_path": "reports/phase_05_baseline_evaluation.json"
+    },
+    {
+      "component": "JobFitAlignment training experiments",
+      "documentation_acceptance_complete": true,
+      "gate_note": "NO-GO for training run; GO for experiment plan completion",
+      "phase": 6,
+      "release_ready": false,
+      "report_path": "reports/phase_06_jobfit_training_experiments.json"
+    },
+    {
+      "component": "ATS friendliness scoring",
+      "documentation_acceptance_complete": true,
+      "gate_note": "GO for rule design and benchmark policy; NO-GO for production ATS scoring claim until benchmark labels and calibration exist",
+      "phase": 7,
+      "release_ready": false,
+      "report_path": "reports/phase_07_ats_friendliness_scoring.json"
+    },
+    {
+      "component": "Overall impression signals",
+      "documentation_acceptance_complete": true,
+      "gate_note": "GO for grounded signal and wrapper design; NO-GO for production copy claims until Phase 10 calibration and wrapper implementation checks exist.",
+      "phase": 8,
+      "release_ready": false,
+      "report_path": "reports/phase_08_overall_impression_signals.json"
+    },
+    {
+      "component": "Candidate job reranking",
+      "documentation_acceptance_complete": true,
+      "gate_note": "design_complete_training_blocked",
+      "phase": 9,
+      "release_ready": false,
+      "report_path": "reports/phase_09_candidate_reranking.json"
+    },
+    {
+      "component": "Calibration, model card, and artifact manifest",
+      "documentation_acceptance_complete": true,
+      "gate_note": "design_complete_deployment_not_ready",
+      "phase": 10,
+      "release_ready": false,
+      "report_path": "reports/phase_10_calibration_model_card.json"
+    }
+  ],
+  "readiness_decision": {
+    "allowed_uses": [
+      "Planning next training work.",
+      "Offline prototype analysis with explicit weak-label disclaimer.",
+      "Generating review checklists, label guidelines, benchmark manifests, and export templates."
+    ],
+    "blocked_uses": [
+      "Production or staging scoring claims.",
+      "Public score-band wording as calibrated quality evidence.",
+      "ATS friendliness production claims.",
+      "Recommendation reranking claims using static job artifacts.",
+      "Automated deployment without manifest hashes and model card evidence."
+    ],
+    "blocking_gate_count": 5,
+    "decision_summary": "Documentation and review artifacts are complete, but model readiness is prototype-only because all release metric gates remain blocked by missing trusted labels, missing high-fit coverage, missing ATS benchmark results, missing candidate-set ranking labels, and missing calibration/export evidence.",
+    "evidence": [
+      "Phase 5 training readiness decision: NO_GO_FIX_PAIR_GENERATION_AND_LABELS_FIRST.",
+      "Phase 10 deployment decision: design_complete_deployment_not_ready.",
+      "Validation/test splits have zero high-fit examples under the current high-band threshold.",
+      "Human-labeled validation data is not available.",
+      "ATS benchmark labels and recommendation relevance labels are not available.",
+      "Calibration diagnostics and artifact manifest hashes are not populated from a verified model export."
+    ],
+    "required_next_actions": [
+      "Materialize Phase 4 balanced pair dataset with required metadata, leakage-safe splits, and high-fit validation/test coverage.",
+      "Create human/manual validation labels and reviewer guidelines for job-fit score bands.",
+      "Rerun Phase 5 baselines and Phase 6 job-fit experiments against trusted full-range labels and slices.",
+      "Create ATS benchmark manifest with required file families, issue labels, precision/recall, empty-text review, and calibration evidence.",
+      "Collect backend-like candidate sets with relevance labels and report NDCG@5, NDCG@10, MAP@10, and constraint violation rates.",
+      "Run calibration diagnostics for all public score outputs with bucket counts, bucket errors, ECE, MCE, and confidence notes.",
+      "Export serving artifacts with immutable sha256 hashes, schema versions, model card, artifact manifest, and runtime compatibility check.",
+      "Implement backend/wrapper enforcement for candidate membership, duplicate rejection, score bounds, fallback policy, and grounded product copy."
+    ],
+    "status": "prototype-only",
+    "status_options": [
+      "prototype-only",
+      "staging-ready",
+      "production-ready"
+    ]
+  },
+  "risk_review": [
+    {
+      "category": "data_quality",
+      "evidence": "Balanced Phase 4 pair metadata columns are missing and validation/test splits have no high-fit examples.",
+      "impact": "Full 0-100 score range and high-fit behavior cannot be evaluated.",
+      "next_control": "Materialize balanced pair dataset with required metadata and high-fit validation/test coverage.",
+      "owner": "model_training",
+      "severity": "blocking"
+    },
+    {
+      "category": "label_quality",
+      "evidence": "Legacy fit_score remains weak-label prototype evidence and human-labeled validation data is unavailable.",
+      "impact": "Model can learn heuristics instead of trusted job-fit outcomes.",
+      "next_control": "Create manual validation sample and label guideline before promotion metrics are trusted.",
+      "owner": "model_training + reviewers",
+      "severity": "blocking"
+    },
+    {
+      "category": "calibration",
+      "evidence": "Calibration bucket tables, plots, ECE, MCE, and score bucket errors are only defined, not populated from verified runs.",
+      "impact": "Public score semantics could overstate reliability.",
+      "next_control": "Run calibration diagnostics for jobFitAlignment, atsFriendliness, and matchScore after trusted labels exist.",
+      "owner": "model_training",
+      "severity": "blocking"
+    },
+    {
+      "category": "localization",
+      "evidence": "Language slice gates are defined, but release metrics by ID, EN, MIXED, and UNKNOWN slices are not available.",
+      "impact": "Language-specific regressions or fallback failures can be hidden.",
+      "next_control": "Report slice metrics and manual review failures by language and text coverage.",
+      "owner": "model_training + product_review",
+      "severity": "blocking"
+    },
+    {
+      "category": "deployment",
+      "evidence": "Artifact manifest hashes, serving bundle validation, model card fields, and runtime packaging are not populated from a verified export.",
+      "impact": "Inference can fail or load unverifiable artifacts.",
+      "next_control": "Export serving artifacts with immutable hashes, schema versions, model card, and runtime compatibility check.",
+      "owner": "model_training + platform",
+      "severity": "blocking"
+    },
+    {
+      "category": "contract_boundary",
+      "evidence": "Backend validators and wrapper grounding checks are required before hydrated jobs, recommendations, and product copy can be trusted.",
+      "impact": "Model output could invent jobs, unsupported claims, or wrapper-owned fields if not enforced.",
+      "next_control": "Implement response validation, candidate membership checks, duplicate rejection, and evidence-backed copy rendering.",
+      "owner": "backend_api + wrapper",
+      "severity": "blocking"
+    }
+  ],
+  "setup_summary": {
+    "all_acceptance_complete": true,
+    "known_blocker_count": 40,
+    "model_owned_field_count": 15,
+    "phase10_decision": "design_complete_deployment_not_ready",
+    "phase5_decision": "NO_GO_FIX_PAIR_GENERATION_AND_LABELS_FIRST",
+    "phase_reports_loaded": 11,
+    "wrapper_or_backend_field_count": 12
+  },
+  "source_references": [
+    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
+    "references/docs/generated/openapi.json",
+    "reports/phase_00_reproducibility_snapshot.json",
+    "reports/phase_01_data_audit_contracts.json",
+    "reports/phase_02_label_schema_baselines.json",
+    "reports/phase_03_normalization_feature_design.json",
+    "reports/phase_04_pair_generation_splits.json",
+    "reports/phase_05_baseline_evaluation.json",
+    "reports/phase_06_jobfit_training_experiments.json",
+    "reports/phase_07_ats_friendliness_scoring.json",
+    "reports/phase_08_overall_impression_signals.json",
+    "reports/phase_09_candidate_reranking.json",
+    "reports/phase_10_calibration_model_card.json"
+  ]
+}

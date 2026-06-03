@@ -1,0 +1,327 @@
+{
+  "cleaned_examples": [
+    {
+      "matchedSkills": [
+        "apis",
+        "python"
+      ],
+      "missingSkills": [],
+      "pairId": "01615c9fbc72105740e3d29d",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "generic_prose",
+          "value": "and data pipelines for large-scale ai workflows"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "location_copy",
+          "value": "remote python developer building backend systems"
+        }
+      ],
+      "score": 73
+    },
+    {
+      "matchedSkills": [
+        "deep learning",
+        "machine learning",
+        "python",
+        "sql"
+      ],
+      "missingSkills": [
+        "artificial intelligence",
+        "computer vision",
+        "data engineering",
+        "data integration",
+        "data mining",
+        "microsoft sql server"
+      ],
+      "pairId": "0166ae25d7d439bd9544c625",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "maximum 5 years of experience"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "minimum 3 years of experience"
+        }
+      ],
+      "score": 82
+    },
+    {
+      "matchedSkills": [],
+      "missingSkills": [
+        "ck",
+        "cve analysis",
+        "cyber kill chain",
+        "edr",
+        "incident response",
+        "log analysis",
+        "mitre att",
+        "security alerts",
+        "security operation center"
+      ],
+      "pairId": "006392896cb950c3d5f609e1",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "requires 1 to 3 years of experience in cybersecurity"
+        }
+      ],
+      "score": 5
+    },
+    {
+      "matchedSkills": [],
+      "missingSkills": [
+        "programming"
+      ],
+      "pairId": "00a966e544d41f358d7a5703",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "marketing_or_benefit_copy",
+          "value": "and opportunities for growth"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "marketing_or_benefit_copy",
+          "value": "competitive package"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "marketing_or_benefit_copy",
+          "value": "cutting-edge software solutions"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "marketing_or_benefit_copy",
+          "value": "join our dynamic team in jakarta"
+        }
+      ],
+      "score": 0
+    },
+    {
+      "matchedSkills": [
+        "data analysis",
+        "machine learning",
+        "python"
+      ],
+      "missingSkills": [
+        "data mining",
+        "information systems",
+        "microsoft dynamic nav",
+        "r programming language",
+        "sql"
+      ],
+      "pairId": "05a03fa4d4a2d56108e65834",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "generic_prose",
+          "value": "capable of analytical thinking and critical thinking"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "minimum 2 years of experience in the same scope"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "minimum s1 in informatics engineering"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "location_copy",
+          "value": "tangerang"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "generic_prose",
+          "value": "understanding of data analysis techniques"
+        }
+      ],
+      "score": 49
+    },
+    {
+      "matchedSkills": [
+        "data analysis",
+        "python"
+      ],
+      "missingSkills": [
+        "sql"
+      ],
+      "pairId": "0673192ae6b88c754adee5ed",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "generic_prose",
+          "value": "bachelor s degree in statistics or related field"
+        }
+      ],
+      "score": 70
+    },
+    {
+      "matchedSkills": [
+        "aws",
+        "cd",
+        "ci",
+        "docker",
+        "kubernetes"
+      ],
+      "missingSkills": [
+        "amazon web services aws",
+        "jenkins"
+      ],
+      "pairId": "00f50eb7d8160b7f0bd637f3",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "3-5 years of experience"
+        }
+      ],
+      "score": 100
+    },
+    {
+      "matchedSkills": [
+        "data analysis",
+        "python"
+      ],
+      "missingSkills": [
+        "sql"
+      ],
+      "pairId": "04d85689f90054fdc7edfa10",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "generic_prose",
+          "value": "bachelor s degree in statistics or related field"
+        }
+      ],
+      "score": 73
+    },
+    {
+      "matchedSkills": [
+        "network security"
+      ],
+      "missingSkills": [],
+      "pairId": "00eb3f0e4e6c4ba3f1e4a4e0",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_characters",
+          "value": "network and security management experience"
+        }
+      ],
+      "score": 30
+    },
+    {
+      "matchedSkills": [],
+      "missingSkills": [
+        "and infrastructure solution"
+      ],
+      "pairId": "015c4b7d3b2df2e3cfd0531d",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "marketing_or_benefit_copy",
+          "value": "akan segera berakhir"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "generic_prose",
+          "value": "and delivering network"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "generic_prose",
+          "value": "developing new business opportunities"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "marketing_or_benefit_copy",
+          "value": "drive enterprise growth by managing key accounts"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "marketing_or_benefit_copy",
+          "value": "expires soon"
+        }
+      ],
+      "score": 5
+    },
+    {
+      "matchedSkills": [
+        "javascript",
+        "node.js",
+        "react",
+        "sql"
+      ],
+      "missingSkills": [
+        "c++",
+        "jquery",
+        "mongodb",
+        "mysql",
+        "postgresql"
+      ],
+      "pairId": "01e976659c5111905d2fba09",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "maximum 3 years of experience"
+        },
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "minimum 1 years of experience"
+        }
+      ],
+      "score": 49
+    },
+    {
+      "matchedSkills": [
+        "java",
+        "python",
+        "sql"
+      ],
+      "missingSkills": [
+        "c++",
+        "laravel",
+        "microsoft sql server",
+        "mysql",
+        "node.js",
+        "php",
+        "postgresql"
+      ],
+      "pairId": "02267294066a50f582b404da",
+      "rejected": [
+        {
+          "field": "missingSkills",
+          "reason": "unsupported_seniority_or_experience_claim",
+          "value": "must have 1-3 years of experience"
+        }
+      ],
+      "score": 51
+    }
+  ],
+  "example_count": 12,
+  "generated_at": "2026-06-02T05:18:16.626783+00:00",
+  "phase_id": "phase_19_5_jobfit_blocker_remediation",
+  "rejection_counts": {
+    "generic_prose": 7,
+    "location_copy": 2,
+    "marketing_or_benefit_copy": 7,
+    "unsupported_characters": 1,
+    "unsupported_seniority_or_experience_claim": 9
+  },
+  "remaining_violations": [],
+  "schema_version": "jobfit-blocker-remediation-v1",
+  "source_report": "reports/phase_18_model_output_contract_examples.json",
+  "status": "passed"
+}

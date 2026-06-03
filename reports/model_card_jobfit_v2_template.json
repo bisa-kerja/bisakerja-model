@@ -1,0 +1,33 @@
+{
+  "blocked_use": [
+    "Production hiring decision automation",
+    "User-facing production score claims without calibration evidence",
+    "Backend-owned hydration or OpenAI wrapper copy generation"
+  ],
+  "data_snapshot_references": {
+    "model_core_schema_contracts": {
+      "path": "reports/phase_13_model_core_schema_contracts.json",
+      "sha256": "74d284763860704a5b8d82cf95d00eaae8ecf50a85668ab47ab058ebf638350b"
+    },
+    "phase_13_validation_report": {
+      "note": "Final report hash is recorded by artifact manifests after report write completes.",
+      "path": "reports/phase_13_data_snapshot_contract_freezing.json"
+    },
+    "snapshot_manifests": {
+      "path": "reports/phase_13_snapshot_manifests.json",
+      "sha256": "6ce9dad49415cb95efd29bb3d18e31dd4b9f609dc9c78f4ef3285fa08ff63153"
+    }
+  },
+  "intended_use": "Notebook-first job-fit scoring experiments after frozen data snapshots, label governance, baseline evaluation, and contract validation pass.",
+  "model_name": "jobfit-v2",
+  "model_version": "jobfit-v2-notebook-bootstrap",
+  "required_before_promotion": [
+    "pairs_v2 manifest from Phase 15",
+    "human validation label manifest from Phase 16",
+    "baseline v2 metrics from Phase 17",
+    "calibration and export manifest from Phase 22",
+    "contract validation report from Phase 23",
+    "final gate report from Phase 24"
+  ],
+  "schema_version": "model-card-template-v1"
+}

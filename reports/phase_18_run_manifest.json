@@ -1,0 +1,44 @@
+{
+  "embedding_manifest": {
+    "path": "reports/phase_18_embedding_manifest.json",
+    "sha256": "55296386621e4d30ffe802dbc84f48ecaac96b888ae443f60c1a81ac454e0b64"
+  },
+  "experiment_config": {
+    "path": "reports/phase_18_experiment_config.json",
+    "sha256": "d1e3e56e09b853525e594c76b9512ce8ea4c91128fb50db93b9acd0fd07a8f90"
+  },
+  "generated_at": "2026-06-02T05:17:58.378005+00:00",
+  "human_label_evaluation": {
+    "path": "reports/phase_18_human_label_evaluation.json",
+    "sha256": "451f5198fd66306855fd7a5489fb4c1f62f67fba0ab8b9d0268f4d4dbf127425"
+  },
+  "metrics": {
+    "path": "reports/phase_18_model_metrics.json",
+    "sha256": "1b32a8c8e72795cd4bde8ad1fefbca3e6c4ab0124a883199cd3680132a2e3274"
+  },
+  "model_artifact": {
+    "path": "artifacts/models/phase_18_jobfit_training_v2/high_recall_calibrated_scorer.joblib",
+    "sha256": "c639b92d1460c4051d5d91cd0e0b2b38d13b1edc91ea4c72778267f919c17324"
+  },
+  "output_contract_examples": {
+    "path": "reports/phase_18_model_output_contract_examples.json",
+    "sha256": "6516c5be686abbabddef1db19f511ff3b2a097e8850356334e0e3d1e4a98745c"
+  },
+  "phase_id": "phase_18_jobfit_training_v2",
+  "prediction_sample": {
+    "path": "artifacts/models/phase_18_jobfit_training_v2/prediction_sample.csv",
+    "sha256": "8acfeed91df036686c6f58969fa428431c342f31bdc1a3f1402108809e03429f"
+  },
+  "schema_version": "jobfit-training-v2",
+  "selected_model": "high_recall_calibrated_scorer",
+  "selected_prediction_column": "pred_high_recall_calibrated_scorer",
+  "slice_metrics": {
+    "path": "reports/phase_18_slice_metrics.json",
+    "sha256": "720626413f8a28c9e57483633ae6155e3a64515eeddcf12dcdae7d21301ac189"
+  },
+  "status": "complete",
+  "training_curves": {
+    "path": "reports/phase_18_training_curves.json",
+    "sha256": "30d37966f5c053ccc3717a94b8566f30ff6b02a10a46f2deec685fc57cf38493"
+  }
+}

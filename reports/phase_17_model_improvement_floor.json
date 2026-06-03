@@ -1,0 +1,72 @@
+{
+  "baseline_registry": {
+    "baseline_constant_mean": {
+      "production_eligible": true,
+      "type": "constant"
+    },
+    "baseline_constant_median": {
+      "production_eligible": true,
+      "type": "constant"
+    },
+    "baseline_e5_cosine_only": {
+      "embedding_backend": "sentence-transformers",
+      "production_eligible": true,
+      "type": "cosine_linear"
+    },
+    "baseline_feature_regression": {
+      "production_eligible": true,
+      "type": "numeric_categorical_ridge"
+    },
+    "baseline_simple_regression": {
+      "production_eligible": true,
+      "type": "numeric_ridge"
+    },
+    "baseline_skill_overlap_only": {
+      "production_eligible": true,
+      "type": "single_feature_linear"
+    }
+  },
+  "best_baseline": "baseline_feature_regression",
+  "best_baseline_test_metrics": {
+    "high_fit_recall": 1.0,
+    "mae": 2.0859574368596565,
+    "predicted_high_count": 90,
+    "r2": 0.9852143749128633,
+    "rmse": 3.544579468895612,
+    "row_count": 540,
+    "score_band_agreement": 1.0,
+    "spearman": 0.9914306524892219,
+    "true_high_count": 90
+  },
+  "best_baseline_validation_metrics": {
+    "high_fit_recall": 1.0,
+    "mae": 1.8773080189459552,
+    "predicted_high_count": 90,
+    "r2": 0.9875636246372769,
+    "rmse": 3.30308045090818,
+    "row_count": 540,
+    "score_band_agreement": 0.9925925925925926,
+    "spearman": 0.9930144152673331,
+    "true_high_count": 90
+  },
+  "generated_at": "2026-06-02T04:48:49.553085+00:00",
+  "phase_id": "phase_17_baseline_evaluation_v2",
+  "required_later_model_metrics": {
+    "must_preserve_or_improve_high_fit_recall": true,
+    "must_preserve_or_improve_score_band_agreement": true,
+    "r2_must_be_positive_on_validation_and_test": true,
+    "required_mae_improvement_fraction": 0.2,
+    "test_mae_must_be_at_most": 1.6687659494877254,
+    "validation_mae_must_be_at_most": 1.5018464151567643
+  },
+  "schema_version": "baseline-evaluation-v2",
+  "training_gate": {
+    "complex_training_allowed": true,
+    "high_fit_counts": {
+      "test": 90,
+      "validation": 90
+    },
+    "high_fit_coverage_failures": [],
+    "later_models_must_beat_best_baseline": true
+  }
+}

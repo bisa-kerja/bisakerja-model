@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-06-02T05:18:16.607618+00:00",
+  "phase17_generated_at": "2026-06-02T04:48:48.955234+00:00",
+  "phase17_real_e5": true,
+  "phase18_generated_at": "2026-06-02T05:17:52.801408+00:00",
+  "phase18_real_e5": true,
+  "phase18_run_status": "complete",
+  "phase18_selected_model": "high_recall_calibrated_scorer",
+  "phase_id": "phase_19_5_jobfit_blocker_remediation",
+  "required_next_action": null,
+  "rerun_from_clean_kernel_with_real_e5": true,
+  "schema_version": "jobfit-blocker-remediation-v1",
+  "status": "complete"
+}

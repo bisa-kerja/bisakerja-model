@@ -1,0 +1,114 @@
+{
+  "approved_model_inputs": [
+    "e5_cosine",
+    "skill_overlap",
+    "requirement_coverage",
+    "role_match",
+    "experience_match",
+    "experience_gap_years",
+    "language"
+  ],
+  "blocked_inputs": [
+    "pair_type as training feature",
+    "profile_id",
+    "job_id",
+    "target",
+    "manual labels",
+    "wrapper-owned copy"
+  ],
+  "candidate_models": {
+    "cosine_only": {
+      "calibration": null,
+      "features": [
+        "e5_cosine"
+      ],
+      "model": "Pipeline"
+    },
+    "feature_augmented_scorer": {
+      "calibration": null,
+      "features": [
+        "e5_cosine",
+        "skill_overlap",
+        "requirement_coverage",
+        "role_match",
+        "experience_match",
+        "experience_gap_years",
+        "language"
+      ],
+      "model": "Pipeline"
+    },
+    "high_recall_calibrated_scorer": {
+      "calibration": {
+        "high_floor": 70.0,
+        "threshold": 55.0
+      },
+      "features": [
+        "e5_cosine",
+        "skill_overlap",
+        "requirement_coverage",
+        "role_match",
+        "experience_match",
+        "experience_gap_years",
+        "language"
+      ],
+      "model": "HighRecallThresholdCalibratedRegressor"
+    },
+    "linear_approved_features": {
+      "calibration": null,
+      "features": [
+        "e5_cosine",
+        "skill_overlap",
+        "requirement_coverage",
+        "role_match",
+        "experience_match",
+        "experience_gap_years",
+        "language"
+      ],
+      "model": "Pipeline"
+    },
+    "neural_embedding_scorer": {
+      "calibration": null,
+      "features": [
+        "e5_cosine",
+        "skill_overlap",
+        "requirement_coverage",
+        "role_match",
+        "experience_match",
+        "experience_gap_years",
+        "language"
+      ],
+      "model": "Pipeline"
+    },
+    "ranking_proxy_scorer": {
+      "calibration": null,
+      "features": [
+        "e5_cosine",
+        "skill_overlap",
+        "requirement_coverage",
+        "role_match",
+        "experience_match",
+        "experience_gap_years",
+        "language"
+      ],
+      "model": "Pipeline"
+    }
+  },
+  "phase17_required_later_model_metrics": {
+    "must_preserve_or_improve_high_fit_recall": true,
+    "must_preserve_or_improve_score_band_agreement": true,
+    "r2_must_be_positive_on_validation_and_test": true,
+    "required_mae_improvement_fraction": 0.2,
+    "test_mae_must_be_at_most": 1.6687659494877254,
+    "validation_mae_must_be_at_most": 1.5018464151567643
+  },
+  "phase_id": "phase_18_jobfit_training_v2",
+  "schema_version": "jobfit-training-v2",
+  "seed": 202618,
+  "slice_only_metadata": [
+    "pair_type",
+    "role_family",
+    "experience_band",
+    "score_band",
+    "target_band"
+  ]
+}

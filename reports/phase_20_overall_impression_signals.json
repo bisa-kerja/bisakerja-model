@@ -1,0 +1,818 @@
+{
+  "acceptance": {
+    "id_and_en_templates_tested": true,
+    "traceable_to_evidence_keys": true,
+    "unsupported_claims_rejected": true,
+    "wrapper_owned_fields_excluded": true
+  },
+  "contract_boundary": {
+    "model_core_owns": [
+      "overallImpression.score",
+      "overallImpression.summary",
+      "overallImpression.evidenceKeys",
+      "overallImpression.confidenceNotes"
+    ],
+    "public_contract_observed": true,
+    "wrapper_owns": [
+      "sectionReviews",
+      "topActionables"
+    ]
+  },
+  "evidence_ledger": [
+    {
+      "case_id": "P20-en-high-fit-01",
+      "confidence_notes": [],
+      "entries": [
+        {
+          "key": "target_role",
+          "source": "target_job.role",
+          "value": "Data Scientist"
+        },
+        {
+          "key": "language",
+          "source": "language_normalization.output",
+          "value": "EN"
+        },
+        {
+          "key": "jobfit_score",
+          "source": "jobFitAlignment.score",
+          "value": 82
+        },
+        {
+          "key": "jobfit_band",
+          "source": "jobFitAlignment.score",
+          "value": "high"
+        },
+        {
+          "key": "matched_skills",
+          "source": "jobFitAlignment.matchedSkills",
+          "value": [
+            "deep learning",
+            "machine learning",
+            "python",
+            "sql"
+          ]
+        },
+        {
+          "key": "missing_skills",
+          "source": "jobFitAlignment.missingSkills",
+          "value": [
+            "artificial intelligence",
+            "computer vision",
+            "data engineering"
+          ]
+        },
+        {
+          "key": "ats_score",
+          "source": "atsFriendliness.score",
+          "value": 82
+        },
+        {
+          "key": "ats_issues",
+          "source": "atsFriendliness.detectedIssues",
+          "value": [
+            "formatting_risk_issue"
+          ]
+        },
+        {
+          "key": "experience_match",
+          "source": "experience_match",
+          "value": "matched"
+        },
+        {
+          "key": "parser_confidence",
+          "source": "parser.confidence",
+          "value": 0.92
+        },
+        {
+          "key": "empty_parse",
+          "source": "parser.empty_parse|atsFriendliness.fallback",
+          "value": false
+        }
+      ]
+    },
+    {
+      "case_id": "P20-id-medium-fit-01",
+      "confidence_notes": [],
+      "entries": [
+        {
+          "key": "target_role",
+          "source": "target_job.role",
+          "value": "Backend Developer"
+        },
+        {
+          "key": "language",
+          "source": "language_normalization.output",
+          "value": "ID"
+        },
+        {
+          "key": "jobfit_score",
+          "source": "jobFitAlignment.score",
+          "value": 73
+        },
+        {
+          "key": "jobfit_band",
+          "source": "jobFitAlignment.score",
+          "value": "medium"
+        },
+        {
+          "key": "matched_skills",
+          "source": "jobFitAlignment.matchedSkills",
+          "value": [
+            "apis",
+            "python"
+          ]
+        },
+        {
+          "key": "missing_skills",
+          "source": "jobFitAlignment.missingSkills",
+          "value": []
+        },
+        {
+          "key": "ats_score",
+          "source": "atsFriendliness.score",
+          "value": 100
+        },
+        {
+          "key": "ats_issues",
+          "source": "atsFriendliness.detectedIssues",
+          "value": []
+        },
+        {
+          "key": "experience_match",
+          "source": "experience_match",
+          "value": "matched"
+        },
+        {
+          "key": "parser_confidence",
+          "source": "parser.confidence",
+          "value": 0.9
+        },
+        {
+          "key": "empty_parse",
+          "source": "parser.empty_parse|atsFriendliness.fallback",
+          "value": false
+        }
+      ]
+    },
+    {
+      "case_id": "P20-empty-parse-01",
+      "confidence_notes": [
+        "low_parser_confidence",
+        "sparse_skill_evidence",
+        "ats_safe_fallback_used"
+      ],
+      "entries": [
+        {
+          "key": "target_role",
+          "source": "target_job.role",
+          "value": "Backend Developer"
+        },
+        {
+          "key": "language",
+          "source": "language_normalization.output",
+          "value": "ID"
+        },
+        {
+          "key": "jobfit_score",
+          "source": "jobFitAlignment.score",
+          "value": null
+        },
+        {
+          "key": "jobfit_band",
+          "source": "jobFitAlignment.score",
+          "value": "unknown"
+        },
+        {
+          "key": "matched_skills",
+          "source": "jobFitAlignment.matchedSkills",
+          "value": []
+        },
+        {
+          "key": "missing_skills",
+          "source": "jobFitAlignment.missingSkills",
+          "value": []
+        },
+        {
+          "key": "ats_score",
+          "source": "atsFriendliness.score",
+          "value": 35
+        },
+        {
+          "key": "ats_issues",
+          "source": "atsFriendliness.detectedIssues",
+          "value": [
+            "empty_parse_risk",
+            "parseability_issue"
+          ]
+        },
+        {
+          "key": "experience_match",
+          "source": "parser_empty",
+          "value": "unknown"
+        },
+        {
+          "key": "parser_confidence",
+          "source": "parser.confidence",
+          "value": 0.0
+        },
+        {
+          "key": "empty_parse",
+          "source": "parser.empty_parse|atsFriendliness.fallback",
+          "value": true
+        }
+      ]
+    },
+    {
+      "case_id": "P20-missing-job-01",
+      "confidence_notes": [
+        "missing_target_job"
+      ],
+      "entries": [
+        {
+          "key": "target_role",
+          "source": "target_job.role",
+          "value": null
+        },
+        {
+          "key": "language",
+          "source": "language_normalization.output",
+          "value": "EN"
+        },
+        {
+          "key": "jobfit_score",
+          "source": "jobFitAlignment.score",
+          "value": null
+        },
+        {
+          "key": "jobfit_band",
+          "source": "jobFitAlignment.score",
+          "value": "unknown"
+        },
+        {
+          "key": "matched_skills",
+          "source": "jobFitAlignment.matchedSkills",
+          "value": [
+            "python"
+          ]
+        },
+        {
+          "key": "missing_skills",
+          "source": "jobFitAlignment.missingSkills",
+          "value": []
+        },
+        {
+          "key": "ats_score",
+          "source": "atsFriendliness.score",
+          "value": 84
+        },
+        {
+          "key": "ats_issues",
+          "source": "atsFriendliness.detectedIssues",
+          "value": []
+        },
+        {
+          "key": "experience_match",
+          "source": "missing_target_job",
+          "value": "unknown"
+        },
+        {
+          "key": "parser_confidence",
+          "source": "parser.confidence",
+          "value": 0.88
+        },
+        {
+          "key": "empty_parse",
+          "source": "parser.empty_parse|atsFriendliness.fallback",
+          "value": false
+        }
+      ]
+    },
+    {
+      "case_id": "P20-unknown-language-01",
+      "confidence_notes": [
+        "unsupported_or_unknown_language",
+        "low_jobfit_alignment"
+      ],
+      "entries": [
+        {
+          "key": "target_role",
+          "source": "target_job.role",
+          "value": "Security Analyst"
+        },
+        {
+          "key": "language",
+          "source": "language_normalization.output",
+          "value": "UNKNOWN"
+        },
+        {
+          "key": "jobfit_score",
+          "source": "jobFitAlignment.score",
+          "value": 5
+        },
+        {
+          "key": "jobfit_band",
+          "source": "jobFitAlignment.score",
+          "value": "low"
+        },
+        {
+          "key": "matched_skills",
+          "source": "jobFitAlignment.matchedSkills",
+          "value": []
+        },
+        {
+          "key": "missing_skills",
+          "source": "jobFitAlignment.missingSkills",
+          "value": [
+            "cve analysis",
+            "cyber kill chain",
+            "edr"
+          ]
+        },
+        {
+          "key": "ats_score",
+          "source": "atsFriendliness.score",
+          "value": 70
+        },
+        {
+          "key": "ats_issues",
+          "source": "atsFriendliness.detectedIssues",
+          "value": [
+            "metric_evidence_issue"
+          ]
+        },
+        {
+          "key": "experience_match",
+          "source": "unknown_language",
+          "value": "unknown"
+        },
+        {
+          "key": "parser_confidence",
+          "source": "parser.confidence",
+          "value": 0.72
+        },
+        {
+          "key": "empty_parse",
+          "source": "parser.empty_parse|atsFriendliness.fallback",
+          "value": false
+        }
+      ]
+    },
+    {
+      "case_id": "P20-low-confidence-sparse-01",
+      "confidence_notes": [
+        "low_parser_confidence",
+        "low_jobfit_alignment"
+      ],
+      "entries": [
+        {
+          "key": "target_role",
+          "source": "target_job.role",
+          "value": "Software Engineer"
+        },
+        {
+          "key": "language",
+          "source": "language_normalization.output",
+          "value": "EN"
+        },
+        {
+          "key": "jobfit_score",
+          "source": "jobFitAlignment.score",
+          "value": 42
+        },
+        {
+          "key": "jobfit_band",
+          "source": "jobFitAlignment.score",
+          "value": "low"
+        },
+        {
+          "key": "matched_skills",
+          "source": "jobFitAlignment.matchedSkills",
+          "value": []
+        },
+        {
+          "key": "missing_skills",
+          "source": "jobFitAlignment.missingSkills",
+          "value": [
+            "testing"
+          ]
+        },
+        {
+          "key": "ats_score",
+          "source": "atsFriendliness.score",
+          "value": 58
+        },
+        {
+          "key": "ats_issues",
+          "source": "atsFriendliness.detectedIssues",
+          "value": [
+            "section_completeness_issue"
+          ]
+        },
+        {
+          "key": "experience_match",
+          "source": "sparse_evidence",
+          "value": "unknown"
+        },
+        {
+          "key": "parser_confidence",
+          "source": "parser.confidence",
+          "value": 0.45
+        },
+        {
+          "key": "empty_parse",
+          "source": "parser.empty_parse|atsFriendliness.fallback",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "export_examples": [
+    {
+      "caseId": "P20-en-high-fit-01",
+      "model": {
+        "name": "phase_20_overall_impression_signals",
+        "version": "overall-impression-signals-v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [],
+        "evidenceKeys": [
+          "language",
+          "target_role",
+          "jobfit_band",
+          "matched_skills",
+          "missing_skills",
+          "ats_issues",
+          "parser_confidence"
+        ],
+        "score": 83,
+        "summary": "CV shows strong alignment for Data Scientist based on deep learning, machine learning, python; review artificial intelligence, computer vision, data engineering and note ATS formatting risk.",
+        "templateId": "en_high_evidence_template_v1"
+      }
+    },
+    {
+      "caseId": "P20-id-medium-fit-01",
+      "model": {
+        "name": "phase_20_overall_impression_signals",
+        "version": "overall-impression-signals-v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [],
+        "evidenceKeys": [
+          "language",
+          "target_role",
+          "jobfit_band",
+          "matched_skills",
+          "missing_skills",
+          "ats_issues",
+          "parser_confidence"
+        ],
+        "score": 81,
+        "summary": "CV menunjukkan keselarasan sebagian untuk Backend Developer dengan bukti pada apis, python; perkuat bukti kebutuhan yang tersisa.",
+        "templateId": "id_medium_evidence_template_v1"
+      }
+    },
+    {
+      "caseId": "P20-empty-parse-01",
+      "model": {
+        "name": "phase_20_overall_impression_signals",
+        "version": "overall-impression-signals-v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "low_parser_confidence",
+          "sparse_skill_evidence",
+          "ats_safe_fallback_used"
+        ],
+        "evidenceKeys": [
+          "language",
+          "target_role",
+          "jobfit_band",
+          "matched_skills",
+          "missing_skills",
+          "ats_issues",
+          "parser_confidence"
+        ],
+        "score": 0,
+        "summary": "CV hanya bisa ditinjau dengan bukti terbatas; hasil parse CV kosong atau tidak cukup terbaca.",
+        "templateId": "id_empty_parse_fallback_v1"
+      }
+    },
+    {
+      "caseId": "P20-missing-job-01",
+      "model": {
+        "name": "phase_20_overall_impression_signals",
+        "version": "overall-impression-signals-v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "missing_target_job"
+        ],
+        "evidenceKeys": [
+          "language",
+          "target_role",
+          "jobfit_band",
+          "matched_skills",
+          "missing_skills",
+          "ats_issues",
+          "parser_confidence"
+        ],
+        "score": 9,
+        "summary": "CV can be reviewed only with limited evidence; target job is missing.",
+        "templateId": "en_missing_target_job_fallback_v1"
+      }
+    },
+    {
+      "caseId": "P20-unknown-language-01",
+      "model": {
+        "name": "phase_20_overall_impression_signals",
+        "version": "overall-impression-signals-v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "unsupported_or_unknown_language",
+          "low_jobfit_alignment"
+        ],
+        "evidenceKeys": [
+          "language",
+          "target_role",
+          "jobfit_band",
+          "matched_skills",
+          "missing_skills",
+          "ats_issues",
+          "parser_confidence"
+        ],
+        "score": 18,
+        "summary": "CV can be reviewed only with limited evidence; language is unknown, so English safe fallback is used.",
+        "templateId": "en_unknown_language_fallback_v1"
+      }
+    },
+    {
+      "caseId": "P20-low-confidence-sparse-01",
+      "model": {
+        "name": "phase_20_overall_impression_signals",
+        "version": "overall-impression-signals-v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "low_parser_confidence",
+          "low_jobfit_alignment"
+        ],
+        "evidenceKeys": [
+          "language",
+          "target_role",
+          "jobfit_band",
+          "matched_skills",
+          "missing_skills",
+          "ats_issues",
+          "parser_confidence"
+        ],
+        "score": 31,
+        "summary": "CV can be reviewed only with limited evidence; evidence is sparse or parser confidence is low.",
+        "templateId": "en_low_confidence_fallback_v1"
+      }
+    }
+  ],
+  "fallback_examples": [
+    {
+      "case_id": "P20-empty-parse-01",
+      "confidence_notes": [
+        "low_parser_confidence",
+        "sparse_skill_evidence",
+        "ats_safe_fallback_used"
+      ],
+      "summary": "CV hanya bisa ditinjau dengan bukti terbatas; hasil parse CV kosong atau tidak cukup terbaca.",
+      "template_id": "id_empty_parse_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-missing-job-01",
+      "confidence_notes": [
+        "missing_target_job"
+      ],
+      "summary": "CV can be reviewed only with limited evidence; target job is missing.",
+      "template_id": "en_missing_target_job_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-unknown-language-01",
+      "confidence_notes": [
+        "unsupported_or_unknown_language",
+        "low_jobfit_alignment"
+      ],
+      "summary": "CV can be reviewed only with limited evidence; language is unknown, so English safe fallback is used.",
+      "template_id": "en_unknown_language_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-low-confidence-sparse-01",
+      "confidence_notes": [
+        "low_parser_confidence",
+        "low_jobfit_alignment"
+      ],
+      "summary": "CV can be reviewed only with limited evidence; evidence is sparse or parser confidence is low.",
+      "template_id": "en_low_confidence_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    }
+  ],
+  "generated_at": "2026-06-02T05:51:46.731681+00:00",
+  "negative_rejections": [
+    {
+      "case_id": "P20-en-high-fit-01",
+      "errors": [
+        {
+          "reason": "hiring_outcome_claim"
+        },
+        {
+          "reason": "hallucinated_skill",
+          "value": "kubernetes"
+        }
+      ]
+    },
+    {
+      "case_id": "P20-id-medium-fit-01",
+      "errors": [
+        {
+          "reason": "unsupported_seniority"
+        }
+      ]
+    }
+  ],
+  "phase_id": "phase_20_overall_impression_signals",
+  "schema_version": "overall-impression-signals-v1",
+  "source_reports": [
+    "reports/phase_18_model_output_contract_examples.json",
+    "reports/phase_19_ats_scorer_metrics.json",
+    "reports/phase_19_issue_errors_fallbacks.json",
+    "reports/phase_19_5_clean_skill_signal_examples.json"
+  ],
+  "status": "complete",
+  "summary_examples": [
+    {
+      "case_id": "P20-en-high-fit-01",
+      "confidence_notes": [],
+      "summary": "CV shows strong alignment for Data Scientist based on deep learning, machine learning, python; review artificial intelligence, computer vision, data engineering and note ATS formatting risk.",
+      "template_id": "en_high_evidence_template_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-id-medium-fit-01",
+      "confidence_notes": [],
+      "summary": "CV menunjukkan keselarasan sebagian untuk Backend Developer dengan bukti pada apis, python; perkuat bukti kebutuhan yang tersisa.",
+      "template_id": "id_medium_evidence_template_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-empty-parse-01",
+      "confidence_notes": [
+        "low_parser_confidence",
+        "sparse_skill_evidence",
+        "ats_safe_fallback_used"
+      ],
+      "summary": "CV hanya bisa ditinjau dengan bukti terbatas; hasil parse CV kosong atau tidak cukup terbaca.",
+      "template_id": "id_empty_parse_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-missing-job-01",
+      "confidence_notes": [
+        "missing_target_job"
+      ],
+      "summary": "CV can be reviewed only with limited evidence; target job is missing.",
+      "template_id": "en_missing_target_job_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-unknown-language-01",
+      "confidence_notes": [
+        "unsupported_or_unknown_language",
+        "low_jobfit_alignment"
+      ],
+      "summary": "CV can be reviewed only with limited evidence; language is unknown, so English safe fallback is used.",
+      "template_id": "en_unknown_language_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    },
+    {
+      "case_id": "P20-low-confidence-sparse-01",
+      "confidence_notes": [
+        "low_parser_confidence",
+        "low_jobfit_alignment"
+      ],
+      "summary": "CV can be reviewed only with limited evidence; evidence is sparse or parser confidence is low.",
+      "template_id": "en_low_confidence_fallback_v1",
+      "used_evidence_keys": [
+        "language",
+        "target_role",
+        "jobfit_band",
+        "matched_skills",
+        "missing_skills",
+        "ats_issues",
+        "parser_confidence"
+      ]
+    }
+  ],
+  "validation_results": [
+    {
+      "case_id": "P20-en-high-fit-01",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "case_id": "P20-id-medium-fit-01",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "case_id": "P20-empty-parse-01",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "case_id": "P20-missing-job-01",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "case_id": "P20-unknown-language-01",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "case_id": "P20-low-confidence-sparse-01",
+      "errors": [],
+      "passed": true
+    }
+  ]
+}

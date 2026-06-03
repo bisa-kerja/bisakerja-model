@@ -1,0 +1,128 @@
+{
+  "generated_at": "2026-06-03T01:45:40.727565+00:00",
+  "model_core_inputs_to_wrapper": {
+    "candidateRerankingCoreOutput": {
+      "candidate_ids_source": "backend-provided jobCandidates only",
+      "required": [
+        "candidateSetId",
+        "language",
+        "recommendations",
+        "model",
+        "rankedAt"
+      ]
+    },
+    "cvAnalysisCoreOutput": {
+      "required": [
+        "schemaVersion",
+        "requestId",
+        "language",
+        "jobFitAlignment",
+        "atsFriendliness",
+        "overallImpression",
+        "model",
+        "analyzedAt"
+      ],
+      "source_fixture": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json"
+    },
+    "sanitizedBackendContext": {
+      "allowed": [
+        "requestId",
+        "language",
+        "jobRoles",
+        "compareSource",
+        "inputMode",
+        "detectedCvSectionNames",
+        "candidateJobMetadataForHydration"
+      ],
+      "forbidden": [
+        "raw full CV text unless retention policy allows it",
+        "passwords",
+        "tokens",
+        "OTP values",
+        "service credentials",
+        "unrelated personal data"
+      ]
+    }
+  },
+  "openapi_wrapper_constraints": {
+    "generatedCv": {
+      "current_contract": "available=false unless implemented outside training",
+      "owner": "api-wrapper-or-separate-feature"
+    },
+    "jobRecommendations": {
+      "maxItems": 5,
+      "owner": "backend-hydration-plus-api-wrapper-copy"
+    },
+    "language_enum": [
+      "id",
+      "en"
+    ],
+    "sectionReviews": {
+      "owner": "api-wrapper-genai-secondary",
+      "required": [
+        "sectionName",
+        "analysis",
+        "actionPoints",
+        "whyItsImportantForYou"
+      ]
+    },
+    "topActionables": {
+      "maxItems": 3,
+      "minItems": 1,
+      "owner": "api-wrapper-genai-secondary"
+    }
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "purpose": "Define GenAI as a secondary API-wrapper feature fed by deterministic model-core outputs, never by training cells.",
+  "schema_version": "phase-25-training-only-genai-boundary-v1",
+  "source_context": {
+    "artifact_manifest": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      "sha256": "3a04ea81684c3d0214e5c05e5c2f3e098401f91f3e26a9446ff98b6f8531cd9e"
+    },
+    "gap_model_training": {
+      "path": "GAP_MODEL_TRAINING.md",
+      "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67"
+    },
+    "model_api_handoff_fixtures": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7"
+    },
+    "model_card": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      "sha256": "30275a5e40db8c984cb90993bd0106a12474c7997a925af4395caa05d28f595c"
+    },
+    "openapi": {
+      "path": "references/docs/generated/openapi.json",
+      "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+    },
+    "requirement": {
+      "path": "REQUIREMENT.md",
+      "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723"
+    }
+  },
+  "training_policy": {
+    "deterministic_placeholders_allowed": true,
+    "external_genai_calls_allowed_in_notebook": false,
+    "genai_is_training_signal": false,
+    "genai_used_for_labels_or_features": false,
+    "model_scores_and_candidate_ids_mutable_by_wrapper": false
+  },
+  "wrapper_guardrails": [
+    "Validate wrapper output against cv-analysis-v2 before persistence or user response.",
+    "Do not invent skills, jobs, companies, seniority, salary, hiring outcomes, credentials, or protected-class claims.",
+    "Do not alter model-core scores, model version, candidate membership, or evidence keys.",
+    "Keep output language in AnalyzeCvMultipartRequest enum: id/en.",
+    "Return safe fallback prose when GenAI is unavailable; never fail the trained model artifact because GenAI is unavailable."
+  ],
+  "wrapper_outputs": {
+    "atsFriendliness.summary": "Wrapper may summarize detectedIssues/evidence without changing score.",
+    "generatedCv": "Separate feature; training sets no generated CV content.",
+    "jobFitAlignment.summary": "Wrapper may turn summarySignals/missingSkills into product-safe prose without changing score.",
+    "jobRecommendations[].nextStep": "Wrapper-owned next step based on missingSkills/rankingSignals.",
+    "jobRecommendations[].reason": "Wrapper-owned prose based on candidate score/signals and backend-hydrated job metadata.",
+    "overallImpression": "Wrapper may rephrase deterministic placeholder summary into public cv-analysis-v2 string.",
+    "sectionReviews": "Wrapper-owned dynamic section reviews for detected sections only.",
+    "topActionables": "Wrapper-owned 1-3 actionables grounded only in model-core evidence and sanitized backend context."
+  }
+}

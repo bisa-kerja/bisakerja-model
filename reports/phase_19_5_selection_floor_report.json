@@ -1,0 +1,94 @@
+{
+  "best_baseline_test_metrics": {
+    "high_fit_recall": 1.0,
+    "mae": 2.0859574368596565,
+    "predicted_high_count": 90,
+    "r2": 0.9852143749128633,
+    "rmse": 3.544579468895612,
+    "row_count": 540,
+    "score_band_agreement": 1.0,
+    "spearman": 0.9914306524892219,
+    "true_high_count": 90
+  },
+  "best_baseline_validation_metrics": {
+    "high_fit_recall": 1.0,
+    "mae": 1.8773080189459552,
+    "predicted_high_count": 90,
+    "r2": 0.9875636246372769,
+    "rmse": 3.30308045090818,
+    "row_count": 540,
+    "score_band_agreement": 0.9925925925925926,
+    "spearman": 0.9930144152673331,
+    "true_high_count": 90
+  },
+  "checks": {
+    "test_high_fit_recall_preserved": true,
+    "test_mae_within_floor": true,
+    "test_r2_positive": true,
+    "test_score_band_preserved": false,
+    "test_score_band_threshold": true,
+    "test_spearman_threshold": true,
+    "validation_high_fit_recall_preserved": true,
+    "validation_mae_within_floor": true,
+    "validation_r2_positive": true,
+    "validation_score_band_preserved": false,
+    "validation_score_band_threshold": true,
+    "validation_spearman_threshold": true
+  },
+  "generated_at": "2026-06-02T05:18:16.616549+00:00",
+  "phase_id": "phase_19_5_jobfit_blocker_remediation",
+  "prototype_only_tradeoff_documented": true,
+  "required_floor": {
+    "must_preserve_or_improve_high_fit_recall": true,
+    "must_preserve_or_improve_score_band_agreement": true,
+    "r2_must_be_positive_on_validation_and_test": true,
+    "required_mae_improvement_fraction": 0.2,
+    "test_mae_must_be_at_most": 1.6687659494877254,
+    "validation_mae_must_be_at_most": 1.5018464151567643
+  },
+  "schema_version": "jobfit-blocker-remediation-v1",
+  "selected_model": "high_recall_calibrated_scorer",
+  "selected_summary_row": {
+    "high_fit_recall_preserved": true,
+    "model": "high_recall_calibrated_scorer",
+    "passes_phase17_floor": true,
+    "score_band_preserved": false,
+    "test_high_fit_recall": 1.0,
+    "test_mae": 1.2134453410559114,
+    "test_r2": 0.9888024700016572,
+    "test_score_band_agreement": 0.9777777777777777,
+    "test_spearman": 0.9941647476914681,
+    "validation_high_fit_recall": 1.0,
+    "validation_mae": 1.2127512022719138,
+    "validation_r2": 0.9840818513078482,
+    "validation_score_band_agreement": 0.9796296296296296,
+    "validation_spearman": 0.9942644428226389
+  },
+  "selected_test_metrics": {
+    "high_fit_recall": 1.0,
+    "mae": 1.2134453410559114,
+    "predicted_high_count": 101,
+    "r2": 0.9888024700016572,
+    "rmse": 3.0846506825968403,
+    "row_count": 540,
+    "score_band_agreement": 0.9777777777777777,
+    "spearman": 0.9941647476914681,
+    "true_high_count": 90
+  },
+  "selected_validation_metrics": {
+    "high_fit_recall": 1.0,
+    "mae": 1.2127512022719138,
+    "predicted_high_count": 99,
+    "r2": 0.9840818513078482,
+    "rmse": 3.736960603319374,
+    "row_count": 540,
+    "score_band_agreement": 0.9796296296296296,
+    "spearman": 0.9942644428226389,
+    "true_high_count": 90
+  },
+  "status": "passed_with_prototype_tradeoff",
+  "strict_selection_passed": false,
+  "tradeoff_notes": [
+    "Prototype-only trade-off: selected model preserves high-fit recall and passes MAE/R2/Spearman/release band thresholds, but score-band agreement does not preserve the Phase 17 best-baseline ceiling."
+  ]
+}

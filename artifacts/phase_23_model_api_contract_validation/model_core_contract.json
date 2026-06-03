@@ -1,0 +1,121 @@
+{
+  "candidateRerankingRequest": {
+    "candidateRequired": [
+      "jobId",
+      "roleTitle",
+      "requirements",
+      "skills"
+    ],
+    "maxCandidates": 25,
+    "required": [
+      "requestId",
+      "candidateSetId",
+      "language",
+      "profile",
+      "jobCandidates"
+    ]
+  },
+  "candidateRerankingResponse": {
+    "forbiddenFields": [
+      "availability",
+      "companyName",
+      "generatedCv",
+      "hydratedJob",
+      "nextStep",
+      "reason",
+      "sectionReviews",
+      "title",
+      "topActionables",
+      "visibility"
+    ],
+    "maxRecommendations": 5,
+    "required": [
+      "requestId",
+      "schemaVersion",
+      "recommendations",
+      "model",
+      "rankedAt"
+    ],
+    "schemaVersion": "model-core-candidate-reranking-v1"
+  },
+  "cvAnalysisRequest": {
+    "cv": [
+      "fileId",
+      "mimeType",
+      "sizeBytes",
+      "parser"
+    ],
+    "language": [
+      "EN",
+      "ID"
+    ],
+    "maxJobRoles": 10,
+    "required": [
+      "requestId",
+      "inputVersion",
+      "language",
+      "jobRoles",
+      "cv"
+    ]
+  },
+  "cvAnalysisResponse": {
+    "forbiddenFields": [
+      "availability",
+      "companyName",
+      "generatedCv",
+      "hydratedJob",
+      "nextStep",
+      "reason",
+      "sectionReviews",
+      "title",
+      "topActionables",
+      "visibility"
+    ],
+    "required": [
+      "requestId",
+      "schemaVersion",
+      "jobFitAlignment",
+      "atsFriendliness",
+      "overallImpression",
+      "model",
+      "analyzedAt"
+    ],
+    "schemaVersion": "model-core-cv-analysis-v1",
+    "scoreFields": [
+      "jobFitAlignment.score",
+      "atsFriendliness.score",
+      "overallImpression.score"
+    ]
+  },
+  "mappingPolicy": {
+    "backendOwned": [
+      "availability",
+      "companyName",
+      "generatedCv",
+      "hydratedJob",
+      "nextStep",
+      "reason",
+      "sectionReviews",
+      "title",
+      "topActionables",
+      "visibility"
+    ],
+    "backendSchemaVersion": "cv-analysis-v2",
+    "languageMapping": {
+      "EN": "en",
+      "ID": "id"
+    },
+    "modelOwned": [
+      "atsFriendliness",
+      "jobFitAlignment",
+      "overallImpression",
+      "recommendations"
+    ]
+  },
+  "schemaVersion": "model-api-contract-validation-v1",
+  "sources": {
+    "cvAnalyzerDoc": "references/docs/modules/ai-cv-analyzer.md",
+    "openapi": "references/docs/generated/openapi.json",
+    "phase22ModelCoreSchema": "artifacts/phase_22_calibration_model_card_export/model_core_schema.json"
+  }
+}

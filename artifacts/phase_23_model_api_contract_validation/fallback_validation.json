@@ -1,0 +1,55 @@
+[
+  {
+    "checks": {
+      "does_not_expose_raw_internals": true,
+      "has_expected_action": true,
+      "not_persisted": true
+    },
+    "expectedAction": "backend_returns_retryable_error_or_safe_processing_message",
+    "name": "timeout",
+    "passed": true
+  },
+  {
+    "checks": {
+      "does_not_expose_raw_internals": true,
+      "has_expected_action": true,
+      "not_persisted": true
+    },
+    "expectedAction": "backend_returns_service_unavailable_without_partial_scores",
+    "name": "model_unavailable",
+    "passed": true
+  },
+  {
+    "checks": {
+      "does_not_expose_raw_internals": true,
+      "hard_validator_rejects": true,
+      "has_expected_action": true,
+      "not_persisted": true
+    },
+    "expectedAction": "reject_before_persistence_or_user_response",
+    "name": "invalid_model_output",
+    "passed": true
+  },
+  {
+    "checks": {
+      "does_not_expose_raw_internals": true,
+      "empty_parse_detected": true,
+      "has_expected_action": true,
+      "safe_to_persist_fallback": true
+    },
+    "expectedAction": "return_safe_empty_parse_fallback_with_no_skill_claims",
+    "name": "empty_cv_parse",
+    "passed": true
+  },
+  {
+    "checks": {
+      "confidence_note_present": true,
+      "does_not_expose_raw_internals": true,
+      "has_expected_action": true,
+      "safe_to_persist_bounded_output": true
+    },
+    "expectedAction": "allow_bounded_low_confidence_output_with_visible_confidence_note",
+    "name": "low_confidence",
+    "passed": true
+  }
+]

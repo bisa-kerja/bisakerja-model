@@ -1,0 +1,23 @@
+{
+  "evaluation_only": true,
+  "generated_at": "2026-06-02T05:17:58.332366+00:00",
+  "label_path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+  "metrics": {
+    "high_fit_recall": 1.0,
+    "mae": 2.333766971736375,
+    "predicted_high_count": 46,
+    "r2": 0.9680715430661315,
+    "rmse": 5.661687413900514,
+    "row_count": 120,
+    "score_band_agreement": 0.95,
+    "spearman": 0.9835515608692094,
+    "true_high_count": 40
+  },
+  "phase_id": "phase_18_jobfit_training_v2",
+  "review_item_count": 120,
+  "review_queue_path": "artifacts/manual_validation/phase_16_review_queue.csv",
+  "row_count": 120,
+  "schema_version": "jobfit-training-v2",
+  "selected_model": "high_recall_calibrated_scorer",
+  "status": "complete"
+}

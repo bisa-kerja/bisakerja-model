@@ -1,0 +1,10 @@
+{
+  "baseline": "baseline_feature_regression",
+  "false_high_definition": "prediction >= 70 and target < 40",
+  "false_high_examples": [],
+  "false_low_definition": "prediction < 40 and target >= 70",
+  "false_low_examples": [],
+  "generated_at": "2026-06-02T04:48:49.544872+00:00",
+  "phase_id": "phase_17_baseline_evaluation_v2",
+  "schema_version": "baseline-evaluation-v2"
+}

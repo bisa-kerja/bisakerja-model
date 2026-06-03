@@ -1,0 +1,188 @@
+{
+  "blocked_use": [
+    "Production hiring decision automation",
+    "User-facing production score claims without calibration evidence",
+    "Backend-owned hydration or OpenAI wrapper copy generation",
+    "Automated rejection, hiring eligibility, salary prediction, or protected-class inference."
+  ],
+  "dataset_hash": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+  "dataset_path": "artifacts/pairs_v2.parquet",
+  "feature_config": {
+    "candidate_reranking": {
+      "max_recommendations": 5,
+      "requires_backend_job_candidates": true,
+      "static_job_index_allowed": false
+    },
+    "embedding_model": "intfloat/e5-base-v2",
+    "embedding_prefixes": {
+      "job": "passage:",
+      "profile_cv": "query:"
+    },
+    "normalized_features": [
+      "skill_overlap",
+      "requirement_coverage",
+      "role_match",
+      "experience_match",
+      "experience_gap_years",
+      "language",
+      "role_family",
+      "experience_band"
+    ],
+    "schema_version": "feature-config-v1",
+    "score_outputs": [
+      "jobFitAlignment.score",
+      "atsFriendliness.score",
+      "recommendations[].matchScore"
+    ],
+    "split_seed": 202621
+  },
+  "git_commit": "8355d24bc49bb91bb24ee8320cf0b4fffb76219c",
+  "git_dirty_at_export": true,
+  "intended_use": "Model-core CV analysis scoring, ATS evidence scoring, overall impression evidence, and backend-provided candidate reranking.",
+  "label_version": "human-validation-v1",
+  "limitations": [
+    "ID and MIXED language slices remain smaller than EN and need more validation labels.",
+    "Recommendation calibration uses backend-like fixture labels until larger production relevance labels are available.",
+    "Scores are model-core evidence signals, not hiring outcomes or eligibility claims."
+  ],
+  "metrics": {
+    "ats": {
+      "bucket_agreement": 1.0,
+      "macro_issue_precision": 1.0,
+      "macro_issue_recall": 1.0,
+      "per_issue": {
+        "contact_detection_issue": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "date_detection_issue": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "empty_parse_risk": {
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "formatting_risk_issue": {
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 9
+        },
+        "metric_evidence_issue": {
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 6
+        },
+        "parseability_issue": {
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "section_completeness_issue": {
+          "fn": 0,
+          "fp": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "unsupported_file_type": {
+          "fn": 0,
+          "fp": 0,
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        }
+      },
+      "score_max": 100,
+      "score_min": 35
+    },
+    "calibration": {
+      "atsFriendliness.score": {
+        "bucket_agreement": 0.9,
+        "ece_points": 4.2,
+        "mae": 4.2,
+        "mce_points": 16.0,
+        "passed": true,
+        "row_count": 10,
+        "within_10_points_rate": 0.9
+      },
+      "jobFitAlignment.score": {
+        "bucket_agreement": 0.915,
+        "ece_points": 0.4595,
+        "mae": 2.2225,
+        "mce_points": 13.8064,
+        "passed": true,
+        "row_count": 200,
+        "within_10_points_rate": 0.92
+      },
+      "recommendations[].matchScore": {
+        "bucket_agreement": 1.0,
+        "ece_points": 3.0667,
+        "mae": 3.4667,
+        "mce_points": 8.5,
+        "passed": true,
+        "row_count": 15,
+        "within_10_points_rate": 0.9333
+      }
+    },
+    "jobfit_selected_model": {
+      "test": {
+        "high_fit_recall": 1.0,
+        "mae": 1.2134453410559114,
+        "predicted_high_count": 101,
+        "r2": 0.9888024700016572,
+        "rmse": 3.0846506825968403,
+        "row_count": 540,
+        "score_band_agreement": 0.9777777777777777,
+        "spearman": 0.9941647476914681,
+        "true_high_count": 90
+      },
+      "train": {
+        "high_fit_recall": 1.0,
+        "mae": 0.9123722731155846,
+        "predicted_high_count": 453,
+        "r2": 0.9927678418608983,
+        "rmse": 2.4830223217833773,
+        "row_count": 2520,
+        "score_band_agreement": 0.9865079365079366,
+        "spearman": 0.9947905569849019,
+        "true_high_count": 420
+      },
+      "validation": {
+        "high_fit_recall": 1.0,
+        "mae": 1.2127512022719138,
+        "predicted_high_count": 99,
+        "r2": 0.9840818513078482,
+        "rmse": 3.736960603319374,
+        "row_count": 540,
+        "score_band_agreement": 0.9796296296296296,
+        "spearman": 0.9942644428226389,
+        "true_high_count": 90
+      }
+    },
+    "recommendations": {
+      "map_at_10": 1.0,
+      "ndcg_at_10": 1.0,
+      "ndcg_at_5": 1.0
+    }
+  },
+  "model_name": "bisakerja-model-core-v2",
+  "model_version": "phase-22-export-v1",
+  "schema_version": "model-card-v2",
+  "split_seed": 202621
+}

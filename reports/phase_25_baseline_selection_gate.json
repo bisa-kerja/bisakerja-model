@@ -1,0 +1,381 @@
+{
+  "artifacts": {
+    "phase17_floor": {
+      "path": "reports/phase_17_model_improvement_floor.json",
+      "sha256": "32ff56fb5d2a65658fff254fd97036bd0088e384f3253e221e593fcbeecf1aff"
+    },
+    "phase18_report": {
+      "path": "reports/phase_18_jobfit_training_v2.json",
+      "sha256": "d8c287e0c6b7df4847174c88d5893ce6a6998fa990713d808381f97ad9bb7358"
+    },
+    "phase25_tensorboard": {
+      "path": "reports/phase_25_tensorboard_monitoring.json",
+      "sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
+    },
+    "phase25_training": {
+      "path": "reports/phase_25_training_evaluation_loop.json",
+      "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523"
+    },
+    "selection_artifact": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
+      "sha256": "7300bfd678da09116c17f98c71fe4e9be83ea19047ab54d339dccd6966088537"
+    }
+  },
+  "comparability_warnings": [],
+  "comparison_rows": [
+    {
+      "ref_band_agreement": 0.99259259,
+      "ref_high_fit_recall": 1.0,
+      "ref_mae_0_100": 1.87730802,
+      "reference": "phase17_best_baseline",
+      "reference_model": "baseline_feature_regression",
+      "split": "validation",
+      "tf_band_agreement": 0.98888889,
+      "tf_high_fit_recall": 1.0,
+      "tf_mae_0_100": 0.84428
+    },
+    {
+      "ref_band_agreement": 0.97962963,
+      "ref_high_fit_recall": 1.0,
+      "ref_mae_0_100": 1.2127512,
+      "reference": "phase18_selected_scorer",
+      "reference_model": "high_recall_calibrated_scorer",
+      "split": "validation",
+      "tf_band_agreement": 0.98888889,
+      "tf_high_fit_recall": 1.0,
+      "tf_mae_0_100": 0.84428
+    },
+    {
+      "ref_band_agreement": 1.0,
+      "ref_high_fit_recall": 1.0,
+      "ref_mae_0_100": 2.08595744,
+      "reference": "phase17_best_baseline",
+      "reference_model": "baseline_feature_regression",
+      "split": "test",
+      "tf_band_agreement": 0.99444444,
+      "tf_high_fit_recall": 1.0,
+      "tf_mae_0_100": 0.86032
+    },
+    {
+      "ref_band_agreement": 0.97777778,
+      "ref_high_fit_recall": 1.0,
+      "ref_mae_0_100": 1.21344534,
+      "reference": "phase18_selected_scorer",
+      "reference_model": "high_recall_calibrated_scorer",
+      "split": "test",
+      "tf_band_agreement": 0.99444444,
+      "tf_high_fit_recall": 1.0,
+      "tf_mae_0_100": 0.86032
+    }
+  ],
+  "final_readiness_cap": "production-ready",
+  "generated_at": "2026-06-03T01:45:36.595812+00:00",
+  "models": {
+    "phase17_best_baseline": {
+      "name": "baseline_feature_regression",
+      "schema_version": "baseline-evaluation-v2"
+    },
+    "phase18_selected_scorer": {
+      "name": "high_recall_calibrated_scorer",
+      "schema_version": "jobfit-training-v2"
+    },
+    "tensorflow_candidate": {
+      "api": "Keras Functional API",
+      "custom_components": [
+        "CosineInteractionLayer",
+        "WeightedHuberLoss",
+        "ProductionGateCallback",
+        "HighRecallCalibrationLayer"
+      ],
+      "input_shape": [
+        null,
+        6
+      ],
+      "name": "bisakerja_jobfit_tf_functional_custom_v1",
+      "output_shape": [
+        null,
+        1
+      ],
+      "parameter_count": 11777,
+      "score_scale": {
+        "api": "0-100",
+        "training": "0-1"
+      },
+      "uses_gradient_tape": true,
+      "uses_model_fit": false,
+      "version": "jobfit_tf_phase25_gradient_tape_v1"
+    }
+  },
+  "notes": [
+    "REQUIREMENT.md MAE target passes on normalized 0-1 scale when validation/test MAE <= 0.02.",
+    "Strict production selection enforces Phase 17/18 MAE and high-fit recall plus Phase 18 score-band preservation; Phase 17 score-band is informational because Phase 18 already superseded that baseline.Later final readiness must remain capped at staging-ready while strict selection failures or comparability warnings remain."
+  ],
+  "phase25_metrics": {
+    "test": {
+      "high_fit_recall": 1.0,
+      "mae": 0.0086032,
+      "mae_0_100": 0.86032,
+      "predicted_high_count": 102,
+      "r2": 0.98956618,
+      "row_count": 540,
+      "score_band_agreement": 0.99444444,
+      "spearman": 0.99536524,
+      "true_high_count": 90
+    },
+    "validation": {
+      "high_fit_recall": 1.0,
+      "mae": 0.0084428,
+      "mae_0_100": 0.84428,
+      "predicted_high_count": 100,
+      "r2": 0.98737391,
+      "row_count": 540,
+      "score_band_agreement": 0.98888889,
+      "spearman": 0.99548961,
+      "true_high_count": 90
+    }
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "production_selection_passed": true,
+  "prototype_tradeoffs": [],
+  "reference_metrics": {
+    "phase17_best_baseline": {
+      "test": {
+        "high_fit_recall": 1.0,
+        "mae_0_100": 2.08595744,
+        "predicted_high_count": 90,
+        "r2": 0.98521437,
+        "row_count": 540,
+        "score_band_agreement": 1.0,
+        "spearman": 0.99143065,
+        "true_high_count": 90
+      },
+      "validation": {
+        "high_fit_recall": 1.0,
+        "mae_0_100": 1.87730802,
+        "predicted_high_count": 90,
+        "r2": 0.98756362,
+        "row_count": 540,
+        "score_band_agreement": 0.99259259,
+        "spearman": 0.99301442,
+        "true_high_count": 90
+      }
+    },
+    "phase18_selected_scorer": {
+      "test": {
+        "high_fit_recall": 1.0,
+        "mae_0_100": 1.21344534,
+        "predicted_high_count": 101,
+        "r2": 0.98880247,
+        "row_count": 540,
+        "score_band_agreement": 0.97777778,
+        "spearman": 0.99416475,
+        "true_high_count": 90
+      },
+      "validation": {
+        "high_fit_recall": 1.0,
+        "mae_0_100": 1.2127512,
+        "predicted_high_count": 99,
+        "r2": 0.98408185,
+        "row_count": 540,
+        "score_band_agreement": 0.97962963,
+        "spearman": 0.99426444,
+        "true_high_count": 90
+      }
+    }
+  },
+  "schema_version": "phase-25-baseline-selection-gate-v1",
+  "selection_decision": "select_for_production_export",
+  "selection_failures": [],
+  "status": "complete",
+  "strict_gate_checks": [
+    {
+      "actual": 0.0084428,
+      "check": "mae_le_0_02_normalized",
+      "direction": "<=",
+      "reference": "requirement_or_threshold",
+      "required": 0.02,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.84428,
+      "check": "mae_le_2_points_0_100",
+      "direction": "<=",
+      "reference": "requirement_or_threshold",
+      "required": 2.0,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.98737391,
+      "check": "r2_ge_threshold",
+      "direction": ">=",
+      "reference": "requirement_or_threshold",
+      "required": 0.15,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.99548961,
+      "check": "spearman_ge_threshold",
+      "direction": ">=",
+      "reference": "requirement_or_threshold",
+      "required": 0.7,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.84428,
+      "check": "mae_0_100_preserve_or_improve",
+      "direction": "<=",
+      "reference": "phase17_best_baseline",
+      "required": 1.87730802,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 1.0,
+      "check": "high_fit_recall_preserve_or_improve",
+      "direction": ">=",
+      "reference": "phase17_best_baseline",
+      "required": 1.0,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.98888889,
+      "check": "score_band_agreement_informational_superseded_by_phase18",
+      "direction": ">=",
+      "reference": "phase17_best_baseline",
+      "required": 0.99259259,
+      "selection_blocking": false,
+      "split": "validation",
+      "status": "INFO"
+    },
+    {
+      "actual": 0.84428,
+      "check": "mae_0_100_preserve_or_improve",
+      "direction": "<=",
+      "reference": "phase18_selected_scorer",
+      "required": 1.2127512,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 1.0,
+      "check": "high_fit_recall_preserve_or_improve",
+      "direction": ">=",
+      "reference": "phase18_selected_scorer",
+      "required": 1.0,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.98888889,
+      "check": "score_band_agreement_preserve_or_improve",
+      "direction": ">=",
+      "reference": "phase18_selected_scorer",
+      "required": 0.97962963,
+      "split": "validation",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.0086032,
+      "check": "mae_le_0_02_normalized",
+      "direction": "<=",
+      "reference": "requirement_or_threshold",
+      "required": 0.02,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.86032,
+      "check": "mae_le_2_points_0_100",
+      "direction": "<=",
+      "reference": "requirement_or_threshold",
+      "required": 2.0,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.98956618,
+      "check": "r2_ge_threshold",
+      "direction": ">=",
+      "reference": "requirement_or_threshold",
+      "required": 0.15,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.99536524,
+      "check": "spearman_ge_threshold",
+      "direction": ">=",
+      "reference": "requirement_or_threshold",
+      "required": 0.7,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.86032,
+      "check": "mae_0_100_preserve_or_improve",
+      "direction": "<=",
+      "reference": "phase17_best_baseline",
+      "required": 2.08595744,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 1.0,
+      "check": "high_fit_recall_preserve_or_improve",
+      "direction": ">=",
+      "reference": "phase17_best_baseline",
+      "required": 1.0,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.99444444,
+      "check": "score_band_agreement_informational_superseded_by_phase18",
+      "direction": ">=",
+      "reference": "phase17_best_baseline",
+      "required": 1.0,
+      "selection_blocking": false,
+      "split": "test",
+      "status": "INFO"
+    },
+    {
+      "actual": 0.86032,
+      "check": "mae_0_100_preserve_or_improve",
+      "direction": "<=",
+      "reference": "phase18_selected_scorer",
+      "required": 1.21344534,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 1.0,
+      "check": "high_fit_recall_preserve_or_improve",
+      "direction": ">=",
+      "reference": "phase18_selected_scorer",
+      "required": 1.0,
+      "split": "test",
+      "status": "PASS"
+    },
+    {
+      "actual": 0.99444444,
+      "check": "score_band_agreement_preserve_or_improve",
+      "direction": ">=",
+      "reference": "phase18_selected_scorer",
+      "required": 0.97777778,
+      "split": "test",
+      "status": "PASS"
+    }
+  ],
+  "thresholds": {
+    "comparison_rule": "TensorFlow must preserve or improve MAE and high-fit recall versus Phase 17/18; score-band preservation is enforced against the Phase 18 selected scorer, while the superseded Phase 17 band baseline remains informational.",
+    "min_r2": 0.15,
+    "min_spearman": 0.7,
+    "target_mae_0_100": 2.0,
+    "target_mae_normalized": 0.02
+  }
+}

@@ -1,0 +1,243 @@
+{
+  "acceptance": {
+    "output_never_invents_jobs": true,
+    "ranking_metrics_and_constraints_are_defined": true,
+    "recommendation_flow_uses_backend_candidate_sets": true
+  },
+  "blocked_until_later_phases": [
+    "Training promotion requires backend-like candidate sets with relevance labels or approved weak labels.",
+    "Production matchLevel and matchScore semantics require calibration evidence.",
+    "Backend response validator must enforce candidate membership, uniqueness, score range, and max item constraints.",
+    "Wrapper copy for reasons and next steps must remain grounded in rankingSignals, matchedSkills, and missingSkills."
+  ],
+  "constraint_validation": {
+    "acceptance_thresholds": {
+      "duplicate_output_job_id_rate": 0.0,
+      "invalid_score_rate": 0.0,
+      "output_membership_violation_rate": 0.0,
+      "unknown_job_id_rate": 0.0
+    },
+    "hard_fail_checks": [
+      {
+        "check": "candidate_set_required",
+        "failure_action": "Return validation error to backend; do not fallback to static artifact jobs.",
+        "rule": "If rankingPolicy.requireCandidateJobIds is true, jobCandidates must be present before scoring."
+      },
+      {
+        "check": "no_unknown_job_id",
+        "failure_action": "Reject output and log contract violation.",
+        "rule": "set(output.jobId) must be subset of set(input.jobCandidates.jobId)."
+      },
+      {
+        "check": "no_duplicate_job_id",
+        "failure_action": "Reject output or deterministic dedupe before backend response, depending on serving policy.",
+        "rule": "Each output jobId appears at most once."
+      },
+      {
+        "check": "score_range",
+        "failure_action": "Reject invalid row or whole response; do not clamp silently in production.",
+        "rule": "Every matchScore is integer 0-100 and finite before serialization."
+      },
+      {
+        "check": "max_recommendations",
+        "failure_action": "Trim only after sorting if policy allows; otherwise reject.",
+        "rule": "Output count must not exceed rankingPolicy.maxRecommendations or public API cap."
+      }
+    ]
+  },
+  "generated_at_utc": "2026-06-01T10:10:14.564455+00:00",
+  "input_contract": {
+    "contract_id": "candidate-reranking-input-v1",
+    "disallowed_inputs": [
+      "static full job_index ranking output as final recommendations",
+      "inactive job ids not supplied by backend",
+      "backend hydration fields not needed for scoring",
+      "bookmarked/applied flags as ranking features unless explicit product policy approves them",
+      "manual validation labels or target relevance as inference-time features"
+    ],
+    "owner_boundary": {
+      "backend_owns": [
+        "user authentication and authorization",
+        "candidate retrieval from live backend data",
+        "job visibility and availability filtering",
+        "deduplication policy before model call when configured",
+        "job detail hydration after model output"
+      ],
+      "model_owns": [
+        "score supplied candidates only",
+        "rank supplied candidates only",
+        "emit grounded skill and ranking signals from candidate evidence"
+      ]
+    },
+    "required_payload_fields": [
+      {
+        "field": "requestId",
+        "rule": "Required trace id; never used as predictive feature.",
+        "type": "string"
+      },
+      {
+        "field": "inputVersion",
+        "rule": "Must identify candidate reranking input schema version, e.g. job-recommendations-v1.",
+        "type": "string"
+      },
+      {
+        "field": "talentProfile",
+        "rule": "Backend-prepared normalized profile/CV/preference evidence only; no frontend-trusted raw profile object.",
+        "type": "object"
+      },
+      {
+        "field": "rankingPolicy",
+        "rule": "Backend-supplied limits and constraints; model must obey maxRecommendations, requireCandidateJobIds, and deduplicateByJobId.",
+        "type": "object"
+      },
+      {
+        "field": "jobCandidates",
+        "rule": "Required backend candidate set. Empty set returns empty recommendations with model metadata, not static artifact jobs.",
+        "type": "array[object]"
+      }
+    ],
+    "training_dataset_requirements": [
+      "candidate_set_id groups each candidate list for one profile/CV request",
+      "job_id is unique within candidate_set_id",
+      "candidate_relevance_label or weak relevance label exists for evaluation",
+      "split isolation prevents same profile request leaking across train/validation/test",
+      "candidate generation source and timestamp are recorded for stale-candidate diagnostics"
+    ]
+  },
+  "output_contract": {
+    "contract_id": "candidate-reranking-output-v1",
+    "model_owned_fields": [
+      {
+        "field": "jobId",
+        "rule": "Must equal one supplied jobCandidates[].jobId; null is not allowed in model-core reranking output.",
+        "type": "string"
+      },
+      {
+        "field": "matchScore",
+        "range": "0-100",
+        "rule": "Rounded, bounded score from ranking/scoring model; production semantics wait for calibration evidence.",
+        "type": "integer"
+      },
+      {
+        "field": "matchLevel",
+        "range": [
+          "strong",
+          "good",
+          "stretch"
+        ],
+        "rule": "Derived from calibrated score bands after calibration; before calibration use prototype thresholds only in reports.",
+        "type": "enum"
+      },
+      {
+        "field": "matchedSkills",
+        "rule": "Intersection of normalized candidate skills and job required skills; no invented or proficiency-inferred skills.",
+        "type": "array[string]"
+      },
+      {
+        "field": "missingSkills",
+        "rule": "Required job skills absent from normalized candidate evidence; exclude optional skills unless policy marks them required.",
+        "type": "array[string]"
+      },
+      {
+        "field": "rankingSignals",
+        "range": [
+          "skill_overlap",
+          "semantic_similarity",
+          "role_match",
+          "experience_match",
+          "requirement_coverage",
+          "location_preference_match",
+          "work_type_match",
+          "freshness_penalty_applied",
+          "low_evidence_confidence"
+        ],
+        "rule": "Stable explainability keys only; wrapper may convert to prose.",
+        "type": "array[string]"
+      },
+      {
+        "field": "nextSteps",
+        "rule": "Optional model-safe suggestions grounded in missingSkills/rankingSignals; wrapper may own final copy.",
+        "type": "array[string] | optional"
+      }
+    ],
+    "recommendations_shape": {
+      "max_items": "min(rankingPolicy.maxRecommendations, backend public response cap)",
+      "ordering": "descending matchScore with deterministic tie break by input order or stable jobId",
+      "public_cv_response_cap": 5,
+      "type": "array[object]"
+    },
+    "wrapper_owned_fields": [
+      "public reason prose",
+      "single nextStep string for CV Analyzer public response",
+      "job title/company/location/workType/experienceLevel hydration",
+      "isBookmarked",
+      "hasApplied"
+    ]
+  },
+  "ranking_evaluation": {
+    "baselines": [
+      "backend_candidate_order",
+      "skill_overlap_only",
+      "cosine_only",
+      "best_phase_5_or_phase_6_ranking_baseline"
+    ],
+    "current_readiness_decision": {
+      "reason": "Recommendation ranking must wait for backend candidate-set labels or realistic candidate sets.",
+      "status": "design_complete_training_blocked"
+    },
+    "required_metrics": [
+      {
+        "metric": "NDCG@5",
+        "purpose": "Measure top-five ordering quality for public CV Analyzer cap."
+      },
+      {
+        "metric": "NDCG@10",
+        "purpose": "Measure broader candidate ordering before public cap or standalone internal response."
+      },
+      {
+        "metric": "MAP@10",
+        "purpose": "Measure precision of relevant jobs in top ten when relevance is binary or thresholded."
+      },
+      {
+        "metric": "constraint_violation_rates",
+        "purpose": "Prove ranking never invents or duplicates jobs."
+      }
+    ],
+    "slice_analysis": [
+      "target_role_or_role_family",
+      "language",
+      "experience_band",
+      "candidate_set_size_bucket",
+      "work_type",
+      "location_preference_presence",
+      "source_freshness_bucket"
+    ]
+  },
+  "source_references": [
+    "TODOS.md",
+    "GAP_MODEL_TRAINING.md#GAP-06",
+    "references/docs/integrations/model-api.md#Job Recommendation Payload Contract",
+    "references/docs/modules/ai-job-recommendations.md#Current Contract",
+    "references/docs/generated/openapi.json",
+    "reports/phase_05_baseline_evaluation.json",
+    "reports/phase_06_jobfit_training_experiments.json"
+  ],
+  "staleness_boundary": {
+    "backend_remains_owner_of": [
+      "candidate retrieval",
+      "job visibility",
+      "job availability/open/closed status",
+      "source freshness policy",
+      "duplicate source collapse",
+      "company and location display fields",
+      "bookmark/application state",
+      "final job detail hydration"
+    ],
+    "model_must_not_do": [
+      "return jobs outside jobCandidates",
+      "hydrate stale job details from training artifacts",
+      "decide whether inactive/private jobs may be shown",
+      "override backend deduplication or visibility rules"
+    ]
+  }
+}

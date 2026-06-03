@@ -1,0 +1,112 @@
+{
+  "artifacts": [
+    {
+      "owner": "model-core",
+      "path": "artifacts/phase_22_calibration_model_card_export/feature_config.json",
+      "required_for_inference": true,
+      "role": "feature_config",
+      "schema_version": "feature-config-v1",
+      "sha256": "ea2b1db13617d7684b35ff167a068dd3353c4596422fb236a0a78df6d42c2585"
+    },
+    {
+      "owner": "model-core",
+      "path": "artifacts/phase_22_calibration_model_card_export/label_manifest.json",
+      "required_for_inference": true,
+      "role": "label_manifest",
+      "schema_version": "export-label-manifest-v1",
+      "sha256": "56592660cc4f0b7e2c0725067db8541ca076869d4e49e2bbc99cdb97b6bdcc09"
+    },
+    {
+      "owner": "model-core",
+      "path": "artifacts/phase_22_calibration_model_card_export/model_core_schema.json",
+      "required_for_inference": true,
+      "role": "schema",
+      "schema_version": "model-core-export-schema-v1",
+      "sha256": "20ef651b3082cc4f93778555bc0b78f3283a9918d0761aa6f4128c8b9e413991"
+    },
+    {
+      "owner": "model-core",
+      "path": "artifacts/phase_22_calibration_model_card_export/score_calibration.json",
+      "required_for_inference": true,
+      "role": "calibration",
+      "schema_version": "score-calibration-v1",
+      "sha256": "c1e5614b948a015e8944af7590d0092c970c9f2507d6d478a07f7715c785c1ec"
+    },
+    {
+      "owner": "model-core",
+      "path": "artifacts/phase_22_calibration_model_card_export/model_card.json",
+      "required_for_inference": true,
+      "role": "model_card",
+      "schema_version": "model-card-v2",
+      "sha256": "206617fb527e67be022ad8d03ffb8b47c0fd72f538b0deb789c1e936c87c3998"
+    },
+    {
+      "owner": "model-core",
+      "path": "artifacts/models/phase_18_jobfit_training_v2/high_recall_calibrated_scorer.joblib",
+      "required_for_inference": true,
+      "role": "selected_jobfit_model",
+      "schema_version": "joblib-model-artifact",
+      "sha256": "c639b92d1460c4051d5d91cd0e0b2b38d13b1edc91ea4c72778267f919c17324"
+    },
+    {
+      "owner": "training-eval",
+      "path": "reports/phase_19_ats_scorer_metrics.json",
+      "required_for_inference": true,
+      "role": "ats_scorer_evidence",
+      "schema_version": "ats-benchmark-scorer-v1",
+      "sha256": "9fba73b66e04dde2b0a5ba0c3efc18665d3762804f580c591e75f12269161086"
+    },
+    {
+      "owner": "training-eval",
+      "path": "reports/phase_20_overall_impression_signals.json",
+      "required_for_inference": true,
+      "role": "overall_impression_evidence",
+      "schema_version": "overall-impression-signals-v1",
+      "sha256": "15246a64c538043626b42fe85a6d7d1fe525432ab8b9dba94561068275909fb5"
+    },
+    {
+      "owner": "training-eval",
+      "path": "reports/phase_21_backend_candidate_reranking.json",
+      "required_for_inference": true,
+      "role": "candidate_reranking_evidence",
+      "schema_version": "backend-candidate-reranking-v1",
+      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef"
+    },
+    {
+      "owner": "training-only",
+      "path": "artifacts/pairs_v2.parquet",
+      "required_for_inference": false,
+      "role": "training_pair_dataset",
+      "schema_version": "pairs-v2",
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    },
+    {
+      "owner": "training-only",
+      "path": "artifacts/models/phase_18_jobfit_training_v2/prediction_sample.csv",
+      "required_for_inference": false,
+      "role": "prediction_sample",
+      "schema_version": "prediction-sample-v1",
+      "sha256": "8acfeed91df036686c6f58969fa428431c342f31bdc1a3f1402108809e03429f"
+    },
+    {
+      "owner": "training-eval",
+      "path": "reports/phase_18_model_metrics.json",
+      "required_for_inference": false,
+      "role": "jobfit_metrics",
+      "schema_version": "jobfit-training-v2",
+      "sha256": "1b32a8c8e72795cd4bde8ad1fefbca3e6c4ab0124a883199cd3680132a2e3274"
+    },
+    {
+      "owner": "training-eval",
+      "path": "reports/phase_16_label_manifest.json",
+      "required_for_inference": false,
+      "role": "human_label_manifest",
+      "schema_version": "human-validation-v1",
+      "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd"
+    }
+  ],
+  "generated_at": "2026-06-02T06:00:35.448237+00:00",
+  "git_commit": "8355d24bc49bb91bb24ee8320cf0b4fffb76219c",
+  "git_dirty_at_export": true,
+  "schema_version": "artifact-manifest-v1"
+}

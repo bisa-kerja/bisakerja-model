@@ -1,0 +1,288 @@
+{
+  "blocked_use": [
+    "Automated hiring decision, rejection, eligibility, salary, or protected-class inference.",
+    "Production score claims without replacing fixture/weak-label evidence with validated labels.",
+    "Backend-owned persistence, auth, job hydration, or GenAI wrapper output generation."
+  ],
+  "data": {
+    "dataset_manifest": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+      "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3"
+    },
+    "embedding_contract": {
+      "backend": "sentence-transformers",
+      "batch_size": 64,
+      "embedding_dimension": 768,
+      "embedding_model": "intfloat/e5-base-v2",
+      "fallback_policy": "TF-IDF, local-hash, and any fallback backend are forbidden for staging or production evidence.",
+      "job_prefix": "passage:",
+      "normalized_embeddings": true,
+      "production_eligible_e5": true,
+      "profile_prefix": "query:",
+      "sentence_transformers_version": "5.5.1"
+    },
+    "label_manifest": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+      "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6"
+    }
+  },
+  "deployment_contract": {
+    "api_handoff_fixtures": {
+      "core_output_only": true,
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "schema_version": "phase-25-model-api-handoff-fixtures-v1",
+      "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7"
+    },
+    "api_handoff_validation": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      "sha256": "41259486b941a58ec9e7b6ed760a386aa5371edee911732c17340ed5a98836e2",
+      "status": "complete"
+    },
+    "clean_reload_smoke": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
+      "sha256": "d0d0558cb16f3db60c379c11c4d2c33f057c64f6fdd646dd00555113052ef94d"
+    },
+    "core_outputs": [
+      "jobFitAlignment.score",
+      "atsFriendliness.score",
+      "recommendations[].matchScore"
+    ],
+    "final_model_artifact": {
+      "format": ".keras",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+    },
+    "model_artifact_status": "final_keras_export_complete",
+    "model_core_output_boundary": {
+      "backend_wrapper_owns": [
+        "topActionables",
+        "sectionReviews",
+        "generatedCv",
+        "job title/company hydration",
+        "reason/nextStep prose",
+        "auth",
+        "persistence",
+        "CV upload/file validation"
+      ],
+      "language_contract": [
+        "en",
+        "id"
+      ],
+      "training_owns": [
+        "jobFitAlignment.score/signals",
+        "atsFriendliness.score/signals",
+        "overallImpression.score/signals",
+        "candidate recommendation scores/ranks for supplied job IDs"
+      ]
+    },
+    "score_scale": "0-100 JSON-compatible numeric score",
+    "training_only_genai_boundary": {
+      "deterministic_placeholders": "artifacts/phase_25_tensorflow_training_delivery/export/deterministic_summary_signal_placeholders.json",
+      "external_genai_calls_from_training": false,
+      "genai_role": "secondary_api_wrapper_feature",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      "sha256": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06",
+      "wrapper_contract": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json"
+    },
+    "wrapper_owned_fields_excluded": [
+      "topActionables",
+      "sectionReviews",
+      "generated prose",
+      "job title/company hydration",
+      "auth",
+      "persistence"
+    ]
+  },
+  "evaluation": {
+    "baseline_selection": {
+      "comparability_warnings": [],
+      "final_readiness_cap": "production-ready",
+      "production_selection_passed": true,
+      "prototype_tradeoffs": []
+    },
+    "calibration": {
+      "atsFriendliness.score": {
+        "benchmark": {
+          "bucket_agreement": 1.0,
+          "ece_points": 0.0,
+          "mae_points": 0.0,
+          "mce_points": 0.0,
+          "passed": true,
+          "rmse_points": 0.0,
+          "row_count": 21,
+          "within_10_points_rate": 1.0
+        }
+      },
+      "jobFitAlignment.score": {
+        "test": {
+          "bucket_agreement": 0.9685,
+          "ece_points": 0.533,
+          "mae_points": 0.8603,
+          "mce_points": 3.0195,
+          "passed": true,
+          "rmse_points": 2.9776,
+          "row_count": 540,
+          "within_10_points_rate": 0.9759
+        },
+        "train": {
+          "bucket_agreement": 0.9786,
+          "ece_points": 0.405,
+          "mae_points": 0.6729,
+          "mce_points": 1.944,
+          "passed": true,
+          "rmse_points": 2.5668,
+          "row_count": 2520,
+          "within_10_points_rate": 0.9849
+        },
+        "validation": {
+          "bucket_agreement": 0.9722,
+          "ece_points": 0.3469,
+          "mae_points": 0.8443,
+          "mce_points": 1.955,
+          "passed": true,
+          "rmse_points": 3.3282,
+          "row_count": 540,
+          "within_10_points_rate": 0.9741
+        }
+      },
+      "recommendations[].matchScore": {
+        "candidate_fixture": {
+          "bucket_agreement": 0.8,
+          "ece_points": 4.5333,
+          "mae_points": 5.3333,
+          "mce_points": 10.8,
+          "passed": true,
+          "rmse_points": 7.7028,
+          "row_count": 15,
+          "within_10_points_rate": 0.8667
+        }
+      }
+    },
+    "metrics": {
+      "test": {
+        "calibration": {
+          "ece_0_1": 0.00511387,
+          "ece_0_100": 0.511387,
+          "max_bucket_gap_0_100": 2.179496
+        },
+        "high_fit_recall": 1.0,
+        "loss": 0.00015298,
+        "mae": 0.0086032,
+        "mae_0_100": 0.86032,
+        "predicted_high_count": 102,
+        "r2": 0.98956618,
+        "rmse": 0.02977602,
+        "rmse_0_100": 2.977602,
+        "row_count": 540,
+        "score_band_agreement": 0.99444444,
+        "spearman": 0.99536524,
+        "true_high_count": 90
+      },
+      "train": {
+        "calibration": {
+          "ece_0_1": 0.00370982,
+          "ece_0_100": 0.370982,
+          "max_bucket_gap_0_100": 1.208754
+        },
+        "high_fit_recall": 1.0,
+        "loss": 0.00015741,
+        "mae": 0.00672921,
+        "mae_0_100": 0.672921,
+        "predicted_high_count": 456,
+        "r2": 0.99227146,
+        "rmse": 0.02566821,
+        "rmse_0_100": 2.566821,
+        "row_count": 2520,
+        "score_band_agreement": 0.99325397,
+        "spearman": 0.99525213,
+        "true_high_count": 420
+      },
+      "validation": {
+        "calibration": {
+          "ece_0_1": 0.00290665,
+          "ece_0_100": 0.290665,
+          "max_bucket_gap_0_100": 0.892771
+        },
+        "high_fit_recall": 1.0,
+        "loss": 0.0002141,
+        "mae": 0.0084428,
+        "mae_0_100": 0.84428,
+        "predicted_high_count": 100,
+        "r2": 0.98737391,
+        "rmse": 0.03328179,
+        "rmse_0_100": 3.328179,
+        "row_count": 540,
+        "score_band_agreement": 0.98888889,
+        "spearman": 0.99548961,
+        "true_high_count": 90
+      }
+    }
+  },
+  "generated_at": "2026-06-03T01:45:36.646906+00:00",
+  "intended_use": [
+    "Model-core job-fit scoring for backend-provided CV/profile and job context.",
+    "Training-owned score calibration and artifact handoff for separate API runtime.",
+    "Backend candidate reranking score semantics; backend owns job hydration and public copy."
+  ],
+  "limitations": [
+    "Job-fit target uses weak-label balanced v2 evidence; human labels are evaluation-only.",
+    "ATS calibration uses synthetic benchmark fixtures, not production CV traffic.",
+    "Recommendation calibration uses small backend-like fixtures and must be replaced by live feedback or reviewer labels before production claims.",
+    "Step 25.9 strict selection gate caps final readiness below production while prototype trade-offs remain.",
+    "Production-ready export is blocked when git dirty state is present at export time.",
+    "GenAI wrapper output is not a training signal and must be validated by the separate API runtime."
+  ],
+  "model": {
+    "api": "Keras Functional API",
+    "custom_components": [
+      "CosineInteractionLayer",
+      "WeightedHuberLoss",
+      "ProductionGateCallback",
+      "HighRecallCalibrationLayer"
+    ],
+    "input_shape": [
+      null,
+      6
+    ],
+    "name": "bisakerja_jobfit_tf_functional_custom_v1",
+    "output_shape": [
+      null,
+      1
+    ],
+    "parameter_count": 11777,
+    "score_scale": {
+      "api": "0-100",
+      "training": "0-1"
+    },
+    "uses_gradient_tape": true,
+    "uses_model_fit": false,
+    "version": "jobfit_tf_phase25_gradient_tape_v1"
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "readiness": {
+    "git_dirty_at_setup": true,
+    "production_ready_blocked_when_dirty": true,
+    "status_cap": "production-ready"
+  },
+  "schema_version": "phase-25-model-card-v1",
+  "training": {
+    "api": "Keras Functional API",
+    "custom_components": [
+      "CosineInteractionLayer",
+      "WeightedHuberLoss",
+      "ProductionGateCallback",
+      "HighRecallCalibrationLayer"
+    ],
+    "tensorboard": {
+      "path": null,
+      "report_sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
+    },
+    "tensorflow_artifact_export": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      "sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe"
+    },
+    "uses_gradient_tape": true,
+    "uses_model_fit": false,
+    "uses_tensorflow": true
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "acceptance_criteria": {
+    "best_baseline_selected_and_stored_as_model_improvement_floor": true,
+    "complex_training_blocked_if_validation_test_high_fit_coverage_insufficient": true,
+    "slice_regressions_and_weak_data_ranges_visible_in_reports": true,
+    "training_gate_fails_unless_later_models_beat_best_baseline_by_required_margins": true
+  },
+  "baseline_metrics": {
+    "path": "reports/phase_17_baseline_metrics.json",
+    "sha256": "2c7362ca174f8b72b8cbe5953d65fb426d30e8d17e2bbfb0ab48513ec0f97021"
+  },
+  "best_baseline": "baseline_feature_regression",
+  "best_baseline_test_mae": 2.0859574368596565,
+  "best_baseline_validation_mae": 1.8773080189459552,
+  "blockers": [],
+  "embedding_manifest": {
+    "path": "reports/phase_17_embedding_manifest.json",
+    "sha256": "517558eabb701432daab54cdc83add13df203e601bdae3c3a964ad7c8b55ab72"
+  },
+  "error_inspection": {
+    "path": "reports/phase_17_error_inspection.json",
+    "sha256": "4f536581fe48fa4a00d0ae5d2679a29f7de387093fd688d20d812f12194a7d02"
+  },
+  "generated_at": "2026-06-02T04:48:49.553494+00:00",
+  "model_improvement_floor": {
+    "path": "reports/phase_17_model_improvement_floor.json",
+    "sha256": "32ff56fb5d2a65658fff254fd97036bd0088e384f3253e221e593fcbeecf1aff"
+  },
+  "notes": [
+    "Manual Phase 16 labels remain evaluation-only and are not used as model input features.",
+    "Cosine baseline is production-eligible E5 evidence only when sentence-transformers loads intfloat/e5-base-v2 successfully."
+  ],
+  "phase_id": "phase_17_baseline_evaluation_v2",
+  "ranking_metrics": {
+    "path": "reports/phase_17_ranking_metrics.json",
+    "sha256": "bb1cda42ef416d46a0cceec2c61e817f9a2779d2583cec6912f0dd627f1917ab"
+  },
+  "schema_version": "baseline-evaluation-v2",
+  "slice_metrics": {
+    "path": "reports/phase_17_slice_metrics.json",
+    "sha256": "ea40a4f32d354f63fa282ad07fa9d91dc4e1904df207c963eb4440c790812d1e"
+  },
+  "source": {
+    "jobs": {
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "row_count": 2073,
+      "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565"
+    },
+    "pairs_v2": {
+      "path": "artifacts/pairs_v2.parquet",
+      "row_count": 3600,
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    },
+    "profiles": {
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "row_count": 69929,
+      "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494"
+    }
+  },
+  "status": "complete"
+}

@@ -1,0 +1,576 @@
+{
+  "jobs_v1": {
+    "column_count": 35,
+    "column_profile": {
+      "_is_tech_cat": {
+        "dtype": "bool",
+        "example": true,
+        "max": true,
+        "mean": 0.7158707187650748,
+        "min": false,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2
+      },
+      "_is_tech_skills": {
+        "dtype": "bool",
+        "example": true,
+        "max": true,
+        "mean": 0.17800289435600578,
+        "min": false,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2
+      },
+      "_is_tech_title": {
+        "dtype": "bool",
+        "example": true,
+        "max": true,
+        "mean": 0.7187650747708635,
+        "min": false,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2
+      },
+      "category": {
+        "dtype": "str",
+        "example": "Frontend/Mobile Development",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 90
+      },
+      "city": {
+        "dtype": "str",
+        "example": "Jakarta Selatan",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 216
+      },
+      "company_name": {
+        "dtype": "str",
+        "example": "Talent Tech",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1332
+      },
+      "description": {
+        "dtype": "str",
+        "example": "The Frontend Web Developer role at Talent Tech in Mampang Prapatan, Jakarta Selatan, DKI Jakarta, Indonesia focuses on core contributions based on available operational evidence. Ideal candidates are expected to meet: minimum 1 years of experience Maximum 3 years of experience",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2053
+      },
+      "description_length_chars": {
+        "dtype": "int64",
+        "example": 284,
+        "max": 3591,
+        "mean": 301.34684032802704,
+        "min": 97,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 461
+      },
+      "employment_type": {
+        "dtype": "str",
+        "example": "CONTRACT",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 5
+      },
+      "experience_level": {
+        "dtype": "str",
+        "example": "JUNIOR",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 5
+      },
+      "fit_input_has_requirements": {
+        "dtype": "int64",
+        "example": 1,
+        "max": 1,
+        "mean": 1.0,
+        "min": 1,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1
+      },
+      "fit_input_has_skills": {
+        "dtype": "int64",
+        "example": 1,
+        "max": 1,
+        "mean": 1.0,
+        "min": 1,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1
+      },
+      "fit_input_quality_score": {
+        "dtype": "int64",
+        "example": 100,
+        "max": 100,
+        "mean": 100.0,
+        "min": 100,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1
+      },
+      "has_salary_info": {
+        "dtype": "int64",
+        "example": 1,
+        "max": 1,
+        "mean": 0.4071394114809455,
+        "min": 0,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2
+      },
+      "is_tech": {
+        "dtype": "bool",
+        "example": true,
+        "max": true,
+        "mean": 1.0,
+        "min": true,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1
+      },
+      "is_train_ready": {
+        "dtype": "int64",
+        "example": 1,
+        "max": 1,
+        "mean": 0.9990352146647371,
+        "min": 0,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2
+      },
+      "job_id": {
+        "dtype": "str",
+        "example": "ffa33a78-6b46-4640-8002-1249292b2b5b",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2073
+      },
+      "language_signal": {
+        "dtype": "str",
+        "example": "EN",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 4
+      },
+      "normalized_title": {
+        "dtype": "str",
+        "example": "Frontend Web Developer",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1093
+      },
+      "province": {
+        "dtype": "str",
+        "example": "DKI Jakarta",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 52
+      },
+      "req_len": {
+        "dtype": "int64",
+        "example": 85,
+        "max": 791,
+        "mean": 133.06126386878918,
+        "min": 11,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 382
+      },
+      "requirement_summary": {
+        "dtype": "str",
+        "example": "minimum 1 years of experience Maximum 3 years of experience",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1669
+      },
+      "requirements_concat": {
+        "dtype": "str",
+        "example": "minimum 1 years of experience || Maximum 3 years of experience",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1805
+      },
+      "salary_currency": {
+        "dtype": "str",
+        "example": "IDR",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 3
+      },
+      "salary_display": {
+        "dtype": "str",
+        "example": "IDR 6,500,000 - 8,500,000 / month",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 323
+      },
+      "salary_max": {
+        "dtype": "float64",
+        "example": 8500000.0,
+        "max": 71146565.0,
+        "mean": 4107968.295706705,
+        "min": 0.0,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 114
+      },
+      "salary_min": {
+        "dtype": "float64",
+        "example": 6500000.0,
+        "max": 60000000.0,
+        "mean": 3037830.049204052,
+        "min": 0.0,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 119
+      },
+      "skills_clean": {
+        "dtype": "str",
+        "example": "Typescript, React, Javascript, CSS, Next.js, HTML, Tailwind, React.Js",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1105
+      },
+      "skills_count_total": {
+        "dtype": "int64",
+        "example": 8,
+        "max": 57,
+        "mean": 4.047274481427882,
+        "min": 1,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 34
+      },
+      "skills_top_10_names": {
+        "dtype": "str",
+        "example": "Typescript | React | Javascript | CSS | Next.js | HTML | Tailwind | React.Js",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1105
+      },
+      "source_posted_at": {
+        "dtype": "str",
+        "example": "2026-05-08 05:17:44.280000+00:00",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 756
+      },
+      "status": {
+        "dtype": "str",
+        "example": "ACTIVE",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2
+      },
+      "tech_signal_source": {
+        "dtype": "str",
+        "example": "category|title|skills",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 6
+      },
+      "title": {
+        "dtype": "str",
+        "example": "Frontend Web Developer",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1318
+      },
+      "work_type": {
+        "dtype": "str",
+        "example": "ONSITE",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 3
+      }
+    },
+    "columns": [
+      "job_id",
+      "company_name",
+      "title",
+      "normalized_title",
+      "category",
+      "description",
+      "requirement_summary",
+      "work_type",
+      "employment_type",
+      "experience_level",
+      "province",
+      "city",
+      "salary_min",
+      "salary_max",
+      "salary_currency",
+      "salary_display",
+      "skills_top_10_names",
+      "requirements_concat",
+      "language_signal",
+      "source_posted_at",
+      "status",
+      "fit_input_quality_score",
+      "fit_input_has_requirements",
+      "fit_input_has_skills",
+      "skills_count_total",
+      "description_length_chars",
+      "req_len",
+      "_is_tech_cat",
+      "_is_tech_title",
+      "_is_tech_skills",
+      "is_tech",
+      "tech_signal_source",
+      "has_salary_info",
+      "skills_clean",
+      "is_train_ready"
+    ],
+    "dataset_name": "jobs_v1",
+    "duplicate_primary_key_count": 0,
+    "format": "csv",
+    "language_distribution": {
+      "EN": 1426,
+      "ID": 22,
+      "MIXED": 23,
+      "UNKNOWN": 602
+    },
+    "missing_required_columns": [],
+    "owner": "model-training",
+    "path": "legacy/dataset/indotech_job_cleaned.csv",
+    "primary_key": [
+      "job_id"
+    ],
+    "required_columns": [
+      "job_id",
+      "title",
+      "description",
+      "requirements_concat",
+      "skills_clean",
+      "experience_level",
+      "language_signal",
+      "status"
+    ],
+    "row_count": 2073,
+    "schema_version": "data-snapshot-contract-v1",
+    "score_profile": null,
+    "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565",
+    "size_bytes": 2059443
+  },
+  "legacy_pairs_v1": {
+    "column_count": 9,
+    "column_profile": {
+      "fit_score": {
+        "dtype": "float64",
+        "example": 0.1612,
+        "max": 0.5545,
+        "mean": 0.20608910999999996,
+        "min": 0.03,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 92
+      },
+      "job_exp": {
+        "dtype": "int64",
+        "example": 2,
+        "max": 5,
+        "mean": 2.0142,
+        "min": 1,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 5
+      },
+      "job_id": {
+        "dtype": "str",
+        "example": "5649e616-8a7a-4017-b224-a337ba0f3540",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2071
+      },
+      "job_skills": {
+        "dtype": "str",
+        "example": "Javascript, MongoDB, PostgreSQL, Node.js, C++, SQL, MySQL, React.Js, JQuery, React",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1103
+      },
+      "job_text": {
+        "dtype": "str",
+        "example": "web developer. skills required javascript, mongodb, postgresql, node.js, c++, sql, mysql, react.js, jquery, react. experience junior.",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 1918
+      },
+      "profile_exp": {
+        "dtype": "float64",
+        "example": 0.0,
+        "max": 1.0,
+        "mean": 0.7493333333333333,
+        "min": 0.0,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 2
+      },
+      "profile_id": {
+        "dtype": "str",
+        "example": "73830",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 3000
+      },
+      "profile_skills": {
+        "dtype": "str",
+        "example": "React, Medical Knowledge, TensorFlow, Thermodynamics, Kubernetes, CI/CD, Linux, SIEM",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 3000
+      },
+      "profile_text": {
+        "dtype": "str",
+        "example": "role cloud engineer. skills react, medical knowledge, tensorflow, thermodynamics, kubernetes, ci cd, linux, siem. experience fresher.",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 3000
+      }
+    },
+    "columns": [
+      "profile_id",
+      "job_id",
+      "profile_text",
+      "job_text",
+      "profile_skills",
+      "job_skills",
+      "profile_exp",
+      "job_exp",
+      "fit_score"
+    ],
+    "dataset_name": "legacy_pairs_v1",
+    "duplicate_primary_key_count": 0,
+    "format": "parquet",
+    "language_distribution": {
+      "UNKNOWN": 30000
+    },
+    "missing_required_columns": [],
+    "owner": "model-training",
+    "path": "legacy/artifacts/pairs.parquet",
+    "primary_key": [
+      "profile_id",
+      "job_id"
+    ],
+    "required_columns": [
+      "profile_id",
+      "job_id",
+      "profile_text",
+      "job_text",
+      "profile_skills",
+      "job_skills",
+      "profile_exp",
+      "job_exp",
+      "fit_score"
+    ],
+    "row_count": 30000,
+    "schema_version": "data-snapshot-contract-v1",
+    "score_profile": {
+      "column": "fit_score",
+      "max": 0.5545,
+      "mean": 0.20608910999999996,
+      "min": 0.03,
+      "null_or_non_numeric_count": 0
+    },
+    "sha256": "00126d53904c136a5106e8c9fe68f837d6707298f0435c2437309f482d7e0864",
+    "size_bytes": 542922
+  },
+  "profiles_v1": {
+    "column_count": 7,
+    "column_profile": {
+      "Education": {
+        "dtype": "str",
+        "example": "S1",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 3
+      },
+      "Experience": {
+        "dtype": "str",
+        "example": "Fresher",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 4
+      },
+      "ID": {
+        "dtype": "int64",
+        "example": 1,
+        "max": 99999,
+        "mean": 50031.96449255673,
+        "min": 1,
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 69929
+      },
+      "Job_Role": {
+        "dtype": "str",
+        "example": "Web Developer",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 7
+      },
+      "Projects": {
+        "dtype": "str",
+        "example": "Healthcare App, AI Chatbot",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 90
+      },
+      "Required_Skills": {
+        "dtype": "str",
+        "example": "HTML, CSS, JavaScript, React, Node.js",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 7
+      },
+      "Skills": {
+        "dtype": "str",
+        "example": "HTML, JavaScript, Node.js, Manufacturing, SIEM, Electronics, Docker, Surgery",
+        "null_count": 0,
+        "null_rate": 0.0,
+        "unique_count": 69929
+      }
+    },
+    "columns": [
+      "ID",
+      "Skills",
+      "Projects",
+      "Education",
+      "Experience",
+      "Job_Role",
+      "Required_Skills"
+    ],
+    "dataset_name": "profiles_v1",
+    "duplicate_primary_key_count": 0,
+    "format": "csv",
+    "language_distribution": {
+      "UNKNOWN": 69929
+    },
+    "missing_required_columns": [],
+    "owner": "model-training",
+    "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+    "primary_key": [
+      "ID"
+    ],
+    "required_columns": [
+      "ID",
+      "Skills",
+      "Projects",
+      "Education",
+      "Experience",
+      "Job_Role",
+      "Required_Skills"
+    ],
+    "row_count": 69929,
+    "schema_version": "data-snapshot-contract-v1",
+    "score_profile": null,
+    "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494",
+    "size_bytes": 14535093
+  }
+}

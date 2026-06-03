@@ -1,0 +1,607 @@
+{
+  "acceptance": {
+    "ats_scoring_is_separate_from_job_fit_scoring": true,
+    "evaluation_metrics_are_defined_before_implementation": true,
+    "supported_file_cases_are_documented": true
+  },
+  "benchmark_cases": [
+    {
+      "acceptance_gate": "At least one high-quality, mostly parseable CV sample exists before score bucket agreement is claimed.",
+      "case_id": "normal_pdf",
+      "expected_primary_issues": [],
+      "file_family": "pdf",
+      "labels_to_collect": [
+        "parseability_rating",
+        "section_completeness_rating",
+        "final_ats_band",
+        "detected_issue_keys"
+      ],
+      "layout_risk": "low",
+      "minimum_bootstrap_cases": 10,
+      "preferred_cases": 30,
+      "required_evidence": [
+        "text_layer_present",
+        "page_count",
+        "extracted_character_count",
+        "section_heading_evidence"
+      ]
+    },
+    {
+      "acceptance_gate": "Scanned/image-only files must be represented before empty-text precision or recall is claimed.",
+      "case_id": "scanned_pdf",
+      "expected_primary_issues": [
+        "scanned_or_image_only",
+        "empty_text",
+        "low_text_coverage"
+      ],
+      "file_family": "pdf",
+      "labels_to_collect": [
+        "empty_parse_risk",
+        "scanned_or_image_only",
+        "final_ats_band",
+        "reviewer_confidence"
+      ],
+      "layout_risk": "critical",
+      "minimum_bootstrap_cases": 10,
+      "preferred_cases": 30,
+      "required_evidence": [
+        "image_only_or_low_text_layer",
+        "ocr_status",
+        "extracted_character_count",
+        "parser_warning"
+      ]
+    },
+    {
+      "acceptance_gate": "Text-order failure examples must be reviewed before treating multi-column PDFs as low risk.",
+      "case_id": "multi_column_pdf",
+      "expected_primary_issues": [
+        "multi_column_risk",
+        "low_text_coverage"
+      ],
+      "file_family": "pdf",
+      "labels_to_collect": [
+        "multi_column_risk",
+        "parseability_rating",
+        "section_completeness_rating",
+        "final_ats_band"
+      ],
+      "layout_risk": "high",
+      "minimum_bootstrap_cases": 10,
+      "preferred_cases": 30,
+      "required_evidence": [
+        "column_count_or_layout_signal",
+        "text_order_sample",
+        "section_boundary_evidence",
+        "parser_warning"
+      ]
+    },
+    {
+      "acceptance_gate": "DOCX parser support must be explicit; unsupported DOCX cannot be silently scored high.",
+      "case_id": "docx",
+      "expected_primary_issues": [
+        "unsupported_file_type"
+      ],
+      "file_family": "docx",
+      "labels_to_collect": [
+        "parseability_rating",
+        "section_completeness_rating",
+        "table_heavy_layout",
+        "final_ats_band"
+      ],
+      "layout_risk": "medium",
+      "minimum_bootstrap_cases": 10,
+      "preferred_cases": 30,
+      "required_evidence": [
+        "docx_parse_status",
+        "paragraph_count",
+        "table_count",
+        "extracted_character_count"
+      ]
+    },
+    {
+      "acceptance_gate": "Table-heavy fixtures must include successful and failed parses to avoid over-penalizing all tables.",
+      "case_id": "table_heavy_cv",
+      "expected_primary_issues": [
+        "table_heavy_layout",
+        "low_text_coverage"
+      ],
+      "file_family": "pdf_or_docx",
+      "labels_to_collect": [
+        "table_heavy_layout",
+        "parseability_rating",
+        "section_completeness_rating",
+        "final_ats_band"
+      ],
+      "layout_risk": "high",
+      "minimum_bootstrap_cases": 10,
+      "preferred_cases": 30,
+      "required_evidence": [
+        "table_density",
+        "text_order_sample",
+        "section_boundary_evidence",
+        "parser_warning"
+      ]
+    },
+    {
+      "acceptance_gate": "Short but valid entry-level CVs must be distinguished from empty/under-informative parses.",
+      "case_id": "very_short_cv",
+      "expected_primary_issues": [
+        "missing_experience_section",
+        "low_quantified_impact"
+      ],
+      "file_family": "pdf_or_docx_text",
+      "labels_to_collect": [
+        "section_completeness_rating",
+        "metric_evidence_rating",
+        "final_ats_band",
+        "detected_issue_keys"
+      ],
+      "layout_risk": "medium",
+      "minimum_bootstrap_cases": 10,
+      "preferred_cases": 30,
+      "required_evidence": [
+        "extracted_character_count",
+        "word_count",
+        "section_count",
+        "experience_or_project_evidence"
+      ]
+    },
+    {
+      "acceptance_gate": "Long-CV penalty must be based on reviewer evidence, not page count alone.",
+      "case_id": "overly_long_cv",
+      "expected_primary_issues": [
+        "excessive_length",
+        "generic_responsibility_only"
+      ],
+      "file_family": "pdf_or_docx_text",
+      "labels_to_collect": [
+        "formatting_risk_rating",
+        "section_completeness_rating",
+        "final_ats_band",
+        "reviewer_confidence"
+      ],
+      "layout_risk": "medium",
+      "minimum_bootstrap_cases": 10,
+      "preferred_cases": 30,
+      "required_evidence": [
+        "page_count",
+        "word_count",
+        "section_count",
+        "duplicate_section_or_repeated_text_signal"
+      ]
+    }
+  ],
+  "blocked_until_later_phases": [
+    "Production ATS score semantics require Phase 10 calibration evidence.",
+    "Classifier training is blocked until benchmark labels exist with enough examples per issue family.",
+    "Release claims are blocked until empty-text and critical parse failures receive manual review."
+  ],
+  "evaluation_policy": {
+    "failure_case_review_workflow": [
+      "Queue every empty-text, scanned/image-only, unsupported-file, and parser-error case for manual review.",
+      "For each false negative issue, record missing source signal, parser limitation, and taxonomy update need.",
+      "For each false positive issue, record threshold problem, layout exception, or reviewer ambiguity.",
+      "Publish aggregate review findings without raw contact values or full CV text.",
+      "Block promotion if critical parse failures are not reviewed or if score-bucket errors cluster in one required case family."
+    ],
+    "label_source": "manual reviewer labels on locked benchmark manifest; weak parser labels may bootstrap only after review",
+    "metrics": [
+      {
+        "formula": "true_positive_issue / predicted_issue",
+        "level": "per_issue_key_and_macro_average",
+        "metric": "issue_precision"
+      },
+      {
+        "formula": "true_positive_issue / labeled_issue",
+        "level": "per_issue_key_and_macro_average",
+        "metric": "issue_recall"
+      },
+      {
+        "formula": "predicted_low_medium_high == reviewer_low_medium_high",
+        "level": "global_and_by_case_family",
+        "metric": "score_bucket_agreement"
+      },
+      {
+        "formula": "empty_text_predictions / total_files",
+        "level": "global_by_parser_and_case_family",
+        "metric": "empty_text_rate"
+      },
+      {
+        "formula": "detected_empty_or_scanned_or_unsupported / labeled_critical_parse_failures",
+        "level": "critical_issue_family",
+        "metric": "critical_failure_recall"
+      },
+      {
+        "formula": "reviewer_disagreements / double_reviewed_cases",
+        "level": "global_and_by_issue_family",
+        "metric": "review_disagreement_rate"
+      }
+    ],
+    "minimum_coverage": {
+      "bootstrap_cases_per_required_case": 10,
+      "critical_failure_review_share": 1.0,
+      "double_review_minimum_share": 0.2,
+      "preferred_cases_per_required_case": 30
+    },
+    "promotion_policy": {
+      "current_decision": "GO for rule design and benchmark policy; NO-GO for production ATS scoring claim until benchmark labels and calibration exist",
+      "must_report_before_classifier": [
+        "rule_baseline_metrics",
+        "per_issue_precision_recall",
+        "score_bucket_agreement",
+        "empty_text_rate",
+        "failure_case_review"
+      ],
+      "phase10_dependency": "Production score semantics and thresholds require calibration diagnostics before release claims."
+    },
+    "required_slices": [
+      "case_id",
+      "file_family",
+      "parser_status",
+      "language",
+      "score_band",
+      "issue_family"
+    ],
+    "score_bands": [
+      {
+        "api_max": 34,
+        "api_min": 0,
+        "band": "low",
+        "product_meaning_ats": "CV has serious parseability, structure, contact/date, metric, or formatting issues that can block reliable screening."
+      },
+      {
+        "api_max": 64,
+        "api_min": 35,
+        "band": "medium",
+        "product_meaning_ats": "CV is mostly parseable but has issues that can reduce ranking or hide important evidence."
+      },
+      {
+        "api_max": 100,
+        "api_min": 65,
+        "band": "high",
+        "product_meaning_ats": "CV is parseable, structured, contact/date evidence is detectable, and formatting risk is low."
+      }
+    ]
+  },
+  "generated_at_utc": "2026-06-01T09:44:29.134690+00:00",
+  "inputs": {
+    "openapi_json": "references/docs/generated/openapi.json",
+    "phase2_report": "reports/phase_02_label_schema_baselines.json",
+    "phase3_report": "reports/phase_03_normalization_feature_design.json"
+  },
+  "issue_taxonomy": [
+    {
+      "component": "parseability",
+      "family": "parseable_text",
+      "issue_keys": [
+        "low_text_coverage",
+        "parser_warning",
+        "unsupported_file_type"
+      ],
+      "privacy_rule": "Store aggregate extraction counts and parser status only.",
+      "review_rule": "Manual review checks whether readable CV content was lost during parsing.",
+      "score_effect": "Reduce parseability component; cap total score when text coverage is too low.",
+      "severity": "high",
+      "source_evidence": [
+        "extracted_character_count",
+        "word_count",
+        "parser_status",
+        "file_type"
+      ]
+    },
+    {
+      "component": "section_completeness",
+      "family": "section_completeness",
+      "issue_keys": [
+        "missing_skills_section",
+        "missing_experience_section",
+        "missing_education_section",
+        "ambiguous_section_headings"
+      ],
+      "privacy_rule": "Store section labels and counts, not full raw section text in labels.",
+      "review_rule": "Reviewer confirms whether section content exists even when heading is nonstandard.",
+      "score_effect": "Score by required section coverage; missing experience or skills is stronger than missing optional sections.",
+      "severity": "medium",
+      "source_evidence": [
+        "detected_section_keys",
+        "heading_text_normalized",
+        "section_count"
+      ]
+    },
+    {
+      "component": "contact_detection",
+      "family": "contact_detection",
+      "issue_keys": [
+        "missing_email",
+        "missing_phone",
+        "missing_portfolio_or_profile_link"
+      ],
+      "privacy_rule": "Store booleans only; never store raw contact values in training labels or reports.",
+      "review_rule": "Reviewer checks detection false negatives on anonymized display, not persisted PII.",
+      "score_effect": "Missing all contact evidence is high severity; missing optional portfolio/profile link is role-dependent and lower severity.",
+      "severity": "medium",
+      "source_evidence": [
+        "has_email",
+        "has_phone",
+        "has_portfolio_or_profile_link"
+      ]
+    },
+    {
+      "component": "date_detection",
+      "family": "date_detection",
+      "issue_keys": [
+        "missing_dates",
+        "ambiguous_dates",
+        "inconsistent_date_order"
+      ],
+      "privacy_rule": "Store normalized date-pattern evidence and consistency flags only.",
+      "review_rule": "Locale-specific date formats must be reviewed before marking dates missing.",
+      "score_effect": "Score by parseable date coverage for experience and education entries.",
+      "severity": "medium",
+      "source_evidence": [
+        "date_pattern_count",
+        "date_parse_success_rate",
+        "experience_entry_count"
+      ]
+    },
+    {
+      "component": "metric_evidence",
+      "family": "metric_evidence",
+      "issue_keys": [
+        "low_quantified_impact",
+        "generic_responsibility_only"
+      ],
+      "privacy_rule": "Store aggregate counts and anonymized snippets only when needed for audit.",
+      "review_rule": "Reviewer distinguishes legitimate qualitative CVs from generic responsibility lists.",
+      "score_effect": "Reward quantified achievements; do not invent metrics when absent.",
+      "severity": "low_to_medium",
+      "source_evidence": [
+        "numeric_evidence_count",
+        "percentage_or_currency_count",
+        "impact_verb_context"
+      ]
+    },
+    {
+      "component": "formatting_risk",
+      "family": "excessive_formatting_risk",
+      "issue_keys": [
+        "table_heavy_layout",
+        "multi_column_risk",
+        "excessive_graphics",
+        "text_order_risk"
+      ],
+      "privacy_rule": "Store layout metrics and parser diagnostics, not screenshots unless consented fixtures exist.",
+      "review_rule": "Reviewer confirms whether layout actually harms ATS text order or section detection.",
+      "score_effect": "Subtract bounded formatting penalties; low-risk layout should not be penalized.",
+      "severity": "medium_to_high",
+      "source_evidence": [
+        "table_density",
+        "column_count",
+        "image_area_ratio",
+        "text_order_sample"
+      ]
+    },
+    {
+      "component": "parseability",
+      "family": "empty_parse_risk",
+      "issue_keys": [
+        "empty_text",
+        "scanned_or_image_only",
+        "ocr_required"
+      ],
+      "privacy_rule": "Store parser status and counts only.",
+      "review_rule": "Every empty parse must enter failure-case review before release metrics are accepted.",
+      "score_effect": "Hard cap total score at low band until OCR/parser recovery is proven.",
+      "severity": "critical",
+      "source_evidence": [
+        "extracted_character_count",
+        "ocr_status",
+        "image_only_signal",
+        "parser_status"
+      ]
+    }
+  ],
+  "output_contract": {
+    "model_owned_fields": [
+      {
+        "field": "score",
+        "grounding_rule": "Derived only from ATS component evidence and Phase 10 calibration; never from job-fit score, recommendation rank, or wrapper copy.",
+        "public_path": "atsFriendliness.score",
+        "range": [
+          0,
+          100
+        ],
+        "type": "integer"
+      },
+      {
+        "field": "detectedIssues",
+        "grounding_rule": "Issue keys must come from the Phase 7 taxonomy and include severity plus source_evidence_keys without raw PII.",
+        "item_shape": {
+          "family": "parseable_text | section_completeness | contact_detection | date_detection | metric_evidence | excessive_formatting_risk | empty_parse_risk",
+          "issueKey": "stable taxonomy key",
+          "severity": "low | medium | high | critical",
+          "sourceEvidenceKeys": "array[string]"
+        },
+        "public_path": "core_only.atsFriendliness.detectedIssues",
+        "range": "0-20 issues",
+        "type": "array[object]"
+      },
+      {
+        "field": "componentScores",
+        "grounding_rule": "Debug/audit field for model card and calibration; not required in public API response.",
+        "public_path": "core_only.atsFriendliness.componentScores",
+        "range": "component score values from 0.0 to 1.0",
+        "type": "object"
+      },
+      {
+        "field": "confidenceNotes",
+        "grounding_rule": "Notes describe data quality, parser uncertainty, missing layout metrics, or manual-review requirement.",
+        "public_path": "core_only.atsFriendliness.confidenceNotes",
+        "range": "0-5 diagnostic notes",
+        "type": "array[string]"
+      }
+    ],
+    "not_model_owned_fields": [
+      "topActionables",
+      "sectionReviews",
+      "overallImpression",
+      "jobFitAlignment",
+      "jobRecommendations",
+      "auth",
+      "persistence",
+      "file storage",
+      "raw contact values"
+    ],
+    "public_api_mapping": {
+      "atsFriendliness.score": "core.score rounded/clipped to integer 0-100 after Phase 10 calibration",
+      "atsFriendliness.summary": "API wrapper renders concise product copy from detectedIssues, score band, and confidenceNotes"
+    },
+    "schema_version": "ats-friendliness-core-v1",
+    "separation_policy": {
+      "ats_vs_jobfit": "ATS score uses CV quality and parser/layout evidence only; job-fit score uses candidate/job alignment evidence only.",
+      "privacy_boundary": "Detected issues can mention missing contact evidence but must not expose raw email, phone, or URL values.",
+      "summary_boundary": "Core emits issue signals; wrapper writes public summary without adding unsupported claims."
+    }
+  },
+  "rule_based_baseline": {
+    "baseline_id": "ats_rule_baseline_v1",
+    "classifier_eligibility_gate": {
+      "decision_now": "not_eligible_yet_rule_baseline_first",
+      "minimum_cases_per_issue_family": 30,
+      "requires_manual_labels": true,
+      "requires_privacy_review": true,
+      "requires_rule_baseline_report": true
+    },
+    "component_score_inputs": {
+      "contact_detection": [
+        "has_email",
+        "has_phone",
+        "has_portfolio_or_profile_link"
+      ],
+      "date_detection": [
+        "date_parse_success_rate",
+        "date_pattern_count",
+        "inconsistent_date_order"
+      ],
+      "formatting_risk": [
+        "table_density",
+        "column_count",
+        "image_area_ratio",
+        "text_order_risk",
+        "file_type"
+      ],
+      "metric_evidence": [
+        "numeric_evidence_count",
+        "percentage_or_currency_count",
+        "impact_verb_context"
+      ],
+      "parseability": [
+        "extracted_character_count",
+        "word_count",
+        "parser_status",
+        "ocr_status",
+        "text_layer_present"
+      ],
+      "section_completeness": [
+        "detected_required_sections",
+        "section_count",
+        "ambiguous_section_headings"
+      ]
+    },
+    "component_weights": {
+      "contact_detection": 0.15,
+      "date_detection": 0.1,
+      "formatting_risk": 0.1,
+      "metric_evidence": 0.15,
+      "parseability": 0.3,
+      "section_completeness": 0.2
+    },
+    "confidence_notes": [
+      "unknown_layout_metrics lowers confidence but does not create a false issue",
+      "manual_review_required for empty parses, parser errors, or conflicting reviewer labels",
+      "score semantics remain draft until Phase 10 calibration"
+    ],
+    "detected_issue_rule": "Emit issue keys whose component evidence crosses documented thresholds; include severity and source_evidence keys, not raw PII.",
+    "excluded_features": [
+      "jobFitAlignment.score",
+      "job title",
+      "job requirements",
+      "recommendation rank",
+      "wrapper-generated summaries",
+      "topActionables",
+      "sectionReviews"
+    ],
+    "hard_caps": [
+      {
+        "condition": "empty_text == true",
+        "issue_key": "empty_text",
+        "max_score": 20
+      },
+      {
+        "condition": "scanned_or_image_only == true and ocr_status != 'successful'",
+        "issue_key": "scanned_or_image_only",
+        "max_score": 30
+      },
+      {
+        "condition": "unsupported_file_type == true",
+        "issue_key": "unsupported_file_type",
+        "max_score": 40
+      },
+      {
+        "condition": "low_text_coverage == true",
+        "issue_key": "low_text_coverage",
+        "max_score": 55
+      },
+      {
+        "condition": "no_contact_evidence == true",
+        "issue_key": "missing_email_or_phone",
+        "max_score": 70
+      }
+    ],
+    "score_formula": "round(100 * sum(component_score[component] * weight[component])) after applying hard caps",
+    "score_range": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "schema_version": "phase-07-ats-friendliness-scoring-v1",
+  "setup_summary": {
+    "ats_component_count": 6,
+    "ats_component_weight_sum": 1.0,
+    "ats_score_schema": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "inherited_blockers": [
+      "Phase 10 must calibrate score bands before production score semantics are finalized.",
+      "Phase 10 must calibrate score meanings after feature and label distributions are stable.",
+      "Phase 3 must define normalization rules before labels are generated.",
+      "Phase 4 must generate balanced pairs using these normalization policies and publish feature-quality metrics.",
+      "Phase 4 must generate balanced pairs with leakage-safe splits before baseline evaluation.",
+      "Phase 5 must compare baselines using these normalized features before complex model training.",
+      "Phase 5 must run this baseline catalog before model training.",
+      "Phase 7 must build controlled ATS benchmark samples before production ATS claims.",
+      "Phase 7 must evaluate ATS text extraction quality before production ATS claims."
+    ],
+    "public_ats_schema": {
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "score",
+        "summary"
+      ],
+      "type": "object"
+    }
+  }
+}

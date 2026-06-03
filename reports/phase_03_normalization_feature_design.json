@@ -1,0 +1,613 @@
+{
+  "acceptance": {
+    "feature_quality_metrics_are_defined": true,
+    "no_known_experience_value_falls_through_silently": true,
+    "skill_alias_policy_is_documented": true
+  },
+  "blocked_until_later_phases": [
+    "Phase 4 must generate balanced pairs using these normalization policies and publish feature-quality metrics.",
+    "Phase 5 must compare baselines using these normalized features before complex model training.",
+    "Phase 7 must evaluate ATS text extraction quality before production ATS claims.",
+    "Phase 10 must calibrate score meanings after feature and label distributions are stable."
+  ],
+  "current_feature_quality_snapshot": {
+    "jobs": {
+      "empty_skills_rate": 0.0,
+      "empty_text_rate": 0.0,
+      "rows": 2073,
+      "unknown_experience_rate": 0.0,
+      "unknown_language_rate": 0.2904003859141341
+    },
+    "profiles": {
+      "empty_skills_rate": 0.0,
+      "empty_text_rate_sample": 0.0,
+      "rows": 69929,
+      "unknown_experience_rate": 0.0,
+      "unknown_language_note": "No audited profile language field exists in the current snapshot; infer later from profile/CV text and report separately.",
+      "unknown_language_rate": null
+    }
+  },
+  "experience_coverage": {
+    "all_observed_values_mapped": true,
+    "job_counts": {
+      "ENTRY_LEVEL": 1097,
+      "JUNIOR": 391,
+      "LEAD": 204,
+      "MID_LEVEL": 246,
+      "SENIOR": 135
+    },
+    "missing_required_values": [],
+    "observed_job_values": [
+      "ENTRY_LEVEL",
+      "JUNIOR",
+      "LEAD",
+      "MID_LEVEL",
+      "SENIOR"
+    ],
+    "observed_profile_values": [
+      "1-2 years",
+      "3-5 years",
+      "5+ years",
+      "Fresher"
+    ],
+    "profile_counts": {
+      "1-2 years": 17412,
+      "3-5 years": 17445,
+      "5+ years": 17569,
+      "Fresher": 17503
+    },
+    "unmapped_observed_values": []
+  },
+  "experience_normalization": {
+    "1-2 years": {
+      "canonical_band": "junior",
+      "max_years": 2.0,
+      "min_years": 1.0,
+      "notes": "Early professional experience bucket.",
+      "representative_years": 1.5,
+      "seniority_order": 1,
+      "source": "profile.Experience"
+    },
+    "3-5 years": {
+      "canonical_band": "mid_level",
+      "max_years": 5.0,
+      "min_years": 3.0,
+      "notes": "Mid-level candidate evidence; may match MID_LEVEL and lower SENIOR requirements depending on role context.",
+      "representative_years": 4.0,
+      "seniority_order": 2,
+      "source": "profile.Experience"
+    },
+    "5+ years": {
+      "canonical_band": "senior_or_above",
+      "max_years": null,
+      "min_years": 5.0,
+      "notes": "Open-ended senior experience bucket; do not infer lead/manager without role evidence.",
+      "representative_years": 5.0,
+      "seniority_order": 3,
+      "source": "profile.Experience"
+    },
+    "ENTRY_LEVEL": {
+      "canonical_band": "entry",
+      "max_years": 1.0,
+      "min_years": 0.0,
+      "notes": "Entry-level job requirement.",
+      "representative_years": 0.5,
+      "seniority_order": 0,
+      "source": "job.experience_level"
+    },
+    "Fresher": {
+      "canonical_band": "entry",
+      "max_years": 0.0,
+      "min_years": 0.0,
+      "notes": "No professional experience evidence; use as entry-level candidate signal.",
+      "representative_years": 0.0,
+      "seniority_order": 0,
+      "source": "profile.Experience"
+    },
+    "JUNIOR": {
+      "canonical_band": "junior",
+      "max_years": 2.0,
+      "min_years": 1.0,
+      "notes": "Junior job requirement.",
+      "representative_years": 1.5,
+      "seniority_order": 1,
+      "source": "job.experience_level"
+    },
+    "LEAD": {
+      "canonical_band": "lead",
+      "max_years": 10.0,
+      "min_years": 6.0,
+      "notes": "Lead role requirement; should also require role/title evidence before strong match.",
+      "representative_years": 8.0,
+      "seniority_order": 4,
+      "source": "job.experience_level"
+    },
+    "MANAGER": {
+      "canonical_band": "manager",
+      "max_years": 10.0,
+      "min_years": 5.0,
+      "notes": "Management requirement; do not infer from years alone without management role evidence.",
+      "representative_years": 7.5,
+      "seniority_order": 4,
+      "source": "job.experience_level"
+    },
+    "MID_LEVEL": {
+      "canonical_band": "mid_level",
+      "max_years": 5.0,
+      "min_years": 3.0,
+      "notes": "Mid-level job requirement.",
+      "representative_years": 4.0,
+      "seniority_order": 2,
+      "source": "job.experience_level"
+    },
+    "SENIOR": {
+      "canonical_band": "senior",
+      "max_years": 8.0,
+      "min_years": 5.0,
+      "notes": "Senior individual-contributor requirement.",
+      "representative_years": 6.5,
+      "seniority_order": 3,
+      "source": "job.experience_level"
+    }
+  },
+  "experience_unknown_policy": {
+    "canonical_value": "UNKNOWN_EXPERIENCE",
+    "feature_flag": "unknown_experience",
+    "pair_generation_action": "Block pair-generation release if any observed source value is unmapped.",
+    "score_policy": "Do not silently default to neutral. Record unknown_experience=true and exclude from strict experience-match labels until reviewed."
+  },
+  "feature_quality_report_plan": {
+    "release_gate": "Pair generation must stop when unmapped observed experience values exist. Other metrics must be reported with warn/block thresholds before training.",
+    "required_metrics": [
+      {
+        "block_threshold": 0.3,
+        "formula": "rows with normalized_language == UNKNOWN / total rows",
+        "metric": "unknown_language_rate",
+        "owner": "normalization",
+        "required_slices": [
+          "dataset",
+          "role_family",
+          "experience_band"
+        ],
+        "warn_threshold": 0.1
+      },
+      {
+        "block_threshold": 0.05,
+        "formula": "rows with unknown_experience == true / total rows",
+        "metric": "unknown_experience_rate",
+        "owner": "normalization",
+        "required_slices": [
+          "dataset",
+          "source_field",
+          "role_family"
+        ],
+        "warn_threshold": 0.01
+      },
+      {
+        "block_threshold": 0.15,
+        "formula": "rows with zero parsed skills / total rows",
+        "metric": "empty_skills_rate",
+        "owner": "feature_builder",
+        "required_slices": [
+          "dataset",
+          "skill_source",
+          "role_family",
+          "language"
+        ],
+        "warn_threshold": 0.05
+      },
+      {
+        "block_threshold": 0.05,
+        "formula": "rows with constructed text length == 0 / total rows",
+        "metric": "empty_text_rate",
+        "owner": "feature_builder",
+        "required_slices": [
+          "dataset",
+          "text_source",
+          "language"
+        ],
+        "warn_threshold": 0.01
+      },
+      {
+        "block_threshold": 0.8,
+        "formula": "parsed skill tokens without alias dictionary match / total parsed skill tokens",
+        "metric": "unknown_skill_token_rate",
+        "owner": "normalization",
+        "required_slices": [
+          "dataset",
+          "skill_source"
+        ],
+        "warn_threshold": 0.5
+      }
+    ],
+    "required_outputs": [
+      "overall metrics by dataset",
+      "metrics by role family",
+      "metrics by normalized language",
+      "metrics by normalized experience band",
+      "top unmapped experience values",
+      "top unknown skill tokens for alias review",
+      "empty text examples with source IDs stored separately from model features"
+    ],
+    "schema_version": "feature-quality-report-v1"
+  },
+  "generated_at_utc": "2026-06-01T07:47:55.516207+00:00",
+  "inputs": {
+    "jobs_csv": "legacy/dataset/indotech_job_cleaned.csv",
+    "phase1_report": "reports/phase_01_data_audit_contracts.json",
+    "phase2_report": "reports/phase_02_label_schema_baselines.json",
+    "profiles_csv": "legacy/dataset/techtalent_profile_cleaned.csv",
+    "todo_scope": "Phase 3 \u2014 Normalization and Feature Design"
+  },
+  "language_normalization_policy": {
+    "allowed_values": [
+      "ID",
+      "EN",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "en_rule": "Assign EN when English marker count is at least 2 and Indonesian marker count is below 2, or trusted source says EN.",
+    "id_rule": "Assign ID when Indonesian marker count is at least 2 and English marker count is below 2, or trusted source says ID.",
+    "minimum_text_rule": "If combined evidence text has fewer than 40 non-whitespace characters, assign UNKNOWN unless trusted source is ID/EN/MIXED.",
+    "mixed_rule": "Assign MIXED when both Indonesian and English marker counts are at least 2, or trusted source says MIXED.",
+    "slice_policy": "Report metrics separately for ID, EN, MIXED, and UNKNOWN. Do not hide UNKNOWN inside EN.",
+    "trusted_source_rule": "Accept source language_signal only when it is exactly ID, EN, MIXED, or UNKNOWN.",
+    "unknown_rule": "Assign UNKNOWN when evidence is missing, marker counts are below threshold, or source value is not in the allowed set."
+  },
+  "language_quality": {
+    "counts": {
+      "EN": 1426,
+      "ID": 22,
+      "MIXED": 23,
+      "UNKNOWN": 602
+    },
+    "mixed_rate": 0.011095031355523395,
+    "observed_values": [
+      "EN",
+      "ID",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "unexpected_values": [],
+    "unknown_rate": 0.2904003859141341
+  },
+  "schema_version": "phase-03-normalization-feature-design-v1",
+  "skill_aliases": {
+    "ai": "artificial intelligence",
+    "analisis data": "data analysis",
+    "api": "api",
+    "apis": "api",
+    "artificial intelligence": "artificial intelligence",
+    "bigquery": "google bigquery",
+    "ci cd": "ci/cd",
+    "ci/cd": "ci/cd",
+    "cicd": "ci/cd",
+    "css": "css",
+    "data analysis": "data analysis",
+    "data analytics": "data analytics",
+    "deep learning": "deep learning",
+    "docker": "docker",
+    "git": "git",
+    "gitlab": "gitlab",
+    "gitlab ci": "gitlab ci/cd",
+    "gitlab ci/cd": "gitlab ci/cd",
+    "google bigquery": "google bigquery",
+    "html": "html",
+    "java script": "javascript",
+    "javascript": "javascript",
+    "js": "javascript",
+    "k8s": "kubernetes",
+    "kecerdasan buatan": "artificial intelligence",
+    "kubernetes": "kubernetes",
+    "machine learning": "machine learning",
+    "ml": "machine learning",
+    "mysql": "mysql",
+    "next js": "next.js",
+    "next.js": "next.js",
+    "nextjs": "next.js",
+    "node js": "node.js",
+    "node.js": "node.js",
+    "nodejs": "node.js",
+    "pembelajaran mesin": "machine learning",
+    "postgre sql": "postgresql",
+    "postgres": "postgresql",
+    "postgresql": "postgresql",
+    "power bi": "power bi",
+    "powerbi": "power bi",
+    "python": "python",
+    "pytorch": "pytorch",
+    "react": "react",
+    "react js": "react",
+    "react.js": "react",
+    "reactjs": "react",
+    "rest api": "rest api",
+    "sql": "sql",
+    "tailwind": "tailwind css",
+    "tailwind css": "tailwind css",
+    "tensorflow": "tensorflow",
+    "ts": "typescript",
+    "type script": "typescript",
+    "typescript": "typescript",
+    "visualisasi data": "data visualization",
+    "visualisation": "data visualization",
+    "visualization": "data visualization",
+    "vue js": "vue.js",
+    "vue.js": "vue.js",
+    "vuejs": "vue.js"
+  },
+  "skill_normalization_policy": {
+    "alias_rule": "Apply exact alias dictionary after lowercase and punctuation cleanup. Alias changes require version bump and review.",
+    "case_rule": "Convert Unicode text to lowercase before alias lookup.",
+    "framework_variant_rule": "Framework spellings such as react.js/reactjs and next.js/nextjs resolve to one canonical token.",
+    "id_en_rule": "Map Indonesian and English variants only when the technical meaning is unambiguous; otherwise preserve normalized source token and flag for review.",
+    "punctuation_rule": "Collapse repeated whitespace; normalize common spacing around slash, dot, plus, and hash; do not remove technical punctuation from c++, c#, .net, node.js, next.js, or ci/cd.",
+    "schema_version": "skill-normalization-v1",
+    "separator_rule": "Split list fields on pipe, comma, semicolon, tab, or newline. Keep slash/dot/plus/hash inside tokens when meaningful.",
+    "trim_rule": "Trim surrounding whitespace, quotes, brackets, braces, parentheses, angle brackets, and colon characters.",
+    "unknown_skill_policy": "Unknown non-empty tokens are preserved as canonical_skill=normalized_token with unknown_skill=true; never drop them silently."
+  },
+  "skill_quality_summary": {
+    "alias_dictionary_size": 61,
+    "by_source": {
+      "jobs.skills_clean": {
+        "alias_applied_tokens": 116,
+        "empty_skill_rate": 0.0,
+        "empty_skill_rows": 0,
+        "rows": 2073,
+        "total_skill_tokens": 7405,
+        "unique_canonical_skills": 1334,
+        "unknown_skill_tokens": 5939
+      },
+      "jobs.skills_top_10_names": {
+        "alias_applied_tokens": 116,
+        "empty_skill_rate": 0.0,
+        "empty_skill_rows": 0,
+        "rows": 2073,
+        "total_skill_tokens": 7405,
+        "unique_canonical_skills": 1334,
+        "unknown_skill_tokens": 5939
+      },
+      "profiles.Required_Skills": {
+        "alias_applied_tokens": 19908,
+        "empty_skill_rate": 0.0,
+        "empty_skill_rows": 0,
+        "rows": 69929,
+        "total_skill_tokens": 349645,
+        "unique_canonical_skills": 29,
+        "unknown_skill_tokens": 110285
+      },
+      "profiles.Skills": {
+        "alias_applied_tokens": 26315,
+        "empty_skill_rate": 0.0,
+        "empty_skill_rows": 0,
+        "rows": 69929,
+        "total_skill_tokens": 535644,
+        "unique_canonical_skills": 44,
+        "unknown_skill_tokens": 265398
+      }
+    },
+    "top_alias_inputs": {
+      "ai": 48,
+      "apis": 23058,
+      "bigquery": 10,
+      "gitlab ci": 4,
+      "ml": 2,
+      "nextjs": 2,
+      "nodejs": 2,
+      "react.js": 142,
+      "reactjs": 6,
+      "tailwind": 8,
+      "visualization": 23171,
+      "vuejs": 2
+    },
+    "top_canonical_skills": {
+      "aws": 23499,
+      "ci/cd": 23617,
+      "communication": 23214,
+      "cryptography": 23420,
+      "css": 23411,
+      "data analysis": 38829,
+      "data visualization": 23191,
+      "docker": 23388,
+      "ethical hacking": 23428,
+      "git": 23320,
+      "html": 23349,
+      "java": 23422,
+      "javascript": 23495,
+      "kubernetes": 23563,
+      "linux": 23430,
+      "machine learning": 38457,
+      "network security": 23543,
+      "node.js": 23364,
+      "numpy": 23340,
+      "pandas": 23210,
+      "python": 69135,
+      "react": 23575,
+      "siem": 23394,
+      "sql": 38676,
+      "tensorflow": 23231
+    },
+    "top_unknown_skill_tokens_for_review": {
+      "aws": 23499,
+      "c": 7900,
+      "cad": 8010,
+      "communication": 23214,
+      "cryptography": 23420,
+      "design": 8004,
+      "diagnosis": 8025,
+      "electronics": 7941,
+      "embedded systems": 7863,
+      "ethical hacking": 23428,
+      "excel": 23163,
+      "java": 23422,
+      "linux": 23430,
+      "manufacturing": 8055,
+      "microcontrollers": 7902,
+      "network security": 23543,
+      "numpy": 23340,
+      "pandas": 23210,
+      "patient care": 7862,
+      "pharmacology": 7924,
+      "rtos": 7943,
+      "siem": 23394,
+      "solidworks": 7986,
+      "surgery": 7887,
+      "thermodynamics": 8006
+    }
+  },
+  "source_snapshot": "legacy",
+  "text_feature_construction": {
+    "cv_text_sections": [
+      {
+        "fields": [
+          "parsed_text"
+        ],
+        "required": true,
+        "section": "parsed_cv_text"
+      },
+      {
+        "fields": [
+          "section_headings"
+        ],
+        "required": false,
+        "section": "detected_sections"
+      },
+      {
+        "fields": [
+          "extracted_skills"
+        ],
+        "required": false,
+        "section": "cv_skills"
+      }
+    ],
+    "dedupe_rule": "Normalize whitespace and remove duplicate non-empty sections while preserving deterministic section order.",
+    "excluded_fields": [
+      "profile_id",
+      "job_id",
+      "ID",
+      "jobFitAlignment.summary",
+      "topActionables",
+      "sectionReviews",
+      "overallImpression product copy",
+      "fit_score",
+      "application outcome",
+      "bookmark status",
+      "hydrated job details"
+    ],
+    "job_text_sections": [
+      {
+        "fields": [
+          "title",
+          "normalized_title"
+        ],
+        "required": true,
+        "section": "title"
+      },
+      {
+        "fields": [
+          "category"
+        ],
+        "required": false,
+        "section": "category"
+      },
+      {
+        "fields": [
+          "requirement_summary",
+          "requirements_concat"
+        ],
+        "required": true,
+        "section": "requirements"
+      },
+      {
+        "fields": [
+          "skills_clean",
+          "skills_top_10_names"
+        ],
+        "required": true,
+        "section": "skills"
+      },
+      {
+        "fields": [
+          "description"
+        ],
+        "required": true,
+        "section": "description"
+      },
+      {
+        "fields": [
+          "experience_level"
+        ],
+        "required": true,
+        "section": "experience_level"
+      }
+    ],
+    "length_policy": "Keep source text fields intact for audit; later embedding jobs may apply model-specific token truncation after logging original character counts.",
+    "profile_text_sections": [
+      {
+        "fields": [
+          "Job_Role"
+        ],
+        "required": false,
+        "section": "role"
+      },
+      {
+        "fields": [
+          "Skills"
+        ],
+        "required": true,
+        "section": "skills"
+      },
+      {
+        "fields": [
+          "Projects"
+        ],
+        "required": false,
+        "section": "projects"
+      },
+      {
+        "fields": [
+          "Experience"
+        ],
+        "required": true,
+        "section": "experience"
+      }
+    ],
+    "scalar_features_kept_outside_embedding_text": [
+      "skill_overlap",
+      "experience_gap_years",
+      "seniority_gap",
+      "role_family_match",
+      "requirement_coverage",
+      "language",
+      "unknown_language",
+      "unknown_experience",
+      "empty_skills",
+      "empty_text"
+    ],
+    "schema_version": "text-feature-construction-v1",
+    "separator": "\n---\n"
+  },
+  "text_feature_quality": {
+    "excluded_fields_verified": [
+      "profile_id",
+      "job_id",
+      "ID",
+      "jobFitAlignment.summary",
+      "topActionables",
+      "sectionReviews",
+      "overallImpression product copy",
+      "fit_score",
+      "application outcome",
+      "bookmark status",
+      "hydrated job details"
+    ],
+    "job_text_empty_rate": 0.0,
+    "job_text_median_chars": 659.0,
+    "job_text_min_chars": 347,
+    "job_text_rows": 2073,
+    "profile_text_empty_rate_sample": 0.0,
+    "profile_text_median_chars_sample": 189.0,
+    "profile_text_min_chars_sample": 145,
+    "profile_text_sample_rows": 1000
+  }
+}

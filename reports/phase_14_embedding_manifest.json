@@ -1,0 +1,14 @@
+{
+  "created_at": "2026-06-02T04:45:50.281839+00:00",
+  "dtype": "float64-json",
+  "embedding_hash": "7f0f1181e75183bc286b7ec4114a7d58e42a0b581064683b8325b4e2a5f0799e",
+  "embedding_model_version": "local-hash-embedding-v1",
+  "finite_values": true,
+  "row_count": 50,
+  "schema_version": "normalization-feature-builder-v1",
+  "shape": [
+    50,
+    16
+  ],
+  "source_text_hash": "7342fe0acceeaf0a40ebe2141d4668fc2443cd25c715e733f29a99b5d6e003fc"
+}

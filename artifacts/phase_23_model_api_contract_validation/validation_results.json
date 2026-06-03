@@ -1,0 +1,92 @@
+{
+  "negative": {
+    "cv_invalid_language": [
+      {
+        "check": "language_enum",
+        "value": "JP"
+      }
+    ],
+    "cv_missing_model_metadata": [
+      {
+        "check": "required_response_field",
+        "field": "model"
+      },
+      {
+        "check": "model_metadata",
+        "value": null
+      }
+    ],
+    "cv_score_out_of_range": [
+      {
+        "check": "score_bounds",
+        "field": "jobFitAlignment.score"
+      }
+    ],
+    "cv_wrapper_owned_field": [
+      {
+        "check": "wrapper_owned_field",
+        "paths": [
+          "$.topActionables"
+        ]
+      }
+    ],
+    "rerank_duplicate_job": [
+      {
+        "check": "duplicate_recommendations",
+        "jobIds": [
+          "job_backend_1"
+        ]
+      }
+    ],
+    "rerank_too_many_items": [
+      {
+        "check": "duplicate_recommendations",
+        "jobIds": [
+          "job_backend_1",
+          "job_fullstack_1"
+        ]
+      },
+      {
+        "check": "max_item_count",
+        "count": 6
+      }
+    ],
+    "rerank_unknown_job": [
+      {
+        "check": "candidate_membership",
+        "unknownIds": [
+          "job_not_in_candidate_set"
+        ]
+      }
+    ],
+    "rerank_wrapper_owned_field": [
+      {
+        "check": "wrapper_owned_field",
+        "paths": [
+          "$.recommendations[0].title"
+        ]
+      }
+    ]
+  },
+  "positive": {
+    "cvRequest": [],
+    "cvResponse": [],
+    "rerankingRequest": [],
+    "rerankingResponse": []
+  },
+  "summary": {
+    "coveredChecks": [
+      "candidate_membership",
+      "duplicate_recommendations",
+      "language_enum",
+      "max_item_count",
+      "model_metadata",
+      "required_response_field",
+      "score_bounds",
+      "wrapper_owned_field"
+    ],
+    "negativeFixtureCount": 8,
+    "negativeRejectedCount": 8,
+    "positiveViolationCount": 0
+  }
+}

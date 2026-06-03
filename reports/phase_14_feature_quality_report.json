@@ -1,0 +1,73 @@
+{
+  "empty_skills": {
+    "jobs.requirements_concat": {
+      "empty_skill_rate": 0.0,
+      "empty_skill_rows": 0
+    },
+    "jobs.skills_clean": {
+      "empty_skill_rate": 0.0,
+      "empty_skill_rows": 0
+    },
+    "profiles.Required_Skills": {
+      "empty_skill_rate": 0.0,
+      "empty_skill_rows": 0
+    },
+    "profiles.Skills": {
+      "empty_skill_rate": 0.0,
+      "empty_skill_rows": 0
+    }
+  },
+  "empty_text": {
+    "job_text": {
+      "empty_count": 0,
+      "empty_rate": 0.0,
+      "row_count": 2073
+    },
+    "profile_text": {
+      "empty_count": 0,
+      "empty_rate": 0.0,
+      "row_count": 69929
+    },
+    "requirement_text": {
+      "empty_count": 0,
+      "empty_rate": 0.0,
+      "row_count": 3073
+    },
+    "role_text": {
+      "empty_count": 0,
+      "empty_rate": 0.0,
+      "row_count": 3073
+    },
+    "section_aware_cv_fixture": {
+      "empty_count": 0,
+      "empty_rate": 0.0,
+      "row_count": 1
+    }
+  },
+  "generated_at": "2026-06-02T04:45:50.282251+00:00",
+  "schema_version": "normalization-feature-builder-v1",
+  "source_files": {
+    "jobs": {
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "row_count": 2073,
+      "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565"
+    },
+    "profiles": {
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "row_count": 69929,
+      "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494"
+    }
+  },
+  "unknown_experience": {
+    "jobs.experience_level": [],
+    "profiles.Experience": []
+  },
+  "unknown_experience_observed_value_count": 0,
+  "unknown_language_rate": 0.2904003859141341,
+  "unknown_skill_token_rates": {
+    "jobs.requirements_concat": 0.9528538812785388,
+    "jobs.skills_clean": 0.7844614963003562,
+    "profiles.Required_Skills": 0.4856068297844957,
+    "profiles.Skills": 0.6436401789248083
+  }
+}

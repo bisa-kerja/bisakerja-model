@@ -1,0 +1,19 @@
+{
+  "inference_policy": "labels are evaluation evidence only and must not be used as inference-time features",
+  "label_version": "human-validation-v1",
+  "schema_version": "export-label-manifest-v1",
+  "sources": [
+    {
+      "path": "reports/phase_16_label_manifest.json",
+      "purpose": "human validation label governance"
+    },
+    {
+      "path": "reports/phase_19_ats_issue_labels.json",
+      "purpose": "ATS benchmark issue taxonomy"
+    },
+    {
+      "path": "reports/phase_21_backend_candidate_reranking.json",
+      "purpose": "candidate relevance fixture labels"
+    }
+  ]
+}

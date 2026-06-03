@@ -1,0 +1,520 @@
+{
+  "acceptance": {
+    "artifact_manifest_template_is_complete": true,
+    "model_card_template_is_complete": true,
+    "score_meanings_not_hardcoded_without_report_evidence": true
+  },
+  "artifact_manifest_template": {
+    "current_legacy_inference_artifacts": [
+      {
+        "artifact_role": "legacy_inference_required",
+        "exists": true,
+        "format": "json",
+        "owner": "legacy-model-training",
+        "path": "legacy/artifacts/job_index.json",
+        "required_for_inference": true,
+        "sha256": "3bd2130212eade240d16aa1aabb5e142fe7d4c5b3e0aad30db41891b61e81d2a",
+        "size_bytes": 467334
+      },
+      {
+        "artifact_role": "legacy_inference_required",
+        "exists": true,
+        "format": "npy",
+        "owner": "legacy-model-training",
+        "path": "legacy/cache/all_job_embeddings.npy",
+        "required_for_inference": true,
+        "sha256": "72cef692066d74d565b2395a51dc932bc8161e97e0880d2bddfbe08e702f0d0f",
+        "size_bytes": 3184256
+      },
+      {
+        "artifact_role": "legacy_inference_required",
+        "exists": true,
+        "format": "keras",
+        "owner": "legacy-model-training",
+        "path": "legacy/models/model_jobfit_v1.keras",
+        "required_for_inference": true,
+        "sha256": "0d47e689392aa9f5e45a9efc1a71bedbbbecc1de4827ba29591423ee7c6aa17b",
+        "size_bytes": 4506778
+      }
+    ],
+    "current_training_or_audit_artifact_count": 26,
+    "hash_policy": "Every promoted artifact must have sha256 and immutable storage path; mutable cache paths are training-only unless exported with versioned manifest.",
+    "required_fields": [
+      {
+        "field": "artifact_id",
+        "rule": "Stable unique id for each file or bundled artifact."
+      },
+      {
+        "field": "path",
+        "rule": "Repository or storage path."
+      },
+      {
+        "field": "format",
+        "rule": "File/container format such as keras, npy, parquet, json, yaml, png, ipynb."
+      },
+      {
+        "field": "role",
+        "rule": "inference_required, training_only, evaluation_report, config, schema, cache, or source_notebook."
+      },
+      {
+        "field": "required_for_inference",
+        "rule": "Boolean; true only when serving cannot run without artifact."
+      },
+      {
+        "field": "schema_version",
+        "rule": "Schema/config version for model input/output, labels, features, or manifest rows."
+      },
+      {
+        "field": "sha256",
+        "rule": "File hash; required before promotion."
+      },
+      {
+        "field": "size_bytes",
+        "rule": "File size for reproducibility and deploy validation."
+      },
+      {
+        "field": "producer",
+        "rule": "Notebook/script/run id that produced artifact."
+      },
+      {
+        "field": "consumer",
+        "rule": "Training, evaluation, export, or inference component that consumes artifact."
+      },
+      {
+        "field": "reproducibility_references",
+        "rule": "Dataset hash, label version, split seed, feature config, git commit, and model card path."
+      }
+    ],
+    "schema_version": "artifact-manifest-v1-template"
+  },
+  "blocked_until_later_phases": [
+    "Production score-band wording requires calibration tables and plots with low/medium/high or 0-20 bucket coverage.",
+    "Production model card cannot be marked release-ready until dataset hash, label version, split seed, feature config, metrics, limitations, and calibration report are populated from a verified run.",
+    "Artifact manifest must be regenerated at export time with immutable hashes for every inference artifact.",
+    "Recommendation matchScore calibration waits for backend-like candidate sets and relevance labels."
+  ],
+  "calibration_diagnostics": {
+    "bucket_definitions": [
+      {
+        "bucket": "0-20",
+        "max": 20,
+        "min": 0
+      },
+      {
+        "bucket": "21-40",
+        "max": 40,
+        "min": 21
+      },
+      {
+        "bucket": "41-60",
+        "max": 60,
+        "min": 41
+      },
+      {
+        "bucket": "61-80",
+        "max": 80,
+        "min": 61
+      },
+      {
+        "bucket": "81-100",
+        "max": 100,
+        "min": 81
+      }
+    ],
+    "current_blockers": [
+      "Legacy validation/test splits have no high-fit examples under Phase 2 threshold.",
+      "Production ATS calibration waits for manual benchmark labels and required file-case coverage.",
+      "Recommendation matchScore calibration waits for backend-like candidate sets and relevance labels.",
+      "Human-labeled validation data is not available; weak labels remain prototype-only evidence."
+    ],
+    "metric_definitions": [
+      {
+        "formula": "sum(bucket_count / total_count * abs(mean_predicted_score - mean_label_score))",
+        "metric": "ECE",
+        "use": "Global calibration error per score."
+      },
+      {
+        "formula": "max(abs(mean_predicted_score - mean_label_score)) across buckets",
+        "metric": "MCE",
+        "use": "Worst bucket calibration error."
+      },
+      {
+        "formula": "predicted_bucket == label_or_reviewer_bucket",
+        "metric": "bucket_agreement",
+        "use": "User-facing band stability."
+      },
+      {
+        "formula": "abs(predicted_score - label_score) <= 10",
+        "metric": "within_10_points_rate",
+        "use": "Tolerance-based score reliability."
+      }
+    ],
+    "outputs_to_calibrate": [
+      "jobFitAlignment.score",
+      "atsFriendliness.score",
+      "recommendations[].matchScore"
+    ],
+    "required_plots": [
+      {
+        "facet": "score_name",
+        "plot": "reliability_curve",
+        "x_axis": "mean_predicted_score",
+        "y_axis": "mean_label_or_reviewer_score"
+      },
+      {
+        "facet": "split_and_score_name",
+        "plot": "bucket_error_bar",
+        "x_axis": "score_bucket",
+        "y_axis": "mae_or_signed_error"
+      },
+      {
+        "facet": "split_and_score_name",
+        "plot": "score_histogram",
+        "x_axis": "predicted_score",
+        "y_axis": "row_count"
+      },
+      {
+        "color": "mae_or_band_agreement",
+        "plot": "slice_bucket_heatmap",
+        "x_axis": "bucket",
+        "y_axis": "slice_value"
+      }
+    ],
+    "required_tables": [
+      {
+        "columns": [
+          "score_name",
+          "split",
+          "bucket",
+          "row_count",
+          "label_count"
+        ],
+        "name": "bucket_count",
+        "purpose": "Detect sparse or missing score ranges."
+      },
+      {
+        "columns": [
+          "score_name",
+          "split",
+          "bucket",
+          "band_agreement",
+          "within_tolerance_rate"
+        ],
+        "name": "bucket_accuracy",
+        "purpose": "Show how often score bucket matches label/reviewer bucket."
+      },
+      {
+        "columns": [
+          "score_name",
+          "split",
+          "bucket",
+          "mae",
+          "rmse",
+          "mean_signed_error",
+          "p90_absolute_error"
+        ],
+        "name": "bucket_error",
+        "purpose": "Expose over/under scoring by range."
+      },
+      {
+        "columns": [
+          "score_name",
+          "split",
+          "slice",
+          "note_key",
+          "trigger_rule"
+        ],
+        "name": "confidence_notes",
+        "purpose": "Attach score caveats to sparse labels, out-of-distribution input, parser uncertainty, or weak labels."
+      }
+    ]
+  },
+  "deployment_readiness": {
+    "blockers_before_inference_release": [
+      "Backend response validator must enforce candidate membership, uniqueness, score range, and max item constraints.",
+      "Balanced Phase 4 pair metadata columns are missing from the available pair artifact.",
+      "Classifier training is blocked until benchmark labels exist with enough examples per issue family.",
+      "Human-labeled validation data is not available; legacy fit_score remains weak-label prototype evidence.",
+      "Production ATS score semantics require Phase 10 calibration evidence.",
+      "Production matchLevel and matchScore semantics require calibration evidence.",
+      "Release claims are blocked until empty-text and critical parse failures receive manual review.",
+      "Test split is missing at least one score band.",
+      "Training promotion requires backend-like candidate sets with relevance labels or approved weak labels.",
+      "True recommendation relevance labels and backend candidate sets are not available; ranking metrics are proxy-only.",
+      "Validation split is missing at least one score band.",
+      "Validation/test splits have no high-fit examples under the Phase 2 high-band threshold.",
+      "Wrapper copy for reasons and next steps must remain grounded in rankingSignals, matchedSkills, and missingSkills."
+    ],
+    "current_decision": "design_complete_deployment_not_ready",
+    "inference_required_artifact_classes": [
+      "exported model weights or serving bundle",
+      "custom layer/module code packaged outside notebooks",
+      "input/output schema versions",
+      "feature normalization config",
+      "embedding model reference and exported candidate embedding policy if used at inference",
+      "artifact manifest with hashes",
+      "model card with calibration metrics and limitations"
+    ],
+    "serving_boundary_notes": [
+      "Backend remains owner of auth, persistence, job detail hydration, and candidate retrieval.",
+      "Model/core outputs calibrated scores and grounded signals only.",
+      "Wrapper copy must not turn draft score semantics into hiring probability or production readiness claims.",
+      "Invalid or missing model version, schema version, manifest hash, or calibrated score evidence blocks promotion."
+    ],
+    "training_only_artifact_classes": [
+      "raw pair parquet",
+      "training embeddings",
+      "notebooks",
+      "baseline plots",
+      "error analysis tables",
+      "manual review workbooks",
+      "intermediate caches not loaded by serving"
+    ]
+  },
+  "generated_at_utc": "2026-06-01T10:21:05.912770+00:00",
+  "model_card_template": {
+    "current_template_decision": "complete_template_ready_for_future_model_export; production model card cannot be marked ready until calibration evidence exists",
+    "metrics_required_by_output": {
+      "atsFriendliness.score": [
+        "issue_precision",
+        "issue_recall",
+        "score_bucket_agreement",
+        "empty_text_rate",
+        "critical_failure_recall",
+        "ECE"
+      ],
+      "jobFitAlignment.score": [
+        "MAE",
+        "RMSE",
+        "R2",
+        "Spearman",
+        "score_band_agreement",
+        "ECE",
+        "slice_MAE"
+      ],
+      "recommendations[].matchScore": [
+        "NDCG@5",
+        "NDCG@10",
+        "MAP@10",
+        "unknown_job_id_rate",
+        "duplicate_job_id_rate",
+        "ECE"
+      ]
+    },
+    "recommended_fields": [
+      "git_commit",
+      "training_code_version",
+      "artifact_manifest_path",
+      "input_schema_version",
+      "output_schema_version",
+      "owner",
+      "reviewers",
+      "approval_status",
+      "fallback_policy",
+      "privacy_notes",
+      "monitoring_notes",
+      "calibration_report_path",
+      "baseline_report_path",
+      "known_blockers",
+      "promotion_decision"
+    ],
+    "required_fields": [
+      {
+        "field": "model.name",
+        "rule": "Stable product/core model name.",
+        "type": "string"
+      },
+      {
+        "field": "model.version",
+        "rule": "Immutable release or experiment version.",
+        "type": "string"
+      },
+      {
+        "field": "date",
+        "rule": "Training/export date in UTC.",
+        "type": "ISO-8601 date"
+      },
+      {
+        "field": "dataset.hash",
+        "rule": "Hash or manifest hash for all training/eval data inputs.",
+        "type": "sha256/string"
+      },
+      {
+        "field": "labels.version",
+        "rule": "Label schema version, reviewer guideline version, and weak-label policy.",
+        "type": "string"
+      },
+      {
+        "field": "split.seed",
+        "rule": "Group-safe split seed; include split artifact hash when available.",
+        "type": "integer"
+      },
+      {
+        "field": "features.config_version",
+        "rule": "Versioned normalization, text-builder, embedding, and scoring config.",
+        "type": "string"
+      },
+      {
+        "field": "metrics",
+        "rule": "Global, slice, ranking, ATS, and calibration metrics with baseline references.",
+        "type": "object"
+      },
+      {
+        "field": "limitations",
+        "rule": "Known data, label, language, parser, and deployment limitations.",
+        "type": "array[string]"
+      },
+      {
+        "field": "intended_use",
+        "rule": "Allowed use cases and explicit non-goals.",
+        "type": "array[string]"
+      }
+    ],
+    "schema_version": "model-card-v2-template"
+  },
+  "openapi_score_constraints": {
+    "atsFriendliness.score": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "jobFit.fitScore": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "jobFitAlignment.score": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    },
+    "recommendations[].matchLevel": {
+      "enum": [
+        "strong",
+        "good",
+        "stretch"
+      ],
+      "type": "string"
+    },
+    "recommendations[].matchScore": {
+      "maximum": 100,
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "score_semantics": [
+    {
+      "calibration_status": "draft_semantics_only_not_production_calibrated",
+      "draft_bands_from_phase2": [
+        {
+          "api_max": 34,
+          "api_min": 0,
+          "band": "low",
+          "evidence_required_before_production": "Pair generation must include true low cases and hard negatives, not only random weak pairs.",
+          "meaning": "Major skill, role, experience, or requirement gaps. User should treat the role as aspirational or needing substantial preparation."
+        },
+        {
+          "api_max": 64,
+          "api_min": 35,
+          "band": "medium",
+          "evidence_required_before_production": "Pair generation must include adjacent-role and partial-skill cases, not only extremes.",
+          "meaning": "Partial match with clear strengths and visible gaps. User may apply after targeted improvements."
+        },
+        {
+          "api_max": 100,
+          "api_min": 65,
+          "band": "high",
+          "evidence_required_before_production": "Validation and training splits must contain high-fit/high-quality examples before any model can claim full-range scoring.",
+          "meaning": "Strong match with most critical evidence present. Remaining gaps should be specific and actionable."
+        }
+      ],
+      "evidence_sources": [
+        "reports/phase_02_label_schema_baselines.json",
+        "reports/phase_05_baseline_evaluation.json",
+        "reports/phase_06_jobfit_training_experiments.json"
+      ],
+      "production_rule": "Keep score wording conservative until low/medium/high buckets all have validation/test coverage and bucket error is reported.",
+      "range": "0-100 integer",
+      "score_name": "jobFitAlignment.score"
+    },
+    {
+      "calibration_status": "draft_semantics_only_not_production_calibrated",
+      "draft_bands_from_phase2": [
+        {
+          "api_max": 34,
+          "api_min": 0,
+          "band": "low",
+          "evidence_required_before_production": "Manual ATS benchmark labels, issue precision/recall, score bucket agreement, empty-text review, and calibration diagnostics.",
+          "meaning": "CV has serious parseability, structure, contact/date, metric, or formatting issues that can block reliable screening."
+        },
+        {
+          "api_max": 64,
+          "api_min": 35,
+          "band": "medium",
+          "evidence_required_before_production": "Manual ATS benchmark labels, issue precision/recall, score bucket agreement, empty-text review, and calibration diagnostics.",
+          "meaning": "CV is mostly parseable but has issues that can reduce ranking or hide important evidence."
+        },
+        {
+          "api_max": 100,
+          "api_min": 65,
+          "band": "high",
+          "evidence_required_before_production": "Manual ATS benchmark labels, issue precision/recall, score bucket agreement, empty-text review, and calibration diagnostics.",
+          "meaning": "CV is parseable, structured, contact/date evidence is detectable, and formatting risk is low."
+        }
+      ],
+      "evidence_sources": [
+        "reports/phase_02_label_schema_baselines.json",
+        "reports/phase_07_ats_friendliness_scoring.json"
+      ],
+      "production_rule": "Do not claim ATS quality band until required file cases and issue labels exist.",
+      "range": "0-100 integer",
+      "score_name": "atsFriendliness.score"
+    },
+    {
+      "calibration_status": "draft_semantics_only_not_production_calibrated",
+      "draft_bands_from_phase2": [
+        {
+          "api_max": 34,
+          "api_min": 0,
+          "band": "stretch",
+          "evidence_required_before_production": "Backend-like candidate sets, relevance labels, NDCG/MAP, membership constraints, and matchScore bucket error.",
+          "meaning": "Candidate-job ranking confidence for backend-supplied candidates only; label is provisional until candidate-set calibration exists."
+        },
+        {
+          "api_max": 64,
+          "api_min": 35,
+          "band": "good",
+          "evidence_required_before_production": "Backend-like candidate sets, relevance labels, NDCG/MAP, membership constraints, and matchScore bucket error.",
+          "meaning": "Candidate-job ranking confidence for backend-supplied candidates only; label is provisional until candidate-set calibration exists."
+        },
+        {
+          "api_max": 100,
+          "api_min": 65,
+          "band": "strong",
+          "evidence_required_before_production": "Backend-like candidate sets, relevance labels, NDCG/MAP, membership constraints, and matchScore bucket error.",
+          "meaning": "Candidate-job ranking confidence for backend-supplied candidates only; label is provisional until candidate-set calibration exists."
+        }
+      ],
+      "evidence_sources": [
+        "reports/phase_09_candidate_reranking.json",
+        "references/docs/integrations/model-api.md"
+      ],
+      "production_rule": "MatchLevel thresholds must be tied to calibrated bucket outcomes and may not be inferred from static job_index ranking.",
+      "range": "0-100 integer",
+      "score_name": "recommendations[].matchScore"
+    }
+  ],
+  "source_references": [
+    "TODOS.md",
+    "GAP_MODEL_TRAINING.md#GAP-07",
+    "GAP_MODEL_TRAINING.md#GAP-09",
+    "references/docs/integrations/model-api.md",
+    "references/docs/generated/openapi.json",
+    "reports/phase_00_reproducibility_snapshot.json",
+    "reports/phase_02_label_schema_baselines.json",
+    "reports/phase_05_baseline_evaluation.json",
+    "reports/phase_06_jobfit_training_experiments.json",
+    "reports/phase_07_ats_friendliness_scoring.json",
+    "reports/phase_09_candidate_reranking.json"
+  ]
+}

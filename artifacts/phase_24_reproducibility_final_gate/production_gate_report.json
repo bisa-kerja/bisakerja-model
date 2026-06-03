@@ -1,0 +1,42 @@
+{
+  "gates": {
+    "atsFriendliness": {
+      "evidence": "reports/phase_19_ats_friendliness_benchmark_scorer.json",
+      "passed": true
+    },
+    "calibration": {
+      "evidence": "reports/phase_22_calibration_model_card_export.json",
+      "passed": true
+    },
+    "ci_reproducibility": {
+      "evidence": [
+        "artifacts/phase_24_reproducibility_final_gate/ci_checks.json",
+        "artifacts/phase_24_reproducibility_final_gate/reproducibility_run.json"
+      ],
+      "passed": true
+    },
+    "contract": {
+      "evidence": "reports/phase_23_model_api_contract_validation.json",
+      "passed": true
+    },
+    "jobFitAlignment": {
+      "evidence": "reports/phase_18_jobfit_training_v2.json",
+      "passed": true
+    },
+    "language": {
+      "evidence": "reports/phase_20_overall_impression_signals.json",
+      "passed": true
+    },
+    "recommendations": {
+      "evidence": "reports/phase_21_backend_candidate_reranking.json",
+      "passed": true
+    },
+    "robustness": {
+      "evidence": "reports/phase_19_5_production_gate_report.json",
+      "passed": true
+    }
+  },
+  "generatedAt": "2026-06-02T06:21:52.916186+00:00",
+  "passed": true,
+  "schemaVersion": "phase-24-production-gate-v1"
+}

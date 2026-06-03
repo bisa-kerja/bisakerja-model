@@ -1,0 +1,335 @@
+{
+  "acceptance": {
+    "ci_fails_on_missing_required_reports_hashes_schemas_or_gates": true,
+    "final_readiness_decision_links_to_immutable_reports_and_artifacts": true,
+    "full_pipeline_rerunnable_from_notebook_configs_clean_kernel_order": true,
+    "production_gate_passes_only_when_required_thresholds_met": true
+  },
+  "ci_checks": {
+    "checks": {
+      "all_required_artifacts_present": true,
+      "all_required_notebooks_present": true,
+      "all_required_reports_present": true,
+      "artifact_manifest_has_hashes": true,
+      "baseline_smoke_has_metrics": true,
+      "data_snapshot_report_present": true,
+      "pairs_v2_present": true,
+      "schema_contract_report_passed": true
+    },
+    "generatedAt": "2026-06-02T06:21:52.916186+00:00",
+    "missingArtifacts": [],
+    "missingNotebooks": [],
+    "missingReports": [],
+    "notebookOrder": [
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_12_repository_hygiene_runtime_bootstrap.ipynb",
+        "sha256": "7cf368c23933d90bea9832f1d7f09734f0c023f9cf475abacb4586581614d5f9"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
+        "sha256": "86e1f29b21e8ce7534c4e770cf4feab345f69e01f0000f5d616126a1920b6c41"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_14_normalization_feature_builder.ipynb",
+        "sha256": "326b75dc98a82e24bb9f7841700e65a4c2856618ee87e8e7549f6d79f6f90ff8"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_15_balanced_pair_generation_splits.ipynb",
+        "sha256": "2514a7375952409dc34d4f62490f9c855eb056d1f118df621923d1932f34e7fe"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_16_human_validation_label_governance.ipynb",
+        "sha256": "7a398398d0df2344049ba6c71ad06ea4178f7bef1a08a36460472c802bbd47a9"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_17_baseline_evaluation_v2.ipynb",
+        "sha256": "7f371d11fdd2c15ef077e55a7cc3aae7a002a55b452a34c07281ff27d6147768"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_18_jobfit_training_v2.ipynb",
+        "sha256": "ef046855dbe78545eb01d7fcc2bae43fe5e259829f4da4ccaeaa0b2efeffccb1"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb",
+        "sha256": "c17685cb52f636dadefa95681abd98ed4f50fde1b11e782ef8feb4ac04e61ae0"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_19_5_jobfit_blocker_remediation.ipynb",
+        "sha256": "70efe8a336c8e105f6c7626ee3d7eadf3a7644979b10efd7f971d2d4330aac05"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_20_overall_impression_signals.ipynb",
+        "sha256": "1458f8d4f4e35fa8c80edf56e45343e805003cfb76b64c9ca8c518164d565949"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_21_backend_candidate_reranking.ipynb",
+        "sha256": "bab18f05c3be09dca11ff74df4d79a248cd910f2496b7692b859466334095306"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_22_calibration_model_card_export.ipynb",
+        "sha256": "ed084c1fb631941664fdfbec63a33f3b8f8285b7d26eb7c1fde5f2ad5ddd40c9"
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/phase_23_model_api_contract_validation.ipynb",
+        "sha256": "024adf7c9fb46f80bd8a935ba83803c7a60cef66e068137d1f816de984dfc769"
+      }
+    ],
+    "passed": true,
+    "requiredArtifacts": [
+      {
+        "exists": true,
+        "path": "artifacts/pairs_v2.parquet",
+        "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+      },
+      {
+        "exists": true,
+        "path": "artifacts/models/phase_18_jobfit_training_v2/high_recall_calibrated_scorer.joblib",
+        "sha256": "c639b92d1460c4051d5d91cd0e0b2b38d13b1edc91ea4c72778267f919c17324"
+      },
+      {
+        "exists": true,
+        "path": "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json",
+        "sha256": "fea0debb87847b1b6b885cab84b07ed4f35e4a4c833fb1d6ecdda2171422f83a"
+      },
+      {
+        "exists": true,
+        "path": "artifacts/phase_22_calibration_model_card_export/model_card.json",
+        "sha256": "206617fb527e67be022ad8d03ffb8b47c0fd72f538b0deb789c1e936c87c3998"
+      },
+      {
+        "exists": true,
+        "path": "artifacts/phase_22_calibration_model_card_export/model_core_schema.json",
+        "sha256": "20ef651b3082cc4f93778555bc0b78f3283a9918d0761aa6f4128c8b9e413991"
+      },
+      {
+        "exists": true,
+        "path": "artifacts/phase_23_model_api_contract_validation/model_core_contract.json",
+        "sha256": "345f6a9b86cef6ba462a7dbbc73d90469805a172c8ea4c040caed2e8e7d218b8"
+      },
+      {
+        "exists": true,
+        "path": "references/docs/generated/openapi.json",
+        "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+      }
+    ],
+    "requiredReports": [
+      {
+        "exists": true,
+        "path": "reports/phase_13_data_snapshot_contract_freezing.json",
+        "sha256": "77da7c949c33f3ef5e6d19adbb5a243d63c68ddbbd1d9be33bef65bde257f55d"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_14_normalization_feature_builder.json",
+        "sha256": "ba547fd6c75b96cbc2ad2a26de9326d890ff01dc4d6d625bd66a52724df222e1"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_15_balanced_pair_generation_splits.json",
+        "sha256": "e371125cd2f02a6acf08719871874876ecb7b2c1560db8517c8e3a8f29b23e6c"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_17_baseline_evaluation_v2.json",
+        "sha256": "34dd19d792aca7ed7f6b38433a119494e2c13221ede0cc0cdfcb3af60a397b78"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_18_jobfit_training_v2.json",
+        "sha256": "d8c287e0c6b7df4847174c88d5893ce6a6998fa990713d808381f97ad9bb7358"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_19_ats_friendliness_benchmark_scorer.json",
+        "sha256": "d01105bade785d5cee6d8f632e79d6482bab4e468838bfb814dd4ff9b2c6a54d"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_19_5_production_gate_report.json",
+        "sha256": "a023251c3efaf1a1a1af15fe542757bb61ea150149d8ea25bdbdef78eda15294"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_20_overall_impression_signals.json",
+        "sha256": "15246a64c538043626b42fe85a6d7d1fe525432ab8b9dba94561068275909fb5"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_21_backend_candidate_reranking.json",
+        "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_22_calibration_model_card_export.json",
+        "sha256": "33f3a6a8a808ed4790c4b33f6f1af29debd5845c672f38a195396eb6ddb2ade9"
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_23_model_api_contract_validation.json",
+        "sha256": "8bc3500089e368528e50a6112213a0dc1709649c6aade480fa62a1bae6249bd7"
+      }
+    ],
+    "schemaVersion": "phase-24-ci-checks-v1"
+  },
+  "final_status": "production-ready",
+  "generated_at": "2026-06-02T06:21:52.916186+00:00",
+  "notes": [
+    "Notebook records CI-safe evidence checks and reproducibility order; it does not deploy artifacts.",
+    "Release checklist is promotion evidence, not remote mutation."
+  ],
+  "phase_id": "phase_24_reproducibility_final_gate",
+  "production_gate_report": {
+    "gates": {
+      "atsFriendliness": {
+        "evidence": "reports/phase_19_ats_friendliness_benchmark_scorer.json",
+        "passed": true
+      },
+      "calibration": {
+        "evidence": "reports/phase_22_calibration_model_card_export.json",
+        "passed": true
+      },
+      "ci_reproducibility": {
+        "evidence": [
+          "artifacts/phase_24_reproducibility_final_gate/ci_checks.json",
+          "artifacts/phase_24_reproducibility_final_gate/reproducibility_run.json"
+        ],
+        "passed": true
+      },
+      "contract": {
+        "evidence": "reports/phase_23_model_api_contract_validation.json",
+        "passed": true
+      },
+      "jobFitAlignment": {
+        "evidence": "reports/phase_18_jobfit_training_v2.json",
+        "passed": true
+      },
+      "language": {
+        "evidence": "reports/phase_20_overall_impression_signals.json",
+        "passed": true
+      },
+      "recommendations": {
+        "evidence": "reports/phase_21_backend_candidate_reranking.json",
+        "passed": true
+      },
+      "robustness": {
+        "evidence": "reports/phase_19_5_production_gate_report.json",
+        "passed": true
+      }
+    },
+    "generatedAt": "2026-06-02T06:21:52.916186+00:00",
+    "passed": true,
+    "schemaVersion": "phase-24-production-gate-v1"
+  },
+  "release_checklist": {
+    "generatedAt": "2026-06-02T06:21:52.916186+00:00",
+    "items": [
+      {
+        "evidence": "reports/phase_22_calibration_model_card_export.json",
+        "item": "artifact_promotion_manifest_hashed",
+        "passed": true
+      },
+      {
+        "evidence": "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json",
+        "item": "rollback_uses_previous_artifact_manifest_and_model_version",
+        "passed": true
+      },
+      {
+        "evidence": "artifacts/phase_24_reproducibility_final_gate/release_checklist.json",
+        "item": "monitoring_hooks_defined_for_score_distribution_slice_drift_latency_and_fallback_rate",
+        "passed": true
+      },
+      {
+        "evidence": "artifacts/phase_22_calibration_model_card_export/model_card.json",
+        "item": "model_version_registration_uses_model_card_version_and_artifact_hashes",
+        "passed": true
+      },
+      {
+        "evidence": "notebook-only release boundary",
+        "item": "deployment_not_executed_by_training_notebook",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "promotionBoundary": "Notebook produces promotion evidence only; deploy/release remains separate approved operation.",
+    "schemaVersion": "phase-24-release-checklist-v1"
+  },
+  "reproducibility_run": {
+    "checks": {
+      "clean_kernel_order_complete": true,
+      "features_pairs_metrics_model_card_manifest_targets_defined": true,
+      "frozen_config_sources_present": true,
+      "source_hashes_recorded": true
+    },
+    "cleanKernelOrder": [
+      "training/notebooks/phase_12_repository_hygiene_runtime_bootstrap.ipynb",
+      "training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
+      "training/notebooks/phase_14_normalization_feature_builder.ipynb",
+      "training/notebooks/phase_15_balanced_pair_generation_splits.ipynb",
+      "training/notebooks/phase_16_human_validation_label_governance.ipynb",
+      "training/notebooks/phase_17_baseline_evaluation_v2.ipynb",
+      "training/notebooks/phase_18_jobfit_training_v2.ipynb",
+      "training/notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb",
+      "training/notebooks/phase_19_5_jobfit_blocker_remediation.ipynb",
+      "training/notebooks/phase_20_overall_impression_signals.ipynb",
+      "training/notebooks/phase_21_backend_candidate_reranking.ipynb",
+      "training/notebooks/phase_22_calibration_model_card_export.ipynb",
+      "training/notebooks/phase_23_model_api_contract_validation.ipynb",
+      "training/notebooks/phase_24_reproducibility_final_gate.ipynb"
+    ],
+    "frozenConfigSources": [
+      "reports/phase_12_notebook_configs.json",
+      "reports/phase_13_snapshot_manifests.json",
+      "reports/phase_18_experiment_config.json",
+      "artifacts/phase_22_calibration_model_card_export/feature_config.json",
+      "artifacts/phase_22_calibration_model_card_export/label_manifest.json",
+      "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json"
+    ],
+    "generatedAt": "2026-06-02T06:21:52.916186+00:00",
+    "passed": true,
+    "rebuildTargets": {
+      "exportManifest": "training/notebooks/phase_22_calibration_model_card_export.ipynb",
+      "features": "training/notebooks/phase_14_normalization_feature_builder.ipynb",
+      "metrics": [
+        "training/notebooks/phase_17_baseline_evaluation_v2.ipynb",
+        "training/notebooks/phase_18_jobfit_training_v2.ipynb"
+      ],
+      "modelCard": "training/notebooks/phase_22_calibration_model_card_export.ipynb",
+      "pairs": "training/notebooks/phase_15_balanced_pair_generation_splits.ipynb"
+    },
+    "schemaVersion": "phase-24-reproducibility-run-v1",
+    "sourceHashes": {
+      "artifacts/models/phase_18_jobfit_training_v2/high_recall_calibrated_scorer.joblib": "c639b92d1460c4051d5d91cd0e0b2b38d13b1edc91ea4c72778267f919c17324",
+      "artifacts/pairs_v2.parquet": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+      "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json": "fea0debb87847b1b6b885cab84b07ed4f35e4a4c833fb1d6ecdda2171422f83a",
+      "artifacts/phase_22_calibration_model_card_export/model_card.json": "206617fb527e67be022ad8d03ffb8b47c0fd72f538b0deb789c1e936c87c3998",
+      "artifacts/phase_22_calibration_model_card_export/model_core_schema.json": "20ef651b3082cc4f93778555bc0b78f3283a9918d0761aa6f4128c8b9e413991",
+      "artifacts/phase_23_model_api_contract_validation/model_core_contract.json": "345f6a9b86cef6ba462a7dbbc73d90469805a172c8ea4c040caed2e8e7d218b8",
+      "references/docs/generated/openapi.json": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e",
+      "reports/phase_13_data_snapshot_contract_freezing.json": "77da7c949c33f3ef5e6d19adbb5a243d63c68ddbbd1d9be33bef65bde257f55d",
+      "reports/phase_14_normalization_feature_builder.json": "ba547fd6c75b96cbc2ad2a26de9326d890ff01dc4d6d625bd66a52724df222e1",
+      "reports/phase_15_balanced_pair_generation_splits.json": "e371125cd2f02a6acf08719871874876ecb7b2c1560db8517c8e3a8f29b23e6c",
+      "reports/phase_17_baseline_evaluation_v2.json": "34dd19d792aca7ed7f6b38433a119494e2c13221ede0cc0cdfcb3af60a397b78",
+      "reports/phase_18_jobfit_training_v2.json": "d8c287e0c6b7df4847174c88d5893ce6a6998fa990713d808381f97ad9bb7358",
+      "reports/phase_19_5_production_gate_report.json": "a023251c3efaf1a1a1af15fe542757bb61ea150149d8ea25bdbdef78eda15294",
+      "reports/phase_19_ats_friendliness_benchmark_scorer.json": "d01105bade785d5cee6d8f632e79d6482bab4e468838bfb814dd4ff9b2c6a54d",
+      "reports/phase_20_overall_impression_signals.json": "15246a64c538043626b42fe85a6d7d1fe525432ab8b9dba94561068275909fb5",
+      "reports/phase_21_backend_candidate_reranking.json": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
+      "reports/phase_22_calibration_model_card_export.json": "33f3a6a8a808ed4790c4b33f6f1af29debd5845c672f38a195396eb6ddb2ade9",
+      "reports/phase_23_model_api_contract_validation.json": "8bc3500089e368528e50a6112213a0dc1709649c6aade480fa62a1bae6249bd7"
+    }
+  },
+  "schema_version": "reproducibility-final-gate-v1"
+}

@@ -1,0 +1,638 @@
+{
+  "acceptance": {
+    "distribution_diagnostics_are_specified": true,
+    "pair_categories_cover_positive_medium_negative_cases": true,
+    "split_rules_prevent_obvious_profile_leakage": true
+  },
+  "blocked_until_later_phases": [
+    "Pair rows are not generated in this planning notebook; implementation code must satisfy this schema before Phase 5 baselines.",
+    "Manual validation labels must be sampled after group-safe split assignment and must not leak into training features.",
+    "Legacy weak-label fit_score remains prototype-only evidence and must not define high-fit pair selection.",
+    "Phase 5 must compare baselines across pair_type, role_family, language, experience, and score_band slices before model training."
+  ],
+  "diagnostic_release_gates": {
+    "high_fit_coverage": "fail if validation or test high-fit examples are below the minimum coverage policy",
+    "missing_pair_type": "fail if any required pair_type has zero rows overall or in validation/test unless documented blocker exists",
+    "missing_score_band": "fail if low, medium, or high band is absent from validation/test",
+    "profile_leakage": "fail if any profile_id appears in more than one split",
+    "unknown_experience": "fail if source values are unmapped by Phase 3 policy",
+    "unknown_language": "warn at Phase 3 threshold; report UNKNOWN separately instead of folding into EN"
+  },
+  "distribution_diagnostics": [
+    {
+      "diagnostic": "score_distribution",
+      "gate": "All low/medium/high bands present in every split.",
+      "required_columns": [
+        "job_fit_score",
+        "score_band"
+      ],
+      "view": "histogram + table"
+    },
+    {
+      "diagnostic": "score_by_pair_type",
+      "gate": "Every required pair type has non-zero rows.",
+      "required_columns": [
+        "pair_type",
+        "job_fit_score"
+      ],
+      "view": "boxplot + count table"
+    },
+    {
+      "diagnostic": "score_by_role_family",
+      "gate": "Top role families have validation/test coverage.",
+      "required_columns": [
+        "profile_role_family",
+        "job_role_family",
+        "job_fit_score"
+      ],
+      "view": "heatmap/table"
+    },
+    {
+      "diagnostic": "score_by_language",
+      "gate": "UNKNOWN language reported separately; ID/EN/MIXED not hidden.",
+      "required_columns": [
+        "language",
+        "job_fit_score",
+        "split"
+      ],
+      "view": "boxplot + count table"
+    },
+    {
+      "diagnostic": "split_balance",
+      "gate": "Profile IDs are isolated; pair-type and score-band shares do not drift beyond tolerance.",
+      "required_columns": [
+        "split",
+        "pair_type",
+        "score_band",
+        "profile_id"
+      ],
+      "view": "stacked bars + table"
+    },
+    {
+      "diagnostic": "high_fit_coverage",
+      "gate": "Validation and test splits each meet minimum high-fit example counts.",
+      "required_columns": [
+        "split",
+        "job_fit_score",
+        "pair_type"
+      ],
+      "view": "table"
+    },
+    {
+      "diagnostic": "feature_quality_flags",
+      "gate": "Block if unmapped experience exists; warn/block thresholds from Phase 3 are visible.",
+      "required_columns": [
+        "unknown_language",
+        "unknown_experience",
+        "empty_skills",
+        "empty_text",
+        "split"
+      ],
+      "view": "rate table"
+    },
+    {
+      "diagnostic": "leakage_audit",
+      "gate": "No profile_id appears in multiple splits; no target/manual label columns used in feature inputs.",
+      "required_columns": [
+        "profile_id",
+        "job_id",
+        "split"
+      ],
+      "view": "assertion report"
+    }
+  ],
+  "generated_at_utc": "2026-06-01T08:00:51.690645+00:00",
+  "inputs": {
+    "jobs_csv": "legacy/dataset/indotech_job_cleaned.csv",
+    "phase2_report": "reports/phase_02_label_schema_baselines.json",
+    "phase3_report": "reports/phase_03_normalization_feature_design.json",
+    "profiles_csv": "legacy/dataset/techtalent_profile_cleaned.csv",
+    "todo_scope": "Phase 4 \u2014 Pair Generation and Split Strategy"
+  },
+  "minimum_high_fit_coverage": {
+    "minimum_manual_review_candidates_per_split": 30,
+    "minimum_test_examples": 300,
+    "minimum_validation_examples": 300,
+    "overall_min_share": 0.2,
+    "overall_preferred_share": 0.4,
+    "release_gate": "Do not train a full-range scorer if validation or test split has too few high-fit examples to evaluate the 65-100 score band."
+  },
+  "pair_metadata_schema": [
+    {
+      "column": "pair_id",
+      "notes": "Stable deterministic pair identifier from dataset version + profile_id + job_id + pair_type.",
+      "required": true,
+      "type": "string",
+      "use": "audit"
+    },
+    {
+      "column": "profile_id",
+      "notes": "Primary group key; never a model feature.",
+      "required": true,
+      "type": "string",
+      "use": "split_audit_only"
+    },
+    {
+      "column": "job_id",
+      "notes": "Used for traceability and backend candidate validation; never a model feature.",
+      "required": true,
+      "type": "string",
+      "use": "audit_only"
+    },
+    {
+      "column": "pair_type",
+      "notes": "One of the Phase 4 pair taxonomy values.",
+      "required": true,
+      "type": "category",
+      "use": "feature_or_slice"
+    },
+    {
+      "column": "split",
+      "notes": "train, validation, or test from profile group assignment.",
+      "required": true,
+      "type": "category",
+      "use": "split_control"
+    },
+    {
+      "column": "score_band",
+      "notes": "low, medium, or high according to Phase 2 score-band policy.",
+      "required": true,
+      "type": "category",
+      "use": "slice"
+    },
+    {
+      "column": "job_fit_score",
+      "notes": "Final weak-label v2 score for pair generation; API conversion to 0-100 happens later.",
+      "required": true,
+      "type": "float_0_1",
+      "use": "target"
+    },
+    {
+      "column": "skill_overlap_score",
+      "notes": "Phase 2 component.",
+      "required": true,
+      "type": "float_0_1",
+      "use": "label_component"
+    },
+    {
+      "column": "semantic_similarity_score",
+      "notes": "Phase 2 component when embeddings exist; otherwise explicit missing flag.",
+      "required": true,
+      "type": "float_0_1",
+      "use": "label_component"
+    },
+    {
+      "column": "experience_match_score",
+      "notes": "Phase 2 component using Phase 3 experience mapping.",
+      "required": true,
+      "type": "float_0_1",
+      "use": "label_component"
+    },
+    {
+      "column": "role_match_score",
+      "notes": "Phase 2 component using role-family policy.",
+      "required": true,
+      "type": "float_0_1",
+      "use": "label_component"
+    },
+    {
+      "column": "requirement_coverage_score",
+      "notes": "Phase 2 component.",
+      "required": true,
+      "type": "float_0_1",
+      "use": "label_component"
+    },
+    {
+      "column": "language",
+      "notes": "ID, EN, MIXED, or UNKNOWN from Phase 3 policy.",
+      "required": true,
+      "type": "category",
+      "use": "slice"
+    },
+    {
+      "column": "profile_role_family",
+      "notes": "Coarse candidate role family.",
+      "required": true,
+      "type": "category",
+      "use": "slice_or_feature"
+    },
+    {
+      "column": "job_role_family",
+      "notes": "Coarse job role family.",
+      "required": true,
+      "type": "category",
+      "use": "slice_or_feature"
+    },
+    {
+      "column": "profile_experience_band",
+      "notes": "Canonical experience band from Phase 3.",
+      "required": true,
+      "type": "category",
+      "use": "slice_or_feature"
+    },
+    {
+      "column": "job_experience_band",
+      "notes": "Canonical job seniority band from Phase 3.",
+      "required": true,
+      "type": "category",
+      "use": "slice_or_feature"
+    },
+    {
+      "column": "matched_skills",
+      "notes": "Grounded matched skill evidence.",
+      "required": true,
+      "type": "list[string]",
+      "use": "evidence_output"
+    },
+    {
+      "column": "missing_skills",
+      "notes": "Grounded missing skill evidence.",
+      "required": true,
+      "type": "list[string]",
+      "use": "evidence_output"
+    },
+    {
+      "column": "unknown_language",
+      "notes": "Feature-quality flag.",
+      "required": true,
+      "type": "boolean",
+      "use": "quality_flag"
+    },
+    {
+      "column": "unknown_experience",
+      "notes": "Feature-quality flag.",
+      "required": true,
+      "type": "boolean",
+      "use": "quality_flag"
+    },
+    {
+      "column": "empty_skills",
+      "notes": "Feature-quality flag.",
+      "required": true,
+      "type": "boolean",
+      "use": "quality_flag"
+    },
+    {
+      "column": "empty_text",
+      "notes": "Feature-quality flag.",
+      "required": true,
+      "type": "boolean",
+      "use": "quality_flag"
+    },
+    {
+      "column": "label_version",
+      "notes": "Example: jobfit_weak_label_v2.",
+      "required": true,
+      "type": "string",
+      "use": "lineage"
+    },
+    {
+      "column": "feature_config_version",
+      "notes": "Example: text-feature-construction-v1 + skill-normalization-v1.",
+      "required": true,
+      "type": "string",
+      "use": "lineage"
+    },
+    {
+      "column": "source_dataset_hash",
+      "notes": "Hash of source manifests/artifacts used to generate pairs.",
+      "required": true,
+      "type": "string",
+      "use": "lineage"
+    }
+  ],
+  "pair_type_target_distribution": [
+    {
+      "minimum_per_split_share": 0.15,
+      "pair_type": "high_fit_positive",
+      "target_count": 7500,
+      "target_share": 0.25
+    },
+    {
+      "minimum_per_split_share": 0.15,
+      "pair_type": "medium_fit_pair",
+      "target_count": 6000,
+      "target_share": 0.2
+    },
+    {
+      "minimum_per_split_share": 0.15,
+      "pair_type": "hard_negative",
+      "target_count": 6000,
+      "target_share": 0.2
+    },
+    {
+      "minimum_per_split_share": 0.05,
+      "pair_type": "random_negative",
+      "target_count": 3000,
+      "target_share": 0.1
+    },
+    {
+      "minimum_per_split_share": 0.1,
+      "pair_type": "same_role_different_seniority",
+      "target_count": 4500,
+      "target_share": 0.15
+    },
+    {
+      "minimum_per_split_share": 0.05,
+      "pair_type": "cross_role_confusing",
+      "target_count": 3000,
+      "target_share": 0.1
+    }
+  ],
+  "pair_type_taxonomy": [
+    {
+      "exclusion_rules": [
+        "Do not use current legacy fit_score as selector",
+        "Exclude pairs with empty skills or unknown experience until reviewed"
+      ],
+      "expected_band": "high",
+      "pair_type": "high_fit_positive",
+      "sampling_rule": "Same or strongly adjacent role family, high normalized skill overlap, experience meets or exceeds job requirement, requirement coverage is high, and language evidence is not UNKNOWN when enough text exists.",
+      "source_evidence": [
+        "normalized_skills",
+        "role_family",
+        "normalized_experience",
+        "requirement_coverage",
+        "language"
+      ],
+      "target_score_range": [
+        0.65,
+        1.0
+      ],
+      "training_purpose": "Teach upper score range and strong recommendation ordering."
+    },
+    {
+      "exclusion_rules": [
+        "Exclude pairs with no interpretable role evidence",
+        "Do not inflate to high when only generic skills match"
+      ],
+      "expected_band": "medium",
+      "pair_type": "medium_fit_pair",
+      "sampling_rule": "Partial skill overlap or adjacent role family with visible gaps; experience may be one band below or above but not unrelated.",
+      "source_evidence": [
+        "partial_skill_overlap",
+        "adjacent_role_family",
+        "bounded_experience_gap"
+      ],
+      "target_score_range": [
+        0.35,
+        0.64
+      ],
+      "training_purpose": "Teach middle score range and actionable partial-match explanations."
+    },
+    {
+      "exclusion_rules": [
+        "Do not sample only random unrelated pairs",
+        "Keep a reason code for why the pair is hard"
+      ],
+      "expected_band": "low",
+      "pair_type": "hard_negative",
+      "sampling_rule": "Superficially similar title or shared generic skills but critical requirements, role family, or seniority do not match.",
+      "source_evidence": [
+        "generic_skill_overlap",
+        "critical_requirement_gap",
+        "role_or_seniority_mismatch"
+      ],
+      "target_score_range": [
+        0.0,
+        0.34
+      ],
+      "training_purpose": "Prevent over-scoring confusing low-quality matches."
+    },
+    {
+      "exclusion_rules": [
+        "Do not dominate the dataset",
+        "Exclude accidental high-overlap pairs and reclassify them"
+      ],
+      "expected_band": "low",
+      "pair_type": "random_negative",
+      "sampling_rule": "Random profile/job combinations across unrelated role families after group-safe candidate filtering.",
+      "source_evidence": [
+        "role_family_mismatch",
+        "low_skill_overlap"
+      ],
+      "target_score_range": [
+        0.0,
+        0.25
+      ],
+      "training_purpose": "Provide broad low-fit background examples without making negatives too easy."
+    },
+    {
+      "exclusion_rules": [
+        "Do not label as high without seniority evidence",
+        "Do not punish overqualified candidates below medium without product decision"
+      ],
+      "expected_band": "medium",
+      "pair_type": "same_role_different_seniority",
+      "sampling_rule": "Same role family and meaningful skill overlap but candidate experience is below/above required seniority enough to affect fit.",
+      "source_evidence": [
+        "same_role_family",
+        "skill_overlap",
+        "experience_gap"
+      ],
+      "target_score_range": [
+        0.3,
+        0.6
+      ],
+      "training_purpose": "Teach seniority-sensitive scoring separately from skill matching."
+    },
+    {
+      "exclusion_rules": [
+        "Keep as low or low-medium unless manual review proves transferability",
+        "Record role families explicitly"
+      ],
+      "expected_band": "low",
+      "pair_type": "cross_role_confusing",
+      "sampling_rule": "Different role families with overlapping buzzwords or tools, such as data analyst vs backend API role, DevOps vs cybersecurity, or frontend vs mobile.",
+      "source_evidence": [
+        "different_role_family",
+        "shared_tools",
+        "requirement_gap"
+      ],
+      "target_score_range": [
+        0.1,
+        0.4
+      ],
+      "training_purpose": "Reduce false-high scores from shared tools across different work contexts."
+    }
+  ],
+  "schema_version": "phase-04-pair-generation-splits-v1",
+  "source_inventory": {
+    "job_experience_counts": {
+      "ENTRY_LEVEL": 1097,
+      "JUNIOR": 391,
+      "LEAD": 204,
+      "MID_LEVEL": 246,
+      "SENIOR": 135
+    },
+    "job_language_counts": {
+      "EN": 1426,
+      "ID": 22,
+      "MIXED": 23,
+      "UNKNOWN": 602
+    },
+    "job_role_family_counts": {
+      "backend": 236,
+      "cybersecurity": 109,
+      "data_analytics": 189,
+      "devops_cloud": 130,
+      "frontend": 227,
+      "general_software": 579,
+      "hardware_iot": 19,
+      "machine_learning_ai": 206,
+      "mobile": 47,
+      "product_design": 141,
+      "quality_assurance": 145,
+      "unknown_role_family": 45
+    },
+    "jobs_rows": 2073,
+    "profile_experience_counts": {
+      "1-2 years": 17412,
+      "3-5 years": 17445,
+      "5+ years": 17569,
+      "Fresher": 17503
+    },
+    "profile_role_family_counts": {
+      "backend": 18599,
+      "cybersecurity": 5445,
+      "devops_cloud": 5872,
+      "frontend": 16824,
+      "hardware_iot": 837,
+      "machine_learning_ai": 20645,
+      "product_design": 386,
+      "unknown_role_family": 1321
+    },
+    "profiles_rows": 69929,
+    "split_seed": 20260601,
+    "target_pair_count_for_planning": 30000
+  },
+  "source_snapshot": "legacy",
+  "split_group_inventory": {
+    "profile_counts_by_split": {
+      "test": 10727,
+      "train": 48754,
+      "validation": 10448
+    },
+    "profile_counts_by_split_and_experience": {
+      "test:1-2 years": 2681,
+      "test:3-5 years": 2716,
+      "test:5+ years": 2706,
+      "test:Fresher": 2624,
+      "train:1-2 years": 12118,
+      "train:3-5 years": 12146,
+      "train:5+ years": 12238,
+      "train:Fresher": 12252,
+      "validation:1-2 years": 2613,
+      "validation:3-5 years": 2583,
+      "validation:5+ years": 2625,
+      "validation:Fresher": 2627
+    },
+    "profile_counts_by_split_and_role_family_top": {
+      "test:backend": 2866,
+      "test:cybersecurity": 828,
+      "test:devops_cloud": 879,
+      "test:frontend": 2549,
+      "test:machine_learning_ai": 3186,
+      "test:unknown_role_family": 215,
+      "train:backend": 12940,
+      "train:cybersecurity": 3811,
+      "train:devops_cloud": 4098,
+      "train:frontend": 11764,
+      "train:hardware_iot": 570,
+      "train:machine_learning_ai": 14393,
+      "train:product_design": 256,
+      "train:unknown_role_family": 922,
+      "validation:backend": 2793,
+      "validation:cybersecurity": 806,
+      "validation:devops_cloud": 895,
+      "validation:frontend": 2511,
+      "validation:machine_learning_ai": 3066,
+      "validation:unknown_role_family": 184
+    }
+  },
+  "split_policy": {
+    "assignment_rule": "Assign each profile_id to exactly one split using a stable hash of seed + profile_id; all pairs for that profile stay in the same split.",
+    "hash_buckets": {
+      "test": [
+        85,
+        99
+      ],
+      "train": [
+        0,
+        69
+      ],
+      "validation": [
+        70,
+        84
+      ]
+    },
+    "job_family_policy": "Track job_role_family balance inside each split. Optionally cap overrepresented job families, but never move a profile across splits to fix job balance.",
+    "leakage_controls": [
+      "No profile_id may appear in more than one split.",
+      "fit_score and future manual labels cannot be used as split features.",
+      "Company, application outcome, bookmark state, wrapper summaries, and hydrated job details are excluded from features and split assignment.",
+      "Near-duplicate profiles must be reviewed before release if duplicate detection is added later.",
+      "Evaluation reports must include pair_type, score_band, role_family, language, and experience slices per split."
+    ],
+    "manual_validation_policy": "Sample manual-review rows from locked validation/test groups only after split assignment and artifact hashes are recorded.",
+    "primary_group_key": "profile_id",
+    "ratios": {
+      "test": 0.15,
+      "train": 0.7,
+      "validation": 0.15
+    },
+    "schema_version": "pair-split-policy-v1",
+    "secondary_stratification_keys": [
+      "profile_role_family",
+      "job_role_family",
+      "language",
+      "pair_type",
+      "score_band"
+    ],
+    "seed": 20260601
+  },
+  "target_score_distribution": [
+    {
+      "purpose": "clear random negatives and severe mismatches",
+      "score_max": 0.2,
+      "score_min": 0.0,
+      "target_count": 4500,
+      "target_share": 0.15
+    },
+    {
+      "purpose": "hard/cross-role negatives near low-band boundary",
+      "score_max": 0.34,
+      "score_min": 0.21,
+      "target_count": 4500,
+      "target_share": 0.15
+    },
+    {
+      "purpose": "lower-medium partial matches",
+      "score_max": 0.49,
+      "score_min": 0.35,
+      "target_count": 4500,
+      "target_share": 0.15
+    },
+    {
+      "purpose": "upper-medium adjacent or incomplete matches",
+      "score_max": 0.64,
+      "score_min": 0.5,
+      "target_count": 4500,
+      "target_share": 0.15
+    },
+    {
+      "purpose": "high-fit positives with some gaps",
+      "score_max": 0.79,
+      "score_min": 0.65,
+      "target_count": 6000,
+      "target_share": 0.2
+    },
+    {
+      "purpose": "strong positives for full-range calibration",
+      "score_max": 1.0,
+      "score_min": 0.8,
+      "target_count": 6000,
+      "target_share": 0.2
+    }
+  ]
+}

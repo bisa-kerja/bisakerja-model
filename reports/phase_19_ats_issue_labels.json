@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-06-02T04:52:49.361286+00:00",
+  "label_positive_counts": {
+    "contact_detection_issue": 0,
+    "date_detection_issue": 0,
+    "empty_parse_risk": 3,
+    "formatting_risk_issue": 9,
+    "metric_evidence_issue": 6,
+    "parseability_issue": 3,
+    "section_completeness_issue": 3,
+    "unsupported_file_type": 0
+  },
+  "label_source": "synthetic locked benchmark fixtures; production labels require reviewer replacement before release claims beyond fixture behavior",
+  "label_version": "ats-issue-labels-v1",
+  "missing_required_keys": [],
+  "phase_id": "phase_19_ats_friendliness_benchmark_scorer",
+  "required_issue_keys": [
+    "parseability_issue",
+    "section_completeness_issue",
+    "contact_detection_issue",
+    "date_detection_issue",
+    "metric_evidence_issue",
+    "formatting_risk_issue",
+    "empty_parse_risk"
+  ],
+  "schema_version": "ats-benchmark-scorer-v1",
+  "taxonomy": {
+    "contact_detection_issue": {
+      "description": "Contact fields are absent or unverified.",
+      "evidence": [
+        "email/phone signal missing when raw text is available"
+      ]
+    },
+    "date_detection_issue": {
+      "description": "Experience or education dates are absent or inconsistent.",
+      "evidence": [
+        "date pattern missing",
+        "timeline ambiguity"
+      ]
+    },
+    "empty_parse_risk": {
+      "description": "Extracted text is empty or near-empty.",
+      "evidence": [
+        "zero extracted characters",
+        "OCR required"
+      ]
+    },
+    "formatting_risk_issue": {
+      "description": "Layout may harm ATS parsing.",
+      "evidence": [
+        "multi-column",
+        "table-heavy",
+        "excessive length"
+      ]
+    },
+    "metric_evidence_issue": {
+      "description": "Experience lacks quantified impact evidence.",
+      "evidence": [
+        "no percent/count/multiplier evidence"
+      ]
+    },
+    "parseability_issue": {
+      "description": "Parser cannot reliably extract meaningful text.",
+      "evidence": [
+        "parser_error",
+        "low extraction coverage",
+        "empty text"
+      ]
+    },
+    "section_completeness_issue": {
+      "description": "Core CV sections are missing or not detected.",
+      "evidence": [
+        "section_count < 3",
+        "missing summary/experience/skills/education"
+      ]
+    },
+    "unsupported_file_type": {
+      "description": "File type is not accepted by current parser contract.",
+      "evidence": [
+        "unsupported extension or mime type"
+      ]
+    }
+  }
+}

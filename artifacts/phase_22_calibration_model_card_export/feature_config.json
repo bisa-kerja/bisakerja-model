@@ -1,0 +1,29 @@
+{
+  "candidate_reranking": {
+    "max_recommendations": 5,
+    "requires_backend_job_candidates": true,
+    "static_job_index_allowed": false
+  },
+  "embedding_model": "intfloat/e5-base-v2",
+  "embedding_prefixes": {
+    "job": "passage:",
+    "profile_cv": "query:"
+  },
+  "normalized_features": [
+    "skill_overlap",
+    "requirement_coverage",
+    "role_match",
+    "experience_match",
+    "experience_gap_years",
+    "language",
+    "role_family",
+    "experience_band"
+  ],
+  "schema_version": "feature-config-v1",
+  "score_outputs": [
+    "jobFitAlignment.score",
+    "atsFriendliness.score",
+    "recommendations[].matchScore"
+  ],
+  "split_seed": 202621
+}

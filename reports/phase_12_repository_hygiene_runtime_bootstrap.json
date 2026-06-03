@@ -1,0 +1,453 @@
+{
+  "config_report": {
+    "exists": true,
+    "path": "reports/phase_12_notebook_configs.json",
+    "sha256": "e8901a4dee6938cea0462eb2260cd94e06676f119d921b280b7f1c852b242b62",
+    "size_bytes": 4069
+  },
+  "dependency_status": {
+    "hashlib": true,
+    "json": true,
+    "logging": true,
+    "numpy": true,
+    "pandas": true,
+    "pathlib": true,
+    "random": true,
+    "sentence_transformers": true,
+    "sklearn": true,
+    "tensorflow": false
+  },
+  "model_load_check": {
+    "path": "legacy/models/model_jobfit_v1.keras",
+    "reason": "TensorFlow is not installed in this kernel",
+    "status": "skipped"
+  },
+  "notebook_only_training_policy": {
+    "backend_or_wrapper_owned_outputs": [
+      "topActionables",
+      "sectionReviews",
+      "job detail hydration",
+      "auth",
+      "persistence"
+    ],
+    "export_policy": "Exported models, manifests, schemas, and model cards must use explicit versioned paths and SHA-256 hashes before promotion.",
+    "generated_report_examples": [
+      "reports/phase_12_repository_hygiene_runtime_bootstrap.json",
+      "reports/phase_12_notebook_configs.json",
+      "reports/model_card_jobfit_v2.json",
+      "reports/artifact_manifest_jobfit_v2.json"
+    ],
+    "model_core_outputs": [
+      "jobFitAlignment",
+      "atsFriendliness",
+      "overallImpression"
+    ],
+    "no_training_package_entrypoints": [
+      "Do not add training/train.py for execution.",
+      "Do not add training/evaluate.py for execution.",
+      "Do not require python -m training.* commands for notebook phases."
+    ],
+    "phase_17_plus_embedding_contract": {
+      "embedding_model": "intfloat/e5-base-v2",
+      "fallback_policy": "TF-IDF or local-hash fallback is local-plumbing-only and must fail staging/production readiness gates.",
+      "job_prefix": "passage:",
+      "normalized_embeddings": true,
+      "profile_cv_prefix": "query:"
+    },
+    "readiness_policy": {
+      "phase_12_base": "Required stdlib runtime and repository hygiene must pass.",
+      "phase_17_plus_e5": "sentence-transformers, numpy, pandas, and sklearn must be available before E5-backed training can claim readiness.",
+      "tensorflow_legacy_model_load": "Optional compatibility check for legacy Keras artifact; skipped kernels must report a warning."
+    },
+    "reports_directory": "reports/",
+    "training_execution": "Versioned .ipynb notebooks under training/notebooks/ own training execution."
+  },
+  "phase_id": "phase_12_repository_hygiene_runtime_bootstrap",
+  "planned_files": {
+    "training/notebooks/phase_20_overall_impression_signals.ipynb": {
+      "exists": false,
+      "path": "training/notebooks/phase_20_overall_impression_signals.ipynb",
+      "sha256": null,
+      "size_bytes": null
+    },
+    "training/notebooks/phase_21_backend_candidate_reranking.ipynb": {
+      "exists": false,
+      "path": "training/notebooks/phase_21_backend_candidate_reranking.ipynb",
+      "sha256": null,
+      "size_bytes": null
+    },
+    "training/notebooks/phase_22_calibration_model_card_export.ipynb": {
+      "exists": false,
+      "path": "training/notebooks/phase_22_calibration_model_card_export.ipynb",
+      "sha256": null,
+      "size_bytes": null
+    },
+    "training/notebooks/phase_23_model_api_contract_validation.ipynb": {
+      "exists": false,
+      "path": "training/notebooks/phase_23_model_api_contract_validation.ipynb",
+      "sha256": null,
+      "size_bytes": null
+    },
+    "training/notebooks/phase_24_reproducibility_final_gate.ipynb": {
+      "exists": false,
+      "path": "training/notebooks/phase_24_reproducibility_final_gate.ipynb",
+      "sha256": null,
+      "size_bytes": null
+    }
+  },
+  "required_files": {
+    ".gitignore": {
+      "exists": true,
+      "path": ".gitignore",
+      "sha256": "7eaae87047798b7869b93eacc09264efd52f8cb6d47adeb2d0a73d535cf70ace",
+      "size_bytes": 276
+    },
+    "GAP_MODEL_TRAINING.md": {
+      "exists": true,
+      "path": "GAP_MODEL_TRAINING.md",
+      "sha256": "cf0886a0093613604d6dda4f707fceea5a84d96fad0d9ef744ee218571594537",
+      "size_bytes": 15503
+    },
+    "TODOS.md": {
+      "exists": true,
+      "path": "TODOS.md",
+      "sha256": "78e698cb57a147bff9b0165b45e6b3e1b81009834484cd3f5587973bb72e4230",
+      "size_bytes": 37718
+    },
+    "training/.gitignore": {
+      "exists": true,
+      "path": "training/.gitignore",
+      "sha256": "182b5b0c1a8a1f39e02006ff9da6ceb0f8ffa7d6a0c0de89ec67ec1b552df26a",
+      "size_bytes": 290
+    },
+    "training/README.md": {
+      "exists": true,
+      "path": "training/README.md",
+      "sha256": "5592dbb4df7d6e77384440055782521dac875c3d931058111b6987a9bae642c9",
+      "size_bytes": 2662
+    },
+    "training/notebooks/README.md": {
+      "exists": true,
+      "path": "training/notebooks/README.md",
+      "sha256": "f29d0de0a786f5d893b151424ddb9c9b27edb069443b5bc27e294d26296dc3e6",
+      "size_bytes": 476
+    },
+    "training/notebooks/phase_00_reproducibility_snapshot.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_00_reproducibility_snapshot.ipynb",
+      "sha256": "da9579be5d004328dd3bba44893d087bd75b4fb89d4ce1ed79c3ee092f70d1ef",
+      "size_bytes": 81628
+    },
+    "training/notebooks/phase_01_data_audit_contracts.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_01_data_audit_contracts.ipynb",
+      "sha256": "a5472d5976818b7ca62e720a94a3584772229b81c4ed66ab9f290498f80dab04",
+      "size_bytes": 74920
+    },
+    "training/notebooks/phase_02_label_schema_baselines.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_02_label_schema_baselines.ipynb",
+      "sha256": "e857f41bbd5504cebb15bc6a113c4252cc3c1d7830b0bd2526484319a60c4788",
+      "size_bytes": 53636
+    },
+    "training/notebooks/phase_03_normalization_feature_design.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_03_normalization_feature_design.ipynb",
+      "sha256": "826a863b4c80b4b74234ea6b37c8932bb1aabde39447079d4c629188f1147885",
+      "size_bytes": 52588
+    },
+    "training/notebooks/phase_04_pair_generation_splits.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_04_pair_generation_splits.ipynb",
+      "sha256": "6722e0944a3e468369ae0d6cd18ce84daaa08927c4b5c7671ddcc66cf8922f41",
+      "size_bytes": 49012
+    },
+    "training/notebooks/phase_05_baseline_evaluation.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_05_baseline_evaluation.ipynb",
+      "sha256": "3166338a4484d4bbf138c72746953884673b070ae891c04b59298d4e1c587d33",
+      "size_bytes": 70485
+    },
+    "training/notebooks/phase_06_jobfit_training_experiments.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_06_jobfit_training_experiments.ipynb",
+      "sha256": "0f39d5952305adc78d72491c80aea0194bcd652e56d5dee789b2fa985640ed1e",
+      "size_bytes": 74100
+    },
+    "training/notebooks/phase_07_ats_friendliness_scoring.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_07_ats_friendliness_scoring.ipynb",
+      "sha256": "f99c70ba995476edaff1658f4f2d1a9c528f9ae7bafd60c197d5c6fb47d8fb0e",
+      "size_bytes": 57145
+    },
+    "training/notebooks/phase_08_overall_impression_signals.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_08_overall_impression_signals.ipynb",
+      "sha256": "6cf71756190afb3a6d4f1ef2955fdb2a9c8b7a830686648542f38a62737389d3",
+      "size_bytes": 48693
+    },
+    "training/notebooks/phase_09_candidate_reranking.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_09_candidate_reranking.ipynb",
+      "sha256": "9d3992d2f4757ec669d855f45120aae95bd800eb70d8449f8080aa293b31bde3",
+      "size_bytes": 28987
+    },
+    "training/notebooks/phase_10_calibration_model_card.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_10_calibration_model_card.ipynb",
+      "sha256": "8b919485c5358ae4dc8eeb353143b99ce76d221cf0c0ab8ad4346180ce5879f2",
+      "size_bytes": 36111
+    },
+    "training/notebooks/phase_11_final_gate_review.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_11_final_gate_review.ipynb",
+      "sha256": "e9f657e9a10a1e8adcf1c6a176a9afc8693d22c492e7cb84be37e4139a7a941a",
+      "size_bytes": 36340
+    },
+    "training/notebooks/phase_12_repository_hygiene_runtime_bootstrap.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_12_repository_hygiene_runtime_bootstrap.ipynb",
+      "sha256": "3829c8c3b24c1428112fbb0a36d777b953fce148319c3a1d5050c7fc6615c0a4",
+      "size_bytes": 40076
+    },
+    "training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
+      "sha256": "c944af42166adabd67d1a290b630b101af4d0c465341390485e03c6b9a2a4712",
+      "size_bytes": 51906
+    },
+    "training/notebooks/phase_14_normalization_feature_builder.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_14_normalization_feature_builder.ipynb",
+      "sha256": "745549671c4598bf902cb087fbc19d353198fadd2c087c61ac6282b8bb4128ba",
+      "size_bytes": 43838
+    },
+    "training/notebooks/phase_15_balanced_pair_generation_splits.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_15_balanced_pair_generation_splits.ipynb",
+      "sha256": "56c52e3cb5fdb486d94f2dad98c55d38a0923fc4c5f47e2894cb4015a03c640e",
+      "size_bytes": 47916
+    },
+    "training/notebooks/phase_16_human_validation_label_governance.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_16_human_validation_label_governance.ipynb",
+      "sha256": "48a4c8affb3e62cd8f8dcf7d766d4f815da8e1eec3d63b9eb33b1a2003915720",
+      "size_bytes": 42746
+    },
+    "training/notebooks/phase_17_baseline_evaluation_v2.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_17_baseline_evaluation_v2.ipynb",
+      "sha256": "05634920b3ec067f66fa8e9ec79603a0451a73396e57034d7a41fc53086033f5",
+      "size_bytes": 47854
+    },
+    "training/notebooks/phase_18_jobfit_training_v2.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_18_jobfit_training_v2.ipynb",
+      "sha256": "3b727d72a1a79c62b35d22ebc039b781b28cdb8f37a690e963ef9013e7f809e1",
+      "size_bytes": 66033
+    },
+    "training/notebooks/phase_19_5_jobfit_blocker_remediation.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_19_5_jobfit_blocker_remediation.ipynb",
+      "sha256": "4e99148e401f16ae4aeaf3e6076e62517319b1aae6e64df22906f734f9b6d6c6",
+      "size_bytes": 71793
+    },
+    "training/notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb": {
+      "exists": true,
+      "path": "training/notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb",
+      "sha256": "1f5c27c9b5242fc9f474cedbdc1f8604b8a580d3b7e52358943da44605b71661",
+      "size_bytes": 47076
+    }
+  },
+  "runtime": {
+    "dependency_status": {
+      "hashlib": true,
+      "json": true,
+      "logging": true,
+      "numpy": true,
+      "pandas": true,
+      "pathlib": true,
+      "random": true,
+      "sentence_transformers": true,
+      "sklearn": true,
+      "tensorflow": false
+    },
+    "generated_at": "2026-06-02T04:33:16.401019+00:00",
+    "phase_id": "phase_12_repository_hygiene_runtime_bootstrap",
+    "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
+    "python_executable": "/Users/macbookpro/Development/bisakerja-model/training/notebooks/venv/bin/python",
+    "python_version": "3.14.2 (main, Dec  5 2025, 16:49:16) [Clang 16.0.0 (clang-1600.0.26.6)]",
+    "repo_root": "/Users/macbookpro/Development/bisakerja-model",
+    "runtime_readiness": {
+      "legacy_tensorflow_model_load_available": false,
+      "missing_phase_17_plus_dependencies": [],
+      "phase_12_base_ready": true,
+      "phase_17_plus_training_ready": true,
+      "policy": {
+        "legacy_model_load_optional": [
+          "tensorflow"
+        ],
+        "phase_12_required": [
+          "json",
+          "hashlib",
+          "pathlib",
+          "logging",
+          "random"
+        ],
+        "phase_17_plus_required_for_e5_training": [
+          "numpy",
+          "pandas",
+          "sklearn",
+          "sentence_transformers"
+        ]
+      }
+    },
+    "runtime_warnings": [
+      "TensorFlow unavailable; legacy Keras model load compatibility is skipped in this kernel."
+    ],
+    "seed": 202612
+  },
+  "runtime_readiness": {
+    "legacy_tensorflow_model_load_available": false,
+    "missing_phase_17_plus_dependencies": [],
+    "phase_12_base_ready": true,
+    "phase_17_plus_training_ready": true,
+    "policy": {
+      "legacy_model_load_optional": [
+        "tensorflow"
+      ],
+      "phase_12_required": [
+        "json",
+        "hashlib",
+        "pathlib",
+        "logging",
+        "random"
+      ],
+      "phase_17_plus_required_for_e5_training": [
+        "numpy",
+        "pandas",
+        "sklearn",
+        "sentence_transformers"
+      ]
+    }
+  },
+  "source_artifacts": {
+    "ats_quality_v1.ats_issue_labels": {
+      "exists": true,
+      "path": "reports/phase_19_ats_issue_labels.json",
+      "sha256": "f398d718875cdf1774d7cbed7974d5a108084955115fba166aea8331ba88f8d2",
+      "size_bytes": 2519
+    },
+    "ats_quality_v1.ats_scorer_metrics": {
+      "exists": true,
+      "path": "reports/phase_19_ats_scorer_metrics.json",
+      "sha256": "2e7d31867d87be6e84d2547a421b3d082fee40d1fa002928dc768d280d07e384",
+      "size_bytes": 3240
+    },
+    "ats_quality_v1.cv_benchmark_manifest": {
+      "exists": true,
+      "path": "reports/phase_19_cv_benchmark_manifest.json",
+      "sha256": "77668542ba163a15f01835e3f73f7104ef71da3fe41ba82a68a60b57ee39c87b",
+      "size_bytes": 900
+    },
+    "jobfit_v2.legacy_reference.legacy_job_embeddings": {
+      "exists": true,
+      "path": "legacy/cache/all_job_embeddings.npy",
+      "sha256": "72cef692066d74d565b2395a51dc932bc8161e97e0880d2bddfbe08e702f0d0f",
+      "size_bytes": 3184256
+    },
+    "jobfit_v2.legacy_reference.legacy_job_index": {
+      "exists": true,
+      "path": "legacy/artifacts/job_index.json",
+      "sha256": "3bd2130212eade240d16aa1aabb5e142fe7d4c5b3e0aad30db41891b61e81d2a",
+      "size_bytes": 467334
+    },
+    "jobfit_v2.legacy_reference.legacy_model": {
+      "exists": true,
+      "path": "legacy/models/model_jobfit_v1.keras",
+      "sha256": "0d47e689392aa9f5e45a9efc1a71bedbbbecc1de4827ba29591423ee7c6aa17b",
+      "size_bytes": 4506778
+    },
+    "jobfit_v2.legacy_reference.legacy_pairs": {
+      "exists": true,
+      "path": "legacy/artifacts/pairs.parquet",
+      "sha256": "00126d53904c136a5106e8c9fe68f837d6707298f0435c2437309f482d7e0864",
+      "size_bytes": 542922
+    },
+    "jobfit_v2.pairs_v2": {
+      "exists": true,
+      "path": "artifacts/pairs_v2.parquet",
+      "sha256": "bbf5174958f83215980dd7c16ec5ffa5fc098c77ec95f66fd35e6b26edcf6bcb",
+      "size_bytes": 250778
+    },
+    "jobfit_v2.phase_16_human_labels": {
+      "exists": true,
+      "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+      "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa",
+      "size_bytes": 133097
+    },
+    "jobfit_v2.phase_17_embedding_manifest": {
+      "exists": true,
+      "path": "reports/phase_17_embedding_manifest.json",
+      "sha256": "0f72127a4053fd45d81638899866c249d6a0e209108c198c2fe0b99469ba876a",
+      "size_bytes": 590
+    },
+    "jobfit_v2.phase_18_embedding_manifest": {
+      "exists": true,
+      "path": "reports/phase_18_embedding_manifest.json",
+      "sha256": "ca64b25398d6e90242231fdde268802163a1639f3b07a69dea97c1a98a245c8e",
+      "size_bytes": 818
+    },
+    "jobfit_v2.phase_18_model_metrics": {
+      "exists": true,
+      "path": "reports/phase_18_model_metrics.json",
+      "sha256": "b2126d8d7dbea58b8a4ff5a58b22346fb75caff6202a5c5ddcca7ad5589c714c",
+      "size_bytes": 11372
+    },
+    "shared_features_schema_v1.current_pairs_v2": {
+      "exists": true,
+      "path": "artifacts/pairs_v2.parquet",
+      "sha256": "bbf5174958f83215980dd7c16ec5ffa5fc098c77ec95f66fd35e6b26edcf6bcb",
+      "size_bytes": 250778
+    },
+    "shared_features_schema_v1.legacy_jobs": {
+      "exists": true,
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565",
+      "size_bytes": 2059443
+    },
+    "shared_features_schema_v1.legacy_model_card": {
+      "exists": true,
+      "path": "legacy/reports/model_card.json",
+      "sha256": "bd5509cdb0cfb69095c4bfed7e860f2d10a1d2c78e6d9e09cb617c8dccf7564b",
+      "size_bytes": 527
+    },
+    "shared_features_schema_v1.legacy_profiles": {
+      "exists": true,
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494",
+      "size_bytes": 14535093
+    },
+    "shared_features_schema_v1.openapi_contract": {
+      "exists": true,
+      "path": "references/docs/generated/openapi.json",
+      "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e",
+      "size_bytes": 256862
+    }
+  },
+  "status": "passed_with_warnings",
+  "training_py_entrypoints": [],
+  "venv_hygiene": {
+    "ignore_rules_verified": true,
+    "local_venv_directories_found": [
+      "training/notebooks/venv",
+      "training/notebooks/venv/lib/python3.14/site-packages/jedi/third_party/typeshed/stdlib/venv"
+    ],
+    "policy": "Notebook-local virtual environments are ignored local runtime state and are not required training artifacts.",
+    "tracked_venv_file_count": 0
+  },
+  "warnings": [
+    "TensorFlow unavailable; legacy Keras model load compatibility is skipped in this kernel.",
+    "Ignored local notebook virtual environments are present; remove them before a clean repository handoff if desired."
+  ]
+}

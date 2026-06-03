@@ -1,0 +1,279 @@
+{
+  "acceptance": {
+    "candidate_membership_preserved": true,
+    "deterministic_placeholder_summary_signals_exported": true,
+    "genai_not_training_signal": true,
+    "no_external_genai_calls_in_notebook_code": true,
+    "openapi_wrapper_constraints_resolved": true,
+    "training_only_genai_boundary_documented": true,
+    "wrapper_handoff_contract_exported": true
+  },
+  "boundary_summary": {
+    "api_runtime_separate": true,
+    "external_genai_calls_from_training_notebook": false,
+    "genai_as_label_or_feature": false,
+    "genai_role": "secondary_api_wrapper_feature",
+    "training_role": "deterministic_model_training_export_and_model_core_handoff"
+  },
+  "deterministic_placeholders": {
+    "candidateReranking": {
+      "candidateSetId": "candidate_set_phase25_backend_001",
+      "language": "en",
+      "recommendationSignals": [
+        {
+          "en": "Candidate 11111111-1111-4111-8111-111111111111 has strong match from model score 92.",
+          "evidenceKeys": [
+            "skill_overlap",
+            "semantic_similarity",
+            "role_match"
+          ],
+          "id": "Kandidat 11111111-1111-4111-8111-111111111111 memiliki tingkat kecocokan strong dari skor model 92.",
+          "jobId": "11111111-1111-4111-8111-111111111111",
+          "matchLevel": "strong",
+          "matchScore": 92,
+          "matchedSkills": [
+            "typescript",
+            "postgresql",
+            "rest api"
+          ],
+          "missingSkills": []
+        },
+        {
+          "en": "Candidate 22222222-2222-4222-8222-222222222222 has good match from model score 76.",
+          "evidenceKeys": [
+            "skill_overlap",
+            "semantic_similarity",
+            "role_match"
+          ],
+          "id": "Kandidat 22222222-2222-4222-8222-222222222222 memiliki tingkat kecocokan good dari skor model 76.",
+          "jobId": "22222222-2222-4222-8222-222222222222",
+          "matchLevel": "good",
+          "matchScore": 76,
+          "matchedSkills": [
+            "typescript",
+            "postgresql"
+          ],
+          "missingSkills": [
+            "react"
+          ]
+        },
+        {
+          "en": "Candidate 33333333-3333-4333-8333-333333333333 has stretch match from model score 42.",
+          "evidenceKeys": [
+            "skill_overlap",
+            "semantic_similarity",
+            "role_match"
+          ],
+          "id": "Kandidat 33333333-3333-4333-8333-333333333333 memiliki tingkat kecocokan stretch dari skor model 42.",
+          "jobId": "33333333-3333-4333-8333-333333333333",
+          "matchLevel": "stretch",
+          "matchScore": 42,
+          "matchedSkills": [
+            "sql"
+          ],
+          "missingSkills": [
+            "python",
+            "machine learning"
+          ]
+        }
+      ],
+      "schemaVersion": "deterministic-reranking-summary-signals-v1",
+      "trainingPolicy": "ranked_candidate_signal_placeholders_only_not_genai_not_labels_not_features"
+    },
+    "guardrails": [
+      "Do not add unsupported skills, seniority, salary, hiring-outcome, or protected-class claims.",
+      "Do not alter model scores, candidate IDs, evidence keys, or score bands.",
+      "Use only sanitized backend context and model-core evidence."
+    ],
+    "language": "id",
+    "requestId": "req_phase25_cv_handoff_001",
+    "schemaVersion": "deterministic-summary-signals-v1",
+    "summarySignals": {
+      "atsFriendliness": {
+        "en": "ATS evidence score is 84; observed issues: skills section could be grouped more clearly, impact metrics are sparse.",
+        "evidenceKeys": [
+          "languageSupported",
+          "parseableText",
+          "sectionCompleteness"
+        ],
+        "id": "Skor bukti ATS 84; isu teramati: skills section could be grouped more clearly, impact metrics are sparse."
+      },
+      "jobFitAlignment": {
+        "en": "Matched evidence: rest api, postgresql, typescript. Missing evidence: deployment evidence, automated testing evidence.",
+        "evidenceKeys": [
+          "skill_overlap",
+          "role_match",
+          "experience_match"
+        ],
+        "id": "Bukti yang cocok: rest api, postgresql, typescript. Bukti yang masih kurang: deployment evidence, automated testing evidence."
+      },
+      "overallImpression": {
+        "en": "CV shows solid backend evidence with clear REST API and PostgreSQL signals; deployment and measurable impact evidence remain sparse.",
+        "evidenceKeys": [
+          "skill_overlap",
+          "role_match",
+          "ats_parseable_text"
+        ],
+        "id": "CV memiliki bukti backend yang cukup jelas; bukti deployment dan dampak terukur masih perlu diperkuat."
+      }
+    },
+    "trainingPolicy": "placeholder_signals_only_not_genai_not_labels_not_features"
+  },
+  "generated_at": "2026-06-03T01:45:40.727565+00:00",
+  "handoff_contract": {
+    "generated_at": "2026-06-03T01:45:40.727565+00:00",
+    "model_core_inputs_to_wrapper": {
+      "candidateRerankingCoreOutput": {
+        "candidate_ids_source": "backend-provided jobCandidates only",
+        "required": [
+          "candidateSetId",
+          "language",
+          "recommendations",
+          "model",
+          "rankedAt"
+        ]
+      },
+      "cvAnalysisCoreOutput": {
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "language",
+          "jobFitAlignment",
+          "atsFriendliness",
+          "overallImpression",
+          "model",
+          "analyzedAt"
+        ],
+        "source_fixture": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json"
+      },
+      "sanitizedBackendContext": {
+        "allowed": [
+          "requestId",
+          "language",
+          "jobRoles",
+          "compareSource",
+          "inputMode",
+          "detectedCvSectionNames",
+          "candidateJobMetadataForHydration"
+        ],
+        "forbidden": [
+          "raw full CV text unless retention policy allows it",
+          "passwords",
+          "tokens",
+          "OTP values",
+          "service credentials",
+          "unrelated personal data"
+        ]
+      }
+    },
+    "openapi_wrapper_constraints": {
+      "generatedCv": {
+        "current_contract": "available=false unless implemented outside training",
+        "owner": "api-wrapper-or-separate-feature"
+      },
+      "jobRecommendations": {
+        "maxItems": 5,
+        "owner": "backend-hydration-plus-api-wrapper-copy"
+      },
+      "language_enum": [
+        "id",
+        "en"
+      ],
+      "sectionReviews": {
+        "owner": "api-wrapper-genai-secondary",
+        "required": [
+          "sectionName",
+          "analysis",
+          "actionPoints",
+          "whyItsImportantForYou"
+        ]
+      },
+      "topActionables": {
+        "maxItems": 3,
+        "minItems": 1,
+        "owner": "api-wrapper-genai-secondary"
+      }
+    },
+    "phase_id": "phase_25_tensorflow_training_delivery",
+    "purpose": "Define GenAI as a secondary API-wrapper feature fed by deterministic model-core outputs, never by training cells.",
+    "schema_version": "phase-25-training-only-genai-boundary-v1",
+    "source_context": {
+      "artifact_manifest": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+        "sha256": "3a04ea81684c3d0214e5c05e5c2f3e098401f91f3e26a9446ff98b6f8531cd9e"
+      },
+      "gap_model_training": {
+        "path": "GAP_MODEL_TRAINING.md",
+        "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67"
+      },
+      "model_api_handoff_fixtures": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+        "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7"
+      },
+      "model_card": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "sha256": "30275a5e40db8c984cb90993bd0106a12474c7997a925af4395caa05d28f595c"
+      },
+      "openapi": {
+        "path": "references/docs/generated/openapi.json",
+        "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+      },
+      "requirement": {
+        "path": "REQUIREMENT.md",
+        "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723"
+      }
+    },
+    "training_policy": {
+      "deterministic_placeholders_allowed": true,
+      "external_genai_calls_allowed_in_notebook": false,
+      "genai_is_training_signal": false,
+      "genai_used_for_labels_or_features": false,
+      "model_scores_and_candidate_ids_mutable_by_wrapper": false
+    },
+    "wrapper_guardrails": [
+      "Validate wrapper output against cv-analysis-v2 before persistence or user response.",
+      "Do not invent skills, jobs, companies, seniority, salary, hiring outcomes, credentials, or protected-class claims.",
+      "Do not alter model-core scores, model version, candidate membership, or evidence keys.",
+      "Keep output language in AnalyzeCvMultipartRequest enum: id/en.",
+      "Return safe fallback prose when GenAI is unavailable; never fail the trained model artifact because GenAI is unavailable."
+    ],
+    "wrapper_outputs": {
+      "atsFriendliness.summary": "Wrapper may summarize detectedIssues/evidence without changing score.",
+      "generatedCv": "Separate feature; training sets no generated CV content.",
+      "jobFitAlignment.summary": "Wrapper may turn summarySignals/missingSkills into product-safe prose without changing score.",
+      "jobRecommendations[].nextStep": "Wrapper-owned next step based on missingSkills/rankingSignals.",
+      "jobRecommendations[].reason": "Wrapper-owned prose based on candidate score/signals and backend-hydrated job metadata.",
+      "overallImpression": "Wrapper may rephrase deterministic placeholder summary into public cv-analysis-v2 string.",
+      "sectionReviews": "Wrapper-owned dynamic section reviews for detected sections only.",
+      "topActionables": "Wrapper-owned 1-3 actionables grounded only in model-core evidence and sanitized backend context."
+    }
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-training-only-genai-boundary-v1",
+  "status": "complete",
+  "training_owned_outputs": [
+    "jobFitAlignment.score/signals",
+    "atsFriendliness.score/signals",
+    "overallImpression.score/evidence summary signal",
+    "candidate reranking score/signals for supplied job IDs"
+  ],
+  "verification": {
+    "candidate_membership_preserved": true,
+    "external_genai_findings": [],
+    "notebook_code_scanned": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
+    "openapi_constraints_resolved": true,
+    "placeholder_languages": [
+      "en",
+      "id"
+    ]
+  },
+  "wrapper_owned_outputs": [
+    "companyName",
+    "generatedCv",
+    "nextStep",
+    "reason",
+    "sectionReviews",
+    "title",
+    "topActionables"
+  ]
+}

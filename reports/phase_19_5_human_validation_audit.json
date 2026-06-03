@@ -1,0 +1,46 @@
+{
+  "band_counts": {
+    "high": 80,
+    "low": 80,
+    "medium": 80
+  },
+  "blockers": [],
+  "columns": [
+    "contact_detection_issue",
+    "date_detection_issue",
+    "disagreement_flag",
+    "evidence_notes",
+    "formatting_risk_issue",
+    "label_version",
+    "metric_evidence_issue",
+    "pair_id",
+    "parseability_issue",
+    "recommendation_relevance",
+    "review_item_id",
+    "reviewed_at",
+    "reviewer_id",
+    "reviewer_job_fit_band",
+    "reviewer_job_fit_score",
+    "section_completeness_issue",
+    "unsupported_claim_flag"
+  ],
+  "generated_at": "2026-06-02T05:18:16.693062+00:00",
+  "label_path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+  "label_sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa",
+  "phase_id": "phase_19_5_jobfit_blocker_remediation",
+  "reviewer_count": 2,
+  "row_count": 240,
+  "schema_version": "jobfit-blocker-remediation-v1",
+  "status": "trusted",
+  "trust_checks": {
+    "disagreement_policy_documented": true,
+    "evaluation_only_policy_holds": true,
+    "evidence_notes_present": true,
+    "frozen_label_file_exists": true,
+    "low_medium_high_coverage_present": true,
+    "no_training_rows_in_review_queue": true,
+    "reviewer_independence_documented": true,
+    "timestamps_present": true
+  },
+  "trusted_enough_for_phase20_evidence_use": true
+}

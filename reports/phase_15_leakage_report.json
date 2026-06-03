@@ -1,0 +1,24 @@
+{
+  "artifact": {
+    "path": "artifacts/pairs_v2.parquet",
+    "row_count": 3600,
+    "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+  },
+  "generated_at": "2026-06-02T04:47:02.115696+00:00",
+  "leaking_profile_count": 0,
+  "leaking_profiles_sample": [],
+  "pair_count": 3600,
+  "passed": true,
+  "profile_count": 920,
+  "schema_version": "pairs-v2-balanced-splits-v1",
+  "split_pair_counts": {
+    "test": 540,
+    "train": 2520,
+    "validation": 540
+  },
+  "split_profile_counts": {
+    "test": 140,
+    "train": 634,
+    "validation": 146
+  }
+}

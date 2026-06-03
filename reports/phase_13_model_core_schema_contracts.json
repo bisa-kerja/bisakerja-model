@@ -1,0 +1,225 @@
+{
+  "boundary_policy": "Model-core notebooks may emit only model-owned signals. Backend/API wrapper owns auth, persistence, hydration, product copy assembly, topActionables, and sectionReviews.",
+  "generated_at": "2026-06-02T04:44:56.398970+00:00",
+  "model_core_output_schemas": {
+    "atsFriendliness": {
+      "blocked_fields": [
+        "rewrittenCv",
+        "sectionReviews",
+        "topActionables",
+        "storageUrl",
+        "rawFileBytes"
+      ],
+      "owner": "model-core",
+      "properties": {
+        "confidenceNotes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "detectedIssues": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "score": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "score",
+        "detectedIssues",
+        "confidenceNotes"
+      ],
+      "schema_version": "model-core-ats-friendliness-v1",
+      "type": "object"
+    },
+    "jobFitAlignment": {
+      "blocked_fields": [
+        "topActionables",
+        "sectionReviews",
+        "jobDetails",
+        "hydratedJobDetails",
+        "auth",
+        "persistence"
+      ],
+      "owner": "model-core",
+      "properties": {
+        "confidenceNotes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "matchedSkills": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "missingSignals": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "missingSkills": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "score": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "summarySignals": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "score",
+        "summarySignals",
+        "matchedSkills",
+        "missingSkills",
+        "confidenceNotes"
+      ],
+      "schema_version": "model-core-job-fit-alignment-v1",
+      "type": "object"
+    },
+    "overallImpression": {
+      "blocked_fields": [
+        "topActionables",
+        "sectionReviews",
+        "hiringDecision",
+        "salaryClaim",
+        "unsupportedSeniorityClaim"
+      ],
+      "owner": "model-core",
+      "properties": {
+        "confidenceNotes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "evidenceKeys": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "score": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "score",
+        "summary",
+        "evidenceKeys",
+        "confidenceNotes"
+      ],
+      "schema_version": "model-core-overall-impression-v1",
+      "type": "object"
+    },
+    "recommendationRanking": {
+      "blocked_fields": [
+        "title",
+        "company",
+        "companyName",
+        "description",
+        "location",
+        "salary",
+        "visibility",
+        "availability",
+        "hydratedJobDetails"
+      ],
+      "owner": "model-core",
+      "properties": {
+        "jobId": {
+          "type": "string"
+        },
+        "matchLevel": {
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "UNKNOWN"
+          ],
+          "type": "string"
+        },
+        "matchScore": {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "matchedSkills": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "missingSkills": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "rankingSignals": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "jobId",
+        "matchScore",
+        "matchLevel",
+        "matchedSkills",
+        "missingSkills",
+        "rankingSignals"
+      ],
+      "schema_version": "model-core-recommendation-ranking-v1",
+      "type": "object"
+    }
+  },
+  "openapi_reference": {
+    "path": "references/docs/generated/openapi.json",
+    "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e",
+    "title": "Bisakerja Backend API",
+    "version": "0.1.0"
+  },
+  "phase_id": "phase_13_data_snapshot_contract_freezing",
+  "schema_version": "data-snapshot-contract-v1",
+  "wrapper_or_backend_owned_fields": [
+    "OpenAIWrapperCopy",
+    "auth",
+    "availability",
+    "company",
+    "companyName",
+    "hydratedJobDetails",
+    "jobDetails",
+    "persistence",
+    "rawFileBytes",
+    "requestValidation",
+    "sectionReviews",
+    "storageSignedUrl",
+    "title",
+    "topActionables",
+    "visibility"
+  ]
+}

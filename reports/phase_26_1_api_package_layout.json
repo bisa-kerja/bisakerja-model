@@ -1,0 +1,102 @@
+{
+  "phase_id": "phase_26_model_api_loader_inference_endpoint",
+  "step_id": "26.1",
+  "step_name": "API package layout",
+  "status": "complete_redone_backend_aligned",
+  "source_references": [
+    "TODOS.md#Phase-26",
+    "references/docs/generated/openapi.json#/components/schemas/AnalyzeCvMultipartRequest",
+    "references/docs/generated/openapi.json#/components/schemas/CvAnalysis",
+    "references/prisma/schema.prisma#CvAnalysisResult",
+    "references/prisma/schema.prisma#JobRecommendationRun",
+    "references/prisma/schema.prisma#JobRecommendationItem",
+    "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+    "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+    "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+    "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+    "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+    "https://openrouter.ai/docs/quickstart",
+    "https://openrouter.ai/models"
+  ],
+  "created_layout": {
+    "package": "model_api",
+    "modules": [
+      "model_api/__init__.py",
+      "model_api/app.py",
+      "model_api/config.py",
+      "model_api/contracts.py",
+      "model_api/schemas.py",
+      "model_api/artifacts.py",
+      "model_api/custom_objects.py",
+      "model_api/features.py",
+      "model_api/inference.py",
+      "model_api/validators.py",
+      "model_api/errors.py"
+    ],
+    "tests": [
+      "tests/model_api/test_phase_26_layout.py"
+    ],
+    "docs": [
+      "model_api/README.md"
+    ]
+  },
+  "backend_contract_alignment": {
+    "openapi_path": "references/docs/generated/openapi.json",
+    "cv_analyzer_route": "/api/v1/ai/cv-analyzer",
+    "backend_request_schema": "AnalyzeCvMultipartRequest",
+    "backend_response_schema": "CvAnalysis",
+    "backend_schema_version": "cv-analysis-v2",
+    "model_core_schema_versions": [
+      "model-core-cv-analysis-v1",
+      "model-core-candidate-reranking-v1"
+    ],
+    "language_enum": ["id", "en"],
+    "input_mode_enum": ["UPLOAD", "REFERENCE"],
+    "compare_source_enum": ["BOOKMARK", "JOB_SEARCH", "DIRECT_JOB_DETAIL"],
+    "max_model_recommendations": 5,
+    "wrapper_owned_fields_excluded_from_model_core": [
+      "id",
+      "summary prose",
+      "topActionables",
+      "sectionReviews",
+      "jobRecommendations[].title",
+      "jobRecommendations[].companyName",
+      "jobRecommendations[].reason",
+      "jobRecommendations[].nextStep",
+      "generatedCv",
+      "auth",
+      "persistence"
+    ]
+  },
+  "database_contract_alignment": {
+    "schema_path": "references/prisma/schema.prisma",
+    "analysis_language_enum": ["ID", "EN"],
+    "cv_input_mode_enum": ["UPLOAD", "REFERENCE"],
+    "cv_compare_source_enum": ["BOOKMARK", "JOB_SEARCH", "DIRECT_JOB_DETAIL"],
+    "job_recommendation_match_level_enum": ["STRONG", "GOOD", "STRETCH"],
+    "model_api_db_access_added": false
+  },
+  "openrouter_boundary": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "chat_completions_url": "https://openrouter.ai/api/v1/chat/completions",
+    "model_catalog_url": "https://openrouter.ai/models",
+    "default_model_env": "OPENROUTER_MODEL",
+    "default_model": "~openai/gpt-latest",
+    "enabled_by_default": false,
+    "core_inference_external_genai_call_added": false
+  },
+  "boundary_checks": {
+    "legacy_prototype_kept_separate": true,
+    "training_notebook_not_modified": true,
+    "phase_25_artifacts_not_mutated": true,
+    "backend_db_access_added": false,
+    "auth_or_persistence_added": false,
+    "external_genai_call_added_for_core_inference": false,
+    "tensorflow_fastapi_import_required_for_layout_tests": false
+  },
+  "verification": {
+    "command": "python -m unittest tests.model_api.test_phase_26_layout",
+    "status": "pass",
+    "result": "Ran 11 tests in 0.003s; OK"
+  }
+}

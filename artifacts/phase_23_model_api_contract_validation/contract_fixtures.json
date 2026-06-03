@@ -1,0 +1,575 @@
+{
+  "backendMappingExample": {
+    "atsFriendliness": {
+      "score": 84,
+      "summarySource": "backend wrapper renders from detectedIssues"
+    },
+    "jobFitAlignment": {
+      "score": 78,
+      "summarySource": "backend wrapper renders from summarySignals"
+    },
+    "language": {
+      "backend": "id",
+      "modelCore": "ID"
+    },
+    "overallImpression": "backend wrapper may render product-safe string from model-core summary",
+    "targetSchemaVersion": "cv-analysis-v2"
+  },
+  "negative": {
+    "cv_invalid_language": {
+      "compareSource": "JOB_SEARCH",
+      "cv": {
+        "fileId": "cv_file_phase23",
+        "mimeType": "application/pdf",
+        "parser": {
+          "confidence": 0.91,
+          "status": "parsed",
+          "textLength": 4200
+        },
+        "sizeBytes": 524288
+      },
+      "inputMode": "UPLOAD",
+      "inputVersion": "cv-analyzer-v1",
+      "jobRoles": [
+        "Backend Developer",
+        "Software Engineer"
+      ],
+      "language": "JP",
+      "requestId": "req_phase23_cv_ok"
+    },
+    "cv_missing_model_metadata": {
+      "analyzedAt": "2026-06-02T06:07:17.296442+00:00",
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be clearer"
+        ],
+        "evidence": {
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "E5-backed job-fit evidence available"
+        ],
+        "matchedSkills": [
+          "rest api",
+          "postgresql",
+          "typescript"
+        ],
+        "missingSkills": [
+          "deployment evidence"
+        ],
+        "score": 78,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "REST API and PostgreSQL evidence found"
+          }
+        ]
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported seniority or hiring-outcome claim detected"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "ats_parseable_text"
+        ],
+        "score": 80,
+        "summary": "CV shows backend evidence with clear REST API and PostgreSQL signals; deployment evidence is still sparse."
+      },
+      "requestId": "req_phase23_cv_ok",
+      "schemaVersion": "model-core-cv-analysis-v1"
+    },
+    "cv_score_out_of_range": {
+      "analyzedAt": "2026-06-02T06:07:17.296442+00:00",
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be clearer"
+        ],
+        "evidence": {
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "E5-backed job-fit evidence available"
+        ],
+        "matchedSkills": [
+          "rest api",
+          "postgresql",
+          "typescript"
+        ],
+        "missingSkills": [
+          "deployment evidence"
+        ],
+        "score": 101,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "REST API and PostgreSQL evidence found"
+          }
+        ]
+      },
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported seniority or hiring-outcome claim detected"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "ats_parseable_text"
+        ],
+        "score": 80,
+        "summary": "CV shows backend evidence with clear REST API and PostgreSQL signals; deployment evidence is still sparse."
+      },
+      "requestId": "req_phase23_cv_ok",
+      "schemaVersion": "model-core-cv-analysis-v1"
+    },
+    "cv_wrapper_owned_field": {
+      "analyzedAt": "2026-06-02T06:07:17.296442+00:00",
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be clearer"
+        ],
+        "evidence": {
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "E5-backed job-fit evidence available"
+        ],
+        "matchedSkills": [
+          "rest api",
+          "postgresql",
+          "typescript"
+        ],
+        "missingSkills": [
+          "deployment evidence"
+        ],
+        "score": 78,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "REST API and PostgreSQL evidence found"
+          }
+        ]
+      },
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported seniority or hiring-outcome claim detected"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "ats_parseable_text"
+        ],
+        "score": 80,
+        "summary": "CV shows backend evidence with clear REST API and PostgreSQL signals; deployment evidence is still sparse."
+      },
+      "requestId": "req_phase23_cv_ok",
+      "schemaVersion": "model-core-cv-analysis-v1",
+      "topActionables": [
+        "Backend wrapper owns this field"
+      ]
+    },
+    "rerank_duplicate_job": {
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "rankedAt": "2026-06-02T06:07:17.296442+00:00",
+      "recommendations": [
+        {
+          "jobId": "job_backend_1",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job_backend_1",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req_phase23_rank_ok",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "rerank_too_many_items": {
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "rankedAt": "2026-06-02T06:07:17.296442+00:00",
+      "recommendations": [
+        {
+          "jobId": "job_backend_1",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job_fullstack_1",
+          "matchLevel": "good",
+          "matchScore": 76,
+          "matchedSkills": [
+            "typescript",
+            "postgresql"
+          ],
+          "missingSkills": [
+            "react"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.67
+            }
+          ]
+        },
+        {
+          "jobId": "job_backend_1",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job_fullstack_1",
+          "matchLevel": "good",
+          "matchScore": 76,
+          "matchedSkills": [
+            "typescript",
+            "postgresql"
+          ],
+          "missingSkills": [
+            "react"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.67
+            }
+          ]
+        },
+        {
+          "jobId": "job_backend_1",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job_fullstack_1",
+          "matchLevel": "good",
+          "matchScore": 76,
+          "matchedSkills": [
+            "typescript",
+            "postgresql"
+          ],
+          "missingSkills": [
+            "react"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.67
+            }
+          ]
+        }
+      ],
+      "requestId": "req_phase23_rank_ok",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "rerank_unknown_job": {
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "rankedAt": "2026-06-02T06:07:17.296442+00:00",
+      "recommendations": [
+        {
+          "jobId": "job_not_in_candidate_set",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req_phase23_rank_ok",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "rerank_wrapper_owned_field": {
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "rankedAt": "2026-06-02T06:07:17.296442+00:00",
+      "recommendations": [
+        {
+          "jobId": "job_backend_1",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ],
+          "title": "Backend Developer"
+        }
+      ],
+      "requestId": "req_phase23_rank_ok",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    }
+  },
+  "positive": {
+    "candidateRerankingRequest": {
+      "candidateSetId": "candidate_set_phase23",
+      "jobCandidates": [
+        {
+          "jobId": "job_backend_1",
+          "requirements": [
+            "REST API",
+            "PostgreSQL"
+          ],
+          "roleTitle": "Backend Developer",
+          "skills": [
+            "typescript",
+            "postgresql"
+          ]
+        },
+        {
+          "jobId": "job_frontend_1",
+          "requirements": [
+            "React",
+            "CSS"
+          ],
+          "roleTitle": "Frontend Developer",
+          "skills": [
+            "react",
+            "css"
+          ]
+        },
+        {
+          "jobId": "job_fullstack_1",
+          "requirements": [
+            "TypeScript",
+            "PostgreSQL"
+          ],
+          "roleTitle": "Fullstack Developer",
+          "skills": [
+            "typescript",
+            "postgresql",
+            "react"
+          ]
+        }
+      ],
+      "language": "EN",
+      "profile": {
+        "role": "Backend Developer",
+        "skills": [
+          "typescript",
+          "postgresql",
+          "rest api"
+        ]
+      },
+      "requestId": "req_phase23_rank_ok"
+    },
+    "candidateRerankingResponse": {
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "rankedAt": "2026-06-02T06:07:17.296442+00:00",
+      "recommendations": [
+        {
+          "jobId": "job_backend_1",
+          "matchLevel": "strong",
+          "matchScore": 88,
+          "matchedSkills": [
+            "rest api",
+            "postgresql"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "job_fullstack_1",
+          "matchLevel": "good",
+          "matchScore": 76,
+          "matchedSkills": [
+            "typescript",
+            "postgresql"
+          ],
+          "missingSkills": [
+            "react"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.67
+            }
+          ]
+        }
+      ],
+      "requestId": "req_phase23_rank_ok",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "cvAnalysisRequest": {
+      "compareSource": "JOB_SEARCH",
+      "cv": {
+        "fileId": "cv_file_phase23",
+        "mimeType": "application/pdf",
+        "parser": {
+          "confidence": 0.91,
+          "status": "parsed",
+          "textLength": 4200
+        },
+        "sizeBytes": 524288
+      },
+      "inputMode": "UPLOAD",
+      "inputVersion": "cv-analyzer-v1",
+      "jobRoles": [
+        "Backend Developer",
+        "Software Engineer"
+      ],
+      "language": "ID",
+      "requestId": "req_phase23_cv_ok"
+    },
+    "cvAnalysisResponse": {
+      "analyzedAt": "2026-06-02T06:07:17.296442+00:00",
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be clearer"
+        ],
+        "evidence": {
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "E5-backed job-fit evidence available"
+        ],
+        "matchedSkills": [
+          "rest api",
+          "postgresql",
+          "typescript"
+        ],
+        "missingSkills": [
+          "deployment evidence"
+        ],
+        "score": 78,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "REST API and PostgreSQL evidence found"
+          }
+        ]
+      },
+      "model": {
+        "name": "bisakerja-model-core",
+        "version": "phase22-export"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported seniority or hiring-outcome claim detected"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "ats_parseable_text"
+        ],
+        "score": 80,
+        "summary": "CV shows backend evidence with clear REST API and PostgreSQL signals; deployment evidence is still sparse."
+      },
+      "requestId": "req_phase23_cv_ok",
+      "schemaVersion": "model-core-cv-analysis-v1"
+    }
+  }
+}

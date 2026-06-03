@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-06-02T06:21:52.916186+00:00",
+  "items": [
+    {
+      "evidence": "reports/phase_22_calibration_model_card_export.json",
+      "item": "artifact_promotion_manifest_hashed",
+      "passed": true
+    },
+    {
+      "evidence": "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json",
+      "item": "rollback_uses_previous_artifact_manifest_and_model_version",
+      "passed": true
+    },
+    {
+      "evidence": "artifacts/phase_24_reproducibility_final_gate/release_checklist.json",
+      "item": "monitoring_hooks_defined_for_score_distribution_slice_drift_latency_and_fallback_rate",
+      "passed": true
+    },
+    {
+      "evidence": "artifacts/phase_22_calibration_model_card_export/model_card.json",
+      "item": "model_version_registration_uses_model_card_version_and_artifact_hashes",
+      "passed": true
+    },
+    {
+      "evidence": "notebook-only release boundary",
+      "item": "deployment_not_executed_by_training_notebook",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "promotionBoundary": "Notebook produces promotion evidence only; deploy/release remains separate approved operation.",
+  "schemaVersion": "phase-24-release-checklist-v1"
+}

@@ -1,0 +1,17 @@
+{
+  "backend": "sentence-transformers",
+  "blockers": [],
+  "cosine_max": 0.8880079388618469,
+  "cosine_min": 0.7108200192451477,
+  "embedding_dimension": 768,
+  "embedding_model": "intfloat/e5-base-v2",
+  "generated_at": "2026-06-02T04:48:48.955234+00:00",
+  "job_prefix": "passage:",
+  "normalized_embeddings": true,
+  "phase_id": "phase_17_baseline_evaluation_v2",
+  "production_eligible_e5": true,
+  "profile_prefix": "query:",
+  "row_count": 3600,
+  "schema_version": "baseline-evaluation-v2",
+  "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
+}

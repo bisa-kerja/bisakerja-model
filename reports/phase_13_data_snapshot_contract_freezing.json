@@ -1,0 +1,388 @@
+{
+  "acceptance": {
+    "dataset_snapshot_regenerates_from_clean_kernel": true,
+    "every_training_input_file_has_hash_row_count_schema_version_owner": true,
+    "model_core_schema_aligned_with_openapi_boundaries": true,
+    "unsafe_wrapper_backend_fields_blocked": true
+  },
+  "generated_at": "2026-06-02T04:44:56.423354+00:00",
+  "model_card_template": {
+    "path": "reports/model_card_jobfit_v2_template.json",
+    "sha256": "e8c44b66fa487138d8d4080077ba69fe44ac4bcea202a9f465d2297cd0931402"
+  },
+  "phase_id": "phase_13_data_snapshot_contract_freezing",
+  "runtime": {
+    "pandas": "3.0.3",
+    "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.2",
+    "seed": 202613
+  },
+  "schema_contract_report": {
+    "path": "reports/phase_13_model_core_schema_contracts.json",
+    "sha256": "74d284763860704a5b8d82cf95d00eaae8ecf50a85668ab47ab058ebf638350b"
+  },
+  "snapshot_manifest_report": {
+    "path": "reports/phase_13_snapshot_manifests.json",
+    "sha256": "6ce9dad49415cb95efd29bb3d18e31dd4b9f609dc9c78f4ef3285fa08ff63153"
+  },
+  "source_schema_registry": {
+    "candidate_job_sets_v1": {
+      "available_in_repo": false,
+      "format": "jsonl",
+      "owner": "backend-api",
+      "path": null,
+      "primary_key": [
+        "candidate_set_id",
+        "job_id"
+      ],
+      "required_columns": [
+        "request_id",
+        "candidate_set_id",
+        "profile_id",
+        "job_id",
+        "candidate_rank",
+        "retrieval_source",
+        "created_at"
+      ],
+      "safe_training_use": "Use only backend-provided candidate IDs for ranking experiments; backend remains owner of job detail hydration and availability.",
+      "schema_version": "data-snapshot-contract-v1"
+    },
+    "cv_text_v1": {
+      "available_in_repo": false,
+      "format": "table-or-jsonl",
+      "owner": "model-training",
+      "path": null,
+      "primary_key": [
+        "cv_id"
+      ],
+      "required_columns": [
+        "cv_id",
+        "profile_id",
+        "source_type",
+        "raw_text",
+        "parser_version",
+        "language_signal",
+        "created_at"
+      ],
+      "safe_training_use": "Use parsed text and parser metadata only after PII removal and ownership checks upstream.",
+      "schema_version": "data-snapshot-contract-v1",
+      "unsafe_columns": [
+        "email",
+        "phone",
+        "address",
+        "raw_file_bytes",
+        "storage_signed_url"
+      ]
+    },
+    "jobs_v1": {
+      "available_in_repo": true,
+      "format": "csv",
+      "language_column": "language_signal",
+      "optional_columns": [
+        "company_name",
+        "normalized_title",
+        "category",
+        "work_type",
+        "employment_type",
+        "province",
+        "city",
+        "salary_min",
+        "salary_max",
+        "salary_currency",
+        "source_posted_at"
+      ],
+      "owner": "model-training",
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "primary_key": [
+        "job_id"
+      ],
+      "required_columns": [
+        "job_id",
+        "title",
+        "description",
+        "requirements_concat",
+        "skills_clean",
+        "experience_level",
+        "language_signal",
+        "status"
+      ],
+      "safe_training_use": "Use job text, normalized role, skills, requirements, experience level, language, and coarse location/work-type features. Do not train on company identity as a primary fit signal.",
+      "schema_version": "data-snapshot-contract-v1"
+    },
+    "legacy_pairs_v1": {
+      "available_in_repo": true,
+      "format": "parquet",
+      "owner": "model-training",
+      "path": "legacy/artifacts/pairs.parquet",
+      "primary_key": [
+        "profile_id",
+        "job_id"
+      ],
+      "required_columns": [
+        "profile_id",
+        "job_id",
+        "profile_text",
+        "job_text",
+        "profile_skills",
+        "job_skills",
+        "profile_exp",
+        "job_exp",
+        "fit_score"
+      ],
+      "safe_training_use": "Prototype weak-label evidence only. Do not use as production training evidence after pairs_v2 is generated.",
+      "schema_version": "data-snapshot-contract-v1",
+      "score_column": "fit_score",
+      "score_range": {
+        "max": 1.0,
+        "min": 0.0
+      }
+    },
+    "manual_labels_v1": {
+      "available_in_repo": false,
+      "format": "table-or-jsonl",
+      "owner": "model-training-reviewers",
+      "path": null,
+      "primary_key": [
+        "label_id"
+      ],
+      "required_columns": [
+        "label_id",
+        "entity_type",
+        "entity_id",
+        "reviewer_id",
+        "label_version",
+        "score",
+        "evidence_notes",
+        "created_at"
+      ],
+      "safe_training_use": "Evaluation-only until governance explicitly approves another use. Do not leak reviewer labels into model input features.",
+      "schema_version": "data-snapshot-contract-v1",
+      "score_range": {
+        "max": 100,
+        "min": 0
+      }
+    },
+    "parsed_cv_sections_v1": {
+      "available_in_repo": false,
+      "format": "table-or-jsonl",
+      "owner": "model-training",
+      "path": null,
+      "primary_key": [
+        "cv_id",
+        "section_name"
+      ],
+      "required_columns": [
+        "cv_id",
+        "section_name",
+        "section_text",
+        "confidence",
+        "parser_version"
+      ],
+      "safe_training_use": "Use section text and parser confidence for ATS and summary evidence only.",
+      "schema_version": "data-snapshot-contract-v1"
+    },
+    "profiles_v1": {
+      "available_in_repo": true,
+      "format": "csv",
+      "optional_columns": [],
+      "owner": "model-training",
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "primary_key": [
+        "ID"
+      ],
+      "required_columns": [
+        "ID",
+        "Skills",
+        "Projects",
+        "Education",
+        "Experience",
+        "Job_Role",
+        "Required_Skills"
+      ],
+      "safe_training_use": "Use skills, projects, education band, experience band, target role, and required-skill text. Treat profile ID only as split/group key.",
+      "schema_version": "data-snapshot-contract-v1"
+    }
+  },
+  "status": "complete",
+  "validation_checks": [
+    {
+      "details": {
+        "missing_required_columns": []
+      },
+      "name": "jobs_v1: required columns present",
+      "passed": true
+    },
+    {
+      "details": {
+        "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565"
+      },
+      "name": "jobs_v1: snapshot hash present",
+      "passed": true
+    },
+    {
+      "details": {
+        "row_count": 2073
+      },
+      "name": "jobs_v1: row count positive",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_id_rows": 0
+      },
+      "name": "jobs_v1: primary key has no missing values",
+      "passed": true
+    },
+    {
+      "details": {
+        "duplicate_rows": 0
+      },
+      "name": "jobs_v1: primary key has no duplicates",
+      "passed": true
+    },
+    {
+      "details": {
+        "unsupported_languages": []
+      },
+      "name": "jobs_v1: supported language values",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_required_columns": []
+      },
+      "name": "profiles_v1: required columns present",
+      "passed": true
+    },
+    {
+      "details": {
+        "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494"
+      },
+      "name": "profiles_v1: snapshot hash present",
+      "passed": true
+    },
+    {
+      "details": {
+        "row_count": 69929
+      },
+      "name": "profiles_v1: row count positive",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_id_rows": 0
+      },
+      "name": "profiles_v1: primary key has no missing values",
+      "passed": true
+    },
+    {
+      "details": {
+        "duplicate_rows": 0
+      },
+      "name": "profiles_v1: primary key has no duplicates",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_required_columns": []
+      },
+      "name": "legacy_pairs_v1: required columns present",
+      "passed": true
+    },
+    {
+      "details": {
+        "sha256": "00126d53904c136a5106e8c9fe68f837d6707298f0435c2437309f482d7e0864"
+      },
+      "name": "legacy_pairs_v1: snapshot hash present",
+      "passed": true
+    },
+    {
+      "details": {
+        "row_count": 30000
+      },
+      "name": "legacy_pairs_v1: row count positive",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_id_rows": 0
+      },
+      "name": "legacy_pairs_v1: primary key has no missing values",
+      "passed": true
+    },
+    {
+      "details": {
+        "duplicate_rows": 0
+      },
+      "name": "legacy_pairs_v1: primary key has no duplicates",
+      "passed": true
+    },
+    {
+      "details": {
+        "invalid_scores": 0,
+        "score_range": {
+          "max": 1.0,
+          "min": 0.0
+        }
+      },
+      "name": "legacy_pairs_v1: score range valid",
+      "passed": true
+    },
+    {
+      "details": {
+        "unsafe_overlap": []
+      },
+      "name": "jobFitAlignment: no blocked fields in properties",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_required_properties": []
+      },
+      "name": "jobFitAlignment: required properties defined",
+      "passed": true
+    },
+    {
+      "details": {
+        "unsafe_overlap": []
+      },
+      "name": "atsFriendliness: no blocked fields in properties",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_required_properties": []
+      },
+      "name": "atsFriendliness: required properties defined",
+      "passed": true
+    },
+    {
+      "details": {
+        "unsafe_overlap": []
+      },
+      "name": "overallImpression: no blocked fields in properties",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_required_properties": []
+      },
+      "name": "overallImpression: required properties defined",
+      "passed": true
+    },
+    {
+      "details": {
+        "unsafe_overlap": []
+      },
+      "name": "recommendationRanking: no blocked fields in properties",
+      "passed": true
+    },
+    {
+      "details": {
+        "missing_required_properties": []
+      },
+      "name": "recommendationRanking: required properties defined",
+      "passed": true
+    }
+  ]
+}

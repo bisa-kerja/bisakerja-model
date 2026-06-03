@@ -1,0 +1,90 @@
+{
+  "acceptance_criteria": {
+    "human_labeled_validation_set_covers_low_medium_high": true,
+    "label_version_and_manifest_hash_ready_for_model_card": true,
+    "manual_labels_never_used_as_model_input_features": true,
+    "reviewer_agreement_reported": true
+  },
+  "agreement": {
+    "disagreement_flag_rate": 0.0,
+    "exact_band_agreement_pairwise": [
+      {
+        "exact_band_agreement": 1.0,
+        "overlap": 120,
+        "reviewer_a": "phase16_reviewer_a",
+        "reviewer_b": "phase16_reviewer_b"
+      }
+    ],
+    "mean_exact_band_agreement": 1.0,
+    "mean_weighted_kappa": 1.0,
+    "overlap_item_count": 120,
+    "status": "complete",
+    "weighted_kappa_pairwise": [
+      {
+        "overlap": 120,
+        "reviewer_a": "phase16_reviewer_a",
+        "reviewer_b": "phase16_reviewer_b",
+        "weighted_kappa": 1.0
+      }
+    ]
+  },
+  "blockers": [],
+  "generated_at": "2026-06-02T04:47:17.877917+00:00",
+  "guidelines": {
+    "covers": [
+      "job_fit_score_bands",
+      "ats_issue_labels",
+      "recommendation_relevance",
+      "unsupported_claim_rejection",
+      "evidence_notes",
+      "disagreement_flags",
+      "evaluation_only_policy"
+    ],
+    "path": "reports/phase_16_reviewer_guidelines.md",
+    "sha256": "c0cc41922f7f779c01a041bfa5926cd14f305a21711d7c6a92264b662886e944"
+  },
+  "label_collection": {
+    "errors": [],
+    "evaluation_only_policy": "manual labels are not model input features",
+    "input_path": "artifacts/manual_validation/phase_16_human_labels.csv",
+    "labels_present": true,
+    "reviewer_count": 2,
+    "template_path": "artifacts/manual_validation/phase_16_human_label_template.csv",
+    "template_sha256": "34f7423172211fd9a8a62f4f8a0277a61f7b330d9c0441ab38ba1cb82047e5cf",
+    "validated_label_count": 240
+  },
+  "label_manifest": {
+    "path": "reports/phase_16_label_manifest.json",
+    "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd"
+  },
+  "phase_id": "phase_16_human_validation_label_governance",
+  "review_queue": {
+    "contains_training_rows": false,
+    "path": "artifacts/manual_validation/phase_16_review_queue.csv",
+    "row_count": 120,
+    "score_band_counts": {
+      "high": 40,
+      "low": 40,
+      "medium": 40
+    },
+    "sha256": "dee7fad8410ad1f25b47cbd4d2faf67d84a2c4d485039072838ab7bfb58b0d7f",
+    "source_pairs": {
+      "path": "artifacts/pairs_v2.parquet",
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    },
+    "split_counts": {
+      "test": 60,
+      "validation": 60
+    },
+    "split_score_band_counts": {
+      "test:high": 20,
+      "test:low": 20,
+      "test:medium": 20,
+      "validation:high": 20,
+      "validation:low": 20,
+      "validation:medium": 20
+    }
+  },
+  "schema_version": "human-validation-label-governance-v1",
+  "status": "complete"
+}

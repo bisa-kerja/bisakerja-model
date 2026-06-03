@@ -1,0 +1,28 @@
+{
+  "backend": "sentence_transformers_e5",
+  "blockers": [],
+  "embedding_model": "intfloat/e5-base-v2",
+  "exception_message": null,
+  "exception_type": null,
+  "generated_at": "2026-06-02T05:18:16.590370+00:00",
+  "job_prefix": "passage:",
+  "normalized_embeddings": true,
+  "pairs_path": "artifacts/pairs_v2.parquet",
+  "pairs_sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+  "phase_id": "phase_19_5_jobfit_blocker_remediation",
+  "prior_phase17_backend": "sentence-transformers",
+  "prior_phase17_production_eligible_e5": true,
+  "prior_phase18_backend": "sentence-transformers",
+  "prior_phase18_production_eligible_e5": true,
+  "production_eligible_e5": true,
+  "profile_prefix": "query:",
+  "requirements_path": "training/requirements.txt",
+  "row_count": 3600,
+  "sample_embedding_shape": [
+    2,
+    768
+  ],
+  "sample_norms_ok": true,
+  "schema_version": "jobfit-blocker-remediation-v1",
+  "sentence_transformers_pinned": true
+}

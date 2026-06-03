@@ -1,0 +1,229 @@
+{
+  "fallback_examples": [
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "empty_parse_risk",
+          "parseability_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 0,
+          "extractionCoverage": 0.0,
+          "layoutRisk": "critical",
+          "parserError": true,
+          "sectionCount": 0
+        },
+        "fallback": true,
+        "score": 35
+      },
+      "fixtureId": "ATS19-scanned_pdf-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "empty_parse_risk",
+          "parseability_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 0,
+          "extractionCoverage": 0.0,
+          "layoutRisk": "critical",
+          "parserError": true,
+          "sectionCount": 0
+        },
+        "fallback": true,
+        "score": 35
+      },
+      "fixtureId": "ATS19-scanned_pdf-02",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "empty_parse_risk",
+          "parseability_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 0,
+          "extractionCoverage": 0.0,
+          "layoutRisk": "critical",
+          "parserError": true,
+          "sectionCount": 0
+        },
+        "fallback": true,
+        "score": 35
+      },
+      "fixtureId": "ATS19-scanned_pdf-03",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    }
+  ],
+  "forbidden_output_fields": [
+    "topActionables",
+    "sectionReviews",
+    "overallImpression",
+    "jobFitAlignment"
+  ],
+  "generated_at": "2026-06-02T04:52:49.418458+00:00",
+  "issue_error_count": 0,
+  "issue_errors": [],
+  "output_contract_examples": [
+    {
+      "atsFriendliness": {
+        "detectedIssues": [],
+        "evidence": {
+          "extractedCharacterCount": 127,
+          "extractionCoverage": 1.0,
+          "layoutRisk": "medium",
+          "parserError": false,
+          "sectionCount": 4
+        },
+        "fallback": false,
+        "score": 100
+      },
+      "fixtureId": "ATS19-docx-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "formatting_risk_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 3693,
+          "extractionCoverage": 1.0,
+          "layoutRisk": "medium",
+          "parserError": false,
+          "sectionCount": 5
+        },
+        "fallback": false,
+        "score": 82
+      },
+      "fixtureId": "ATS19-long_cv-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "formatting_risk_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 123,
+          "extractionCoverage": 1.0,
+          "layoutRisk": "high",
+          "parserError": false,
+          "sectionCount": 4
+        },
+        "fallback": false,
+        "score": 82
+      },
+      "fixtureId": "ATS19-multi_column_pdf-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [],
+        "evidence": {
+          "extractedCharacterCount": 170,
+          "extractionCoverage": 1.0,
+          "layoutRisk": "low",
+          "parserError": false,
+          "sectionCount": 5
+        },
+        "fallback": false,
+        "score": 100
+      },
+      "fixtureId": "ATS19-normal_pdf-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "empty_parse_risk",
+          "parseability_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 0,
+          "extractionCoverage": 0.0,
+          "layoutRisk": "critical",
+          "parserError": true,
+          "sectionCount": 0
+        },
+        "fallback": true,
+        "score": 35
+      },
+      "fixtureId": "ATS19-scanned_pdf-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "metric_evidence_issue",
+          "section_completeness_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 73,
+          "extractionCoverage": 1.0,
+          "layoutRisk": "medium",
+          "parserError": false,
+          "sectionCount": 3
+        },
+        "fallback": false,
+        "score": 72
+      },
+      "fixtureId": "ATS19-short_cv-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    },
+    {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "formatting_risk_issue",
+          "metric_evidence_issue"
+        ],
+        "evidence": {
+          "extractedCharacterCount": 122,
+          "extractionCoverage": 1.0,
+          "layoutRisk": "high",
+          "parserError": false,
+          "sectionCount": 4
+        },
+        "fallback": false,
+        "score": 72
+      },
+      "fixtureId": "ATS19-table_heavy_pdf-01",
+      "model": {
+        "name": "phase_19_ats_friendliness_benchmark_scorer",
+        "version": "ats-benchmark-scorer-v1"
+      }
+    }
+  ],
+  "phase_id": "phase_19_ats_friendliness_benchmark_scorer",
+  "schema_version": "ats-benchmark-scorer-v1"
+}

@@ -1,0 +1,133 @@
+{
+  "acceptance_criteria": {
+    "mae_improves_at_least_20_percent_versus_best_baseline": true,
+    "model_uses_intfloat_e5_base_v2_and_grounded_outputs_only": true,
+    "r2_positive_on_validation_test": true,
+    "spearman_and_score_band_agreement_meet_release_thresholds": true
+  },
+  "blockers": [],
+  "gates": {
+    "e5": {
+      "backend": "sentence-transformers",
+      "passed": true,
+      "production_eligible_e5": true,
+      "requires_intfloat_e5_base_v2": true
+    },
+    "input_boundary": {
+      "approved_inputs": [
+        "e5_cosine",
+        "experience_gap_years",
+        "experience_match",
+        "language",
+        "requirement_coverage",
+        "role_match",
+        "skill_overlap"
+      ],
+      "passed": true,
+      "slice_only_metadata": [
+        "pair_type",
+        "role_family",
+        "experience_band",
+        "score_band",
+        "target_band"
+      ],
+      "violations": []
+    },
+    "mae": {
+      "test_actual_mae": 1.2134453410559114,
+      "test_passed": true,
+      "test_required_mae_at_most": 1.6687659494877254,
+      "validation_actual_mae": 1.2127512022719138,
+      "validation_passed": true,
+      "validation_required_mae_at_most": 1.5018464151567643
+    },
+    "r2": {
+      "passed": true,
+      "test_actual": 0.9888024700016572,
+      "threshold": 0.0,
+      "validation_actual": 0.9840818513078482
+    },
+    "spearman_band": {
+      "band_agreement_threshold": 0.75,
+      "passed": true,
+      "spearman_threshold": 0.7,
+      "test_band_agreement": 0.9777777777777777,
+      "test_spearman": 0.9941647476914681,
+      "validation_band_agreement": 0.9796296296296296,
+      "validation_spearman": 0.9942644428226389
+    }
+  },
+  "generated_at": "2026-06-02T05:17:58.379742+00:00",
+  "notes": [
+    "Manual labels are evaluation-only and were not used as training features.",
+    "Pair metadata is used for slices only, not as model input.",
+    "Wrapper-owned copy and frontend hydration remain outside the model artifact."
+  ],
+  "phase_id": "phase_18_jobfit_training_v2",
+  "run_manifest": {
+    "path": "reports/phase_18_run_manifest.json",
+    "sha256": "4cf1637cde417b105e2701d5e2487aa0fa4af6ff5c1fd29b71da6256f4550938"
+  },
+  "schema_version": "jobfit-training-v2",
+  "selected_model": "high_recall_calibrated_scorer",
+  "selected_model_metrics": {
+    "prediction_column": "pred_high_recall_calibrated_scorer",
+    "splits": {
+      "test": {
+        "high_fit_recall": 1.0,
+        "mae": 1.2134453410559114,
+        "predicted_high_count": 101,
+        "r2": 0.9888024700016572,
+        "rmse": 3.0846506825968403,
+        "row_count": 540,
+        "score_band_agreement": 0.9777777777777777,
+        "spearman": 0.9941647476914681,
+        "true_high_count": 90
+      },
+      "train": {
+        "high_fit_recall": 1.0,
+        "mae": 0.9123722731155846,
+        "predicted_high_count": 453,
+        "r2": 0.9927678418608983,
+        "rmse": 2.4830223217833773,
+        "row_count": 2520,
+        "score_band_agreement": 0.9865079365079366,
+        "spearman": 0.9947905569849019,
+        "true_high_count": 420
+      },
+      "validation": {
+        "high_fit_recall": 1.0,
+        "mae": 1.2127512022719138,
+        "predicted_high_count": 99,
+        "r2": 0.9840818513078482,
+        "rmse": 3.736960603319374,
+        "row_count": 540,
+        "score_band_agreement": 0.9796296296296296,
+        "spearman": 0.9942644428226389,
+        "true_high_count": 90
+      }
+    }
+  },
+  "source": {
+    "jobs": {
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "row_count": 2073,
+      "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565"
+    },
+    "pairs_v2": {
+      "path": "artifacts/pairs_v2.parquet",
+      "row_count": 3600,
+      "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+    },
+    "phase17_floor": {
+      "path": "reports/phase_17_model_improvement_floor.json",
+      "sha256": "32ff56fb5d2a65658fff254fd97036bd0088e384f3253e221e593fcbeecf1aff"
+    },
+    "profiles": {
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "row_count": 69929,
+      "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494"
+    }
+  },
+  "status": "complete"
+}

@@ -1,0 +1,74 @@
+{
+  "acceptance": {
+    "candidate_membership_preserved": true,
+    "deterministic_placeholder_summary_signals_exported": true,
+    "genai_not_training_signal": true,
+    "no_external_genai_calls_in_notebook_code": true,
+    "openapi_wrapper_constraints_resolved": true,
+    "training_only_genai_boundary_documented": true,
+    "wrapper_handoff_contract_exported": true
+  },
+  "artifact_manifest": {
+    "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json"
+  },
+  "boundary_summary": {
+    "api_runtime_separate": true,
+    "external_genai_calls_from_training_notebook": false,
+    "genai_as_label_or_feature": false,
+    "genai_role": "secondary_api_wrapper_feature",
+    "training_role": "deterministic_model_training_export_and_model_core_handoff"
+  },
+  "export_hashes": {
+    "deterministic_summary_signal_placeholders": "df73748b27ae87f4875f319fa017e13e867e15924ac125ed1ae19c21e82e3eab",
+    "genai_wrapper_handoff_contract": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
+    "training_only_genai_boundary": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06"
+  },
+  "export_paths": {
+    "deterministic_summary_signal_placeholders": "artifacts/phase_25_tensorflow_training_delivery/export/deterministic_summary_signal_placeholders.json",
+    "genai_wrapper_handoff_contract": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+    "report": "reports/phase_25_training_only_genai_boundary.json",
+    "training_only_genai_boundary": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json"
+  },
+  "external_genai_findings": [],
+  "generated_at": "2026-06-03T01:45:40.727565+00:00",
+  "model_card": {
+    "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+    "sha256": "902d3b6653e4aafe6ef458446b4b56a7c14d6877ade96846e43fe4682b06755e"
+  },
+  "notes": [
+    "Training exports deterministic summary signals only; API wrapper owns GenAI prose generation.",
+    "No external GenAI service is imported or called by notebook code.",
+    "GenAI output must not change model scores, candidate IDs, evidence keys, or candidate membership."
+  ],
+  "openapi_wrapper_constraints": {
+    "generatedCv": {
+      "current_contract": "available=false unless implemented outside training",
+      "owner": "api-wrapper-or-separate-feature"
+    },
+    "jobRecommendations": {
+      "maxItems": 5,
+      "owner": "backend-hydration-plus-api-wrapper-copy"
+    },
+    "language_enum": [
+      "id",
+      "en"
+    ],
+    "sectionReviews": {
+      "owner": "api-wrapper-genai-secondary",
+      "required": [
+        "sectionName",
+        "analysis",
+        "actionPoints",
+        "whyItsImportantForYou"
+      ]
+    },
+    "topActionables": {
+      "maxItems": 3,
+      "minItems": 1,
+      "owner": "api-wrapper-genai-secondary"
+    }
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-training-only-genai-boundary-v1",
+  "status": "complete"
+}

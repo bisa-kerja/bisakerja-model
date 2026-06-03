@@ -1,0 +1,423 @@
+{
+  "artifacts": [
+    {
+      "artifact_id": "score_calibration",
+      "consumer": "Model API handoff, final export gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.10",
+      "reproducibility_references": {
+        "dataset_manifest": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "git_commit": "1a6dd0c",
+        "label_manifest": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+        "split_seed": 202621
+      },
+      "required_for_inference": true,
+      "role": "phase25_export",
+      "schema_version": "phase-25-score-calibration-v1",
+      "sha256": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
+      "size_bytes": 12943
+    },
+    {
+      "artifact_id": "calibration_tables_csv",
+      "consumer": "Model API handoff, final export gate, reproducibility review",
+      "format": "csv",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/score_calibration_tables.csv",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.10",
+      "reproducibility_references": {
+        "dataset_manifest": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "git_commit": "1a6dd0c",
+        "label_manifest": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+        "split_seed": 202621
+      },
+      "required_for_inference": false,
+      "role": "phase25_export",
+      "schema_version": null,
+      "sha256": "1236b81ed4366331dc6e2904fbef0ea6d9a85d1ae3a9f6f5420c02dd8e1b8cf1",
+      "size_bytes": 2492
+    },
+    {
+      "artifact_id": "feature_config",
+      "consumer": "Model API handoff, final export gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.10",
+      "reproducibility_references": {
+        "dataset_manifest": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "git_commit": "1a6dd0c",
+        "label_manifest": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+        "split_seed": 202621
+      },
+      "required_for_inference": true,
+      "role": "phase25_export",
+      "schema_version": "phase-25-feature-config-export-v1",
+      "sha256": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
+      "size_bytes": 2741
+    },
+    {
+      "artifact_id": "label_manifest",
+      "consumer": "Model API handoff, final export gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.10",
+      "reproducibility_references": {
+        "dataset_manifest": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "git_commit": "1a6dd0c",
+        "label_manifest": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+        "split_seed": 202621
+      },
+      "required_for_inference": false,
+      "role": "phase25_export",
+      "schema_version": "phase-25-label-manifest-v1",
+      "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
+      "size_bytes": 5900
+    },
+    {
+      "artifact_id": "dataset_manifest",
+      "consumer": "Model API handoff, final export gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.10",
+      "reproducibility_references": {
+        "dataset_manifest": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "git_commit": "1a6dd0c",
+        "label_manifest": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+        "split_seed": 202621
+      },
+      "required_for_inference": false,
+      "role": "phase25_export",
+      "schema_version": "phase-25-dataset-manifest-v1",
+      "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
+      "size_bytes": 7633
+    },
+    {
+      "artifact_id": "source_predictions",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "npz",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": false,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "2aa9a5b4266252dfe4dee634e44e0eb5713123bc1deff714cd9da3ace25be16a",
+      "size_bytes": 83701
+    },
+    {
+      "artifact_id": "source_feature_matrix",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "npz",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": false,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5",
+      "size_bytes": 105262
+    },
+    {
+      "artifact_id": "source_trained_candidate_model",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "keras",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": true,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "size_bytes": 80901
+    },
+    {
+      "artifact_id": "source_training_history",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "csv",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": false,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "432705c47b2dd867ac4196c69d88314c1f90597fb90198668771810d1c29954e",
+      "size_bytes": 17538
+    },
+    {
+      "artifact_id": "source_tensorflow_feature_config",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": true,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
+      "size_bytes": 2029
+    },
+    {
+      "artifact_id": "source_ats_benchmark",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "csv",
+      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": false,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17",
+      "size_bytes": 16367
+    },
+    {
+      "artifact_id": "source_candidate_reranking",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "json",
+      "path": "reports/phase_21_backend_candidate_reranking.json",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": false,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
+      "size_bytes": 18519
+    },
+    {
+      "artifact_id": "source_phase23_contract_fixtures",
+      "consumer": "Step 25.10 calibration/model-card export",
+      "format": "json",
+      "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
+      "producer": "earlier Phase 25 or referenced production-track phase",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
+      },
+      "required_for_inference": false,
+      "role": "source_evidence",
+      "schema_version": null,
+      "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3",
+      "size_bytes": 14874
+    },
+    {
+      "artifact_id": "final_keras_model",
+      "consumer": "Model API runtime, final gate, reproducibility review",
+      "format": "keras",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.11",
+      "reproducibility_references": {
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "training_report": "reports/phase_25_training_evaluation_loop.json"
+      },
+      "required_for_inference": true,
+      "role": "final_model_export",
+      "schema_version": null,
+      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "size_bytes": 80901
+    },
+    {
+      "artifact_id": "clean_reload_script",
+      "consumer": "Model API runtime, final gate, reproducibility review",
+      "format": "py",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.11",
+      "reproducibility_references": {
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "training_report": "reports/phase_25_training_evaluation_loop.json"
+      },
+      "required_for_inference": false,
+      "role": "verification",
+      "schema_version": null,
+      "sha256": "3dc2c703929fa460acdf5468cf4e2abfccc3993f816cbe9ddcf97495eb09b657",
+      "size_bytes": 7375
+    },
+    {
+      "artifact_id": "inference_smoke_fixture",
+      "consumer": "Model API runtime, final gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.11",
+      "reproducibility_references": {
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "training_report": "reports/phase_25_training_evaluation_loop.json"
+      },
+      "required_for_inference": false,
+      "role": "verification",
+      "schema_version": null,
+      "sha256": "d0d0558cb16f3db60c379c11c4d2c33f057c64f6fdd646dd00555113052ef94d",
+      "size_bytes": 1515
+    },
+    {
+      "artifact_id": "tensorflow_artifact_export",
+      "consumer": "Model API runtime, final gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.11",
+      "reproducibility_references": {
+        "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "training_report": "reports/phase_25_training_evaluation_loop.json"
+      },
+      "required_for_inference": true,
+      "role": "final_model_export_manifest",
+      "schema_version": "phase-25-tensorflow-artifact-export-v1",
+      "sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe",
+      "size_bytes": 7098
+    },
+    {
+      "artifact_id": "model_api_handoff_fixtures",
+      "consumer": "Model API wrapper, final gate, contract validation",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.12",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "openapi": "references/docs/generated/openapi.json",
+        "tensorflow_artifact_export": "reports/phase_25_tensorflow_artifact_export.json"
+      },
+      "required_for_inference": true,
+      "role": "model_api_handoff",
+      "schema_version": "phase-25-model-api-handoff-fixtures-v1",
+      "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7",
+      "size_bytes": 23261
+    },
+    {
+      "artifact_id": "model_api_handoff_validation",
+      "consumer": "Model API wrapper, final gate, contract validation",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.12",
+      "reproducibility_references": {
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "openapi": "references/docs/generated/openapi.json",
+        "tensorflow_artifact_export": "reports/phase_25_tensorflow_artifact_export.json"
+      },
+      "required_for_inference": true,
+      "role": "model_api_handoff_validation",
+      "schema_version": "phase-25-model-api-handoff-fixtures-v1",
+      "sha256": "41259486b941a58ec9e7b6ed760a386aa5371edee911732c17340ed5a98836e2",
+      "size_bytes": 2280
+    },
+    {
+      "artifact_id": "phase25_model_api_handoff_report",
+      "consumer": "Final gate and review",
+      "format": "json",
+      "path": "reports/phase_25_model_api_handoff_fixtures.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.12",
+      "reproducibility_references": {
+        "api_handoff_fixtures": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json"
+      },
+      "required_for_inference": false,
+      "role": "report",
+      "schema_version": "phase-25-model-api-handoff-fixtures-v1",
+      "sha256": "1ce32a785459f8a9e27ad3858b0beb09a506f55896e283e144a4f30d5a636846",
+      "size_bytes": 4152
+    },
+    {
+      "artifact_id": "training_only_genai_boundary",
+      "consumer": "Model API wrapper, final gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.13",
+      "reproducibility_references": {
+        "model_api_handoff_fixtures": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "openapi": "references/docs/generated/openapi.json"
+      },
+      "required_for_inference": true,
+      "role": "genai_boundary",
+      "schema_version": "phase-25-training-only-genai-boundary-v1",
+      "sha256": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06",
+      "size_bytes": 10877
+    },
+    {
+      "artifact_id": "genai_wrapper_handoff_contract",
+      "consumer": "Model API wrapper, final gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.13",
+      "reproducibility_references": {
+        "model_api_handoff_fixtures": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "openapi": "references/docs/generated/openapi.json"
+      },
+      "required_for_inference": true,
+      "role": "api_wrapper_handoff",
+      "schema_version": "phase-25-training-only-genai-boundary-v1",
+      "sha256": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
+      "size_bytes": 4948
+    },
+    {
+      "artifact_id": "deterministic_summary_signal_placeholders",
+      "consumer": "Model API wrapper, final gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/deterministic_summary_signal_placeholders.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.13",
+      "reproducibility_references": {
+        "model_api_handoff_fixtures": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "openapi": "references/docs/generated/openapi.json"
+      },
+      "required_for_inference": false,
+      "role": "api_wrapper_handoff_fixture",
+      "schema_version": "phase-25-training-only-genai-boundary-v1",
+      "sha256": "df73748b27ae87f4875f319fa017e13e867e15924ac125ed1ae19c21e82e3eab",
+      "size_bytes": 3862
+    },
+    {
+      "artifact_id": "model_card",
+      "consumer": "Model API wrapper, final gate, reproducibility review",
+      "format": "json",
+      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.13",
+      "reproducibility_references": {
+        "model_api_handoff_fixtures": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+        "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "openapi": "references/docs/generated/openapi.json"
+      },
+      "required_for_inference": true,
+      "role": "phase25_export",
+      "schema_version": "phase-25-model-card-v1",
+      "sha256": "902d3b6653e4aafe6ef458446b4b56a7c14d6877ade96846e43fe4682b06755e",
+      "size_bytes": 9909
+    },
+    {
+      "artifact_id": "phase25_training_only_genai_boundary_report",
+      "consumer": "final gate, reproducibility review",
+      "format": "json",
+      "path": "reports/phase_25_training_only_genai_boundary.json",
+      "producer": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb#step-25.13",
+      "reproducibility_references": {
+        "training_only_genai_boundary": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json"
+      },
+      "required_for_inference": false,
+      "role": "report",
+      "schema_version": "phase-25-training-only-genai-boundary-v1",
+      "sha256": "1bdc8af7e23989aaadb7ed0b1e8634d16809b110d37e1c8976243295781d7e32",
+      "size_bytes": 3030
+    }
+  ],
+  "generated_at": "2026-06-03T01:45:40.836650+00:00",
+  "hash_policy": "Every listed file has SHA-256 and byte size. Manifest hash is recorded in the report.",
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "schema_version": "phase-25-artifact-manifest-v1"
+}

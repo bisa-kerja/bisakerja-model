@@ -1,0 +1,712 @@
+{
+  "schema_version": "phase-00-reproducibility-snapshot-v1",
+  "generated_at_utc": "2026-06-01T06:56:28.280549+00:00",
+  "source_snapshot": "legacy",
+  "artifact_inventory": [
+    {
+      "path": "legacy/artifacts/job_index.json",
+      "format": "json",
+      "owner": "legacy-model-training",
+      "artifact_role": "legacy_inference_required",
+      "required_for_inference": true,
+      "exists": true,
+      "size_bytes": 467334,
+      "sha256": "3bd2130212eade240d16aa1aabb5e142fe7d4c5b3e0aad30db41891b61e81d2a",
+      "modified_at_utc": "2026-05-28T13:01:06+00:00",
+      "json_type": "dict",
+      "entries": 2073
+    },
+    {
+      "path": "legacy/artifacts/pairs.parquet",
+      "format": "parquet",
+      "owner": "legacy-model-training",
+      "artifact_role": "training_only",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 542922,
+      "sha256": "00126d53904c136a5106e8c9fe68f837d6707298f0435c2437309f482d7e0864",
+      "modified_at_utc": "2026-05-28T15:16:46+00:00",
+      "rows": 30000,
+      "columns": [
+        "profile_id",
+        "job_id",
+        "profile_text",
+        "job_text",
+        "profile_skills",
+        "job_skills",
+        "profile_exp",
+        "job_exp",
+        "fit_score"
+      ]
+    },
+    {
+      "path": "legacy/bisakerja_model_training_FINAL.ipynb",
+      "format": "ipynb",
+      "owner": "legacy-model-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 9073446,
+      "sha256": "47b92e5ed223be78ffe1349c0341f29f7e3ec49157cd61eb3baba1bb8e2e4ca9",
+      "modified_at_utc": "2026-05-28T18:14:28+00:00"
+    },
+    {
+      "path": "legacy/cache/all_job_embeddings.npy",
+      "format": "npy",
+      "owner": "legacy-model-training",
+      "artifact_role": "legacy_inference_required",
+      "required_for_inference": true,
+      "exists": true,
+      "size_bytes": 3184256,
+      "sha256": "72cef692066d74d565b2395a51dc932bc8161e97e0880d2bddfbe08e702f0d0f",
+      "modified_at_utc": "2026-05-28T13:01:06+00:00",
+      "shape": [
+        2073,
+        384
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "legacy/cache/embedding_meta.json",
+      "format": "json",
+      "owner": "legacy-model-training",
+      "artifact_role": "metadata_or_reference",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 146,
+      "sha256": "94d8ac3b74ed12c6697c59400b70f5d11cf28e648cdb53f9bb8bcbfb309998b6",
+      "modified_at_utc": "2026-05-28T15:29:08+00:00",
+      "json_type": "dict",
+      "entries": 4
+    },
+    {
+      "path": "legacy/cache/job_embeddings.npy",
+      "format": "npy",
+      "owner": "legacy-model-training",
+      "artifact_role": "training_only",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 46080128,
+      "sha256": "3b37f1bf53b0d63c505bc09d75c40830871b718ff135bc50d9721685c6fe59e5",
+      "modified_at_utc": "2026-05-28T15:29:12+00:00",
+      "shape": [
+        30000,
+        384
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "legacy/cache/profile_embeddings.npy",
+      "format": "npy",
+      "owner": "legacy-model-training",
+      "artifact_role": "training_only",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 46080128,
+      "sha256": "c590b813955a935dad36d1f3e54b48e9e30052fe6a1cf05d1472d750224cb507",
+      "modified_at_utc": "2026-05-28T15:29:08+00:00",
+      "shape": [
+        30000,
+        384
+      ],
+      "dtype": "float32"
+    },
+    {
+      "path": "legacy/models/checkpoint_best.keras",
+      "format": "keras",
+      "owner": "legacy-model-training",
+      "artifact_role": "legacy_model_checkpoint",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 4506778,
+      "sha256": "c07e4b338bc1d3aef2a41d9cf430334660204861a3b429376d523eba94703a20",
+      "modified_at_utc": "2026-05-28T15:31:04+00:00"
+    },
+    {
+      "path": "legacy/models/model_jobfit_v1.keras",
+      "format": "keras",
+      "owner": "legacy-model-training",
+      "artifact_role": "legacy_inference_required",
+      "required_for_inference": true,
+      "exists": true,
+      "size_bytes": 4506778,
+      "sha256": "0d47e689392aa9f5e45a9efc1a71bedbbbecc1de4827ba29591423ee7c6aa17b",
+      "modified_at_utc": "2026-05-28T15:31:18+00:00"
+    },
+    {
+      "path": "legacy/reports/eval_plot.png",
+      "format": "png",
+      "owner": "legacy-model-training",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 49384,
+      "sha256": "3ac0e5fbf2fef183e6273cfaa118c57c31784e5c445d0925060ee51e163eaeb5",
+      "modified_at_utc": "2026-05-28T15:31:18+00:00"
+    },
+    {
+      "path": "legacy/reports/fit_score_distribution.png",
+      "format": "png",
+      "owner": "legacy-model-training",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 25937,
+      "sha256": "0c464f7d00248c83cf1dc23c6ad8998b796c03cdd8f9759b82acf0536409891f",
+      "modified_at_utc": "2026-05-28T15:16:46+00:00"
+    },
+    {
+      "path": "legacy/reports/language_report.json",
+      "format": "json",
+      "owner": "legacy-model-training",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 138,
+      "sha256": "b7e142a84940ba4b470fde664e6ea4329f27ce6e27415f5f39bae017de412085",
+      "modified_at_utc": "2026-05-28T15:16:28+00:00",
+      "json_type": "dict",
+      "entries": 3
+    },
+    {
+      "path": "legacy/reports/model_card.json",
+      "format": "json",
+      "owner": "legacy-model-training",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 527,
+      "sha256": "bd5509cdb0cfb69095c4bfed7e860f2d10a1d2c78e6d9e09cb617c8dccf7564b",
+      "modified_at_utc": "2026-05-28T15:31:18+00:00",
+      "json_type": "dict",
+      "entries": 10
+    },
+    {
+      "path": "reports/phase_00_reproducibility_snapshot.json",
+      "format": "json",
+      "owner": "model-training-audit",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 23442,
+      "sha256": "f0fcff3dd25172c42d241da9be99211e1416668a55a58653faa08606607f03be",
+      "modified_at_utc": "2026-06-01T06:56:08.291714+00:00",
+      "json_type": "dict",
+      "entries": 9
+    },
+    {
+      "path": "reports/training_audit_v1.json",
+      "format": "json",
+      "owner": "model-training-audit",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6937,
+      "sha256": "5437f7316140bbac91164d74645170855f2751bf849a7b702a3031f57e35dac7",
+      "modified_at_utc": "2026-06-01T05:26:15.206008+00:00",
+      "json_type": "dict",
+      "entries": 9
+    },
+    {
+      "path": "reports/training_phase1_verification.json",
+      "format": "json",
+      "owner": "model-training-audit",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 3117,
+      "sha256": "c168bcca6d1b5583b1cffa7d15e924f4b5cf630c875767f67f7bde434ea6912e",
+      "modified_at_utc": "2026-06-01T05:49:52.911787+00:00",
+      "json_type": "dict",
+      "entries": 5
+    },
+    {
+      "path": "reports/training_phase1_verification_venv.json",
+      "format": "json",
+      "owner": "model-training-audit",
+      "artifact_role": "audit_or_evaluation_report",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 3239,
+      "sha256": "843077cf906189f72e9cd4bcbe645e74fb76b6c0ada32827ab9cb6f2474768a9",
+      "modified_at_utc": "2026-06-01T06:05:29.353684+00:00",
+      "json_type": "dict",
+      "entries": 5
+    },
+    {
+      "path": "training/notebooks/phase_00_reproducibility_snapshot.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 81629,
+      "sha256": "b2a4b9e20303858277cdfba7768f0c1a02624ebff602592b6b02f010bcc27b59",
+      "modified_at_utc": "2026-06-01T06:56:01.441637+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_01_data_audit_contracts.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6419,
+      "sha256": "a6b2c9e326830d88b907dfab7c5d01758767be6c1c516b71ba299d20205fd36b",
+      "modified_at_utc": "2026-06-01T06:41:35.326983+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_02_label_schema_baselines.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6468,
+      "sha256": "48501954fb553901024e6419dd5b9729c67d4e84f1e6e444830ad0796f31bc30",
+      "modified_at_utc": "2026-06-01T06:41:35.327309+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_03_normalization_feature_design.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6416,
+      "sha256": "4c53b4e1bc33398da31d25ca132bafbb165f86f58fcb6f57018f70e892f793a3",
+      "modified_at_utc": "2026-06-01T06:41:35.327584+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_04_pair_generation_splits.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6368,
+      "sha256": "e11d9d5bd017a4b5a419dd93fdbc682eefa8e81edc711526b15e38aaa8a0926b",
+      "modified_at_utc": "2026-06-01T06:41:35.327809+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_05_baseline_evaluation.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6302,
+      "sha256": "d2724f8427736936177a04be94e91fa71730fd81a8f8dcf930b9da1a37fbe88e",
+      "modified_at_utc": "2026-06-01T06:41:35.328014+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_06_jobfit_training_experiments.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6404,
+      "sha256": "f509eb63d47620c68b912c02370749f87a4d10b8805716800f7150e75e557b65",
+      "modified_at_utc": "2026-06-01T06:41:35.328236+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_07_ats_friendliness_scoring.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6288,
+      "sha256": "4723bb7b3da94970ccc836dec688d53a37d2377d718f4fb37b57b0350a977fe8",
+      "modified_at_utc": "2026-06-01T06:41:35.328534+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_08_overall_impression_signals.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6259,
+      "sha256": "150f111df45e4b1fc6db3942b2d3da953f31954429b9070f6088b3b086932d7c",
+      "modified_at_utc": "2026-06-01T06:41:35.328773+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_09_candidate_reranking.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6289,
+      "sha256": "68a49fcf6c9624809fef0b06ad56a22b5a96714b028baf2e029cfe6c6dd580d8",
+      "modified_at_utc": "2026-06-01T06:41:35.328972+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_10_calibration_model_card.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6337,
+      "sha256": "a736df6658c4d8d834656e5b502a3ebff37573cc80bb31043dacde64582c2919",
+      "modified_at_utc": "2026-06-01T06:41:35.329171+00:00"
+    },
+    {
+      "path": "training/notebooks/phase_11_final_gate_review.ipynb",
+      "format": "ipynb",
+      "owner": "notebook-first-training",
+      "artifact_role": "notebook_source",
+      "required_for_inference": false,
+      "exists": true,
+      "size_bytes": 6317,
+      "sha256": "cd1c0d978177e392c56fb9c844a3f17f07e9378b936d6bbea18dce5c98d1b5f4",
+      "modified_at_utc": "2026-06-01T06:41:35.329550+00:00"
+    }
+  ],
+  "environment_snapshot": {
+    "generated_at_utc": "2026-06-01T06:56:27.942694+00:00",
+    "python": {
+      "version": "3.14.2",
+      "executable": "/Users/macbookpro/.pyenv/versions/3.14.2/bin/python",
+      "implementation": "CPython"
+    },
+    "notebook_runtime": {
+      "kernel": "python3",
+      "execution_mode": "Jupyter-compatible notebook or nbconvert execute"
+    },
+    "packages": {
+      "numpy": "1.26.4",
+      "pandas": "2.3.3",
+      "pyarrow": "22.0.0",
+      "scikit-learn": "1.8.0",
+      "tensorflow": "not_installed",
+      "keras": "not_installed",
+      "sentence-transformers": "not_installed",
+      "jupyter": "1.1.1",
+      "ipykernel": "7.2.0",
+      "nbformat": "5.10.4"
+    },
+    "hardware_assumptions": {
+      "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
+      "machine": "arm64",
+      "processor": "arm",
+      "cpu_count": 10,
+      "gpu_required": false,
+      "notes": "Phase 0 is an audit-only notebook. GPU is not required. Later training phases must record accelerator details separately."
+    },
+    "random_seeds": {
+      "validation_split_seed": 42,
+      "numpy_seed": "not_documented_in_legacy_training",
+      "python_random_seed": "not_documented_in_legacy_training",
+      "tensorflow_seed": "not_documented_in_legacy_training"
+    }
+  },
+  "dataset_snapshot": {
+    "raw_jobs": {
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "rows": 2073,
+      "columns": [
+        "job_id",
+        "company_name",
+        "title",
+        "normalized_title",
+        "category",
+        "description",
+        "requirement_summary",
+        "work_type",
+        "employment_type",
+        "experience_level",
+        "province",
+        "city",
+        "salary_min",
+        "salary_max",
+        "salary_currency",
+        "salary_display",
+        "skills_top_10_names",
+        "requirements_concat",
+        "language_signal",
+        "source_posted_at",
+        "status",
+        "fit_input_quality_score",
+        "fit_input_has_requirements",
+        "fit_input_has_skills",
+        "skills_count_total",
+        "description_length_chars",
+        "req_len",
+        "_is_tech_cat",
+        "_is_tech_title",
+        "_is_tech_skills",
+        "is_tech",
+        "tech_signal_source",
+        "has_salary_info",
+        "skills_clean",
+        "is_train_ready"
+      ],
+      "missing_values": {
+        "job_id": 0,
+        "company_name": 0,
+        "title": 0,
+        "normalized_title": 0,
+        "category": 0,
+        "description": 0,
+        "requirement_summary": 0,
+        "work_type": 0,
+        "employment_type": 0,
+        "experience_level": 0,
+        "province": 0,
+        "city": 0,
+        "salary_min": 0,
+        "salary_max": 0,
+        "salary_currency": 0,
+        "salary_display": 0,
+        "skills_top_10_names": 0,
+        "requirements_concat": 0,
+        "language_signal": 0,
+        "source_posted_at": 0,
+        "status": 0,
+        "fit_input_quality_score": 0,
+        "fit_input_has_requirements": 0,
+        "fit_input_has_skills": 0,
+        "skills_count_total": 0,
+        "description_length_chars": 0,
+        "req_len": 0,
+        "_is_tech_cat": 0,
+        "_is_tech_title": 0,
+        "_is_tech_skills": 0,
+        "is_tech": 0,
+        "tech_signal_source": 0,
+        "has_salary_info": 0,
+        "skills_clean": 0,
+        "is_train_ready": 0
+      },
+      "language_distribution": {
+        "EN": 1426,
+        "UNKNOWN": 602,
+        "MIXED": 23,
+        "ID": 22
+      },
+      "status_distribution": {
+        "ACTIVE": 2072,
+        "EXPIRED": 1
+      },
+      "duplicate_job_id_count": 0,
+      "missing_job_id_count": 0
+    },
+    "raw_profiles": {
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "rows": 69929,
+      "columns": [
+        "ID",
+        "Skills",
+        "Projects",
+        "Education",
+        "Experience",
+        "Job_Role",
+        "Required_Skills"
+      ],
+      "missing_values": {
+        "ID": 0,
+        "Skills": 0,
+        "Projects": 0,
+        "Education": 0,
+        "Experience": 0,
+        "Job_Role": 0,
+        "Required_Skills": 0
+      },
+      "duplicate_profile_id_count": 0,
+      "missing_profile_id_count": 0,
+      "experience_distribution": {
+        "5+ years": 17569,
+        "Fresher": 17503,
+        "3-5 years": 17445,
+        "1-2 years": 17412
+      }
+    },
+    "generated_pairs": {
+      "path": "legacy/artifacts/pairs.parquet",
+      "rows": 30000,
+      "columns": [
+        "profile_id",
+        "job_id",
+        "profile_text",
+        "job_text",
+        "profile_skills",
+        "job_skills",
+        "profile_exp",
+        "job_exp",
+        "fit_score"
+      ],
+      "missing_values": {
+        "profile_id": 0,
+        "job_id": 0,
+        "profile_text": 0,
+        "job_text": 0,
+        "profile_skills": 0,
+        "job_skills": 0,
+        "profile_exp": 0,
+        "job_exp": 0,
+        "fit_score": 0
+      },
+      "unique_profiles": 3000,
+      "unique_jobs": 2071,
+      "duplicate_profile_job_pairs": 0,
+      "train_pairs": 25500,
+      "validation_pairs": 4500,
+      "split_strategy": {
+        "type": "profile_id_group_shuffle",
+        "validation_size": 0.15,
+        "random_state": 42
+      }
+    },
+    "cv_samples": {
+      "count": 0,
+      "paths": [],
+      "note": "No CV benchmark sample files are present in the legacy snapshot."
+    }
+  },
+  "baseline_metric_snapshot": {
+    "source_model_card": "legacy/reports/model_card.json",
+    "label_target": "fit_score",
+    "label_source": "weak_label_rule_based",
+    "prototype_gate_only": true,
+    "current_metrics_exact_from_model_card": {
+      "mae": 0.0844,
+      "accuracy": 0.802,
+      "r2": -0.0038
+    },
+    "model_card_gate_passed": true,
+    "label_distribution": {
+      "overall": {
+        "count": 30000,
+        "min": 0.03,
+        "max": 0.5545,
+        "mean": 0.206089,
+        "median": 0.21,
+        "std": 0.103143,
+        "p25": 0.12,
+        "p75": 0.3,
+        "bands": {
+          "low": 29302,
+          "medium": 557,
+          "high": 0
+        }
+      },
+      "train": {
+        "count": 25500,
+        "min": 0.03,
+        "max": 0.5333,
+        "mean": 0.206502,
+        "median": 0.21,
+        "std": 0.102982,
+        "p25": 0.12,
+        "p75": 0.3,
+        "bands": {
+          "low": 24902,
+          "medium": 473,
+          "high": 0
+        }
+      },
+      "validation": {
+        "count": 4500,
+        "min": 0.03,
+        "max": 0.5545,
+        "mean": 0.20375,
+        "median": 0.21,
+        "std": 0.104032,
+        "p25": 0.12,
+        "p75": 0.3,
+        "bands": {
+          "low": 4400,
+          "medium": 84,
+          "high": 0
+        }
+      }
+    },
+    "baseline_metrics": {
+      "evaluation_split": "validation",
+      "tolerance": 0.15,
+      "constant_mean": {
+        "train_label_mean": 0.206502,
+        "mae": 0.085552,
+        "accuracy_at_tolerance_0_15": 0.800667,
+        "r2": -0.0007,
+        "prediction_mean": 0.206502,
+        "prediction_median": 0.206502
+      },
+      "constant_median": {
+        "train_label_median": 0.21,
+        "mae": 0.084368,
+        "accuracy_at_tolerance_0_15": 0.801778,
+        "r2": -0.00361,
+        "prediction_mean": 0.21,
+        "prediction_median": 0.21
+      },
+      "skill_jaccard_only": {
+        "mae": 0.192715,
+        "accuracy_at_tolerance_0_15": 0.339778,
+        "r2": -3.435032,
+        "prediction_mean": 0.011186,
+        "prediction_median": 0.0
+      },
+      "cosine_embedding_only": {
+        "note": "Row-wise cosine(profile_embedding, job_embedding), clipped to [0, 1].",
+        "mae": 0.292163,
+        "accuracy_at_tolerance_0_15": 0.148,
+        "r2": -8.53008,
+        "prediction_mean": 0.495397,
+        "prediction_median": 0.490751
+      }
+    },
+    "metric_notes": [
+      "Current metrics are copied exactly from the legacy model card.",
+      "The target label is a weak rule-based fit_score, not a human-reviewed production label.",
+      "The legacy gate is prototype-only because R\u00b2 is negative and no high-fit samples exist in the pair dataset."
+    ]
+  },
+  "risk_register": [
+    {
+      "risk": "Weak rule-based labels",
+      "evidence": "Legacy fit_score is based on skill overlap and experience score, not recruiter or outcome labels.",
+      "impact": "Model can learn the heuristic instead of real job-fit quality.",
+      "next_control": "Define label schema and manual validation sample before new training."
+    },
+    {
+      "risk": "No high-fit samples",
+      "evidence": "Current pair label maximum is below 0.65 and high band count is zero.",
+      "impact": "Scores above strong-fit range cannot be calibrated from current data.",
+      "next_control": "Build balanced pairs with low, medium, and high-fit examples."
+    },
+    {
+      "risk": "Possible data leakage",
+      "evidence": "Legacy split groups by profile_id only; job family and duplicate text leakage are not fully audited.",
+      "impact": "Validation metrics can overstate generalization.",
+      "next_control": "Define stricter split rules in the pair-generation phase."
+    },
+    {
+      "risk": "Stale job artifacts",
+      "evidence": "Legacy recommendation artifacts include static job_index and all_job_embeddings snapshots.",
+      "impact": "Inference can rank inactive or backend-ineligible jobs if used directly.",
+      "next_control": "Backend must provide candidate jobs and model should only score those candidates."
+    },
+    {
+      "risk": "Missing CV benchmark samples",
+      "evidence": "No PDF/DOCX CV benchmark files are present in the legacy snapshot.",
+      "impact": "ATS friendliness and extraction failure rates cannot be validated.",
+      "next_control": "Create controlled CV parsing and ATS evaluation set before ATS scoring claims."
+    },
+    {
+      "risk": "Runtime incompatibility",
+      "evidence": "Legacy custom layer/package loading is not documented as deployable outside the notebook.",
+      "impact": "Model artifact can fail to load in API runtime.",
+      "next_control": "Package model definition and record exact runtime versions before training v2."
+    }
+  ],
+  "acceptance": {
+    "inventory_covers_required_training_artifacts": true,
+    "baseline_metrics_recorded_before_new_experiments": true,
+    "known_blockers_visible_before_phase_1": true
+  }
+}

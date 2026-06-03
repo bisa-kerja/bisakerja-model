@@ -1,0 +1,130 @@
+{
+  "failures": [],
+  "feature_config": {
+    "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+    "sha256": "c13cd29c3de8788fb1042f7cb6cf9c4f387c7183ef935e49ad51c2ed6acae087"
+  },
+  "feature_matrix": {
+    "feature_count": 6,
+    "feature_names": [
+      "e5_cosine",
+      "skill_overlap",
+      "requirement_coverage",
+      "role_match",
+      "experience_match",
+      "experience_gap_years_clipped"
+    ],
+    "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
+    "row_count": 3600,
+    "sha256": "68e35d7081b9e9eb3de640aa082ad3b3e8a2b68a0c1e19aed3aebf2d16bdd7c6",
+    "split_counts": {
+      "test": 540,
+      "train": 2520,
+      "validation": 540
+    },
+    "target_max": 1.0,
+    "target_min": 0.0
+  },
+  "generated_at": "2026-06-02T08:02:26.901666+00:00",
+  "model": {
+    "api": "TensorFlow Functional API",
+    "architecture_json_path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_model_architecture.json",
+    "inference_outputs": [
+      "score_0_1",
+      "score_0_100"
+    ],
+    "input_shape": [
+      null,
+      6
+    ],
+    "name": "bisakerja_jobfit_tf_functional_v1",
+    "output_shape": [
+      null,
+      1
+    ],
+    "parameter_count": 897,
+    "summary": [
+      "Model: \"bisakerja_jobfit_tf_functional_v1\"\n\u250f\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2513\n\u2503 Layer (type)                    \u2503 Output Shape           \u2503       Param # \u2503\n\u2521\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2529\n\u2502 approved_numeric_features       \u2502 (None, 6)              \u2502             0 \u2502\n\u2502 (InputLayer)                    \u2502                        \u2502               \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 jobfit_dense_1 (Dense)          \u2502 (None, 32)             \u2502           224 \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 jobfit_batch_norm_1             \u2502 (None, 32)             \u2502           128 \u2502\n\u2502 (BatchNormalization)            \u2502                        \u2502               \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 jobfit_dropout_1 (Dropout)      \u2502 (None, 32)             \u2502             0 \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 jobfit_dense_2 (Dense)          \u2502 (None, 16)             \u2502           528 \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 jobfit_score_0_1 (Dense)        \u2502 (None, 1)              \u2502            17 \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n Total params: 897 (3.50 KB)\n Trainable params: 833 (3.25 KB)\n Non-trainable params: 64 (256.00 B)\n"
+    ],
+    "training_output": "jobfit_score_0_1",
+    "type_name": "Functional",
+    "uses_gradient_tape_later": true,
+    "uses_model_fit": false,
+    "version": "jobfit_tf_phase25_v1"
+  },
+  "passed": true,
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "runtime": {
+    "keras": "3.14.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "python": "3.13.11",
+    "tensorflow": "2.21.0"
+  },
+  "sample_forward_pass": [
+    {
+      "pair_id": "c593ed80cd8e55fb79bbbea3",
+      "score_0_1": 0.5518102049827576,
+      "score_0_100": 55.1810188293457,
+      "split": "train",
+      "target_0_1": 1.0
+    },
+    {
+      "pair_id": "2302520551f8bfc5dbb25402",
+      "score_0_1": 0.5805037021636963,
+      "score_0_100": 58.05036926269531,
+      "split": "train",
+      "target_0_1": 0.7300000190734863
+    },
+    {
+      "pair_id": "c1966cac7f07407a22a5fe7a",
+      "score_0_1": 0.6601954698562622,
+      "score_0_100": 66.01954650878906,
+      "split": "validation",
+      "target_0_1": 0.7020000219345093
+    },
+    {
+      "pair_id": "6b2ec14c33e34197a0430050",
+      "score_0_1": 0.66073077917099,
+      "score_0_100": 66.07307434082031,
+      "split": "validation",
+      "target_0_1": 0.7067000269889832
+    }
+  ],
+  "schema_version": "phase-25-tensorflow-architecture-v1",
+  "status": "complete",
+  "validation_checks": [
+    {
+      "check": "tensorflow_available",
+      "status": "PASS"
+    },
+    {
+      "check": "functional_api_model_created",
+      "status": "PASS"
+    },
+    {
+      "check": "approved_features_only",
+      "status": "PASS"
+    },
+    {
+      "check": "train_only_normalization_stats",
+      "status": "PASS"
+    },
+    {
+      "check": "target_range_0_1",
+      "status": "PASS"
+    },
+    {
+      "check": "normalized_output_range_0_1",
+      "status": "PASS"
+    },
+    {
+      "check": "api_score_range_0_100",
+      "status": "PASS"
+    },
+    {
+      "check": "no_model_fit_required",
+      "status": "PASS"
+    }
+  ]
+}

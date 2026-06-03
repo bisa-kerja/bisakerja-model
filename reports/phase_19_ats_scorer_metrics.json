@@ -1,0 +1,147 @@
+{
+  "baseline_empty_text_only": {
+    "bucket_agreement": 0.7142857142857143,
+    "macro_issue_precision": 1.0,
+    "macro_issue_recall": 0.4,
+    "per_issue": {
+      "contact_detection_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "tp": 0
+      },
+      "date_detection_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "tp": 0
+      },
+      "empty_parse_risk": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 3
+      },
+      "formatting_risk_issue": {
+        "fn": 9,
+        "fp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "metric_evidence_issue": {
+        "fn": 6,
+        "fp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "parseability_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 3
+      },
+      "section_completeness_issue": {
+        "fn": 3,
+        "fp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "unsupported_file_type": {
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "tp": 0
+      }
+    }
+  },
+  "generated_at": "2026-06-02T04:52:49.394242+00:00",
+  "phase_id": "phase_19_ats_friendliness_benchmark_scorer",
+  "release_gate": {
+    "beats_baseline_bucket_agreement": true,
+    "bucket_agreement_passed": true,
+    "critical_parse_failure_recall_passed": true,
+    "macro_issue_precision_passed": true,
+    "macro_issue_recall_passed": true
+  },
+  "release_thresholds": {
+    "bucket_agreement": 0.8,
+    "critical_parse_failure_recall": 1.0,
+    "empty_text_rate_supported_max": 0.2,
+    "macro_issue_precision": 0.85,
+    "macro_issue_recall": 0.85
+  },
+  "schema_version": "ats-benchmark-scorer-v1",
+  "transparent_scorer": {
+    "bucket_agreement": 1.0,
+    "macro_issue_precision": 1.0,
+    "macro_issue_recall": 1.0,
+    "per_issue": {
+      "contact_detection_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "tp": 0
+      },
+      "date_detection_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "tp": 0
+      },
+      "empty_parse_risk": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 3
+      },
+      "formatting_risk_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 9
+      },
+      "metric_evidence_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 6
+      },
+      "parseability_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 3
+      },
+      "section_completeness_issue": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 3
+      },
+      "unsupported_file_type": {
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "tp": 0
+      }
+    },
+    "score_max": 100,
+    "score_min": 35
+  }
+}

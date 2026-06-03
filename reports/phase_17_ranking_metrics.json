@@ -1,0 +1,23 @@
+{
+  "baseline": "baseline_feature_regression",
+  "generated_at": "2026-06-02T04:48:49.318705+00:00",
+  "group_key": "profile_id",
+  "phase_id": "phase_17_baseline_evaluation_v2",
+  "schema_version": "baseline-evaluation-v2",
+  "splits": {
+    "test": {
+      "eligible_group_count": 90,
+      "high_fit_group_count": 40,
+      "map_at_10": 1.0,
+      "ndcg_at_10": 0.9998258830628405,
+      "ndcg_at_5": 0.9994998287530606
+    },
+    "validation": {
+      "eligible_group_count": 90,
+      "high_fit_group_count": 34,
+      "map_at_10": 1.0,
+      "ndcg_at_10": 0.9997525725528602,
+      "ndcg_at_5": 0.9997525725528602
+    }
+  }
+}

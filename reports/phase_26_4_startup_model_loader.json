@@ -1,0 +1,65 @@
+{
+  "phase_id": "phase_26_model_api_loader_inference_endpoint",
+  "step_id": "26.4",
+  "step_name": "Startup model loader",
+  "status": "complete",
+  "source_references": [
+    "TODOS.md#Phase-26",
+    "references/docs/generated/openapi.json#/paths/~1api~1v1~1ai~1cv-analyzer",
+    "references/docs/generated/openapi.json#/components/schemas/CvAnalysis",
+    "references/prisma/schema.prisma#CvAnalysisResult",
+    "references/prisma/schema.prisma#JobRecommendationRun",
+    "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+    "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+    "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras"
+  ],
+  "implementation": {
+    "startup_hook": "FastAPI lifespan calls InferenceService.load_once after runtime artifact verification",
+    "load_once_semantics": true,
+    "model_loader_helper": "model_api.custom_objects.load_phase25_keras_model",
+    "custom_objects_registered_before_load": true,
+    "compile_false": true,
+    "model_identity_source": "Phase 25 model_card.json plus verified final_keras_model artifact hash",
+    "exposed_readiness_routes": ["GET /health", "GET /model-info"],
+    "not_ready_inference_behavior": "InferenceService.require_ready raises ModelNotReadyError; FastAPI handler maps it to HTTP 503"
+  },
+  "model_identity": {
+    "name": "bisakerja_jobfit_tf_functional_custom_v1",
+    "version": "jobfit_tf_phase25_gradient_tape_v1",
+    "artifact_id": "final_keras_model",
+    "artifact_sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+  },
+  "boundary_checks": {
+    "phase_25_artifacts_mutated": false,
+    "training_notebook_modified": false,
+    "backend_db_access_added": false,
+    "auth_or_persistence_added": false,
+    "external_genai_call_added_for_core_inference": false,
+    "request_schema_or_batch_inference_added": false,
+    "tensorflow_required_for_lightweight_imports": false,
+    "fastapi_required_for_lightweight_imports": false
+  },
+  "changed_files": {
+    "model_api/__init__.py": {"sha256": "8cae558b300a563459f16b900986dd9772391e0fa3e60a3635d26279e7cf1b1e"},
+    "model_api/app.py": {"sha256": "578202e6683501205dead526de565dd7b34abb7a19be2ece51e72577d071dbf2"},
+    "model_api/inference.py": {"sha256": "513679963eb182fdc83a31fa0d91a76cd758f00d25a2944819ad1fc9af5057bc"},
+    "model_api/errors.py": {"sha256": "9086626d25c598e81607eade92a451051b7e690333107664f4cd9e229118d34f"},
+    "tests/model_api/test_phase_26_layout.py": {"sha256": "49766c8697c71bbbf8f177b1e7122a6201b8bc0cf8b97b4d3a66f811d8294883"},
+    "TODOS.md": {"step_26_4_checked": true}
+  },
+  "verification": {
+    "commands": [
+      {
+        "command": "python -m unittest tests.model_api.test_phase_26_layout",
+        "status": "pass",
+        "result": "Ran 19 tests in 0.008s; OK (skipped=1)",
+        "skip_reason": "TensorFlow/Keras not installed locally, so real .keras load test skipped after deterministic registration error path. Startup loader covered with fake loader and verified Phase 25 artifact hashes."
+      },
+      {
+        "command": "python -m py_compile model_api/__init__.py model_api/app.py model_api/inference.py model_api/errors.py tests/model_api/test_phase_26_layout.py",
+        "status": "pass"
+      }
+    ]
+  },
+  "next_step": "26.5 Request schemas"
+}

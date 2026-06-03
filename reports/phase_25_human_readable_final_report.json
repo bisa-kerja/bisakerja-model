@@ -1,0 +1,59 @@
+{
+  "acceptance": {
+    "artifact_paths_included": true,
+    "gate_status_included": true,
+    "key_metrics_included": true,
+    "known_limitations_included": true,
+    "model_api_handoff_included": true,
+    "next_action_included": true,
+    "reads_current_exported_reports_only": true,
+    "report_written": true,
+    "required_sections_present": true,
+    "requirement_compliance_included": true
+  },
+  "generated_at": "2026-06-03T01:45:43.810927+00:00",
+  "human_report": {
+    "path": "reports/phase_25_human_readable_final_report.md",
+    "sha256": "96c23082b8b7ea0c8714ffa37c54911884d8125b71b52de7b8286215059ab265",
+    "size_bytes": 3409
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "report_sections": [
+    "Requirement compliance",
+    "Key metrics",
+    "Gate status",
+    "Artifact paths",
+    "Model API handoff",
+    "Known limitations",
+    "Next action"
+  ],
+  "schema_version": "phase-25-human-readable-final-report-v1",
+  "source_reports": {
+    "calibration_model_card_export": {
+      "path": "reports/phase_25_calibration_model_card_export.json",
+      "sha256": "e4fb2d9e1c7022934706fa8a7891d98441d2b7e6c12e316246b41019c2bebc19",
+      "size_bytes": 7003
+    },
+    "final_clean_kernel_gate": {
+      "path": "reports/phase_25_tensorflow_training_delivery.json",
+      "sha256": "4ab9c846bf13d4072b8b8f70b547f60a547597ea455a43debf89a0783598d167",
+      "size_bytes": 18976
+    },
+    "model_api_handoff_fixtures": {
+      "path": "reports/phase_25_model_api_handoff_fixtures.json",
+      "sha256": "1ce32a785459f8a9e27ad3858b0beb09a506f55896e283e144a4f30d5a636846",
+      "size_bytes": 4152
+    },
+    "requirement_contract_matrix": {
+      "path": "reports/phase_25_requirement_contract_matrix.json",
+      "sha256": "b8d0002b256066821d12178470561d59e9be171e9701521a4815916f44b606ad",
+      "size_bytes": 7426
+    },
+    "tensorflow_artifact_export": {
+      "path": "reports/phase_25_tensorflow_artifact_export.json",
+      "sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe",
+      "size_bytes": 7098
+    }
+  },
+  "status": "complete"
+}

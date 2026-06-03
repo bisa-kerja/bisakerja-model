@@ -1,0 +1,1060 @@
+{
+  "schema_version": "phase-01-data-audit-contracts-v1",
+  "generated_at_utc": "2026-06-01T07:34:27.576377+00:00",
+  "source_snapshot": "legacy",
+  "inputs": {
+    "jobs_csv": "legacy/dataset/indotech_job_cleaned.csv",
+    "profiles_csv": "legacy/dataset/techtalent_profile_cleaned.csv",
+    "pairs_parquet": "legacy/artifacts/pairs.parquet",
+    "openapi_json": "references/docs/generated/openapi.json",
+    "phase0_report": "reports/phase_00_reproducibility_snapshot.json"
+  },
+  "source_schema_review": [
+    {
+      "dataset": "raw_jobs",
+      "field": "job_id",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "ffa33a78-6b46-4640-8002-1249292b2b5b",
+        "ff9f6a5c-69d3-4e93-bbc1-88472f8da8bb",
+        "ff9f2065-dce5-4531-bbf9-af45a779a939"
+      ],
+      "training_purpose": "Stable job identifier used for joins, split diagnostics, and backend candidate binding.",
+      "training_use": "identifier_only",
+      "safe_to_use_during_training": true,
+      "safety_note": "Never use as model feature; use for grouping, deduplication, and output validation."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "company_name",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Talent Tech",
+        "INDICO Telkomsel Ekosistem Digital",
+        "PT DIGITAL SEJAHTERA NUSANTARA"
+      ],
+      "training_purpose": "Company display name used by backend hydration and audit examples.",
+      "training_use": "use_with_caution",
+      "safe_to_use_during_training": false,
+      "safety_note": "Can introduce employer memorization; avoid as model feature unless explicit bias review exists."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "title",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Frontend Web Developer",
+        "DevSecOps",
+        "Data Analyst/Data Scientist/Data Engineer/AI Engineer"
+      ],
+      "training_purpose": "Raw job title text used for role-alignment evidence.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after normalization and leakage review."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "normalized_title",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Frontend Web Developer",
+        "DevSecOps",
+        "Data Analyst"
+      ],
+      "training_purpose": "Canonical role title used for role-family grouping and slice analysis.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after title normalization policy is versioned."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "category",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Frontend/Mobile Development",
+        "IT & Software",
+        "Data & Analytics"
+      ],
+      "training_purpose": "Job category used for role-family diagnostics and pair balancing.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe for slice analysis; use as model feature only after category taxonomy is fixed."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "description",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "The Frontend Web Developer role at Talent Tech in Mampang Prapatan, Jakarta Selatan, DKI Jakarta, Indonesia focuses on core contributions based on available operational evidence. Ideal candidates are expected to meet: minimum 1 years of experience Maximum 3 years of experience",
+        "INDICO Telkomsel Ekosistem Digital is looking for a DevSecOps professional. DevSecOps & CI/CD Pipeline Management. Build and maintain GitLab CI/CD pipelines for automated testing, building, and deployment processes. Integrate...",
+        "The Data Analyst/Data Scientist/Data Engineer/AI Engineer role at PT DIGITAL SEJAHTERA NUSANTARA in Kebayoran Baru, Jakarta Selatan, DKI Jakarta, Indonesia focuses on core contributions based on available operational evidence. Ideal candidates are expected to meet: Requires 0 to 50 years of experience Skills include Kafka, Tableau, SQL, Google BigQuery, Data Analysis, Power BI, Python, Kubernetes, and Apache Spark"
+      ],
+      "training_purpose": "Job description text used for semantic alignment and requirement coverage.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after PII and stale-content checks."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "requirement_summary",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "minimum 1 years of experience Maximum 3 years of experience",
+        "Experience with DevSecOps and CI/CD pipeline management.",
+        "Requires 0 to 50 years of experience Skills include Kafka, Tableau, SQL, Google BigQuery, Data Analysis, Power BI, Python, Kubernetes, and Apache Spark"
+      ],
+      "training_purpose": "Condensed requirement text used for requirement coverage and missing-signal extraction.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe if derived from job record, not from labels or outcomes."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "work_type",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "ONSITE",
+        "REMOTE",
+        "HYBRID"
+      ],
+      "training_purpose": "Work arrangement signal used by backend/preference matching, not core job-fit training unless approved.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Backend preference feature; keep outside core scorer for current roadmap."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "employment_type",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "CONTRACT",
+        "FULL_TIME",
+        "PART_TIME"
+      ],
+      "training_purpose": "Employment contract type used for filtering and optional preference diagnostics.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Backend-owned filter unless explicit training requirement is added."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "experience_level",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "JUNIOR",
+        "ENTRY_LEVEL",
+        "SENIOR"
+      ],
+      "training_purpose": "Job seniority level used for experience-match labels and normalization checks.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe only after Phase 3 experience mapping covers every value."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "province",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "DKI Jakarta",
+        "Jakarta Raya",
+        "Nasional"
+      ],
+      "training_purpose": "Job province used for backend location preference and data-slice diagnostics.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Backend preference/hydration field; avoid in core model until location policy is approved."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "city",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Jakarta Selatan",
+        "Jakarta",
+        "Indonesia"
+      ],
+      "training_purpose": "Job city used for backend location preference and data-slice diagnostics.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Backend preference/hydration field; avoid in core model until location policy is approved."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "salary_min",
+      "inferred_type": "number_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "6500000.0",
+        "0.0",
+        "7000000.0"
+      ],
+      "training_purpose": "Minimum salary metadata used for backend display/filtering and optional preference checks.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Do not use in model before salary fairness and missingness policy exists."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "salary_max",
+      "inferred_type": "number_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "8500000.0",
+        "0.0",
+        "20000000.0"
+      ],
+      "training_purpose": "Maximum salary metadata used for backend display/filtering and optional preference checks.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Do not use in model before salary fairness and missingness policy exists."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "salary_currency",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "IDR",
+        "AUD",
+        "USD"
+      ],
+      "training_purpose": "Salary currency metadata used for backend display/filtering.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Backend-owned display/filter field."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "salary_display",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "IDR 6,500,000 - 8,500,000 / month",
+        "Not specified",
+        "IDR 7,000,000 - 20,000,000 / month"
+      ],
+      "training_purpose": "Human salary display text used for backend hydration only.",
+      "training_use": "wrapper_or_backend",
+      "safe_to_use_during_training": false,
+      "safety_note": "Do not train on display strings."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "skills_top_10_names",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Typescript | React | Javascript | CSS | Next.js | HTML | Tailwind | React.Js",
+        "Gitlab | DevSecOps | CD | CI | CI/CD",
+        "Power BI | Apache Spark | Tableau | Google BigQuery | Python | Kubernetes | Kafka | SQL | Data Analysis"
+      ],
+      "training_purpose": "Raw top skills text used for skill-overlap labels and feature construction.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after skill parsing and alias policy are versioned."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "requirements_concat",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "minimum 1 years of experience || Maximum 3 years of experience",
+        "Experience with DevSecOps and CI/CD pipeline management",
+        "Requires 0 to 50 years of experience || Skills include Kafka, Tableau, SQL, Google BigQuery, Data Analysis, Power BI, Python, Kubernetes, and Apache Spark"
+      ],
+      "training_purpose": "Concatenated requirement text used for requirement coverage and text embedding.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe if source-only and not label-derived."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "language_signal",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "EN",
+        "ID",
+        "UNKNOWN"
+      ],
+      "training_purpose": "Detected job language used for language slices and output-language diagnostics.",
+      "training_use": "feature_quality",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe for audit/slicing; model use requires Phase 3 language policy."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "source_posted_at",
+      "inferred_type": "datetime_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "2026-05-08 05:17:44.280000+00:00",
+        "2026-04-20 08:38:47.489999872+00:00",
+        "2026-04-18 06:23:40.630000+00:00"
+      ],
+      "training_purpose": "Source posting timestamp used for freshness/staleness filtering.",
+      "training_use": "filter_only",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use to exclude stale jobs; do not train as content feature."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "status",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "ACTIVE",
+        "EXPIRED"
+      ],
+      "training_purpose": "Job availability status used to filter inactive records.",
+      "training_use": "filter_only",
+      "safe_to_use_during_training": true,
+      "safety_note": "Required for candidate eligibility; do not train on inactive jobs."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "fit_input_quality_score",
+      "inferred_type": "integer_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "100"
+      ],
+      "training_purpose": "Derived data-quality score for whether job input is usable.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for filtering/audit only; derived quality fields can leak curation rules."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "fit_input_has_requirements",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "1"
+      ],
+      "training_purpose": "Derived flag showing requirement text availability.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for audit/filter only."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "fit_input_has_skills",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "1"
+      ],
+      "training_purpose": "Derived flag showing skill availability.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for audit/filter only."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "skills_count_total",
+      "inferred_type": "integer_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "8",
+        "5",
+        "9"
+      ],
+      "training_purpose": "Derived skill count used for feature-quality diagnostics.",
+      "training_use": "feature_quality",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe for diagnostics; model use requires missingness policy."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "description_length_chars",
+      "inferred_type": "integer_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "284",
+        "239",
+        "424"
+      ],
+      "training_purpose": "Description length used for feature-quality diagnostics.",
+      "training_use": "feature_quality",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe for diagnostics; avoid as direct model signal unless validated."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "req_len",
+      "inferred_type": "integer_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "85",
+        "63",
+        "177"
+      ],
+      "training_purpose": "Requirement text length used for feature-quality diagnostics.",
+      "training_use": "feature_quality",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe for diagnostics; avoid as direct model signal unless validated."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "_is_tech_cat",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "True",
+        "False"
+      ],
+      "training_purpose": "Internal tech-category flag from preprocessing.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for source filtering only; internal derived flags should not be target features."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "_is_tech_title",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "True",
+        "False"
+      ],
+      "training_purpose": "Internal tech-title flag from preprocessing.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for source filtering only."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "_is_tech_skills",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "True",
+        "False"
+      ],
+      "training_purpose": "Internal tech-skill flag from preprocessing.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for source filtering only."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "is_tech",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "True"
+      ],
+      "training_purpose": "Final tech-job eligibility flag.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for dataset scope filtering only."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "tech_signal_source",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "category|title|skills",
+        "category",
+        "title"
+      ],
+      "training_purpose": "Explanation of why a job was considered tech-relevant.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for audit only."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "has_salary_info",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "1",
+        "0"
+      ],
+      "training_purpose": "Derived salary availability flag.",
+      "training_use": "feature_quality",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for audit/filtering only until salary policy exists."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "skills_clean",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Typescript, React, Javascript, CSS, Next.js, HTML, Tailwind, React.Js",
+        "Gitlab, DevSecOps, CD, CI, CI/CD",
+        "Power BI, Apache Spark, Tableau, Google BigQuery, Python, Kubernetes, Kafka, SQL, Data Analysis"
+      ],
+      "training_purpose": "Cleaned skill list used for skill normalization and overlap features.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after alias policy and unknown-skill handling are versioned."
+    },
+    {
+      "dataset": "raw_jobs",
+      "field": "is_train_ready",
+      "inferred_type": "boolean_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "1",
+        "0"
+      ],
+      "training_purpose": "Training eligibility flag from preprocessing.",
+      "training_use": "quality_gate",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use as inclusion gate only; not as model feature."
+    },
+    {
+      "dataset": "raw_profiles",
+      "field": "ID",
+      "inferred_type": "integer_like",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "1",
+        "2",
+        "3"
+      ],
+      "training_purpose": "Stable profile identifier used for grouping, joins, and leakage-safe splits.",
+      "training_use": "identifier_only",
+      "safe_to_use_during_training": true,
+      "safety_note": "Never use as model feature; use to isolate train/validation groups."
+    },
+    {
+      "dataset": "raw_profiles",
+      "field": "Skills",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "HTML, JavaScript, Node.js, Manufacturing, SIEM, Electronics, Docker, Surgery",
+        "APIs, Machine Learning, CSS, Visualization, PyTorch, Python, Network Security, CAD",
+        "React, Medical Knowledge, APIs, Python, Manufacturing, Git, Embedded Systems, RTOS"
+      ],
+      "training_purpose": "Candidate skill list used for skill overlap, missing-skill analysis, and text construction.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after parsing, alias normalization, and unknown-skill policy."
+    },
+    {
+      "dataset": "raw_profiles",
+      "field": "Projects",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Healthcare App, AI Chatbot",
+        "Resume Analyzer, IoT Smart Home",
+        "Stock Prediction Model, Cybersecurity Monitoring Tool"
+      ],
+      "training_purpose": "Project text used for semantic profile/CV evidence.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after text-quality and PII checks."
+    },
+    {
+      "dataset": "raw_profiles",
+      "field": "Education",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "S1",
+        "D3",
+        "S2"
+      ],
+      "training_purpose": "Education signal used for audit slices and optional feature experiments.",
+      "training_use": "use_with_caution",
+      "safe_to_use_during_training": false,
+      "safety_note": "Can encode bias; do not use in production scorer without fairness review."
+    },
+    {
+      "dataset": "raw_profiles",
+      "field": "Experience",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Fresher",
+        "3-5 years",
+        "1-2 years"
+      ],
+      "training_purpose": "Candidate experience bucket used for experience-match labels and normalization checks.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe only after Phase 3 maps every observed value."
+    },
+    {
+      "dataset": "raw_profiles",
+      "field": "Job_Role",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "Web Developer",
+        "ML Engineer",
+        "Backend Developer"
+      ],
+      "training_purpose": "Candidate target/current role used for role-match evidence and slices.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after role taxonomy policy; avoid leaking desired output labels."
+    },
+    {
+      "dataset": "raw_profiles",
+      "field": "Required_Skills",
+      "inferred_type": "string",
+      "null_count": 0,
+      "null_rate": 0.0,
+      "null_policy": "required_current_snapshot",
+      "example_values": [
+        "HTML, CSS, JavaScript, React, Node.js",
+        "Python, Deep Learning, TensorFlow, PyTorch, Machine Learning",
+        "Python, Java, SQL, APIs, Git"
+      ],
+      "training_purpose": "Role-required skill list attached to profile source data.",
+      "training_use": "use_with_caution",
+      "safe_to_use_during_training": false,
+      "safety_note": "Leakage-prone when it represents target role truth; use for audit/bootstrap labels only until validated."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "profile_id",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Profile id in generated pair dataset.",
+      "training_use": "identifier_only",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for grouped split and leakage checks only."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "job_id",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Job id in generated pair dataset.",
+      "training_use": "identifier_only",
+      "safe_to_use_during_training": true,
+      "safety_note": "Use for joins and backend candidate binding checks only."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "profile_text",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Constructed profile text used for embedding/features.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe only if construction excludes labels and wrapper-only fields."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "job_text",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Constructed job text used for embedding/features.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe only if source comes from active backend job fields."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "profile_skills",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Profile skills used for skill-overlap label/bootstrap features.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after skill normalization policy."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "job_skills",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Job skills used for skill-overlap label/bootstrap features.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Safe after skill normalization policy."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "profile_exp",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Profile experience bucket used for experience-match label/bootstrap features.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Blocked until mapping handles current values."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "job_exp",
+      "inferred_type": "string_or_text",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Job experience level used for experience-match label/bootstrap features.",
+      "training_use": "feature",
+      "safe_to_use_during_training": true,
+      "safety_note": "Blocked until mapping handles current values."
+    },
+    {
+      "dataset": "generated_pairs",
+      "field": "fit_score",
+      "inferred_type": "number_like",
+      "null_policy": "must_be_non_null_for_training_pairs",
+      "example_values": [],
+      "training_purpose": "Weak-label target from old rule-based pair generation.",
+      "training_use": "target_only",
+      "safe_to_use_during_training": false,
+      "safety_note": "Never use as input feature; prototype label only."
+    }
+  ],
+  "identifier_integrity": {
+    "raw_jobs": {
+      "field": "job_id",
+      "rows": 2073,
+      "missing_ids": 0,
+      "duplicate_ids": 0,
+      "unique_ids": 2073,
+      "passed": true
+    },
+    "raw_profiles": {
+      "field": "ID",
+      "rows": 69929,
+      "missing_ids": 0,
+      "duplicate_ids": 0,
+      "unique_ids": 69929,
+      "passed": true
+    },
+    "job_status_distribution": {
+      "ACTIVE": 2072,
+      "EXPIRED": 1
+    },
+    "job_train_ready_distribution": {
+      "1": 2071,
+      "0": 2
+    },
+    "job_posted_at_summary": {
+      "count": 2073,
+      "oldest": "2019-12-09T11:47:20.295000+00:00",
+      "latest": "2026-05-18T00:35:36.607000+00:00",
+      "parse_errors": 0,
+      "freshness_policy": "Backend must exclude inactive or stale jobs before candidate retrieval; Phase 4 must document stale-record threshold before pair generation."
+    },
+    "pair_artifact": {
+      "path": "legacy/artifacts/pairs.parquet",
+      "schema_fields_documented": [
+        "profile_id",
+        "job_id",
+        "profile_text",
+        "job_text",
+        "profile_skills",
+        "job_skills",
+        "profile_exp",
+        "job_exp",
+        "fit_score"
+      ],
+      "phase0_rows": 30000,
+      "required_split_control": "Group validation by profile_id at minimum; consider job-family isolation before ranking experiments."
+    },
+    "leakage_controls": [
+      "Do not use job_id or profile_id as model features.",
+      "Do not use fit_score as an input feature; it is the weak-label target only.",
+      "Do not let profile Required_Skills leak target-role truth into validation labels without manual review.",
+      "Filter inactive jobs before pair generation and before recommendation candidate scoring.",
+      "Separate backend job detail hydration from model ranking output; model must not invent or return stale job details.",
+      "Use grouped splits by profile_id and report duplicate profile/job pairs before baseline evaluation."
+    ]
+  },
+  "output_contract_mapping": [
+    {
+      "product_field": "analysisResult.jobFitAlignment.score",
+      "api_shape": "integer 0-100",
+      "owner": "model_core",
+      "model_output": "jobFitAlignment.score",
+      "training_signal_needed": "skill overlap, semantic similarity, experience match, role match, requirement coverage",
+      "current_data_support": "partial_weak_label_only",
+      "notes": "Current fit_score max is below high-fit range; needs Phase 2 label schema and Phase 4 balanced pairs."
+    },
+    {
+      "product_field": "analysisResult.jobFitAlignment.summary",
+      "api_shape": "string",
+      "owner": "wrapper_from_model_signals",
+      "model_output": "summarySignals, matchedSkills, missingSkills, confidence notes",
+      "training_signal_needed": "grounded matched and missing signals from source text/skills",
+      "current_data_support": "partial_skill_signals_only",
+      "notes": "Wrapper may render final copy, but model/core must expose grounded signals."
+    },
+    {
+      "product_field": "analysisResult.atsFriendliness.score",
+      "api_shape": "integer 0-100",
+      "owner": "model_core_or_rule_baseline",
+      "model_output": "atsFriendliness.score",
+      "training_signal_needed": "CV parseability, section completeness, contact/date detection, metric evidence, formatting risk",
+      "current_data_support": "blocked_no_cv_benchmark",
+      "notes": "No controlled CV benchmark exists in current data snapshot."
+    },
+    {
+      "product_field": "analysisResult.atsFriendliness.summary",
+      "api_shape": "string",
+      "owner": "wrapper_from_model_signals",
+      "model_output": "detectedIssues",
+      "training_signal_needed": "issue taxonomy and evaluated issue detector",
+      "current_data_support": "blocked_no_ats_labels",
+      "notes": "Issue taxonomy required before classifier or scored rule set."
+    },
+    {
+      "product_field": "analysisResult.overallImpression",
+      "api_shape": "string",
+      "owner": "wrapper_from_model_signals",
+      "model_output": "overallImpression.score, overallImpression.summary, confidence notes",
+      "training_signal_needed": "grounded alignment strengths, gaps, ATS risks, fallback cases",
+      "current_data_support": "partial_rule_template_only",
+      "notes": "Must not hallucinate unsupported skills or seniority."
+    },
+    {
+      "product_field": "analysisResult.jobRecommendations[].matchScore",
+      "api_shape": "integer 0-100, max 5 items in CV Analyzer response",
+      "owner": "model_core_for_candidate_ranking",
+      "model_output": "recommendations[].matchScore for backend-provided jobCandidates",
+      "training_signal_needed": "candidate job set, ranking labels/baselines, no unknown job IDs",
+      "current_data_support": "partial_static_job_index_only",
+      "notes": "Backend owns candidate retrieval and final job detail hydration."
+    }
+  ],
+  "openapi_score_constraints": {
+    "jobFitAlignment.score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "atsFriendliness.score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "jobRecommendations[].matchScore": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    }
+  },
+  "boundary_definition": [
+    {
+      "area": "CV analysis core",
+      "field_or_behavior": "jobFitAlignment.score and grounded matched/missing alignment signals",
+      "owner": "model_core",
+      "training_action": "define labels/features in Phases 2-6",
+      "must_not_do": "Do not produce final public copy without wrapper validation."
+    },
+    {
+      "area": "CV quality",
+      "field_or_behavior": "atsFriendliness.score and detectedIssues",
+      "owner": "model_core_or_rule_baseline",
+      "training_action": "define ATS labels and benchmark in Phases 2 and 7",
+      "must_not_do": "Do not claim ATS production quality without CV benchmark evidence."
+    },
+    {
+      "area": "Summary signal",
+      "field_or_behavior": "overallImpression grounded summary signal",
+      "owner": "model_core_signal + wrapper_rendering",
+      "training_action": "define grounded templates and fallback policy in Phase 8",
+      "must_not_do": "Do not infer skills, seniority, language, or impact not present in evidence."
+    },
+    {
+      "area": "Actionable copy",
+      "field_or_behavior": "topActionables",
+      "owner": "api_wrapper",
+      "training_action": "consume model signals only",
+      "must_not_do": "Do not train core model to own product copy or prompt orchestration."
+    },
+    {
+      "area": "Section-level review",
+      "field_or_behavior": "sectionReviews",
+      "owner": "api_wrapper",
+      "training_action": "consume detected sections/issues if available",
+      "must_not_do": "Do not force missing CV sections into response."
+    },
+    {
+      "area": "Job recommendations",
+      "field_or_behavior": "recommendation score/rank for backend-provided candidates",
+      "owner": "model_core_ranker",
+      "training_action": "define candidate ranking contract in Phase 9",
+      "must_not_do": "Do not rank static artifact jobs as final public recommendations."
+    },
+    {
+      "area": "Job detail hydration",
+      "field_or_behavior": "job title, companyName, location, bookmark/application status, visibility",
+      "owner": "backend_api",
+      "training_action": "use jobId only for binding/validation",
+      "must_not_do": "Do not embed stale job details in model artifact output."
+    },
+    {
+      "area": "Security and persistence",
+      "field_or_behavior": "auth, ownership, storage, raw CV retention, request validation",
+      "owner": "backend_api",
+      "training_action": "respect privacy constraints and avoid raw CV logs",
+      "must_not_do": "Do not train on tokens, auth data, storage keys, or unrelated PII."
+    }
+  ],
+  "model_owned_fields": [
+    "jobFitAlignment.score",
+    "jobFitAlignment.summarySignals",
+    "jobFitAlignment.missingSignals",
+    "jobFitAlignment.matchedSkills",
+    "jobFitAlignment.missingSkills",
+    "atsFriendliness.score",
+    "atsFriendliness.detectedIssues",
+    "overallImpression.score",
+    "overallImpression.summary",
+    "recommendations[].jobId",
+    "recommendations[].matchScore",
+    "recommendations[].matchLevel",
+    "recommendations[].matchedSkills",
+    "recommendations[].missingSkills",
+    "recommendations[].rankingSignals"
+  ],
+  "wrapper_or_backend_fields": [
+    "topActionables",
+    "sectionReviews",
+    "generatedCv",
+    "jobRecommendations[].title",
+    "jobRecommendations[].companyName",
+    "jobRecommendations[].reason",
+    "jobRecommendations[].nextStep",
+    "job detail hydration",
+    "auth and ownership",
+    "request validation",
+    "persistence",
+    "OpenAI wrapper orchestration"
+  ],
+  "data_readiness_decision": {
+    "ready_for_phase_2_label_schema_design": true,
+    "ready_for_new_model_training": false,
+    "ready_for_production_readiness_claim": false,
+    "manual_or_synthetic_labels_needed_first": true,
+    "decision": "Proceed to Phase 2 label schema and baseline definitions; do not start new model training yet.",
+    "evidence": [
+      "Raw job and profile identifiers are complete and unique in the current snapshot.",
+      "Every raw training input field has a documented purpose and safety decision.",
+      "Current generated fit_score is weak-label only and lacks high-fit coverage from Phase 0.",
+      "ATS friendliness lacks controlled CV benchmark samples and issue labels.",
+      "Recommendation flow must switch from static job artifacts to backend-provided candidates before production ranking evaluation.",
+      "Wrapper-owned fields are separated from model/core outputs."
+    ],
+    "required_before_training": [
+      "Phase 2 label schema for job-fit, ATS, score bands, and manual validation samples.",
+      "Phase 3 normalization rules for experience, skills, language, and text construction.",
+      "Phase 4 balanced pair generation with leakage-safe splits and high/medium/low coverage.",
+      "Phase 5 baseline evaluation before complex model experiments.",
+      "ATS benchmark and labels before claiming atsFriendliness production support.",
+      "Candidate job input contract before recommendation ranking model evaluation."
+    ]
+  },
+  "acceptance": {
+    "every_training_input_field_has_documented_purpose": true,
+    "model_owned_outputs_separated_from_api_wrapper_outputs": true,
+    "data_readiness_decision_is_explicit": true
+  }
+}

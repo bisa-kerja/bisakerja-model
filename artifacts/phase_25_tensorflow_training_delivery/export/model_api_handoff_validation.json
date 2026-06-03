@@ -1,0 +1,81 @@
+{
+  "acceptance": {
+    "candidate_membership_enforced": true,
+    "candidate_reranking_fixture_model_outputs_only": true,
+    "cv_core_fixture_model_outputs_only": true,
+    "language_id_en_enforced": true,
+    "negative_fixtures_rejected": true,
+    "openapi_cv_analysis_v2_mapping_resolved": true,
+    "score_bounds_enforced": true,
+    "wrapper_backend_owned_fields_rejected": true
+  },
+  "generated_at": "2026-06-03T01:45:40.685985+00:00",
+  "negative_validation_errors": {
+    "cv_invalid_language": [
+      "language must be one of ['en', 'id']"
+    ],
+    "cv_score_out_of_range": [
+      "$.jobFitAlignment.score must be integer 0-100; actual=101"
+    ],
+    "cv_wrapper_owned_field": [
+      "$.topActionables is wrapper/backend-owned"
+    ],
+    "rerank_duplicate_candidate": [
+      "recommendations[1].jobId duplicate: '11111111-1111-4111-8111-111111111111'"
+    ],
+    "rerank_score_out_of_range": [
+      "$.recommendations[0].matchScore must be integer 0-100; actual=-1"
+    ],
+    "rerank_unknown_candidate": [
+      "recommendations[0].jobId not in candidate set: '99999999-9999-4999-8999-999999999999'"
+    ],
+    "rerank_wrapper_owned_field": [
+      "$.recommendations[0].title is wrapper/backend-owned"
+    ]
+  },
+  "phase_id": "phase_25_tensorflow_training_delivery",
+  "positive_validation_errors": {
+    "candidate_reranking": [],
+    "cv_core_output": [],
+    "openapi_mapping": []
+  },
+  "rules": {
+    "allowed_languages": [
+      "en",
+      "id"
+    ],
+    "candidate_membership": "Every recommendation.jobId must be present in request.jobCandidates and be unique.",
+    "forbidden_model_core_fields": [
+      "auth",
+      "availability",
+      "company",
+      "companyName",
+      "cvFile",
+      "cvFileId",
+      "experienceLevel",
+      "generatedCv",
+      "hasApplied",
+      "hydratedJob",
+      "isBookmarked",
+      "location",
+      "nextStep",
+      "nextSteps",
+      "persistence",
+      "reason",
+      "sectionReviews",
+      "title",
+      "topActionables",
+      "userId",
+      "visibility",
+      "workType"
+    ],
+    "max_recommendations": 5,
+    "score_bounds": {
+      "integer": true,
+      "maximum": 100,
+      "minimum": 0
+    }
+  },
+  "schema_version": "phase-25-model-api-handoff-fixtures-v1",
+  "status": "complete"
+}

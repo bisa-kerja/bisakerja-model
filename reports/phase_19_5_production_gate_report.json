@@ -1,0 +1,45 @@
+{
+  "blockers": [],
+  "fallback_policy": {
+    "tfidf_or_local_hash_allowed_for": [
+      "local_plumbing",
+      "notebook_smoke_checks"
+    ],
+    "tfidf_or_local_hash_blocked_for": [
+      "staging_readiness",
+      "production_readiness",
+      "phase_20_evidence_claims"
+    ]
+  },
+  "generated_at": "2026-06-02T05:18:16.601341+00:00",
+  "manifest_checks": [
+    {
+      "backend": "sentence-transformers",
+      "blockers": [],
+      "blocks_staging_or_production": false,
+      "fallback_allowed_for_local_plumbing_only": false,
+      "phase": "phase_17",
+      "production_eligible_e5": true
+    },
+    {
+      "backend": "sentence-transformers",
+      "blockers": [],
+      "blocks_staging_or_production": false,
+      "fallback_allowed_for_local_plumbing_only": false,
+      "phase": "phase_18",
+      "production_eligible_e5": true
+    },
+    {
+      "backend": "sentence_transformers_e5",
+      "blockers": [],
+      "blocks_staging_or_production": false,
+      "fallback_allowed_for_local_plumbing_only": false,
+      "phase": "phase_19_5",
+      "production_eligible_e5": true
+    }
+  ],
+  "phase_id": "phase_19_5_jobfit_blocker_remediation",
+  "readiness_status": "ready",
+  "schema_version": "jobfit-blocker-remediation-v1",
+  "staging_or_production_ready": true
+}

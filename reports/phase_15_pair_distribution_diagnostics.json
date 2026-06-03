@@ -1,0 +1,776 @@
+{
+  "artifact": {
+    "path": "artifacts/pairs_v2.parquet",
+    "row_count": 3600,
+    "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+  },
+  "experience_band_by_split": {
+    "columns": [
+      "split",
+      "experience_band"
+    ],
+    "records": [
+      {
+        "count": 52,
+        "experience_band": "profile:entry|job:entry",
+        "split": "test"
+      },
+      {
+        "count": 48,
+        "experience_band": "profile:entry|job:junior",
+        "split": "test"
+      },
+      {
+        "count": 59,
+        "experience_band": "profile:entry|job:lead",
+        "split": "test"
+      },
+      {
+        "count": 5,
+        "experience_band": "profile:entry|job:mid",
+        "split": "test"
+      },
+      {
+        "count": 3,
+        "experience_band": "profile:entry|job:senior",
+        "split": "test"
+      },
+      {
+        "count": 37,
+        "experience_band": "profile:junior|job:entry",
+        "split": "test"
+      },
+      {
+        "count": 45,
+        "experience_band": "profile:junior|job:junior",
+        "split": "test"
+      },
+      {
+        "count": 43,
+        "experience_band": "profile:junior|job:lead",
+        "split": "test"
+      },
+      {
+        "count": 10,
+        "experience_band": "profile:junior|job:mid",
+        "split": "test"
+      },
+      {
+        "count": 3,
+        "experience_band": "profile:junior|job:senior",
+        "split": "test"
+      },
+      {
+        "count": 64,
+        "experience_band": "profile:mid|job:entry",
+        "split": "test"
+      },
+      {
+        "count": 30,
+        "experience_band": "profile:mid|job:junior",
+        "split": "test"
+      },
+      {
+        "count": 8,
+        "experience_band": "profile:mid|job:lead",
+        "split": "test"
+      },
+      {
+        "count": 9,
+        "experience_band": "profile:mid|job:mid",
+        "split": "test"
+      },
+      {
+        "count": 2,
+        "experience_band": "profile:mid|job:senior",
+        "split": "test"
+      },
+      {
+        "count": 65,
+        "experience_band": "profile:senior|job:entry",
+        "split": "test"
+      },
+      {
+        "count": 18,
+        "experience_band": "profile:senior|job:junior",
+        "split": "test"
+      },
+      {
+        "count": 3,
+        "experience_band": "profile:senior|job:lead",
+        "split": "test"
+      },
+      {
+        "count": 30,
+        "experience_band": "profile:senior|job:mid",
+        "split": "test"
+      },
+      {
+        "count": 6,
+        "experience_band": "profile:senior|job:senior",
+        "split": "test"
+      },
+      {
+        "count": 220,
+        "experience_band": "profile:entry|job:entry",
+        "split": "train"
+      },
+      {
+        "count": 167,
+        "experience_band": "profile:entry|job:junior",
+        "split": "train"
+      },
+      {
+        "count": 207,
+        "experience_band": "profile:entry|job:lead",
+        "split": "train"
+      },
+      {
+        "count": 21,
+        "experience_band": "profile:entry|job:mid",
+        "split": "train"
+      },
+      {
+        "count": 9,
+        "experience_band": "profile:entry|job:senior",
+        "split": "train"
+      },
+      {
+        "count": 212,
+        "experience_band": "profile:junior|job:entry",
+        "split": "train"
+      },
+      {
+        "count": 198,
+        "experience_band": "profile:junior|job:junior",
+        "split": "train"
+      },
+      {
+        "count": 238,
+        "experience_band": "profile:junior|job:lead",
+        "split": "train"
+      },
+      {
+        "count": 41,
+        "experience_band": "profile:junior|job:mid",
+        "split": "train"
+      },
+      {
+        "count": 12,
+        "experience_band": "profile:junior|job:senior",
+        "split": "train"
+      },
+      {
+        "count": 331,
+        "experience_band": "profile:mid|job:entry",
+        "split": "train"
+      },
+      {
+        "count": 128,
+        "experience_band": "profile:mid|job:junior",
+        "split": "train"
+      },
+      {
+        "count": 32,
+        "experience_band": "profile:mid|job:lead",
+        "split": "train"
+      },
+      {
+        "count": 79,
+        "experience_band": "profile:mid|job:mid",
+        "split": "train"
+      },
+      {
+        "count": 23,
+        "experience_band": "profile:mid|job:senior",
+        "split": "train"
+      },
+      {
+        "count": 326,
+        "experience_band": "profile:senior|job:entry",
+        "split": "train"
+      },
+      {
+        "count": 89,
+        "experience_band": "profile:senior|job:junior",
+        "split": "train"
+      },
+      {
+        "count": 25,
+        "experience_band": "profile:senior|job:lead",
+        "split": "train"
+      },
+      {
+        "count": 134,
+        "experience_band": "profile:senior|job:mid",
+        "split": "train"
+      },
+      {
+        "count": 28,
+        "experience_band": "profile:senior|job:senior",
+        "split": "train"
+      },
+      {
+        "count": 53,
+        "experience_band": "profile:entry|job:entry",
+        "split": "validation"
+      },
+      {
+        "count": 45,
+        "experience_band": "profile:entry|job:junior",
+        "split": "validation"
+      },
+      {
+        "count": 52,
+        "experience_band": "profile:entry|job:lead",
+        "split": "validation"
+      },
+      {
+        "count": 5,
+        "experience_band": "profile:entry|job:mid",
+        "split": "validation"
+      },
+      {
+        "count": 1,
+        "experience_band": "profile:entry|job:senior",
+        "split": "validation"
+      },
+      {
+        "count": 39,
+        "experience_band": "profile:junior|job:entry",
+        "split": "validation"
+      },
+      {
+        "count": 36,
+        "experience_band": "profile:junior|job:junior",
+        "split": "validation"
+      },
+      {
+        "count": 46,
+        "experience_band": "profile:junior|job:lead",
+        "split": "validation"
+      },
+      {
+        "count": 9,
+        "experience_band": "profile:junior|job:mid",
+        "split": "validation"
+      },
+      {
+        "count": 1,
+        "experience_band": "profile:junior|job:senior",
+        "split": "validation"
+      },
+      {
+        "count": 70,
+        "experience_band": "profile:mid|job:entry",
+        "split": "validation"
+      },
+      {
+        "count": 36,
+        "experience_band": "profile:mid|job:junior",
+        "split": "validation"
+      },
+      {
+        "count": 3,
+        "experience_band": "profile:mid|job:lead",
+        "split": "validation"
+      },
+      {
+        "count": 14,
+        "experience_band": "profile:mid|job:mid",
+        "split": "validation"
+      },
+      {
+        "count": 7,
+        "experience_band": "profile:mid|job:senior",
+        "split": "validation"
+      },
+      {
+        "count": 60,
+        "experience_band": "profile:senior|job:entry",
+        "split": "validation"
+      },
+      {
+        "count": 22,
+        "experience_band": "profile:senior|job:junior",
+        "split": "validation"
+      },
+      {
+        "count": 4,
+        "experience_band": "profile:senior|job:lead",
+        "split": "validation"
+      },
+      {
+        "count": 31,
+        "experience_band": "profile:senior|job:mid",
+        "split": "validation"
+      },
+      {
+        "count": 6,
+        "experience_band": "profile:senior|job:senior",
+        "split": "validation"
+      }
+    ]
+  },
+  "generated_at": "2026-06-02T04:47:02.153831+00:00",
+  "language_by_split": {
+    "columns": [
+      "split",
+      "language"
+    ],
+    "records": [
+      {
+        "count": 338,
+        "language": "EN",
+        "split": "test"
+      },
+      {
+        "count": 2,
+        "language": "ID",
+        "split": "test"
+      },
+      {
+        "count": 3,
+        "language": "MIXED",
+        "split": "test"
+      },
+      {
+        "count": 197,
+        "language": "UNKNOWN",
+        "split": "test"
+      },
+      {
+        "count": 1596,
+        "language": "EN",
+        "split": "train"
+      },
+      {
+        "count": 18,
+        "language": "ID",
+        "split": "train"
+      },
+      {
+        "count": 10,
+        "language": "MIXED",
+        "split": "train"
+      },
+      {
+        "count": 896,
+        "language": "UNKNOWN",
+        "split": "train"
+      },
+      {
+        "count": 326,
+        "language": "EN",
+        "split": "validation"
+      },
+      {
+        "count": 2,
+        "language": "ID",
+        "split": "validation"
+      },
+      {
+        "count": 1,
+        "language": "MIXED",
+        "split": "validation"
+      },
+      {
+        "count": 211,
+        "language": "UNKNOWN",
+        "split": "validation"
+      }
+    ]
+  },
+  "pair_type_by_score_band": {
+    "columns": [
+      "pair_type",
+      "score_band"
+    ],
+    "records": [
+      {
+        "count": 600,
+        "pair_type": "cross_role_confusing",
+        "score_band": "low"
+      },
+      {
+        "count": 600,
+        "pair_type": "hard_negative",
+        "score_band": "low"
+      },
+      {
+        "count": 600,
+        "pair_type": "high_fit_positive",
+        "score_band": "high"
+      },
+      {
+        "count": 600,
+        "pair_type": "medium_fit",
+        "score_band": "medium"
+      },
+      {
+        "count": 600,
+        "pair_type": "random_negative",
+        "score_band": "low"
+      },
+      {
+        "count": 598,
+        "pair_type": "same_role_different_seniority",
+        "score_band": "low"
+      },
+      {
+        "count": 2,
+        "pair_type": "same_role_different_seniority",
+        "score_band": "medium"
+      }
+    ]
+  },
+  "pair_type_by_split": {
+    "columns": [
+      "split",
+      "pair_type"
+    ],
+    "records": [
+      {
+        "count": 90,
+        "pair_type": "cross_role_confusing",
+        "split": "test"
+      },
+      {
+        "count": 90,
+        "pair_type": "hard_negative",
+        "split": "test"
+      },
+      {
+        "count": 90,
+        "pair_type": "high_fit_positive",
+        "split": "test"
+      },
+      {
+        "count": 90,
+        "pair_type": "medium_fit",
+        "split": "test"
+      },
+      {
+        "count": 90,
+        "pair_type": "random_negative",
+        "split": "test"
+      },
+      {
+        "count": 90,
+        "pair_type": "same_role_different_seniority",
+        "split": "test"
+      },
+      {
+        "count": 420,
+        "pair_type": "cross_role_confusing",
+        "split": "train"
+      },
+      {
+        "count": 420,
+        "pair_type": "hard_negative",
+        "split": "train"
+      },
+      {
+        "count": 420,
+        "pair_type": "high_fit_positive",
+        "split": "train"
+      },
+      {
+        "count": 420,
+        "pair_type": "medium_fit",
+        "split": "train"
+      },
+      {
+        "count": 420,
+        "pair_type": "random_negative",
+        "split": "train"
+      },
+      {
+        "count": 420,
+        "pair_type": "same_role_different_seniority",
+        "split": "train"
+      },
+      {
+        "count": 90,
+        "pair_type": "cross_role_confusing",
+        "split": "validation"
+      },
+      {
+        "count": 90,
+        "pair_type": "hard_negative",
+        "split": "validation"
+      },
+      {
+        "count": 90,
+        "pair_type": "high_fit_positive",
+        "split": "validation"
+      },
+      {
+        "count": 90,
+        "pair_type": "medium_fit",
+        "split": "validation"
+      },
+      {
+        "count": 90,
+        "pair_type": "random_negative",
+        "split": "validation"
+      },
+      {
+        "count": 90,
+        "pair_type": "same_role_different_seniority",
+        "split": "validation"
+      }
+    ]
+  },
+  "role_family_by_split": {
+    "columns": [
+      "split",
+      "role_family"
+    ],
+    "records": [
+      {
+        "count": 46,
+        "role_family": "backend",
+        "split": "test"
+      },
+      {
+        "count": 73,
+        "role_family": "cloud",
+        "split": "test"
+      },
+      {
+        "count": 93,
+        "role_family": "data",
+        "split": "test"
+      },
+      {
+        "count": 18,
+        "role_family": "frontend",
+        "split": "test"
+      },
+      {
+        "count": 6,
+        "role_family": "fullstack",
+        "split": "test"
+      },
+      {
+        "count": 5,
+        "role_family": "mobile",
+        "split": "test"
+      },
+      {
+        "count": 112,
+        "role_family": "other",
+        "split": "test"
+      },
+      {
+        "count": 5,
+        "role_family": "quality_assurance",
+        "split": "test"
+      },
+      {
+        "count": 66,
+        "role_family": "security",
+        "split": "test"
+      },
+      {
+        "count": 58,
+        "role_family": "software_engineering",
+        "split": "test"
+      },
+      {
+        "count": 58,
+        "role_family": "web",
+        "split": "test"
+      },
+      {
+        "count": 276,
+        "role_family": "backend",
+        "split": "train"
+      },
+      {
+        "count": 325,
+        "role_family": "cloud",
+        "split": "train"
+      },
+      {
+        "count": 409,
+        "role_family": "data",
+        "split": "train"
+      },
+      {
+        "count": 75,
+        "role_family": "frontend",
+        "split": "train"
+      },
+      {
+        "count": 83,
+        "role_family": "fullstack",
+        "split": "train"
+      },
+      {
+        "count": 8,
+        "role_family": "mobile",
+        "split": "train"
+      },
+      {
+        "count": 489,
+        "role_family": "other",
+        "split": "train"
+      },
+      {
+        "count": 32,
+        "role_family": "quality_assurance",
+        "split": "train"
+      },
+      {
+        "count": 253,
+        "role_family": "security",
+        "split": "train"
+      },
+      {
+        "count": 315,
+        "role_family": "software_engineering",
+        "split": "train"
+      },
+      {
+        "count": 255,
+        "role_family": "web",
+        "split": "train"
+      },
+      {
+        "count": 55,
+        "role_family": "backend",
+        "split": "validation"
+      },
+      {
+        "count": 56,
+        "role_family": "cloud",
+        "split": "validation"
+      },
+      {
+        "count": 106,
+        "role_family": "data",
+        "split": "validation"
+      },
+      {
+        "count": 18,
+        "role_family": "frontend",
+        "split": "validation"
+      },
+      {
+        "count": 17,
+        "role_family": "fullstack",
+        "split": "validation"
+      },
+      {
+        "count": 5,
+        "role_family": "mobile",
+        "split": "validation"
+      },
+      {
+        "count": 107,
+        "role_family": "other",
+        "split": "validation"
+      },
+      {
+        "count": 3,
+        "role_family": "quality_assurance",
+        "split": "validation"
+      },
+      {
+        "count": 46,
+        "role_family": "security",
+        "split": "validation"
+      },
+      {
+        "count": 70,
+        "role_family": "software_engineering",
+        "split": "validation"
+      },
+      {
+        "count": 57,
+        "role_family": "web",
+        "split": "validation"
+      }
+    ]
+  },
+  "schema_version": "pairs-v2-balanced-splits-v1",
+  "score_band_by_split": {
+    "columns": [
+      "split",
+      "score_band"
+    ],
+    "records": [
+      {
+        "count": 90,
+        "score_band": "high",
+        "split": "test"
+      },
+      {
+        "count": 359,
+        "score_band": "low",
+        "split": "test"
+      },
+      {
+        "count": 91,
+        "score_band": "medium",
+        "split": "test"
+      },
+      {
+        "count": 420,
+        "score_band": "high",
+        "split": "train"
+      },
+      {
+        "count": 1679,
+        "score_band": "low",
+        "split": "train"
+      },
+      {
+        "count": 421,
+        "score_band": "medium",
+        "split": "train"
+      },
+      {
+        "count": 90,
+        "score_band": "high",
+        "split": "validation"
+      },
+      {
+        "count": 360,
+        "score_band": "low",
+        "split": "validation"
+      },
+      {
+        "count": 90,
+        "score_band": "medium",
+        "split": "validation"
+      }
+    ]
+  },
+  "score_summary": {
+    "10%": 0.0,
+    "25%": 0.045,
+    "50%": 0.219,
+    "75%": 0.5122,
+    "90%": 0.73,
+    "count": 3600.0,
+    "max": 1.0,
+    "mean": 0.30451091666666663,
+    "min": 0.0,
+    "std": 0.29259081880115145
+  },
+  "source_files": {
+    "jobs": {
+      "path": "legacy/dataset/indotech_job_cleaned.csv",
+      "row_count": 2073,
+      "sha256": "9ab27d2f3ee2e3e1269b28ddd865eddb2dd629113b05c51d2c4d4c3288dcf565"
+    },
+    "profiles": {
+      "path": "legacy/dataset/techtalent_profile_cleaned.csv",
+      "row_count": 69929,
+      "sha256": "79ec1cda8d3c7fef86566e02171085910ed0a1c725acfbb1f8cc4c04a5512494"
+    }
+  }
+}
