@@ -1,0 +1,144 @@
+{
+  "schema_version": "phase-26-final-api-gate-report-v1",
+  "phase": "26.14",
+  "generated_at": "2026-06-03T09:45:00Z",
+  "loader_status": {
+    "artifact_manifest_phase": "phase_25_tensorflow_training_delivery",
+    "runtime_hash_verification": "passed",
+    "verified_runtime_artifact_count": 11,
+    "real_tensorflow_loader": "not_run_in_current_interpreter_tensorflow_missing",
+    "expected_loader": "load selected_jobfit_tf_phase25.keras once with registered custom objects and compile=False"
+  },
+  "model": {
+    "name": "bisakerja_jobfit_tf_functional_custom_v1",
+    "version": "jobfit_tf_phase25_gradient_tape_v1",
+    "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+    "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+    "keras_version_from_smoke_fixture": "3.14.1",
+    "tensorflow_version_from_smoke_fixture": "2.21.0"
+  },
+  "runtime_artifacts": {
+    "score_calibration": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      "sha256": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
+      "size_bytes": 12943
+    },
+    "feature_config": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      "sha256": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
+      "size_bytes": 2741
+    },
+    "source_trained_candidate_model": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
+      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "size_bytes": 80901
+    },
+    "source_tensorflow_feature_config": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
+      "size_bytes": 2029
+    },
+    "final_keras_model": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+      "size_bytes": 80901
+    },
+    "tensorflow_artifact_export": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      "sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe",
+      "size_bytes": 7098
+    },
+    "model_api_handoff_fixtures": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7",
+      "size_bytes": 23261
+    },
+    "model_api_handoff_validation": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      "sha256": "41259486b941a58ec9e7b6ed760a386aa5371edee911732c17340ed5a98836e2",
+      "size_bytes": 2280
+    },
+    "training_only_genai_boundary": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      "sha256": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06",
+      "size_bytes": 10877
+    },
+    "genai_wrapper_handoff_contract": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      "sha256": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
+      "size_bytes": 4948
+    },
+    "model_card": {
+      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      "sha256": "902d3b6653e4aafe6ef458446b4b56a7c14d6877ade96846e43fe4682b06755e",
+      "size_bytes": 9909
+    }
+  },
+  "contract_tests": {
+    "command": "python -m unittest tests.model_api.test_phase_26_layout",
+    "result": "OK",
+    "tests_run": 37,
+    "skipped": 2,
+    "skip_reason": "TensorFlow/Keras dependency missing in current interpreter",
+    "handoff_validation_status": "complete",
+    "handoff_acceptance": {
+      "candidate_membership_enforced": true,
+      "candidate_reranking_fixture_model_outputs_only": true,
+      "cv_core_fixture_model_outputs_only": true,
+      "language_id_en_enforced": true,
+      "negative_fixtures_rejected": true,
+      "openapi_cv_analysis_v2_mapping_resolved": true,
+      "score_bounds_enforced": true,
+      "wrapper_backend_owned_fields_rejected": true
+    }
+  },
+  "endpoint_smoke": {
+    "health_endpoint": "implemented: GET /health",
+    "model_info_endpoint": "implemented: GET /model-info",
+    "cv_analysis_endpoint": "implemented: POST /inference/cv-analysis",
+    "live_fastapi_smoke": "not_run_current_interpreter_fastapi_missing_before_requirements_install",
+    "fixture_prediction_bounds": {
+      "max_0_1": 0.999987781047821,
+      "min_0_1": 0.699999988079071
+    },
+    "sample_output": {
+      "recommendations": [
+        {
+          "jobId": "job-2",
+          "matchScore": 72,
+          "matchLevel": "good",
+          "rankingSignals": [],
+          "matchedSkills": [],
+          "missingSkills": []
+        },
+        {
+          "jobId": "job-1",
+          "matchScore": 71,
+          "matchLevel": "good",
+          "rankingSignals": [],
+          "matchedSkills": [],
+          "missingSkills": []
+        },
+        {
+          "jobId": "job-0",
+          "matchScore": 70,
+          "matchLevel": "good",
+          "rankingSignals": [],
+          "matchedSkills": [],
+          "missingSkills": []
+        }
+      ]
+    }
+  },
+  "latency_sample": {
+    "mode": "in_process_fake_model_predict_for_service_sort_calibration_path",
+    "candidate_count": 3,
+    "elapsed_ms": 0.052,
+    "note": "Real TensorFlow/E5 latency must be measured after installing serving requirements on Python 3.13.x."
+  },
+  "readiness_decision": {
+    "status": "source-and-contract-ready; runtime-loader-verification-pending",
+    "reason": "Current interpreter lacks TensorFlow/Keras/FastAPI/SentenceTransformers; requirements.txt now pins serving runtime for Python 3.13.x.",
+    "next_gate": "Create Python 3.13 env, pip install -r requirements.txt, run full unittest including real Keras smoke, start uvicorn, hit /health and /inference/cv-analysis."
+  }
+}

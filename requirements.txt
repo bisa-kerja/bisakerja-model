@@ -1,0 +1,16 @@
+# Bisakerja Model API serving runtime dependencies
+# Scope: REST API + Phase 25 TensorFlow inference only.
+# Keep notebook/training-only packages (pandas, pyarrow, fastparquet, matplotlib, etc.) in training/requirements.txt.
+# Runtime target: Python 3.13.x (Phase 25 recorded Python 3.13.11).
+
+fastapi==0.123.5
+uvicorn[standard]==0.47.0
+pydantic==2.12.5
+
+# Phase 25 model runtime recorded by inference_smoke_fixture.json.
+tensorflow==2.21.0
+keras==3.14.1
+numpy==1.26.4
+
+# Approved embedding runtime: intfloat/e5-base-v2 via sentence-transformers.
+sentence-transformers==5.5.1
