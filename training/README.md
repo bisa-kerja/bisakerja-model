@@ -1,8 +1,44 @@
-# Bisakerja Notebook-First Model Training
+# Training Workspace
 
-This directory is reset to a notebook-first training workflow. The old script/package extraction scaffold has been removed from this directory.
+Notebook-first model training workspace for Bisakerja Model API.
 
-## Notebook phases
+Training owns feature design, weak-label and human-label governance, baseline comparison, TensorFlow delivery, calibration, model-card evidence, and artifact export. Model serving lives in `../model_api/`. Backend API is a separate repository at <https://github.com/bisa-kerja/bisakerja-api>.
+
+## Boundary
+
+Training is responsible for producing model-core evidence and artifacts for:
+
+- `jobFitAlignment`
+- `atsFriendliness`
+- `overallImpression`
+- candidate reranking scores for Backend-provided job IDs
+
+Training does not own Backend auth, persistence, final public response formatting, hydrated job details, or GenAI wrapper prose.
+
+## Layout
+
+```text
+training/
+|-- README.md
+|-- requirements.txt              # Training/notebook dependencies
+|-- notebooks/                    # Versioned notebook-first workflow
+|-- .gitignore
+`-- .tf-venv-3.13/                # Local ignored TensorFlow runtime when created
+```
+
+## Notebook-First Rule
+
+Training implementation stays in versioned `.ipynb` notebooks. Do not add `training/*.py` package entrypoints for training execution unless the workflow is explicitly redesigned.
+
+Every notebook step must start with English Markdown before code. Each step documents:
+
+- Purpose
+- Required input
+- Action
+- Expected output
+- Verification
+
+## Notebook Order
 
 Run and review notebooks in numeric order:
 
@@ -34,23 +70,11 @@ Run and review notebooks in numeric order:
 26. `notebooks/phase_24_reproducibility_final_gate.ipynb`
 27. `notebooks/phase_25_tensorflow_training_delivery.ipynb`
 
-Phase 13 executable cells are intentionally retired for production notebook hygiene; durable evidence remains in `reports/phase_13_*.json`. Phase 25 is the current TensorFlow training delivery notebook for release evidence.
+Phase 13 executable cells are intentionally retired for production notebook hygiene; durable evidence remains in `../reports/phase_13_*.json`.
 
-## Default embedding model
+## Runtime
 
-For Phase 17+ English-focused training, use `intfloat/e5-base-v2` as the default frozen embedding model.
-
-- Profile/CV text prefix: `query:`
-- Job text prefix: `passage:`
-- Use normalized embeddings.
-- Regenerate embedding cache and manifests; do not reuse legacy `all-MiniLM-L6-v2` cache.
-- Use `all-mpnet-base-v2` / `all-MiniLM-L6-v2` only as comparator baselines.
-
-## TensorFlow notebook runtime
-
-Use a TensorFlow-compatible Python runtime for the final training notebook. Local verification currently uses Python `3.13` with dependencies from `training/requirements.txt`.
-
-Do not install Phase 25 dependencies into an active Python `3.14` notebook virtual environment. If `pip -V` points to `training/notebooks/venv/lib/python3.14`, deactivate that environment first and create a dedicated TensorFlow runtime:
+Use Python `3.13.11` for the TensorFlow training runtime. Python `3.14` is not reliable for this project unless compatible TensorFlow wheels are available.
 
 ```bash
 deactivate 2>/dev/null || true
@@ -58,19 +82,45 @@ PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
 source training/.tf-venv-3.13/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r training/requirements.txt
+python -m pip install ipykernel jupyterlab
+python -m ipykernel install --user --name bisakerja-model-tf313 --display-name "Bisakerja Model TF 3.13"
+```
+
+Verify runtime:
+
+```bash
 python - <<'PY'
 import sys
 import tensorflow as tf
-print(sys.version)
-print(tf.__version__)
+import keras
+from sentence_transformers import SentenceTransformer
+
+print('python:', sys.version.split()[0])
+print('tensorflow:', tf.__version__)
+print('keras:', keras.__version__)
+print('sentence_transformers: import-ok')
 PY
 ```
 
-Python `3.14` is not a reliable TensorFlow runtime for this project unless compatible TensorFlow wheels are available.
+Expected Python: `3.13.x`. Phase 25 smoke evidence records TensorFlow `2.21.0` and Keras `3.14.1`.
 
-## Production release evidence gates
+## Default Embedding Model
 
-Before any production-ready claim, verify release evidence from a clean git state:
+For production-track English-focused training, use `intfloat/e5-base-v2` as the frozen embedding model.
+
+- CV/profile text prefix: `query:`
+- Job text prefix: `passage:`
+- Use normalized embeddings.
+- Regenerate embedding cache and manifests when the embedding model changes.
+- Use `all-mpnet-base-v2` or `all-MiniLM-L6-v2` only as comparator baselines.
+
+## Backend Contract Inputs
+
+When training notebooks or validation gates need Backend API contracts, use generated snapshots or fixtures exported from <https://github.com/bisa-kerja/bisakerja-api>. Backend source is not part of this repository.
+
+## Production Evidence Gates
+
+Before any production-ready claim, verify release evidence from a clean or well-understood git state:
 
 ```bash
 python scripts/verify_phase_27_1_27_2_release_gate.py --write
@@ -78,12 +128,18 @@ python scripts/verify_phase_27_3_27_4_release_evidence.py --write
 python scripts/verify_phase_27_5_27_6_validation_expansion.py --write
 ```
 
-The release gates record the current git commit, exit non-zero when production status is blocked, verify TensorBoard event evidence under `artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/`, verify active notebook hygiene, and enforce the production human-label policy. TensorBoard logs in ignored local run directories are not sufficient for `REQUIREMENT.md` section 1.4 unless copied to the release path and recorded in `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json` with SHA-256 and byte size. Weak labels remain allowed only as bootstrap/training support; production score claims require larger frozen human/recruiter-reviewed slice-covered validation evidence. ATS readiness requires a release-scale real or sanitized CV benchmark covering normal PDF, scanned/OCR fallback, multi-column PDF, table-heavy PDF, DOCX, short CV, long CV, Indonesian CV, and English CV. Recommendation readiness requires a larger backend-like candidate-set fixture or anonymized relevance labels, candidate membership preservation, NDCG/MAP uplift over backend order, and no reliance on the small 3-set/15-candidate handoff fixture.
+Release gates record git commit, notebook hygiene, TensorBoard release evidence, model-card/manifest consistency, validation expansion, and human-label policy. TensorBoard logs in ignored local directories are not enough for `REQUIREMENT.md` section 1.4 unless copied to the release path and recorded with SHA-256 and byte size.
 
-## Notebook-only rule
+Weak labels are allowed only as bootstrap/training support. Production score claims require larger frozen human/recruiter-reviewed validation evidence with slice coverage.
 
-Training implementation stays in versioned `.ipynb` notebooks. Do not add `training/*.py` package entrypoints for training execution.
+## Artifact Outputs
 
-## Documentation rule
+Production-track notebooks write durable outputs under:
 
-Every notebook step starts with English Markdown documentation before any future code cell is added. Each step explains purpose, inputs, action, expected output, and verification.
+```text
+../artifacts/phase_25_tensorflow_training_delivery/
+../reports/phase_25_*.json
+../reports/phase_27_*.json
+```
+
+Do not mutate exported artifacts at runtime. If an artifact changes, update the relevant manifest and rerun verification.

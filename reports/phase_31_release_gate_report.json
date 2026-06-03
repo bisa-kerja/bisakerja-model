@@ -27,27 +27,21 @@
   "sources": {
     "code": [
       "model_api/app.py",
-      "model_api/observability.py",
-      "references/src/modules/health/health.service.ts",
-      "references/src/modules/health/health.types.ts"
+      "model_api/observability.py"
     ],
     "docs": [
+      "README.md",
       "model_api/README.md",
-      "references/docs/integrations/model-api.md",
-      "references/docs/modules/ai-cv-analyzer.md",
+      "docs/architecture/service-boundaries.md",
+      "docs/runbooks/local-development.md",
       "RUNNING_STEPS.md"
     ],
     "env_templates": [
       ".env.example",
-      "model_api/.env.example",
-      "references/.env.example",
-      "references/.env.test.example",
-      "references/.env.production.example"
+      "model_api/.env.example"
     ],
     "tests": [
-      "tests/test_phase_31_release_gate.py",
-      "references/tests/integration/routes/health.test.ts",
-      "references/tests/smoke/health.test.ts"
+      "tests/test_phase_31_release_gate.py"
     ]
   }
 }

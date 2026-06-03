@@ -1,123 +1,153 @@
-# Running Steps — Bisakerja Model Training
+# Running Steps — Bisakerja Model Workspace
 
-Panduan ini menjelaskan cara menjalankan project training model Bisakerja pelan-pelan dari terminal sampai notebook bisa dipakai.
+This runbook explains how to run the Bisakerja model workspace from terminal setup to TensorFlow notebooks, Model API runtime, integration checks, release gates, troubleshooting, and rollback.
+
+Backend API is a separate repository: <https://github.com/bisa-kerja/bisakerja-api>. Keep Backend source, env files, DB config, and generated Backend artifacts outside this model repository unless a specific release fixture is intentionally copied into `artifacts/`.
 
 ## Release Gate Runbook
 
 ### Local run
 
-1. Copy `.env.example`, `model_api/.env.example`, and `references/.env.example` to local untracked `.env` files.
-2. Set `MODEL_API_SERVICE_TOKEN` to a local-only value and keep `MODEL_API_ENABLE_GENAI_WRAPPER=false` unless testing the Backend wrapper fallback path.
-3. Start Model API with Python 3.13 TensorFlow/E5 runtime, then start Backend API with `MODEL_API_BASE_URL=http://localhost:8000`.
-4. Run Backend + Model API tests: `python -m unittest tests.test_phase_31_release_gate` and backend health tests from `references/`.
+1. Copy the Model API env template to an untracked local file:
+
+   ```bash
+   cp model_api/.env.example model_api/.env
+   ```
+
+2. Optionally copy the root model-workspace env template:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Root `.env.example` is optional. Model API runtime primarily uses `model_api/.env.example`. Root `.env.example` only stores model-workspace orchestration defaults and the external Backend repo URL.
+
+3. Set `MODEL_API_SERVICE_TOKEN` to a local-only value when testing authenticated internal routes.
+4. Keep `MODEL_API_ENABLE_GENAI_WRAPPER=false` unless testing Backend wrapper fallback behavior.
+5. Start Model API with Python `3.13.x` TensorFlow/E5 runtime.
+6. When Backend integration is in scope, open <https://github.com/bisa-kerja/bisakerja-api> outside this repo and start it with `MODEL_API_BASE_URL=http://localhost:8000` plus a matching service token.
+7. Run Model API tests:
+
+   ```bash
+   python -m unittest tests.test_phase_31_release_gate
+   python -m unittest tests.test_phase_29_model_api_hardening
+   ```
+
+8. Run Backend health, route, and contract tests from the external Backend repository when integration testing is required.
 
 ### Staging run
 
-1. Use staging-only secrets from the deployment secret store; do not commit `.env` files.
-2. Verify `/ready` on Model API checks artifacts, TensorFlow model, E5 backend, PDF parser, and service-token config.
-3. Verify Backend `/health/ready` checks PostgreSQL, Redis, and Model API reachability.
-4. Run upload contract flow with fixture PDFs and fixture jobs through Backend `/api/v1/ai/cv-analyzer`; validate public `CvAnalysis` response and persistence records.
+1. Use staging-only secrets from deployment secret store; do not commit `.env` files.
+2. Verify Model API `/health` checks:
+   - artifacts verified
+   - TensorFlow model loaded
+   - E5 backend configured
+   - PDF parser available
+   - service-token configured
+3. Verify Backend API readiness from <https://github.com/bisa-kerja/bisakerja-api> when integration testing is required.
+4. Run upload contract flow through Backend API `/api/v1/ai/cv-analyzer` with fixture PDFs and fixture jobs.
+5. Validate public `CvAnalysis` response shape, persistence records, and `JobRecommendationRun` / `JobRecommendationItem` records in Backend repository checks.
+6. Confirm Frontend UI never calls Model API directly.
 
 ### Failure modes
 
-- invalid PDF → deterministic `422` validation response.
-- parse failure → deterministic low-confidence parse fallback, no fabricated raw CV.
-- empty candidates → Backend deterministic no-recommendation policy before Model API call.
-- Model API timeout → deterministic `504`/AI unavailable mapping.
-- TensorFlow load failure → deterministic `503` readiness failure.
-- E5 failure → deterministic `503` readiness or inference failure.
-- GenAI wrapper failure → deterministic Backend fallback copy without changing model scores/order.
+- invalid PDF -> deterministic `422` validation response.
+- parse failure -> deterministic low-confidence parse fallback, no fabricated raw CV.
+- empty candidates -> Backend deterministic no-recommendation policy before Model API call.
+- Model API timeout -> deterministic `504` or AI-unavailable mapping.
+- TensorFlow load failure -> deterministic `503` readiness failure.
+- E5 failure -> deterministic `503` readiness or inference failure.
+- GenAI wrapper failure -> deterministic Backend fallback copy without changing model scores or ordering.
 
-### Troubleshooting
+### Troubleshooting summary
 
-- If readiness fails on Model API, inspect artifact paths, E5 backend setup, TensorFlow load logs, PDF parser dependency, and `MODEL_API_SERVICE_TOKEN` presence.
-- If Backend readiness fails, inspect `MODEL_API_BASE_URL`, service token mismatch, Redis, and PostgreSQL connectivity.
+- If Model API readiness fails, inspect artifact paths, manifest hashes, E5 backend setup, TensorFlow load logs, PDF parser dependency, and `MODEL_API_SERVICE_TOKEN` presence.
+- If Backend integration fails, inspect the external Backend repo config, `MODEL_API_BASE_URL`, service-token mismatch, Redis, PostgreSQL, and Model API reachability.
 - Verify security/privacy review items: service-token rotation guidance, raw CV log exclusion, upload cleanup, retention, path traversal defense, and non-public Model API routing.
 - Logs must include request ID, model version, artifact hash, candidate count, parse quality, latency fields, error code, and fallback reason only. Do not log raw CV text, service-token values, DB URLs, or unrelated PII.
 
 ### Rollback
 
-1. Disable public analyzer traffic or route to deterministic fallback.
-2. Keep Backend DB owner; do not give Model API production DB credentials.
-3. Restore previous model artifact paths and rerun readiness plus contract tests.
-4. Rotate service-token values if any boundary exposure is suspected.
+1. Disable public analyzer traffic from Backend API or route to deterministic fallback.
+2. Keep Backend as DB owner; do not give Model API production DB credentials.
+3. Restore previous model artifact paths.
+4. Rerun Model API readiness and contract/smoke tests.
+5. Rerun Backend integration tests from <https://github.com/bisa-kerja/bisakerja-api> when relevant.
+6. Rotate service-token values if any boundary exposure is suspected.
 
+## Target Runtime
 
-Target runtime sekarang:
+Current target runtime:
 
 - Python: `3.13.11`
 - Virtual environment: `training/.tf-venv-3.13`
 - Jupyter kernel: `Bisakerja Model TF 3.13`
-- Notebook utama Phase 25: `training/notebooks/phase_25_tensorflow_training_delivery.ipynb`
+- Main Phase 25 notebook: `training/notebooks/phase_25_tensorflow_training_delivery.ipynb`
+- TensorFlow: `2.21.0`
+- Keras: `3.14.1`
 
-> Jangan pakai Python `3.14` untuk Phase 25. TensorFlow `2.21.0` belum tersedia untuk runtime itu di environment ini.
+Do not use Python `3.14` for Phase 25. TensorFlow `2.21.0` is not available/reliable in that runtime in this project environment.
 
----
+## 1. Enter Repository Root
 
-## 1. Masuk ke root project
-
-Buka terminal baru, lalu masuk ke folder project:
+Open a new terminal and enter the project folder:
 
 ```bash
 cd /Users/macbookpro/Development/bisakerja-model
 ```
 
-Cek posisi:
+Check current directory:
 
 ```bash
 pwd
 ```
 
-Harus keluar:
+Expected:
 
-```txt
+```text
 /Users/macbookpro/Development/bisakerja-model
 ```
 
-Cek file penting:
+Check important files:
 
 ```bash
 ls TODOS.md REQUIREMENT.md GAP_MODEL_TRAINING.md training/requirements.txt
 ```
 
-Kalau ada yang `No such file`, berarti belum di root project.
+If any file returns `No such file`, you are not in repository root.
 
----
+## 2. Deactivate Old Virtual Environment
 
-## 2. Matikan virtual environment lama dulu
-
-Kalau prompt terminal menunjukkan `notebooks Py`, `.venv`, `venv`, atau env lain, matikan dulu:
+If terminal prompt shows `notebooks Py`, `.venv`, `venv`, or another active environment, deactivate it first:
 
 ```bash
 deactivate 2>/dev/null || true
 ```
 
-Cek Python global yang sedang terlihat:
+Check visible global Python:
 
 ```bash
 which python
 python -V
 ```
 
-Tidak masalah kalau masih Python `3.14` di sini, karena langkah berikutnya akan membuat venv khusus Python `3.13`.
+It is okay if this still shows Python `3.14`; the next step creates a dedicated Python `3.13` virtual environment.
 
----
+## 3. Create TensorFlow Python 3.13 Virtual Environment
 
-## 3. Buat virtual environment TensorFlow Python 3.13
-
-Jalankan:
+Run:
 
 ```bash
 PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
 ```
 
-Aktifkan venv:
+Activate it:
 
 ```bash
 source training/.tf-venv-3.13/bin/activate
 ```
 
-Cek lagi:
+Check again:
 
 ```bash
 which python
@@ -127,19 +157,17 @@ python -m pip -V
 
 Expected:
 
-```txt
+```text
 .../bisakerja-model/training/.tf-venv-3.13/bin/python
 Python 3.13.11
 .../bisakerja-model/training/.tf-venv-3.13/lib/python3.13/...
 ```
 
-Kalau masih mengarah ke `training/notebooks/venv/lib/python3.14`, ulangi dari langkah 2.
+If it still points to `training/notebooks/venv/lib/python3.14`, repeat from step 2.
 
----
+## 4. Install Training Dependencies
 
-## 4. Install dependency project
-
-Dengan venv `training/.tf-venv-3.13` aktif, jalankan:
+With `training/.tf-venv-3.13` active, run:
 
 ```bash
 python -m pip install --upgrade pip
@@ -147,17 +175,15 @@ python -m pip install -r training/requirements.txt
 python -m pip install ipykernel jupyterlab
 ```
 
-Kenapa harus begini:
+Why:
 
-- `training/requirements.txt` berisi dependency training, termasuk TensorFlow.
-- `ipykernel` membuat venv muncul sebagai pilihan kernel notebook.
-- `jupyterlab` menjalankan UI notebook dari venv yang sama.
+- `training/requirements.txt` contains training dependencies including TensorFlow.
+- `ipykernel` makes the virtual environment available as a notebook kernel.
+- `jupyterlab` runs notebook UI from the same virtual environment.
 
----
+## 5. Validate TensorFlow and Main Dependencies
 
-## 5. Validasi TensorFlow dan dependency utama
-
-Jalankan:
+Run:
 
 ```bash
 python - <<'PY'
@@ -176,111 +202,104 @@ print('sentence_transformers: import-ok')
 PY
 ```
 
-Expected penting:
+Expected important lines:
 
-```txt
+```text
 python: .../training/.tf-venv-3.13/bin/python
 python_version: 3.13.11
 tensorflow: 2.21.0
+keras: 3.14.1
 ```
 
-Kalau TensorFlow gagal dengan `No matching distribution`, hampir pasti pip masih memakai Python `3.14`. Ulangi langkah 2 dan 3.
+If TensorFlow fails with `No matching distribution`, pip is almost certainly using Python `3.14`. Repeat steps 2 and 3.
 
----
+## 6. Register Correct Jupyter Kernel
 
-## 6. Register Jupyter kernel yang benar
-
-Jalankan:
+Run:
 
 ```bash
 python -m ipykernel install --user --name bisakerja-model-tf313 --display-name "Bisakerja Model TF 3.13"
 ```
 
-Cek kernel:
+Check kernel list:
 
 ```bash
 jupyter kernelspec list
 ```
 
-Harus ada:
+Expected kernel name:
 
-```txt
+```text
 bisakerja-model-tf313
 ```
 
-Kernel lama yang membingungkan sebaiknya dihapus:
+Remove old confusing project kernel if it exists:
 
 ```bash
 jupyter kernelspec uninstall -f bisakerja-model-venv 2>/dev/null || true
 ```
 
-Jangan pilih kernel `python3` default untuk Phase 25, karena biasanya mengarah ke Python global `3.14`.
+Do not select default `python3` kernel for Phase 25 because it often points to global Python `3.14`.
 
----
+## 7. Stop Old Jupyter Servers
 
-## 7. Pastikan tidak ada Jupyter server lama berjalan
-
-Cek server aktif:
+Check active servers:
 
 ```bash
 jupyter server list
 jupyter notebook list
 ```
 
-Kalau output hanya:
+If output only shows:
 
-```txt
+```text
 Currently running servers:
 ```
 
-berarti tidak ada server aktif.
+then no server is active.
 
-Kalau ada server lama, lihat port dari output, misalnya `http://localhost:8888/...`, lalu stop:
+If old servers exist, inspect the port from output, for example `http://localhost:8888/...`, then stop it:
 
 ```bash
 jupyter server stop 8888
 ```
 
-Ulangi untuk port lain yang muncul. Setelah itu cek lagi:
+Repeat for other ports. Check again:
 
 ```bash
 jupyter server list
 ```
 
----
+## 8. Start Jupyter Lab from Correct Virtual Environment
 
-## 8. Jalankan Jupyter Lab dari venv yang benar
-
-Pastikan venv masih aktif:
+Make sure virtual environment is still active:
 
 ```bash
 which python
 python -V
 ```
 
-Lalu jalankan Jupyter Lab dari root project:
+Start Jupyter Lab from repository root:
 
 ```bash
 python -m jupyter lab --notebook-dir .
 ```
 
-Browser akan terbuka. Kalau tidak terbuka otomatis, copy URL dari terminal.
+Browser should open automatically. If not, copy the URL from terminal.
 
-Biarkan terminal ini tetap hidup selama memakai notebook.
+Keep this terminal running while using notebooks.
 
----
+## 9. Select Correct Kernel in Notebook
 
-## 9. Pilih kernel benar di notebook
+In Jupyter Lab:
 
-Di Jupyter Lab:
+1. Open notebook.
+2. Click **Kernel**.
+3. Choose **Change Kernel**.
+4. Select **Bisakerja Model TF 3.13**.
+5. Click **Restart Kernel**.
 
-1. Buka notebook.
-2. Klik menu **Kernel**.
-3. Pilih **Change Kernel**.
-4. Pilih **Bisakerja Model TF 3.13**.
-5. Klik **Restart Kernel**.
-
-Cek dari cell notebook:
+Check from notebook cell:
 
 ```python
 import sys
@@ -291,39 +310,37 @@ print(tf.__version__)
 
 Expected:
 
-```txt
+```text
 .../training/.tf-venv-3.13/bin/python
 2.21.0
 ```
 
-Kalau bukan path itu, kernel salah. Ganti lagi ke **Bisakerja Model TF 3.13**.
+If path differs, kernel is wrong. Change again to **Bisakerja Model TF 3.13**.
 
----
+## 10. Run Phase 25 Notebook
 
-## 10. Jalankan notebook Phase 25
+Main notebook for TensorFlow delivery requirement:
 
-Notebook utama untuk memenuhi requirement TensorFlow:
-
-```txt
+```text
 training/notebooks/phase_25_tensorflow_training_delivery.ipynb
 ```
 
-Cara run aman:
+Safe run flow:
 
-1. Buka notebook Phase 25.
-2. Pilih kernel **Bisakerja Model TF 3.13**.
-3. Klik **Kernel → Restart Kernel**.
-4. Klik **Run → Run All Cells**.
-5. Tunggu sampai selesai.
+1. Open Phase 25 notebook.
+2. Select kernel **Bisakerja Model TF 3.13**.
+3. Click **Kernel -> Restart Kernel**.
+4. Click **Run -> Run All Cells**.
+5. Wait until complete.
 6. Save notebook.
 
-Setelah selesai, cek report Phase 25:
+After completion, check Phase 25 reports:
 
 ```bash
 ls reports/phase_25_*.json
 ```
 
-Cek ringkas status report:
+Check compact report status:
 
 ```bash
 python - <<'PY'
@@ -336,31 +353,29 @@ for p in sorted(Path('reports').glob('phase_25_*.json')):
 PY
 ```
 
-Cek log TensorBoard Phase 25:
+Check TensorBoard logs:
 
 ```bash
 ls artifacts/tensorboard/phase_25_tensorflow_training_delivery
 ```
 
-Buka TensorBoard dari venv yang punya package TensorBoard:
+Open TensorBoard from the environment that has TensorBoard installed:
 
 ```bash
 tensorboard --logdir artifacts/tensorboard/phase_25_tensorflow_training_delivery
 ```
 
-Kalau command `tensorboard` belum tersedia, install ulang dependency project dari venv aktif:
+If `tensorboard` command is not available, reinstall training dependencies from active venv:
 
 ```bash
 python -m pip install -r training/requirements.txt
 ```
 
----
+## 11. Notebook Order When Starting from Scratch
 
-## 11. Urutan notebook kalau mulai dari awal
+Run notebook-first track in numeric order:
 
-Kalau ingin menjalankan seluruh track notebook-first, jalankan berurutan:
-
-```txt
+```text
 phase_00_reproducibility_snapshot.ipynb
 phase_01_data_audit_contracts.ipynb
 phase_02_label_schema_baselines.ipynb
@@ -390,15 +405,13 @@ phase_24_reproducibility_final_gate.ipynb
 phase_25_tensorflow_training_delivery.ipynb
 ```
 
-Untuk tugas saat ini, fokus ke Phase 25 dulu karena Phase 25 adalah notebook final untuk TensorFlow training delivery.
+For current TensorFlow delivery verification, focus on Phase 25 first.
 
----
+## 12. Validate E5 Embedding Model
 
-## 12. Validasi E5 embedding model
+Phase 17+ and Phase 25 use `intfloat/e5-base-v2`.
 
-Phase 17+ dan Phase 25 memakai `intfloat/e5-base-v2`.
-
-Jalankan sekali dari venv aktif:
+Run once from active venv:
 
 ```bash
 python - <<'PY'
@@ -417,29 +430,112 @@ PY
 
 Expected:
 
-```txt
+```text
 shape: (2, 768)
 norms: [1.0, 1.0]
 ```
 
-Kalau gagal karena download/cache, jalankan ulang saat internet stabil.
+If download/cache fails, retry when internet is stable.
 
----
+## 13. Model API Runtime
 
-## 13. Troubleshooting pelan-pelan
+Model API is the serving package under `model_api/`.
+
+Create and activate serving venv if not already active:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Copy Model API env template:
+
+```bash
+cp model_api/.env.example model_api/.env
+```
+
+Start Model API:
+
+```bash
+uvicorn model_api.app:create_app --factory --host 0.0.0.0 --port 8000
+```
+
+Check health:
+
+```bash
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/model-info
+```
+
+Run targeted tests:
+
+```bash
+python -m unittest tests.model_api.test_phase_26_layout
+python -m unittest tests.test_phase_29_model_api_hardening
+python -m unittest tests.test_phase_31_release_gate
+```
+
+## 14. Backend integration run
+
+Use this only when Backend integration is in scope.
+
+1. Clone/open Backend repo outside this model repository:
+
+   ```text
+   https://github.com/bisa-kerja/bisakerja-api
+   ```
+
+2. Configure Backend API with:
+
+   ```text
+   MODEL_API_BASE_URL=http://localhost:8000
+   MODEL_API_SERVICE_TOKEN=<same local token as Model API>
+   ```
+
+3. Start Backend API from Backend repository.
+4. Run Backend health/route/contract tests from Backend repository.
+5. Run upload contract flow through Backend `/api/v1/ai/cv-analyzer` with fixture PDFs and fixture jobs.
+6. Keep Backend env files and database config outside this model repository.
+
+## 15. Release Gate Commands
+
+Run from repository root:
+
+```bash
+python scripts/verify_phase_27_1_27_2_release_gate.py --write
+python scripts/verify_phase_27_3_27_4_release_evidence.py --write
+python scripts/verify_phase_27_5_27_6_validation_expansion.py --write
+python scripts/verify_phase_27_7_clean_kernel_export.py --write
+python scripts/verify_phase_27_8_model_card_manifest_refresh.py --write
+python scripts/verify_phase_27_9_model_api_production_smoke.py --write --run-live
+python scripts/verify_phase_27_10_requirement_matrix.py --write
+python scripts/verify_phase_28_contract_realignment.py --write
+python scripts/verify_phase_31_release_gate.py
+```
+
+Notes:
+
+- `--run-live` requires Model API live runtime with dependencies installed.
+- Some gates require TensorFlow/Keras artifact reload.
+- Some gates require exported Backend contract fixtures from <https://github.com/bisa-kerja/bisakerja-api>.
+- Do not hand-edit generated reports when a script owns them.
+
+## 16. Troubleshooting Details
 
 ### Error: `No matching distribution found for tensorflow==2.21.0`
 
-Penyebab umum: pip memakai Python `3.14`.
+Common cause: pip uses Python `3.14`.
 
-Cek:
+Check:
 
 ```bash
 python -V
 python -m pip -V
 ```
 
-Kalau ada `python3.14` atau `training/notebooks/venv/lib/python3.14`, fix:
+If output contains `python3.14` or `training/notebooks/venv/lib/python3.14`, fix:
 
 ```bash
 deactivate 2>/dev/null || true
@@ -449,68 +545,68 @@ python -m pip -V
 python -m pip install -r training/requirements.txt
 ```
 
-### Notebook package tidak ketemu
+### Notebook package not found
 
-Cek cell:
+Check notebook cell:
 
 ```python
 import sys
 print(sys.executable)
 ```
 
-Kalau bukan `training/.tf-venv-3.13/bin/python`, kernel salah.
+If it is not `training/.tf-venv-3.13/bin/python`, kernel is wrong.
 
-Fix: **Kernel → Change Kernel → Bisakerja Model TF 3.13**.
+Fix: **Kernel -> Change Kernel -> Bisakerja Model TF 3.13**.
 
-### Terlalu banyak kernel membingungkan
+### Too many kernels are confusing
 
-Lihat daftar kernel:
+List kernels:
 
 ```bash
 jupyter kernelspec list
 ```
 
-Untuk Phase 25, yang dipakai hanya:
+For Phase 25, use only:
 
-```txt
+```text
 bisakerja-model-tf313
 ```
 
-Hapus kernel lama project kalau muncul:
+Remove old project kernel if it appears:
 
 ```bash
 jupyter kernelspec uninstall -f bisakerja-model-venv
 ```
 
-### Terlalu banyak server Jupyter membingungkan
+### Too many Jupyter servers are confusing
 
-Lihat server:
+List servers:
 
 ```bash
 jupyter server list
 ```
 
-Stop server by port:
+Stop servers by port:
 
 ```bash
 jupyter server stop 8888
 jupyter server stop 8889
 ```
 
-Jalankan lagi satu server saja:
+Run one server only:
 
 ```bash
 python -m jupyter lab --notebook-dir .
 ```
 
-### Report tidak berubah setelah Run All
+### Reports do not change after Run All
 
-Cek:
+Check:
 
-- notebook sudah pakai kernel benar
-- tidak ada error cell
-- notebook sudah disimpan
-- file `reports/phase_25_*.json` timestamp berubah
+- notebook uses correct kernel
+- no error cell exists
+- notebook was saved
+- `reports/phase_25_*.json` timestamp changed
 
 Command:
 
@@ -523,16 +619,41 @@ for p in sorted(Path('reports').glob('phase_25_*.json')):
 PY
 ```
 
----
+### Model API readiness fails
 
-## 14. Project rules
+Check:
 
-- Training execution tetap di `.ipynb` notebooks.
-- Jangan tambah `training/*.py` entrypoint untuk training execution.
-- Phase 25 memakai TensorFlow Functional API / custom training flow.
-- Embedding default Phase 17+: `intfloat/e5-base-v2`.
+- artifact path env vars
+- `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json`
+- TensorFlow/Keras import
+- custom object registration
+- E5 dependency and cache
+- PDF parser dependency
+- `MODEL_API_SERVICE_TOKEN` for staging/production
+
+### Backend integration fails
+
+Check in external Backend repository:
+
+- `MODEL_API_BASE_URL`
+- service token match
+- Redis and PostgreSQL connectivity
+- Backend readiness endpoint
+- Backend route tests
+- Model API reachability from Backend process
+
+## 17. Project Rules
+
+- Training execution stays in versioned `.ipynb` notebooks.
+- Do not add `training/*.py` entrypoints for training execution unless workflow is intentionally redesigned.
+- Phase 25 uses TensorFlow Functional API / custom training flow.
+- Embedding default for Phase 17+: `intfloat/e5-base-v2`.
 - Profile/CV prefix: `query:`.
 - Job prefix: `passage:`.
-- Embeddings wajib normalized.
-- TF-IDF/local-hash fallback hanya boleh untuk local smoke/plumbing, bukan staging/production evidence.
-- Backend/wrapper-owned outputs tetap di luar model core: `topActionables`, `sectionReviews`, hydration, auth, persistence.
+- Embeddings must be normalized.
+- TF-IDF/local-hash fallback is allowed only for local smoke/plumbing, not staging/production evidence.
+- Backend/wrapper-owned outputs stay outside model core: `topActionables`, `sectionReviews`, hydration, auth, persistence.
+- Model API owns no DB credentials.
+- Do not log raw CV text, service tokens, DB URLs, auth headers, uploaded file bytes, or unrelated PII.
+- Do not mutate artifacts at runtime.
+- Keep Backend source outside this model repository.

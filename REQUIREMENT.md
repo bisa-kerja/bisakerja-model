@@ -1,17 +1,21 @@
-# Requirement Proyek Machine Learning & Deployment
+# Machine Learning and Deployment Requirements
 
-## 1. Pengembangan Model Deep Learning
+This document defines delivery requirements for Bisakerja model training, inference, REST API serving, Generative AI integration, and final repository evidence.
 
-### 1.1 Arsitektur Model
+## 1. Deep Learning Model Development
 
-- Membangun model Deep Learning menggunakan:
-  - TensorFlow Functional API **atau**
-  - TensorFlow Model Subclassing
-- Arsitektur model harus disesuaikan dengan dataset dan permasalahan bisnis yang telah ditentukan oleh tim Data Science (jika tersedia).
+### 1.1 Model Architecture
 
-### 1.2 Implementasi Komponen Kustom
+Build a Deep Learning model using one of these TensorFlow approaches:
 
-Model wajib mengimplementasikan minimal **satu** komponen kustom lanjutan berikut:
+- TensorFlow Functional API
+- TensorFlow Model Subclassing
+
+The architecture must match the dataset and business problem selected for the Bisakerja job-fit and CV-analysis workflow.
+
+### 1.2 Custom Component Implementation
+
+The model must implement at least one advanced custom component:
 
 - Custom Layer
 - Custom Loss Function
@@ -19,80 +23,102 @@ Model wajib mengimplementasikan minimal **satu** komponen kustom lanjutan beriku
 
 ### 1.3 Custom Training Loop
 
-- Mengimplementasikan proses training dan evaluation loop secara penuh menggunakan `tf.GradientTape`.
-- Tidak menggunakan training loop standar (`model.fit()`) sebagai proses utama pelatihan.
+Training and evaluation must use a full custom loop with `tf.GradientTape`.
 
-### 1.4 Monitoring Training
+`model.fit()` must not be the primary training loop for the final delivery evidence.
 
-- Mengintegrasikan TensorBoard untuk memantau proses pelatihan model.
-- Menampilkan metrik pelatihan dan evaluasi secara menyeluruh.
-- Menyertakan log TensorBoard yang dihasilkan ke dalam repository proyek.
+### 1.4 Training Monitoring
 
-### 1.5 Target Performa Model
+Training must integrate TensorBoard for monitoring.
 
-Model harus memenuhi salah satu kriteria berikut sesuai jenis permasalahan:
+Evidence must include:
 
-#### Klasifikasi
+- training metrics
+- evaluation metrics
+- TensorBoard event logs committed or recorded as release artifacts
+- artifact manifest entries with SHA-256 and byte size when logs are stored under release paths
 
-- Akurasi (Accuracy) minimal **85%**
+### 1.5 Model Performance Target
 
-#### Regresi
+The model must meet the selected problem target.
 
-- Mean Absolute Error (MAE) maksimal **0,02**
+#### Classification
 
-## 2. Penyimpanan dan Deployment Model
+- Accuracy at least `85%`.
 
-### 2.1 Ekspor Model
+#### Regression
 
-- Menyimpan model yang telah selesai dilatih dalam format TensorFlow siap produksi:
-  - `.keras` **atau**
-  - `SavedModel`
+- Mean Absolute Error (MAE) at most `0.02`.
+
+For Bisakerja production-readiness review, weak-label metrics alone are not enough. Human/recruiter-reviewed validation and slice coverage remain required for trustworthy product claims.
+
+## 2. Model Storage and Deployment
+
+### 2.1 Model Export
+
+Export the trained model in a production-ready TensorFlow format:
+
+- `.keras`
+- or `SavedModel`
+
+Exported artifacts must be accompanied by model card, feature config, calibration config, and manifest evidence when used by Model API.
 
 ### 2.2 Inference
 
-- Membuat kode sederhana untuk melakukan proses inference menggunakan model yang telah diekspor.
+Provide inference code that can:
 
-## 3. Pengembangan REST API
+- load the exported model
+- build the approved input feature vector
+- run prediction
+- return bounded model-core output
 
-### 3.1 Framework API
+## 3. REST API Development
 
-Mengembangkan REST API mandiri menggunakan salah satu framework berikut:
+### 3.1 API Framework
+
+Provide a standalone REST API using one of these frameworks:
 
 - FastAPI
 - Flask
 
-### 3.2 Integrasi Model
+### 3.2 Model Integration
 
-REST API harus mampu:
+The REST API must:
 
-- Memuat model hasil pelatihan.
-- Menerima input dari pengguna.
-- Menjalankan proses inferensi.
-- Mengembalikan hasil prediksi dalam format JSON.
+- load the exported model
+- accept validated user/backend input
+- run inference
+- return JSON output
+- expose deterministic health/readiness behavior
 
-## 4. Integrasi Generative AI
+For this project, Model API is internal-only and Backend API owns the public REST boundary.
 
-### 4.1 Fitur Tambahan
+## 4. Generative AI Integration
 
-- Menggunakan API Generative AI sebagai fitur tambahan atau fitur sekunder pada aplikasi.
-- Implementasi dapat berupa:
-  - Penjelasan hasil prediksi.
-  - Ringkasan data.
-  - Rekomendasi berbasis hasil model.
-  - Chat assistant atau fitur AI pendukung lainnya.
+### 4.1 Additional Feature
+
+Use a Generative AI API as an additional or secondary feature, such as:
+
+- prediction explanation
+- data summary
+- recommendation copy based on model output
+- chat assistant or other supporting AI feature
+
+Core model inference must not depend on external GenAI calls. Backend wrapper behavior owns product-facing prose and fallbacks.
 
 ## 5. Deliverables
 
-Repository akhir minimal berisi:
+Final repository evidence must include:
 
-- Source code pelatihan model.
-- Implementasi custom component.
-- Custom training loop menggunakan `tf.GradientTape`.
-- Model hasil pelatihan (`.keras` atau `SavedModel`).
-- Kode inference.
-- REST API (FastAPI/Flask).
-- Integrasi Generative AI.
-- Log TensorBoard.
-- Dokumentasi penggunaan dan deployment.
-- File `requirements.txt`.
-- README proyek.
+- model training source in versioned notebooks
+- custom TensorFlow component implementation
+- custom training loop using `tf.GradientTape`
+- exported model (`.keras` or `SavedModel`)
+- inference code
+- REST API using FastAPI or Flask
+- Generative AI integration boundary or wrapper evidence
+- TensorBoard logs or release artifact evidence
+- usage and deployment documentation
+- `requirements.txt`
+- project README
+- model card, artifact manifest, contract fixtures, and release-gate reports

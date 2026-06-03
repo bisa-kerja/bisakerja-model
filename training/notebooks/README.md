@@ -1,25 +1,53 @@
-# Notebook Phase Index
+# Training Notebooks
 
-These notebooks define the model-training phases. They are documentation-first. Later production-track notebooks may include executable cells after each step documents intent, inputs, outputs, and verification.
+Versioned notebook-first workflow for Bisakerja model training and release evidence.
 
-Each notebook uses Markdown cells to describe:
+## Documentation-First Rule
 
-- objective
-- required inputs
-- step-by-step actions
-- expected outputs
-- verification checks
-- acceptance criteria
+Every step must start with English Markdown before code. Required sections:
 
-Add executable code only after the Markdown intent for that step is clear.
+- Purpose
+- Required input
+- Action
+- Expected output
+- Verification
 
-## Production notebook hygiene
+Code cells may follow only after the step intent and acceptance criteria are clear.
 
-Active production notebooks must be saved without error outputs. Unexecuted code cells in older planning notebooks must either be executed or intentionally retired with durable report evidence. Phase 13 executable cells are retired; the frozen evidence remains in `../../reports/phase_13_*.json`.
+## Notebook Hygiene
 
-Run the hygiene and label evidence gate before any production-ready claim:
+Active production notebooks must be saved without error outputs. Old planning code must either be executed successfully or intentionally retired with durable report evidence.
+
+Phase 13 executable cells are retired. Frozen evidence remains in:
+
+```text
+../../reports/phase_13_*.json
+```
+
+## Current Production Notebook
+
+```text
+phase_25_tensorflow_training_delivery.ipynb
+```
+
+Use kernel:
+
+```text
+Bisakerja Model TF 3.13
+```
+
+## Verification Gates
+
+Run hygiene and label evidence gates before any production-ready claim:
 
 ```bash
 python scripts/verify_phase_27_3_27_4_release_evidence.py --write
 python scripts/verify_phase_27_5_27_6_validation_expansion.py --write
 ```
+
+## Rules
+
+- Keep notebooks in numeric order.
+- Keep generated evidence under `../../artifacts/` and `../../reports/`.
+- Do not store secrets, tokens, DB URLs, raw CV text, or unrelated PII in notebook outputs.
+- Do not use Python `3.14` for TensorFlow production-track notebooks unless compatible TensorFlow wheels are confirmed.

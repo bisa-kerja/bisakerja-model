@@ -8,12 +8,16 @@ tasks/
 !*.env.example
 
 # Python virtual environments
+.venv/
+venv/
 training/venv/
+training/.tf-venv-3.13/
 training/notebooks/**/venv/
 training/notebooks/**/.venv/
 
 # Python cache and compiled files
-_pycache_/
+__pycache__/
+**/__pycache__/
 *.py[cod]
 .pytest_cache/
 .ipynb_checkpoints/
@@ -26,7 +30,7 @@ legacy/.pi/
 # Logs
 legacy/logs/
 
-# Dataset, references, and generated artifacts
+# Accidental external Backend checkout and generated artifacts
 references/
 artifacts/tensorboard/
 

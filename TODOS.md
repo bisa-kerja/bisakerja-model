@@ -1,7 +1,7 @@
 # TODOS — Notebook-First Training Model Phases
 
 Source reference: `GAP_MODEL_TRAINING.md`  
-Model/API contract reference: `references/docs/generated/openapi.json`
+Backend/API contract source: <https://github.com/bisa-kerja/bisakerja-api> (use exported contract snapshots or release fixtures when needed)
 
 This TODO resets the training work to **Phase 0** and switches the training workflow to readable `.ipynb` notebooks. Existing script-package extraction work is no longer the active phase plan.
 
@@ -364,7 +364,7 @@ Acceptance Criteria:
 
 - [x] Every training input file has hash, row count, schema version, and owner.
 - [x] Dataset snapshot can be regenerated deterministically by running the notebook top-to-bottom from a clean kernel.
-- [x] Model-core schema is aligned with `references/docs/generated/openapi.json` boundaries.
+- [x] Model-core schema is aligned with exported Backend API contract boundaries from <https://github.com/bisa-kerja/bisakerja-api>.
 - [x] Unsafe wrapper/backend-owned fields are blocked from model-core training outputs.
 
 ---
@@ -623,7 +623,7 @@ Goal: Prove notebook-exported model-core outputs can be safely consumed by the b
 Tasks:
 
 - [x] Step 23.1: Define model-core request/response schemas for CV analysis and candidate reranking.
-- [x] Step 23.2: Add notebook contract fixtures aligned with `references/docs/generated/openapi.json` and `references/docs/modules/ai-cv-analyzer.md`.
+- [x] Step 23.2: Add notebook contract fixtures aligned with exported Backend API contracts from <https://github.com/bisa-kerja/bisakerja-api>.
 - [x] Step 23.3: Validate score bounds, required fields, language handling, candidate membership, duplicate rejection, max item counts, and model metadata.
 - [x] Step 23.4: Validate safe fallbacks for timeout, model unavailable, invalid model output, empty CV parse, and low confidence.
 - [x] Step 23.5: Produce integration readiness report that separates model-core outputs from backend/wrapper-owned response fields.
@@ -676,7 +676,7 @@ Scope boundary:
 
 - Notebook owns training, evaluation, calibration, TensorBoard logging, TensorFlow export, model card, artifact manifest, and inference smoke tests.
 - Notebook must not implement the long-running FastAPI/Flask server, direct backend DB access, auth, persistence, job hydration, or OpenAI/GenAI wrapper runtime.
-- API runtime remains separate source code, but this phase must export schemas, examples, and handoff fixtures aligned with `references/docs/generated/openapi.json` so the API can consume the model artifact without hidden notebook state.
+- API runtime remains separate source code, but this phase must export schemas, examples, and handoff fixtures aligned with the external Backend API contract so the API can consume the model artifact without hidden notebook state.
 
 Notebook writing style:
 
@@ -714,7 +714,7 @@ Acceptance Criteria:
 - [x] The selected TensorFlow model beats or preserves Phase 17/18 gates without prototype-only trade-offs, or final readiness is capped below production.
 - [x] The final artifact export is from a clean or explicitly documented worktree; production-ready status is blocked when `git_dirty_at_export=true`.
 - [x] Exported TensorFlow model reloads without hidden notebook state and produces bounded JSON-compatible outputs for model-core inference.
-- [x] Model-core output aligns with `references/docs/generated/openapi.json` while wrapper-owned fields (`topActionables`, `sectionReviews`, generated CV copy, job title/company hydration, auth, persistence) remain outside the training artifact.
+- [x] Model-core output aligns with the external Backend API contract while wrapper-owned fields (`topActionables`, `sectionReviews`, generated CV copy, job title/company hydration, auth, persistence) remain outside the training artifact.
 - [x] No direct backend database integration is required or performed by the notebook; backend candidate jobs are represented by fixtures and model output only scores/ranks provided candidate IDs.
 - [x] TensorBoard log references, model artifact hash, dataset hash, label hash, feature-config hash, calibration report, and model card are all recorded under `reports/` or `artifacts/`.
 
@@ -738,7 +738,7 @@ Source artifacts:
 - `artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json`
 - `artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json`
 - `artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json`
-- `references/docs/generated/openapi.json`
+- Exported Backend OpenAPI snapshot from <https://github.com/bisa-kerja/bisakerja-api>
 
 Status: In progress
 
@@ -857,11 +857,11 @@ Tasks:
 
 - [x] Step 28.1: Define final internal request contract — Document `POST /internal/model/cv-analysis` as multipart with `requestId`, `language`, `inputMode`, `compareSource`, `jobRoles[]`, `cvFile`, `jobCandidates` JSON, and `rankingPolicy` JSON.
 - [x] Step 28.2: Define final internal response contract — Document `model-core-cv-analysis-v1` containing `parsedCv`, `jobFitAlignment`, `atsFriendliness`, `overallImpression` evidence, `candidateReranking.recommendations[]`, `model`, and timestamps; exclude public wrapper fields.
-- [x] Step 28.3: Map OpenAPI/Prisma fields to contract owners — Create a matrix from `references/docs/generated/openapi.json` and `references/prisma/schema.prisma` covering `CvAnalysisResult`, `JobRecommendationRun`, `JobRecommendationItem`, `JobListing`, `JobRequirement`, and `JobSkill`.
+- [x] Step 28.3: Map OpenAPI/Prisma fields to contract owners — Create a matrix from exported Backend OpenAPI/Prisma snapshots covering `CvAnalysisResult`, `JobRecommendationRun`, `JobRecommendationItem`, `JobListing`, `JobRequirement`, and `JobSkill`.
 - [x] Step 28.4: Define language and enum mapping — Freeze `id/en` for public/model API, `ID/EN` for Prisma, `UPLOAD/REFERENCE`, `BOOKMARK/JOB_SEARCH/DIRECT_JOB_DETAIL`, and `strong/good/stretch` to Prisma `STRONG/GOOD/STRETCH`.
 - [x] Step 28.5: Define failure contracts — Specify deterministic backend behavior for Model API `422`, `503`, `504`, parse failure, empty candidate set, stale artifact, timeout, and GenAI wrapper failure.
 - [x] Step 28.6: Add contract fixtures — Create positive/negative fixtures for direct upload PDF, active CV reference, bookmarked candidates, job-search candidates, direct-job-detail candidate, duplicate job IDs, empty PDF parse, and missing candidate evidence.
-- [x] Step 28.7: Update durable docs — Update `model_api/README.md`, backend integration docs under `references/docs/integrations/model-api.md`, and module docs so future implementation follows one contract.
+- [x] Step 28.7: Update durable docs — Update `model_api/README.md` and external Backend integration docs in <https://github.com/bisa-kerja/bisakerja-api> so future implementation follows one contract.
 
 Acceptance Criteria:
 
@@ -975,7 +975,7 @@ Acceptance Criteria:
 - [x] `.env` files are ignored; only safe examples/templates are tracked.
 - [x] Logs and reports include operational metadata but not raw CV text, tokens, DB URLs, or unrelated PII.
 - [x] Failure modes are deterministic and documented for invalid PDF, parse failure, empty candidates, Model API timeout, TensorFlow load failure, E5 failure, and GenAI wrapper failure.
-- [x] Final public response validates against `references/docs/generated/openapi.json` and persisted data validates against `references/prisma/schema.prisma` expectations.
+- [x] Final public response validates against exported Backend OpenAPI expectations and persisted data validates against exported Backend Prisma expectations.
 
 ---
 
