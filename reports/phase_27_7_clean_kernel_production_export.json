@@ -1,9 +1,6 @@
 {
-  "blockers": [
-    "Worktree is dirty; clean-kernel production export must be frozen from clean git state.",
-    "Phase 25 final report status is 'staging-ready', not 'production-ready'."
-  ],
-  "final_decision": "blocked",
+  "blockers": [],
+  "final_decision": "production-ready",
   "gates": [
     {
       "check": "required_phase25_evidence_exists",
@@ -13,77 +10,30 @@
       "status": "PASS"
     },
     {
-      "blocker": "Dirty worktree",
       "check": "clean_git_state_now",
       "evidence": {
-        "commit": "5d605dfdbf853b6b18eec02905560627c7a47247",
-        "dirty": true,
-        "dirty_file_count": 112,
-        "sample": [
-          " M .gitignore",
-          " M README.md",
-          " M RUNNING_STEPS.md",
-          " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/custom_component_smoke_model.keras",
-          " M artifacts/phase_25_tensorflow_training_delivery/data_feature_reuse.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/e5_embedding_contract.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          " M artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
-          " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
-          " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
-          " M artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/requirement_contract_matrix.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
-          " M artifacts/phase_25_tensorflow_training_delivery/score_calibration_tables.csv"
-        ],
-        "status": "FAIL"
+        "commit": "18a2aff62ac5ef8f2e5503054ac6372ddefdd5e8",
+        "dirty": false,
+        "dirty_file_count": 0,
+        "sample": [],
+        "status": "PASS"
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
-      "blocker": "Phase 25 final status not production-ready",
       "check": "phase25_final_status_production_ready",
       "evidence": {
         "final_status_reasons": {
-          "baseline_readiness_cap": "staging-ready",
+          "baseline_readiness_cap": "production-ready",
           "failure_count": 0,
-          "git_dirty_at_export": true,
-          "production_cap_failure_count": 1,
-          "production_selection_passed": false,
-          "prototype_tradeoffs": [
-            {
-              "actual": 0.97777778,
-              "check": "score_band_agreement_preserve_or_improve",
-              "direction": ">=",
-              "reference": "phase18_selected_scorer",
-              "required": 0.97962963,
-              "split": "validation",
-              "status": "FAIL"
-            },
-            {
-              "actual": 1.495885,
-              "check": "mae_0_100_preserve_or_improve",
-              "direction": "<=",
-              "reference": "phase18_selected_scorer",
-              "required": 1.21344534,
-              "split": "test",
-              "status": "FAIL"
-            }
-          ]
+          "git_dirty_at_export": false,
+          "production_cap_failure_count": 0,
+          "production_selection_passed": true,
+          "prototype_tradeoffs": []
         },
-        "status": "staging-ready"
+        "status": "production-ready"
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "check": "phase25_strict_gate_checks_pass",
@@ -116,7 +66,7 @@
     {
       "check": "python_3_13_runtime_recorded",
       "evidence": {
-        "architecture_python": "3.13.13",
+        "architecture_python": "3.13.11",
         "python": ""
       },
       "status": "PASS"
@@ -152,8 +102,8 @@
       "check": "mae_target_le_0_02",
       "evidence": {
         "required_max": 0.02,
-        "test_mae": 0.01495885,
-        "validation_mae": 0.01189119
+        "test_mae": 0.0086032,
+        "validation_mae": 0.0084428
       },
       "status": "PASS"
     },
@@ -170,8 +120,8 @@
         "clean_subprocess_reload": "PASS",
         "final_model": {
           "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "cab7df2a754d9429246d8d39f8a6ae98abb5b321c98b2beffbafec67eef7aafb",
-          "size_bytes": 80919
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+          "size_bytes": 80901
         },
         "format": ".keras"
       },
@@ -186,81 +136,36 @@
       "status": "PASS"
     }
   ],
-  "generated_at": "2026-06-04T04:02:29.252801+00:00",
+  "generated_at": "2026-06-04T04:42:33.030321+00:00",
   "git_state": {
-    "commit": "5d605dfdbf853b6b18eec02905560627c7a47247",
-    "dirty": true,
-    "dirty_file_count": 112,
-    "sample": [
-      " M .gitignore",
-      " M README.md",
-      " M RUNNING_STEPS.md",
-      " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/custom_component_smoke_model.keras",
-      " M artifacts/phase_25_tensorflow_training_delivery/data_feature_reuse.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/e5_embedding_contract.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-      " M artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
-      " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
-      " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
-      " M artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/requirement_contract_matrix.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
-      " M artifacts/phase_25_tensorflow_training_delivery/score_calibration_tables.csv"
-    ],
-    "status": "FAIL"
+    "commit": "18a2aff62ac5ef8f2e5503054ac6372ddefdd5e8",
+    "dirty": false,
+    "dirty_file_count": 0,
+    "sample": [],
+    "status": "PASS"
   },
   "phase25": {
     "final_report": "reports/phase_25_tensorflow_training_delivery.json",
     "final_status_reasons": {
-      "baseline_readiness_cap": "staging-ready",
+      "baseline_readiness_cap": "production-ready",
       "failure_count": 0,
-      "git_dirty_at_export": true,
-      "production_cap_failure_count": 1,
-      "production_selection_passed": false,
-      "prototype_tradeoffs": [
-        {
-          "actual": 0.97777778,
-          "check": "score_band_agreement_preserve_or_improve",
-          "direction": ">=",
-          "reference": "phase18_selected_scorer",
-          "required": 0.97962963,
-          "split": "validation",
-          "status": "FAIL"
-        },
-        {
-          "actual": 1.495885,
-          "check": "mae_0_100_preserve_or_improve",
-          "direction": "<=",
-          "reference": "phase18_selected_scorer",
-          "required": 1.21344534,
-          "split": "test",
-          "status": "FAIL"
-        }
-      ]
+      "git_dirty_at_export": false,
+      "production_cap_failure_count": 0,
+      "production_selection_passed": true,
+      "prototype_tradeoffs": []
     },
-    "generated_at": "2026-06-04T04:00:19.747646+00:00",
+    "generated_at": "2026-06-04T04:39:58.810410+00:00",
     "runtime": {
       "architecture_report": {
         "keras": "3.14.1",
         "numpy": "2.4.6",
         "pandas": "3.0.3",
-        "python": "3.13.13",
+        "python": "3.13.11",
         "tensorflow": "2.21.0"
       },
       "phase25": {}
     },
-    "status": "staging-ready"
+    "status": "production-ready"
   },
   "phase_id": "phase_27_7_clean_kernel_production_export",
   "policy": {

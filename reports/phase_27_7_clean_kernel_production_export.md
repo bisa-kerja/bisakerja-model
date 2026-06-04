@@ -1,15 +1,15 @@
 # Phase 27.7 Clean-Kernel Production Export Gate
 
-Generated at: `2026-06-04T04:02:29.252801+00:00`
-Final decision: **blocked**
-Git commit: `5d605dfdbf853b6b18eec02905560627c7a47247`
-Dirty files: `112`
+Generated at: `2026-06-04T04:42:33.030321+00:00`
+Final decision: **production-ready**
+Git commit: `18a2aff62ac5ef8f2e5503054ac6372ddefdd5e8`
+Dirty files: `0`
 
 ## Gate checks
 
 - PASS - `required_phase25_evidence_exists`
-- FAIL - `clean_git_state_now`
-- FAIL - `phase25_final_status_production_ready`
+- PASS - `clean_git_state_now`
+- PASS - `phase25_final_status_production_ready`
 - PASS - `phase25_strict_gate_checks_pass`
 - PASS - `phase25_required_step_reports_pass`
 - PASS - `python_3_13_runtime_recorded`
@@ -23,8 +23,7 @@ Dirty files: `112`
 
 ## Blockers
 
-- Worktree is dirty; clean-kernel production export must be frozen from clean git state.
-- Phase 25 final report status is 'staging-ready', not 'production-ready'.
+- None
 
 ## Reproduction command
 
