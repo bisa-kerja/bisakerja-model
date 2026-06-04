@@ -55,10 +55,14 @@ class Phase38AiCvAnalyzerRuntimeGateTest(unittest.TestCase):
         disabled = RuntimeConfig.from_env(
             {"MODEL_API_ENV": "staging", "MODEL_API_SERVICE_TOKEN": "token", "MODEL_API_WARMUP_REQUIRED": "false"}
         )
+        tuned = RuntimeConfig.from_env({"MODEL_API_MAX_CONCURRENT_INFERENCE": "2"})
+        clamped = RuntimeConfig.from_env({"MODEL_API_MAX_CONCURRENT_INFERENCE": "0"})
 
         self.assertFalse(local.warmup_required)
         self.assertTrue(staging.warmup_required)
         self.assertFalse(disabled.warmup_required)
+        self.assertEqual(tuned.max_concurrent_inference, 2)
+        self.assertEqual(clamped.max_concurrent_inference, 1)
 
     def test_cv_analysis_response_records_latency_breakdown_for_runtime_gate(self) -> None:
         request = CvAnalysisModelCoreRequest(
@@ -89,11 +93,12 @@ class Phase38AiCvAnalyzerRuntimeGateTest(unittest.TestCase):
             environment="test",
             timeout_ms=30_000,
             include_observability=True,
+            parse_latency_ms=123,
         )
         event = payload["observability"]
 
         self.assertEqual(event["requestId"], "req-phase38")
-        self.assertIn("parseLatencyMs", event)
+        self.assertEqual(event["parseLatencyMs"], 123)
         self.assertIn("embeddingLatencyMs", event)
         self.assertIn("tensorflowLatencyMs", event)
         self.assertIn("totalLatencyMs", event)

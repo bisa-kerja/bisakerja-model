@@ -19,6 +19,8 @@ class Phase31ReleaseGateTest(unittest.TestCase):
             embeddingLatencyMs=20,
             tensorflowLatencyMs=30,
             wrapperLatencyMs=0,
+            queueLatencyMs=5,
+            inferenceLatencyMs=50,
             totalLatencyMs=62,
             errorCode="MODEL_API_TIMEOUT",
             fallbackReason="slow TensorFlow",
@@ -29,6 +31,8 @@ class Phase31ReleaseGateTest(unittest.TestCase):
         assert_safe_observability_event(event)
         self.assertEqual(event["requestId"], "req-31")
         self.assertEqual(event["candidateCount"], 50)
+        self.assertEqual(event["queueLatencyMs"], 5)
+        self.assertEqual(event["inferenceLatencyMs"], 50)
         self.assertNotIn("cvText", event)
         self.assertNotIn("token", event)
 

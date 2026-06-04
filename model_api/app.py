@@ -11,6 +11,7 @@ import asyncio
 import json
 import logging
 from secrets import compare_digest
+from threading import BoundedSemaphore
 from time import perf_counter
 from typing import Any
 
@@ -314,6 +315,7 @@ def build_cv_analysis_response_payload(
     environment: str = "local",
     timeout_ms: int | None = None,
     include_observability: bool = False,
+    parse_latency_ms: int = 0,
 ) -> dict[str, object]:
     """Build validated model-core CV-analysis response for HTTP route/tests."""
 
@@ -420,7 +422,7 @@ def build_cv_analysis_response_payload(
             artifactHash=state.model_identity.artifact_sha256,
             candidateCount=len(request.jobCandidates),
             parseQuality=parse_quality,
-            parseLatencyMs=0,
+            parseLatencyMs=parse_latency_ms,
             embeddingLatencyMs=embedding_latency_ms,
             tensorflowLatencyMs=tensorflow_latency_ms,
             wrapperLatencyMs=0,
@@ -679,6 +681,7 @@ def create_app(
     runtime_embedding_backend = embedding_backend or SentenceTransformerE5Embedder(embedding_contract.embedding_model)
     validate_e5_backend(runtime_embedding_backend, runtime_config.environment, expected_model_name=embedding_contract.embedding_model)
     warmup_state: dict[str, object] = {"completed": False, "inProgress": False, "latencyMs": None, "error": None}
+    inference_gate = BoundedSemaphore(runtime_config.max_concurrent_inference)
 
     def _load_runtime_once() -> RuntimeState:
         state = inference_service.load_once(runtime_config.artifact_paths, artifact_report)
@@ -881,16 +884,17 @@ def create_app(
             return JSONResponse(status_code=401, content=auth_error)
         request = parse_cv_analysis_model_core_request(payload)
         include_observability = http_request.headers.get("x-model-api-include-observability") == "true"
-        data = build_cv_analysis_response_payload(
-            request,
-            service=inference_service,
-            feature_config=feature_config,
-            calibration_policy=calibration_policy,
-            embedding_backend=runtime_embedding_backend,
-            environment=runtime_config.environment,
-            timeout_ms=runtime_config.timeout_ms,
-            include_observability=include_observability,
-        )
+        with inference_gate:
+            data = build_cv_analysis_response_payload(
+                request,
+                service=inference_service,
+                feature_config=feature_config,
+                calibration_policy=calibration_policy,
+                embedding_backend=runtime_embedding_backend,
+                environment=runtime_config.environment,
+                timeout_ms=runtime_config.timeout_ms,
+                include_observability=include_observability,
+            )
         observability = data.get("observability") if isinstance(data, dict) else None
         warmup_state.update(
             {
@@ -908,19 +912,21 @@ def create_app(
         if auth_error is not None:
             return JSONResponse(status_code=401, content=auth_error)
         request = parse_candidate_reranking_core_request(payload)
-        data = build_candidate_reranking_response_payload(
-            request,
-            service=inference_service,
-            feature_config=feature_config,
-            calibration_policy=calibration_policy,
-            embedding_backend=runtime_embedding_backend,
-            environment=runtime_config.environment,
-            timeout_ms=runtime_config.timeout_ms,
-        )
+        with inference_gate:
+            data = build_candidate_reranking_response_payload(
+                request,
+                service=inference_service,
+                feature_config=feature_config,
+                calibration_policy=calibration_policy,
+                embedding_backend=runtime_embedding_backend,
+                environment=runtime_config.environment,
+                timeout_ms=runtime_config.timeout_ms,
+            )
         return {"success": True, "message": "Model-core candidate reranking completed", "data": data, "error": None}
 
     @app.post("/internal/model/cv-analysis")
     async def internal_model_cv_analysis(http_request: Request):
+        route_started_at = perf_counter()
         request_id = http_request.headers.get("x-request-id", "")
         SERVER_LOGGER.info("Model API cv-analysis request received request_id=%s", request_id)
         auth_error = _authorize_internal_request(http_request.headers, runtime_config)
@@ -929,45 +935,76 @@ def create_app(
         content_type = http_request.headers.get("content-type", "")
         if "multipart/form-data" not in content_type:
             raise ContractValidationError(["Content-Type must be multipart/form-data"])
+        form_started_at = perf_counter()
         form = await http_request.form()
-        SERVER_LOGGER.info("Model API cv-analysis multipart parsed request_id=%s", request_id)
+        form_latency_ms = _latency_ms(form_started_at)
+        SERVER_LOGGER.info("Model API cv-analysis multipart parsed request_id=%s form_latency_ms=%s", request_id, form_latency_ms)
         file_values = [value for value in form.values() if hasattr(value, "filename") and hasattr(value, "read")]
         if len(file_values) != 1 or "cvFile" not in form:
             raise ContractValidationError(["multipart request must include exactly one cvFile"])
         upload = form["cvFile"]
         if getattr(upload, "content_type", None) not in {"application/pdf", "application/octet-stream"}:
             raise ContractValidationError(["cvFile content type must be application/pdf"])
+        read_started_at = perf_counter()
         pdf_bytes = await upload.read()
-        SERVER_LOGGER.info("Model API cv-analysis file read request_id=%s cv_bytes=%s", request_id, len(pdf_bytes))
+        read_latency_ms = _latency_ms(read_started_at)
+        SERVER_LOGGER.info(
+            "Model API cv-analysis file read request_id=%s cv_bytes=%s read_latency_ms=%s",
+            request_id,
+            len(pdf_bytes),
+            read_latency_ms,
+        )
         _validate_pdf_upload_bytes(pdf_bytes, runtime_config)
         payload = _build_cv_payload_from_multipart(form, pdf_bytes, runtime_config)
         parsed_pdf_evidence = payload.pop("_parsedPdfEvidence")
+        parse_latency_ms = int(parsed_pdf_evidence.get("parseLatencyMs", 0)) if isinstance(parsed_pdf_evidence, dict) else 0
         job_candidates = payload.get("jobCandidates")
+        candidate_count = len(job_candidates) if isinstance(job_candidates, list) else None
         SERVER_LOGGER.info(
-            "Model API cv-analysis payload built request_id=%s cv_bytes=%s candidate_count=%s",
+            "Model API cv-analysis payload built request_id=%s cv_bytes=%s candidate_count=%s parse_latency_ms=%s",
             request_id,
             len(pdf_bytes),
-            len(job_candidates) if isinstance(job_candidates, list) else None,
+            candidate_count,
+            parse_latency_ms,
         )
         request = parse_cv_analysis_model_core_request(payload)
         include_observability = http_request.headers.get("x-model-api-include-observability") == "true"
-        SERVER_LOGGER.info("Model API cv-analysis inference started request_id=%s", request_id)
-        data = build_cv_analysis_response_payload(
-            request,
-            service=inference_service,
-            feature_config=feature_config,
-            calibration_policy=calibration_policy,
-            embedding_backend=runtime_embedding_backend,
-            environment=runtime_config.environment,
-            timeout_ms=runtime_config.timeout_ms,
-            include_observability=include_observability,
+        queue_started_at = perf_counter()
+        SERVER_LOGGER.info(
+            "Model API cv-analysis inference queued request_id=%s max_concurrent_inference=%s",
+            request_id,
+            runtime_config.max_concurrent_inference,
         )
+
+        def _run_inference_with_gate() -> tuple[dict[str, object], int, int]:
+            with inference_gate:
+                queue_latency_ms = _latency_ms(queue_started_at)
+                SERVER_LOGGER.info(
+                    "Model API cv-analysis inference started request_id=%s queue_latency_ms=%s",
+                    request_id,
+                    queue_latency_ms,
+                )
+                inference_started_at = perf_counter()
+                data = build_cv_analysis_response_payload(
+                    request,
+                    service=inference_service,
+                    feature_config=feature_config,
+                    calibration_policy=calibration_policy,
+                    embedding_backend=runtime_embedding_backend,
+                    environment=runtime_config.environment,
+                    timeout_ms=runtime_config.timeout_ms,
+                    include_observability=True,
+                    parse_latency_ms=parse_latency_ms,
+                )
+                return data, queue_latency_ms, _latency_ms(inference_started_at)
+
+        data, queue_latency_ms, inference_latency_ms = await asyncio.to_thread(_run_inference_with_gate)
         observability = data.get("observability") if isinstance(data, dict) else None
         warmup_state.update(
             {
                 "completed": True,
                 "inProgress": False,
-                "latencyMs": observability.get("totalLatencyMs") if isinstance(observability, dict) else None,
+                "latencyMs": observability.get("totalLatencyMs") if isinstance(observability, dict) else inference_latency_ms,
                 "error": None,
             }
         )
@@ -984,8 +1021,22 @@ def create_app(
             data["atsFriendliness"]["detectedIssues"] = parsed_pdf_evidence["detectedIssues"]
             data["atsFriendliness"]["parseQuality"] = parse_quality if parse_quality in {"high", "medium", "low", "failed"} else "low"
             data["atsFriendliness"]["evidence"] = ["deterministic_pdf_parser"]
+        embedding_latency_ms = observability.get("embeddingLatencyMs") if isinstance(observability, dict) else None
+        tensorflow_latency_ms = observability.get("tensorflowLatencyMs") if isinstance(observability, dict) else None
+        if not include_observability:
+            data.pop("observability", None)
         validate_model_core_payload(data, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
-        SERVER_LOGGER.info("Model API cv-analysis completed request_id=%s", request_id)
+        SERVER_LOGGER.info(
+            "Model API cv-analysis completed request_id=%s candidate_count=%s parse_latency_ms=%s embedding_latency_ms=%s tensorflow_latency_ms=%s inference_latency_ms=%s queue_latency_ms=%s total_latency_ms=%s",
+            request_id,
+            candidate_count,
+            parse_latency_ms,
+            embedding_latency_ms,
+            tensorflow_latency_ms,
+            inference_latency_ms,
+            queue_latency_ms,
+            _latency_ms(route_started_at),
+        )
         return data
 
     return app

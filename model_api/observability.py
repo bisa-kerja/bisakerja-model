@@ -34,6 +34,8 @@ SAFE_OBSERVABILITY_KEYS = frozenset(
         "embeddingLatencyMs",
         "tensorflowLatencyMs",
         "wrapperLatencyMs",
+        "queueLatencyMs",
+        "inferenceLatencyMs",
         "totalLatencyMs",
         "errorCode",
         "fallbackReason",

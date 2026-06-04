@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM python:3.13-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -20,7 +21,8 @@ ENV HOME=/home/user \
     MODEL_API_SERVICE_NAME=bisakerja-model-api \
     MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL=false \
     MODEL_API_MAX_RECOMMENDATIONS=5 \
-    MODEL_API_TIMEOUT_MS=30000 \
+    MODEL_API_TIMEOUT_MS=120000 \
+    MODEL_API_MAX_CONCURRENT_INFERENCE=1 \
     MODEL_API_WARMUP_ON_STARTUP=true \
     MODEL_API_WARMUP_REQUIRED=true \
     MODEL_API_ARTIFACT_ROOT=artifacts/phase_46_calibration_model_card_manifest_handoff_refresh \
@@ -28,6 +30,13 @@ ENV HOME=/home/user \
     MODEL_API_MAX_PDF_BYTES=5000000 \
     MODEL_API_MAX_PDF_PAGES=10 \
     MODEL_API_ENABLE_GENAI_WRAPPER=false \
+    OMP_NUM_THREADS=2 \
+    MKL_NUM_THREADS=2 \
+    OPENBLAS_NUM_THREADS=2 \
+    NUMEXPR_NUM_THREADS=2 \
+    TF_NUM_INTRAOP_THREADS=2 \
+    TF_NUM_INTEROP_THREADS=1 \
+    TOKENIZERS_PARALLELISM=false \
     CUDA_VISIBLE_DEVICES=-1 \
     TF_CPP_MIN_LOG_LEVEL=2 \
     SENTENCE_TRANSFORMERS_HOME=/home/user/.cache/sentence-transformers
@@ -35,7 +44,9 @@ ENV HOME=/home/user \
 WORKDIR $HOME/app
 
 COPY --chown=user requirements.txt ./requirements.txt
-RUN python -m pip install --upgrade pip \
+RUN --mount=type=secret,id=HF_TOKEN,required=false,uid=1000,mode=0400 \
+    export HF_TOKEN="$(cat /run/secrets/HF_TOKEN 2>/dev/null || true)" \
+    && python -m pip install --upgrade pip \
     && python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch==2.9.1" \
     && python -m pip install -r requirements.txt \
     && python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('intfloat/multilingual-e5-small')" \

@@ -152,6 +152,7 @@ class RuntimeConfig:
     allow_unauthenticated_local: bool = True
     max_pdf_bytes: int = 5_000_000
     max_pdf_pages: int = 10
+    max_concurrent_inference: int = 1
     warmup_on_startup: bool = False
     warmup_required: bool = False
     artifact_paths: ArtifactPaths = field(default_factory=ArtifactPaths.from_env)
@@ -180,6 +181,7 @@ class RuntimeConfig:
             allow_unauthenticated_local=data.get("MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL", "true").lower() == "true",
             max_pdf_bytes=int(data.get("MODEL_API_MAX_PDF_BYTES", "5000000")),
             max_pdf_pages=int(data.get("MODEL_API_MAX_PDF_PAGES", "10")),
+            max_concurrent_inference=max(1, int(data.get("MODEL_API_MAX_CONCURRENT_INFERENCE", "1"))),
             warmup_on_startup=data.get("MODEL_API_WARMUP_ON_STARTUP", "false").lower() == "true",
             warmup_required=data.get("MODEL_API_WARMUP_REQUIRED", warmup_required_default).lower() == "true",
             artifact_paths=ArtifactPaths.from_env(data),
