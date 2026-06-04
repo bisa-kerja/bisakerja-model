@@ -1,25 +1,25 @@
 # Phase 27.7 Clean-Kernel Production Export Gate
 
-Generated at: `2026-06-03T11:19:45.908138+00:00`
+Generated at: `2026-06-04T04:02:29.252801+00:00`
 Final decision: **blocked**
-Git commit: `3194f629441d5e5b45658219651c7de7e21f72a5`
-Dirty files: `39`
+Git commit: `5d605dfdbf853b6b18eec02905560627c7a47247`
+Dirty files: `112`
 
 ## Gate checks
 
-- PASS — `required_phase25_evidence_exists`
-- FAIL — `clean_git_state_now`
-- FAIL — `phase25_final_status_production_ready`
-- PASS — `phase25_strict_gate_checks_pass`
-- PASS — `phase25_required_step_reports_pass`
-- PASS — `python_3_13_runtime_recorded`
-- PASS — `tensorflow_functional_api`
-- PASS — `custom_components_present`
-- PASS — `gradient_tape_loop_no_model_fit`
-- PASS — `mae_target_le_0_02`
-- PASS — `tensorboard_events_recorded`
-- PASS — `keras_export_and_inference_smoke`
-- PASS — `phase25_notebook_has_no_saved_errors`
+- PASS - `required_phase25_evidence_exists`
+- FAIL - `clean_git_state_now`
+- FAIL - `phase25_final_status_production_ready`
+- PASS - `phase25_strict_gate_checks_pass`
+- PASS - `phase25_required_step_reports_pass`
+- PASS - `python_3_13_runtime_recorded`
+- PASS - `tensorflow_functional_api`
+- PASS - `custom_components_present`
+- PASS - `gradient_tape_loop_no_model_fit`
+- PASS - `mae_target_le_0_02`
+- PASS - `tensorboard_events_recorded`
+- PASS - `keras_export_and_inference_smoke`
+- PASS - `phase25_notebook_has_no_saved_errors`
 
 ## Blockers
 

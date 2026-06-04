@@ -34,8 +34,10 @@ class Phase27NotebookLabelGateTest(unittest.TestCase):
         self.assertEqual(label_gate["unique_review_items"], 120)
         self.assertGreaterEqual(label_gate["reviewer_count"], 2)
         self.assertTrue(label_gate["weak_labels_allowed_only_as_bootstrap_training_support"])
-        self.assertIn("language", " ".join(label_gate["blockers"]))
-        self.assertIn("experience_band", " ".join(label_gate["blockers"]))
+        self.assertIn("language", label_gate["slice_dimensions"])
+        self.assertIn("experience_band", label_gate["slice_dimensions"])
+        self.assertTrue(label_gate["slice_dimensions"]["language"])
+        self.assertTrue(label_gate["slice_dimensions"]["experience_band"])
         self.assertEqual(report["final_decision"], "blocked")
 
     def test_written_policy_and_report_are_durable_json(self) -> None:

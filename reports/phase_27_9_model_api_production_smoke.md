@@ -1,10 +1,10 @@
 # Phase 27.9 Model API Production Smoke
 
-Generated: `2026-06-03T11:19:45.819420Z`
+Generated: `2026-06-03T17:45:56.806940Z`
 Decision: `blocked`
 
 ## Gates
-- FAIL `python_3_13_serving_runtime`
+- PASS `python_3_13_serving_runtime`
 - PASS `root_requirements_pin_serving_runtime`
 - FAIL `serving_dependencies_importable`
 - FAIL `phase26_tests_unskipped`
@@ -12,7 +12,6 @@ Decision: `blocked`
 - FAIL `live_fastapi_health_model_info_inference_smoke`
 
 ## Blockers
-- python_3_13_serving_runtime
 - serving_dependencies_importable
 - phase26_tests_unskipped
 - real_keras_custom_object_loader_smoke

@@ -79,7 +79,7 @@ Backend API is a separate repository: <https://github.com/bisa-kerja/bisakerja-a
 
 Current target runtime:
 
-- Python: `3.13.11`
+- Python: `3.13.x` (current verified local runtime: `3.13.13`)
 - Virtual environment: `training/.tf-venv-3.13`
 - Jupyter kernel: `Bisakerja Model TF 3.13`
 - Main Phase 25 notebook: `training/notebooks/phase_25_tensorflow_training_delivery.ipynb`
@@ -138,7 +138,7 @@ It is okay if this still shows Python `3.14`; the next step creates a dedicated 
 Run:
 
 ```bash
-PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
+PYENV_VERSION=3.13.13 pyenv exec python -m venv training/.tf-venv-3.13
 ```
 
 Activate it:
@@ -159,7 +159,7 @@ Expected:
 
 ```text
 .../bisakerja-model/training/.tf-venv-3.13/bin/python
-Python 3.13.11
+Python 3.13.x
 .../bisakerja-model/training/.tf-venv-3.13/lib/python3.13/...
 ```
 
@@ -206,7 +206,7 @@ Expected important lines:
 
 ```text
 python: .../training/.tf-venv-3.13/bin/python
-python_version: 3.13.11
+python_version: 3.13.x
 tensorflow: 2.21.0
 keras: 3.14.1
 ```
@@ -218,7 +218,7 @@ If TensorFlow fails with `No matching distribution`, pip is almost certainly usi
 Run:
 
 ```bash
-python -m ipykernel install --user --name bisakerja-model-tf313 --display-name "Bisakerja Model TF 3.13"
+python -m ipykernel install --user --name bisakerja-model-tf-3.13 --display-name "Bisakerja Model TF 3.13"
 ```
 
 Check kernel list:
@@ -230,7 +230,7 @@ jupyter kernelspec list
 Expected kernel name:
 
 ```text
-bisakerja-model-tf313
+bisakerja-model-tf-3.13
 ```
 
 Remove old confusing project kernel if it exists:
@@ -569,7 +569,7 @@ jupyter kernelspec list
 For Phase 25, use only:
 
 ```text
-bisakerja-model-tf313
+bisakerja-model-tf-3.13
 ```
 
 Remove old project kernel if it appears:

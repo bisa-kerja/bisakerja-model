@@ -1,0 +1,123 @@
+{
+  "acceptance": {
+    "keras_version_3_14_1": true,
+    "kernel_points_to_training_venv": true,
+    "pytest_available_in_venv": true,
+    "python_3_14_not_used_for_phase_25": true,
+    "tensorflow_imports_in_venv": true,
+    "tensorflow_version_2_21_0": true,
+    "venv_uses_python_3_13": true
+  },
+  "blockers": [],
+  "dependencies": {
+    "blockers": [],
+    "import_probe": {
+      "payload": {
+        "keras": "3.14.1",
+        "pandas": "3.0.3",
+        "pytest": "9.0.3",
+        "sentence_transformers": "5.5.1",
+        "tensorflow": "2.21.0"
+      },
+      "returncode": 0,
+      "stderr": "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1780537384.134494   18000 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nWARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1780537388.012589   18000 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`."
+    },
+    "required_versions": {
+      "fastparquet": "2026.5.0",
+      "pandas": "3.0.3",
+      "pyarrow": "24.0.0",
+      "pytest": "9.0.3",
+      "sentence-transformers": "5.5.1",
+      "tensorboard": "2.20.0",
+      "tensorflow": "2.21.0"
+    },
+    "requirements": {
+      "exists": true,
+      "path": "training/requirements.txt",
+      "sha256": "7ae51f404563379720941923de02505eb8f59d8b55eed817f93d7d15ab8d22e6",
+      "size_bytes": 398
+    },
+    "status": "PASS",
+    "warnings": []
+  },
+  "expected": {
+    "keras": "3.14.1",
+    "kernel_display_name": "Bisakerja Model TF 3.13",
+    "kernel_name": "bisakerja-model-tf-3.13",
+    "python": "3.13.x",
+    "tensorflow": "2.21.0"
+  },
+  "final_decision": "pass",
+  "generated_at": "2026-06-04T01:43:23.953379+00:00",
+  "kernel": {
+    "blockers": [],
+    "expected_kernel": "bisakerja-model-tf-3.13",
+    "kernel_probe": {
+      "expected_kernel_spec": {
+        "argv": [
+          "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe",
+          "-Xfrozen_modules=off",
+          "-m",
+          "ipykernel_launcher",
+          "-f",
+          "{connection_file}"
+        ],
+        "display_name": "Bisakerja Model TF 3.13",
+        "env": {},
+        "interrupt_mode": "signal",
+        "kernel_protocol_version": "5.5",
+        "language": "python",
+        "metadata": {
+          "debugger": true
+        }
+      },
+      "registered_kernel_names": [
+        "bisakerja-model-tf-3.13",
+        "python3"
+      ],
+      "returncode": 0,
+      "stderr": ""
+    },
+    "status": "PASS",
+    "warnings": []
+  },
+  "phase_id": "training_step_2_runtime",
+  "runtime": {
+    "blockers": [],
+    "pyvenv_cfg": {
+      "home": "D:\\bisakerja-model\\.uv-python\\cpython-3.13-windows-x86_64-none",
+      "implementation": "CPython",
+      "include-system-site-packages": "false",
+      "uv": "0.11.19",
+      "version_info": "3.13.13"
+    },
+    "status": "PASS",
+    "venv_dir": {
+      "exists": true,
+      "path": "training/.tf-venv-3.13/pyvenv.cfg",
+      "sha256": "591b2d48a828a68a5dcd4562d4c83192214e9060e915c9168613e9b25954a29d",
+      "size_bytes": 168
+    },
+    "venv_python": {
+      "exists": true,
+      "path": "training/.tf-venv-3.13/Scripts/python.exe",
+      "sha256": "3c0d40bd2b94860cf5e2ce24e44380b8f0f581ffbdf0f51d68d473b245363266",
+      "size_bytes": 45568
+    },
+    "version_probe": {
+      "payload": {
+        "executable": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe",
+        "major": 3,
+        "micro": 13,
+        "minor": 13,
+        "version": "3.13.13"
+      },
+      "returncode": 0,
+      "stderr": ""
+    },
+    "warnings": []
+  },
+  "schema_version": "training-step-2-runtime-v1",
+  "todo_source": "training/TODOS.md#step-2-stabilkan-runtime",
+  "warnings": []
+}

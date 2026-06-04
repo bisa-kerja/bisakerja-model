@@ -1,0 +1,650 @@
+{
+  "blocking_steps": [],
+  "final_decision": "implemented-with-warnings",
+  "generated_at": "2026-06-04T03:31:44.071474+00:00",
+  "phase_id": "training_steps_3_8_stabilization",
+  "schema_version": "training-steps-3-8-audit-v1",
+  "steps": {
+    "3": {
+      "blockers": [],
+      "name": "Notebook hygiene",
+      "notebook_count": 27,
+      "notebooks": [
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_00_reproducibility_snapshot.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "bcc03450c190b982460bf63e5b3dc801a2b27adae65a9d0fb4cf5e3d975d8ea1",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_01_data_audit_contracts.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "3b7a08975b637accdf124672cb45e69cdb845bcc13b33a942d192066c2ca6d4e",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_02_label_schema_baselines.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "c1effe262341b1e4de8ca8d5bbc30fdec1488ea014fd304b01dc0ab9ecc5b591",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_03_normalization_feature_design.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "e208a3c689a51b3f282261a9eecee198660420f507813295c2cbb33c820c19f4",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_04_pair_generation_splits.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "942132f34377005efcf0ca30f58f0e4e5cfb082e3254542edd24eb5f9896bea1",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_05_baseline_evaluation.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "a1ea53e1b95ae4392a4ff85634a97e78ed7e052dcae22b414c24fe23e473d028",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_06_jobfit_training_experiments.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "da35b0a8f4eaf7dcd434d7fa3cc84f2a42e0bd0cd544713b8ef57292b49867ec",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_07_ats_friendliness_scoring.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "ee9ecc0313f9a4ded7be25842ef721d8a86a760717eb6abe96153db89e61715a",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 2,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_08_overall_impression_signals.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "527c05a56e2d3334b8f39ef3cca9e8a8e2a956e20f4dc3696ed32d62c0931b42",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 3,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_09_candidate_reranking.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "ba44ee3f85ec32e3f415059c6ed97b4cd4fba08beb26ce63e2b505a7cd40882c",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 3,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_10_calibration_model_card.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "f20c21503cc4dbb3596110ce7d345b15d222901941a7729c80a5063994a4a4e1",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 3,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_11_final_gate_review.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "6602764ecd43cb3a366a9f2d06605d383606381233fa5732d26473af503c31b1",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_12_repository_hygiene_runtime_bootstrap.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "96176ca1aa0253ee2df5f1089d32b7a09d023188b18914794f2e62b02ee45e96",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 0,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
+          "retired": true,
+          "retirement_reason": "Phase 13 executable cells are intentionally retired; durable evidence remains in reports/phase_13_*.json.",
+          "sha256": "1c11efc1fb2ed42bbdf3661630efebb6ded00cff97299c96d3b1287177ad94c7",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_14_normalization_feature_builder.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "0c32e02cebc2bfedddf3cd46e0a77bdc6066562135c224e85e81ae2603c7626e",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_15_balanced_pair_generation_splits.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "9c7b18f4e72aaba7faa2a12d024f14c95c3cdcd88acff2803da9ee9772933307",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_16_human_validation_label_governance.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "c855c625c816ef213896783012b5b1fa62d8573726e53c109b9d1d181e2d2bf9",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_17_baseline_evaluation_v2.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "22bb355318fd1b9d32dccb365ea84c793fb501fb89c515924285219f071a247f",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_18_jobfit_training_v2.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "e7b8e0e7d6ecca37dc396448ac7f6fcb70361367b5ecf5ec0333953bae6ace44",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "d0f41f480bfd512ec6f9411ea290feb828ef00eaa910aed160ead00b46dc7ab7",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 8,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_19_5_jobfit_blocker_remediation.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "b6542d338a11e20638235b75933efa998097b15fea0c5fc473d75fbb5ec2227c",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_20_overall_impression_signals.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "3bead29304f26b2b57920a4b27708d0ea4f596c78e4c867f77956ffd1ba39198",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_21_backend_candidate_reranking.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "04cb99bda2e9ef94a078a43acf1f3c36d5f551c5bdbfd08e1394177b9ac52ab5",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_22_calibration_model_card_export.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "f6c9d1dd50cc3346d305c8bbd440aaf3b5a177084d5a539c817284258ea83c1c",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 5,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_23_model_api_contract_validation.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "40958f8f131165104465dbd64e423a9f4e5e4ab17b7de056687e80d4c3f7d6a9",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 6,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_24_reproducibility_final_gate.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "ea545911eb565c14ea17976ab3ce30217af1ab4e47daaa8c8122a8e432408e4e",
+          "unexecuted_code_cells": []
+        },
+        {
+          "code_cell_count": 15,
+          "error_output_count": 0,
+          "missing_documentation_sections": [],
+          "path": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
+          "retired": false,
+          "retirement_reason": null,
+          "sha256": "5756c19fc353ca51a24e11fcebe92b9fe67cf78c060be58c61765788ff204260",
+          "unexecuted_code_cells": []
+        }
+      ],
+      "phase13_retired_evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_13_data_snapshot_contract_freezing.json",
+          "sha256": "490f7cae4a5deca964f0357a2696dd8d53a12c11cd737b33ef6a8bead9ac0207",
+          "size_bytes": 10639
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_13_model_core_schema_contracts.json",
+          "sha256": "edcfbad73301e0235dafcee8a8dc8fad44fcd5f90812ae61e88817acda849b66",
+          "size_bytes": 5417
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_13_snapshot_manifests.json",
+          "sha256": "dfea6b1651d5c2990b741e071541a9df35247181e349a6895f2c9e166eb4bcdf",
+          "size_bytes": 15276
+        }
+      ],
+      "status": "PASS",
+      "step": "3"
+    },
+    "4": {
+      "blockers": [],
+      "generated_contract_inputs": [
+        {
+          "exists": true,
+          "path": "references/docs/generated/openapi.json",
+          "sha256": "51beae913df6632993c0f0ce83deaa52fd3b769bd138e9a99e8d1e867a597640",
+          "size_bytes": 15562
+        },
+        {
+          "exists": true,
+          "path": "artifacts/phase_23_model_api_contract_validation/model_core_contract.json",
+          "sha256": "c62928b0b0be866c3d1df1c7ded488b55dcb5fe41fb37b905dea914ca57a4d9f",
+          "size_bytes": 2607
+        }
+      ],
+      "name": "Data snapshot and contract input",
+      "required_evidence": [
+        {
+          "exists": true,
+          "path": "reports/phase_13_data_snapshot_contract_freezing.json",
+          "sha256": "490f7cae4a5deca964f0357a2696dd8d53a12c11cd737b33ef6a8bead9ac0207",
+          "size_bytes": 10639
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_13_snapshot_manifests.json",
+          "sha256": "dfea6b1651d5c2990b741e071541a9df35247181e349a6895f2c9e166eb4bcdf",
+          "size_bytes": 15276
+        },
+        {
+          "exists": true,
+          "path": "reports/phase_13_model_core_schema_contracts.json",
+          "sha256": "edcfbad73301e0235dafcee8a8dc8fad44fcd5f90812ae61e88817acda849b66",
+          "size_bytes": 5417
+        }
+      ],
+      "secret_scan_findings": [],
+      "status": "PASS",
+      "step": "4"
+    },
+    "5": {
+      "blockers": [],
+      "checks": {
+        "embedding_model": true,
+        "fallback_forbidden": true,
+        "job_prefix": true,
+        "normalized_embeddings": true,
+        "phase17_phase18_e5": true,
+        "production_eligible_e5": true,
+        "profile_prefix": true,
+        "report_passed": true
+      },
+      "evidence": {
+        "exists": true,
+        "path": "reports/phase_25_e5_embedding_contract.json",
+        "sha256": "e49ac427b45bc5ad13857260cf528cf8535778b108c52759e8ccb94f984b3923",
+        "size_bytes": 4654
+      },
+      "name": "Embedding and feature contract",
+      "status": "WARN",
+      "step": "5",
+      "warnings": [
+        "Phase 14 keeps historical local-hash embedding evidence; Phase 25 production contract forbids fallback backends."
+      ]
+    },
+    "6": {
+      "blockers": [],
+      "label_gate": {
+        "exists": true,
+        "path": "reports/phase_27_3_27_4_notebook_label_gate.json",
+        "sha256": "6ed0383d9b37bf423cae2db870d2e583dc49a6327a5e44311b6dd98b050d8521",
+        "size_bytes": 35019
+      },
+      "label_manifest": {
+        "exists": true,
+        "path": "reports/phase_16_label_manifest.json",
+        "sha256": "c178aec9033052b41190b3ec3fee428ca1512dfb3fcc7d7a3fd8aa71589836f4",
+        "size_bytes": 3175
+      },
+      "name": "Label governance",
+      "production_claim_gate": {
+        "frozen_human_or_recruiter_reviewed_evidence_required": true,
+        "frozen_label_path": "artifacts\\manual_validation\\phase_16_human_labels_frozen.csv",
+        "frozen_label_sha256": "ec7e0db9a1c2bb7bf0746e3e84c9b4ede064cf3801fa14d40853edf565c6e24a",
+        "minimum_reviewers_per_item": 2,
+        "policy_id": "jobfit-production-human-validation-policy-v1",
+        "production_score_claims_blocked_until_thresholds_pass": true,
+        "review_queue_path": "artifacts\\manual_validation\\phase_16_review_queue.csv",
+        "review_queue_sha256": "a485449b4bfd032988309c97651581f90c9bda8e182f272b54a47944d880bfec"
+      },
+      "production_score_claims_allowed": false,
+      "reviewer_guidelines": {
+        "exists": true,
+        "path": "reports/phase_16_reviewer_guidelines.md",
+        "sha256": "714d5cfa901d2c2ce0947007bd84528baf947308c9681dbf819017e256e0cf3f",
+        "size_bytes": 2567
+      },
+      "status": "WARN",
+      "step": "6",
+      "unique_review_items": 120,
+      "validation_expansion_gate": {
+        "exists": true,
+        "path": "reports/phase_27_5_27_6_validation_expansion.json",
+        "sha256": "92c821b3c0433f95c09570b1cafa3bec3cdc1c029ad5f01081a65554da373826",
+        "size_bytes": 13201
+      },
+      "validation_slice_gate": {
+        "covered_ats_cases": [
+          "docx",
+          "english_cv",
+          "indonesian_cv",
+          "long_cv",
+          "multi_column_pdf",
+          "normal_pdf",
+          "scanned_pdf",
+          "short_cv",
+          "table_heavy_pdf"
+        ],
+        "missing_ats_cases": [],
+        "missing_jobfit_slice_dimensions": [],
+        "present_jobfit_slice_dimensions": [
+          "experience_band",
+          "language",
+          "pair_type",
+          "role_family",
+          "score_band"
+        ],
+        "required_ats_cases": [
+          "docx",
+          "english_cv",
+          "indonesian_cv",
+          "long_cv",
+          "multi_column_pdf",
+          "normal_pdf",
+          "scanned_pdf",
+          "short_cv",
+          "table_heavy_pdf"
+        ],
+        "required_jobfit_slice_dimensions": [
+          "experience_band",
+          "language",
+          "pair_type",
+          "role_family",
+          "score_band"
+        ],
+        "undercovered_jobfit_slice_dimensions": {
+          "experience_band": {
+            "profile:entry|job:entry": 13,
+            "profile:entry|job:junior": 19,
+            "profile:entry|job:lead": 7,
+            "profile:entry|job:senior": 1,
+            "profile:junior|job:entry": 8,
+            "profile:junior|job:junior": 12,
+            "profile:junior|job:lead": 5,
+            "profile:junior|job:mid": 4,
+            "profile:junior|job:senior": 1,
+            "profile:mid|job:entry": 10,
+            "profile:mid|job:junior": 13,
+            "profile:mid|job:lead": 1,
+            "profile:mid|job:mid": 1,
+            "profile:mid|job:senior": 1,
+            "profile:senior|job:entry": 5,
+            "profile:senior|job:junior": 4,
+            "profile:senior|job:mid": 12,
+            "profile:senior|job:senior": 3
+          },
+          "language": {
+            "EN": 67,
+            "ID": 1,
+            "UNKNOWN": 52
+          },
+          "pair_type": {
+            "cross_role_confusing": 10,
+            "hard_negative": 14,
+            "high_fit_positive": 40,
+            "medium_fit": 40,
+            "random_negative": 8,
+            "same_role_different_seniority": 8
+          },
+          "role_family": {
+            "backend": 12,
+            "cloud": 21,
+            "data": 22,
+            "frontend": 3,
+            "fullstack": 2,
+            "other": 19,
+            "security": 11,
+            "software_engineering": 17,
+            "web": 13
+          }
+        }
+      },
+      "warnings": [
+        "frozen human validation item count 120 < required 600",
+        "score band low has 40 items < required 150",
+        "score band medium has 40 items < required 150",
+        "score band high has 40 items < required 150",
+        "required slice dimension role_family has under-covered buckets: {'backend': 12, 'web': 13, 'other': 19, 'cloud': 21, 'security': 11, 'data': 22, 'software_engineering': 17, 'frontend': 3, 'fullstack': 2}",
+        "required slice dimension language has under-covered buckets: {'EN': 67, 'UNKNOWN': 52, 'ID': 1}",
+        "required slice dimension experience_band has under-covered buckets: {'profile:entry|job:entry': 13, 'profile:senior|job:junior': 4, 'profile:junior|job:junior': 12, 'profile:entry|job:junior': 19, 'profile:senior|job:senior': 3, 'profile:junior|job:entry': 8, 'profile:senior|job:mid': 12, 'profile:mid|job:entry': 10, 'profile:mid|job:junior': 13, 'profile:senior|job:entry': 5, 'profile:entry|job:lead': 7, 'profile:junior|job:senior': 1, 'profile:junior|job:lead': 5, 'profile:entry|job:senior': 1, 'profile:mid|job:senior': 1, 'profile:mid|job:lead': 1, 'profile:junior|job:mid': 4, 'profile:mid|job:mid': 1}",
+        "required slice dimension pair_type has under-covered buckets: {'high_fit_positive': 40, 'hard_negative': 14, 'same_role_different_seniority': 8, 'cross_role_confusing': 10, 'random_negative': 8, 'medium_fit': 40}",
+        "Label validation slices are present but remain under release-scale coverage thresholds."
+      ]
+    },
+    "7": {
+      "artifact": {
+        "path": "artifacts/pairs_v2.parquet",
+        "row_count": 3600,
+        "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+      },
+      "blockers": [],
+      "diagnostics": {
+        "exists": true,
+        "path": "reports/phase_15_pair_distribution_diagnostics.json",
+        "sha256": "934942140fc9456005ca83994f8de8bcae2021c9129c54b97a0ab5bf9d700fce",
+        "size_bytes": 17425
+      },
+      "leakage": {
+        "leaking_profile_count": 0,
+        "passed": true,
+        "split_pair_counts": {
+          "test": 540,
+          "train": 2520,
+          "validation": 540
+        }
+      },
+      "name": "Pair generation and split",
+      "pair_type_counts": {
+        "cross_role_confusing": {
+          "test": 90,
+          "train": 420,
+          "validation": 90
+        },
+        "hard_negative": {
+          "test": 90,
+          "train": 420,
+          "validation": 90
+        },
+        "high_fit_positive": {
+          "test": 90,
+          "train": 420,
+          "validation": 90
+        },
+        "medium_fit": {
+          "test": 90,
+          "train": 420,
+          "validation": 90
+        },
+        "random_negative": {
+          "test": 90,
+          "train": 420,
+          "validation": 90
+        },
+        "same_role_different_seniority": {
+          "test": 90,
+          "train": 420,
+          "validation": 90
+        }
+      },
+      "score_band_counts": {
+        "high": {
+          "test": 90,
+          "train": 420,
+          "validation": 90
+        },
+        "low": {
+          "test": 359,
+          "train": 1679,
+          "validation": 360
+        },
+        "medium": {
+          "test": 91,
+          "train": 421,
+          "validation": 90
+        }
+      },
+      "status": "PASS",
+      "step": "7"
+    },
+    "8": {
+      "best_baseline": "baseline_feature_regression",
+      "blockers": [],
+      "name": "Baseline before model selection",
+      "phase25_final_readiness_cap": "staging-ready",
+      "phase25_production_selection_passed": false,
+      "prototype_tradeoffs": [
+        {
+          "actual": 0.97777778,
+          "check": "score_band_agreement_preserve_or_improve",
+          "direction": ">=",
+          "reference": "phase18_selected_scorer",
+          "required": 0.97962963,
+          "split": "validation",
+          "status": "FAIL"
+        },
+        {
+          "actual": 1.495885,
+          "check": "mae_0_100_preserve_or_improve",
+          "direction": "<=",
+          "reference": "phase18_selected_scorer",
+          "required": 1.21344534,
+          "split": "test",
+          "status": "FAIL"
+        }
+      ],
+      "ranking_splits": {
+        "test": {
+          "eligible_group_count": 90,
+          "high_fit_group_count": 40,
+          "map_at_10": 1.0,
+          "ndcg_at_10": 0.9998258830628405,
+          "ndcg_at_5": 0.9994998287530606
+        },
+        "validation": {
+          "eligible_group_count": 90,
+          "high_fit_group_count": 34,
+          "map_at_10": 1.0,
+          "ndcg_at_10": 0.9997525725528602,
+          "ndcg_at_5": 0.9997525725528602
+        }
+      },
+      "slice_columns": [
+        "experience_band",
+        "language",
+        "pair_type",
+        "role_family",
+        "target_band"
+      ],
+      "status": "WARN",
+      "step": "8",
+      "warnings": [
+        "Phase 25 TensorFlow candidate does not yet pass strict production selection against Phase 18 preservation checks.",
+        "Prototype tradeoffs remain recorded in phase_25_baseline_selection_gate.json."
+      ]
+    }
+  },
+  "todo_source": "training/TODOS.md#step-3-through-step-8",
+  "warning_steps": [
+    "5",
+    "6",
+    "8"
+  ]
+}

@@ -15,6 +15,11 @@ training/.tf-venv-3.13/
 training/notebooks/**/venv/
 training/notebooks/**/.venv/
 
+# Local Codex/uv runtime helpers
+.codex-tools/
+.uv-cache/
+.uv-python/
+
 # Python cache and compiled files
 __pycache__/
 **/__pycache__/
@@ -31,7 +36,12 @@ legacy/.pi/
 legacy/logs/
 
 # Accidental external Backend checkout and generated artifacts
-references/
+references/*
+!references/docs/
+references/docs/*
+!references/docs/generated/
+references/docs/generated/*
+!references/docs/generated/openapi.json
 artifacts/tensorboard/
 
 # Trained model artifacts

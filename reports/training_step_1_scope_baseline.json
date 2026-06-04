@@ -1,0 +1,312 @@
+{
+  "acceptance": {
+    "dirty_paths_documented": true,
+    "existing_reports_reviewed": true,
+    "training_scope_explicit": true
+  },
+  "blockers": [],
+  "evidence_review": {
+    "blockers": [],
+    "report_summaries": {
+      "reports/phase_25_tensorflow_training_delivery.json": {
+        "generated_at": "2026-06-03T17:44:06.348548+00:00",
+        "passed": false,
+        "phase_id": "phase_25_tensorflow_training_delivery",
+        "schema_version": "phase-25-final-clean-kernel-gate-v1",
+        "status": "prototype-only"
+      },
+      "reports/phase_27_10_requirement_matrix.json": {
+        "blocker_count": 5,
+        "final_decision": "blocked",
+        "generated_at": "2026-06-03T17:45:57.381593Z",
+        "phase_id": "phase_27_10_requirement_matrix",
+        "schema_version": "phase-27-10-requirement-matrix-v1"
+      },
+      "reports/phase_27_1_27_2_release_gate.json": {
+        "final_decision": "blocked",
+        "generated_at": "2026-06-03T17:45:12Z",
+        "phase_id": "phase_27_production_readiness_release_gate",
+        "schema_version": "phase-27-1-27-2-release-gate-v1"
+      },
+      "reports/phase_27_3_27_4_notebook_label_gate.json": {
+        "final_decision": "blocked",
+        "generated_at": "2026-06-03T17:40:49.891324+00:00",
+        "phase_id": "phase_27_3_27_4_notebook_hygiene_label_evidence",
+        "schema_version": "phase-27-3-27-4-notebook-label-gate-v1"
+      },
+      "reports/phase_27_5_27_6_validation_expansion.json": {
+        "final_decision": "production-ready",
+        "generated_at": "2026-06-03T10:41:38.226690+00:00",
+        "phase_id": "phase_27_5_27_6_validation_expansion",
+        "schema_version": "phase-27-5-27-6-validation-expansion-v1"
+      },
+      "reports/phase_27_7_clean_kernel_production_export.json": {
+        "blocker_count": 2,
+        "final_decision": "blocked",
+        "generated_at": "2026-06-03T17:45:36.786390+00:00",
+        "phase_id": "phase_27_7_clean_kernel_production_export",
+        "schema_version": "phase-27-7-clean-kernel-production-export-v1"
+      },
+      "reports/phase_27_8_model_card_manifest_refresh.json": {
+        "blocker_count": 0,
+        "final_decision": "refresh-complete",
+        "generated_at": "2026-06-03T17:45:37.225633Z",
+        "phase_id": "phase_27_8_model_card_manifest_refresh",
+        "schema_version": "phase-27-8-model-card-manifest-refresh-v1"
+      }
+    },
+    "required_evidence": [
+      {
+        "exists": true,
+        "path": "training/README.md",
+        "sha256": "5f037f476026f5aad3c6052ec5d6d645738e37ed6cdc759de43236c5b6983449",
+        "size_bytes": 6075
+      },
+      {
+        "exists": true,
+        "path": "training/notebooks/README.md",
+        "sha256": "c2105aaa7cac52c053b7b49aff5ef96ae14e9a2e43e383e7dc36e174b4a34b0b",
+        "size_bytes": 1444
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_25_tensorflow_training_delivery.json",
+        "sha256": "c52e74f453866095277996584658d2433e4df52cbe320c7697188dea8041bb42",
+        "size_bytes": 22180
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_27_1_27_2_release_gate.json",
+        "sha256": "73ccc152420a0ca841ce4d1e41304914ad6ec92144a9b508b5b3281aaebce46e",
+        "size_bytes": 8872
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_27_3_27_4_notebook_label_gate.json",
+        "sha256": "bbf7af538d5aa7c53ff14368518c6d012c17b649d711babdf9a948135f466ee3",
+        "size_bytes": 33377
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_27_5_27_6_validation_expansion.json",
+        "sha256": "92c821b3c0433f95c09570b1cafa3bec3cdc1c029ad5f01081a65554da373826",
+        "size_bytes": 13201
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_27_7_clean_kernel_production_export.json",
+        "sha256": "cf2e99ee810a39b5ae0349e61ce5716bf6ae50e10fa242d6460334b771fee7bd",
+        "size_bytes": 11260
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_27_8_model_card_manifest_refresh.json",
+        "sha256": "d346d69e3fc1b52b27c2795fc047302ed83c03a32bea2be8fe1276b97d4ac93a",
+        "size_bytes": 8250
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_27_10_requirement_matrix.json",
+        "sha256": "002296db9d2d601ffae4da067affb8cb76a107e068c3dbccbe4f3ead5048562f",
+        "size_bytes": 22989
+      }
+    ],
+    "status": "WARN",
+    "warnings": [
+      "Phase 25 remains prototype-only; Step 1 records this baseline without claiming production readiness.",
+      "Phase 27.1/27.2 release gate is blocked in current evidence.",
+      "Phase 27.3/27.4 notebook/label gate is blocked in current evidence.",
+      "Phase 27.7 clean-kernel export is blocked in current evidence.",
+      "Phase 27.10 requirement matrix is blocked in current evidence."
+    ]
+  },
+  "final_decision": "implemented-with-documented-warnings",
+  "generated_at": "2026-06-03T18:03:59.081217+00:00",
+  "git_state": {
+    "available": true,
+    "commit": "5d605dfdbf853b6b18eec02905560627c7a47247",
+    "dirty": true,
+    "dirty_path_count": 102,
+    "dirty_paths": [
+      "M .gitignore",
+      "M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/custom_component_smoke_model.keras",
+      "M artifacts/phase_25_tensorflow_training_delivery/data_feature_reuse.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/e5_embedding_contract.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+      "M artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
+      "M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
+      "M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
+      "M artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/requirement_contract_matrix.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/score_calibration_tables.csv",
+      "M artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      "M artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
+      "M artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      "M reports/phase_16_label_manifest.json",
+      "M reports/phase_25_baseline_selection_gate.json",
+      "M reports/phase_25_calibration_model_card_export.json",
+      "M reports/phase_25_custom_component.json",
+      "M reports/phase_25_data_feature_reuse.json",
+      "M reports/phase_25_e5_embedding_contract.json",
+      "M reports/phase_25_human_readable_final_report.json",
+      "M reports/phase_25_human_readable_final_report.md",
+      "M reports/phase_25_model_api_handoff_fixtures.json",
+      "M reports/phase_25_reproducibility_setup.json",
+      "M reports/phase_25_requirement_contract_matrix.json",
+      "M reports/phase_25_tensorboard_monitoring.json",
+      "M reports/phase_25_tensorflow_architecture.json",
+      "M reports/phase_25_tensorflow_artifact_export.json",
+      "M reports/phase_25_tensorflow_training_delivery.json",
+      "M reports/phase_25_training_evaluation_loop.json",
+      "M reports/phase_25_training_only_genai_boundary.json",
+      "M reports/phase_27_10_requirement_matrix.json",
+      "M reports/phase_27_10_requirement_matrix.md",
+      "M reports/phase_27_1_27_2_release_gate.json",
+      "M reports/phase_27_1_27_2_release_gate.md",
+      "M reports/phase_27_3_27_4_notebook_label_gate.json",
+      "M reports/phase_27_3_27_4_notebook_label_gate.md",
+      "M reports/phase_27_7_clean_kernel_production_export.json",
+      "M reports/phase_27_7_clean_kernel_production_export.md",
+      "M reports/phase_27_8_model_card_manifest_refresh.json",
+      "M reports/phase_27_8_model_card_manifest_refresh.md",
+      "M reports/phase_27_9_model_api_production_smoke.json",
+      "M reports/phase_27_9_model_api_production_smoke.md",
+      "M reports/phase_31_release_gate_report.json",
+      "M scripts/verify_phase_27_3_27_4_release_evidence.py",
+      "M tests/README.md",
+      "M tests/test_phase_27_clean_kernel_export.py",
+      "M training/README.md",
+      "M training/notebooks/phase_00_reproducibility_snapshot.ipynb",
+      "M training/notebooks/phase_01_data_audit_contracts.ipynb",
+      "M training/notebooks/phase_02_label_schema_baselines.ipynb",
+      "M training/notebooks/phase_03_normalization_feature_design.ipynb",
+      "M training/notebooks/phase_04_pair_generation_splits.ipynb",
+      "M training/notebooks/phase_05_baseline_evaluation.ipynb",
+      "M training/notebooks/phase_06_jobfit_training_experiments.ipynb",
+      "M training/notebooks/phase_07_ats_friendliness_scoring.ipynb",
+      "M training/notebooks/phase_08_overall_impression_signals.ipynb",
+      "M training/notebooks/phase_09_candidate_reranking.ipynb",
+      "M training/notebooks/phase_10_calibration_model_card.ipynb",
+      "M training/notebooks/phase_11_final_gate_review.ipynb",
+      "M training/notebooks/phase_12_repository_hygiene_runtime_bootstrap.ipynb",
+      "M training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
+      "M training/notebooks/phase_14_normalization_feature_builder.ipynb",
+      "M training/notebooks/phase_15_balanced_pair_generation_splits.ipynb",
+      "M training/notebooks/phase_16_human_validation_label_governance.ipynb",
+      "M training/notebooks/phase_17_baseline_evaluation_v2.ipynb",
+      "M training/notebooks/phase_18_jobfit_training_v2.ipynb",
+      "M training/notebooks/phase_19_5_jobfit_blocker_remediation.ipynb",
+      "M training/notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb",
+      "M training/notebooks/phase_20_overall_impression_signals.ipynb",
+      "M training/notebooks/phase_21_backend_candidate_reranking.ipynb",
+      "M training/notebooks/phase_22_calibration_model_card_export.ipynb",
+      "M training/notebooks/phase_23_model_api_contract_validation.ipynb",
+      "M training/notebooks/phase_24_reproducibility_final_gate.ipynb",
+      "M training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
+      "?? artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T170959/",
+      "?? artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T174200/",
+      "?? references/",
+      "?? reports/training_step_1_scope_baseline.json",
+      "?? reports/training_step_1_scope_baseline.md",
+      "?? reports/training_steps_3_8_audit.json",
+      "?? reports/training_steps_3_8_audit.md",
+      "?? scripts/verify_training_step_1_scope_baseline.py",
+      "?? scripts/verify_training_steps_3_8.py",
+      "?? tests/test_training_step_1_scope_baseline.py",
+      "?? tests/test_training_steps_3_8_audit.py",
+      "?? training/TODOS.md"
+    ],
+    "production_note": "Dirty state is documented for Step 1 baseline; production-ready release claims still require a clean or explicitly accepted release gate."
+  },
+  "phase_id": "training_step_1_scope_baseline",
+  "schema_version": "training-step-1-scope-baseline-v1",
+  "scope_boundary": {
+    "blockers": [],
+    "boundary_evidence": [
+      {
+        "exists": true,
+        "path": "reports/phase_25_training_only_genai_boundary.json",
+        "sha256": "b6524aa9ff618a4d4100be351bef363bfec828e0ab49bea894a0bb104a7e95b7",
+        "size_bytes": 3097
+      },
+      {
+        "exists": true,
+        "path": "reports/phase_25_model_api_handoff_fixtures.json",
+        "sha256": "87c35f7fe1af63f4c33ecc7e784d15cf3ba0207cb4ebddd41eff5ac29f85cc30",
+        "size_bytes": 4267
+      },
+      {
+        "exists": true,
+        "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+        "sha256": "0ccc7f1b6a86e5533b7a311593649d07d533273b976fb6a83667bbb03ce032fc",
+        "size_bytes": 24041
+      },
+      {
+        "exists": true,
+        "path": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+        "sha256": "f3bc79b2e2246345679419bbcda40f7f18f7f676925829b6b5a96dd04dd2191a",
+        "size_bytes": 5069
+      }
+    ],
+    "handoff_wrapper_owned_fields_present": [
+      "auth",
+      "hydratedJob",
+      "persistence",
+      "sectionReviews",
+      "topActionables"
+    ],
+    "readme_boundary_checks": {
+      "GenAI orchestration": true,
+      "GenAI wrapper prose": true,
+      "atsFriendliness": true,
+      "auth": true,
+      "candidate reranking scores": true,
+      "hydrated job details": true,
+      "jobFitAlignment": true,
+      "overallImpression": true,
+      "persistence": true,
+      "request validation": true
+    },
+    "status": "PASS",
+    "training_owned_outputs": [
+      "jobFitAlignment",
+      "atsFriendliness",
+      "overallImpression",
+      "candidate reranking scores for Backend-provided job IDs"
+    ],
+    "warnings": [],
+    "wrapper_owned_outputs": [
+      "topActionables",
+      "sectionReviews",
+      "hydrated job details",
+      "auth",
+      "persistence",
+      "request validation",
+      "GenAI orchestration"
+    ]
+  },
+  "todo_source": "training/TODOS.md#step-1-kunci-scope-dan-baseline",
+  "warnings": [
+    "Phase 25 remains prototype-only; Step 1 records this baseline without claiming production readiness.",
+    "Phase 27.1/27.2 release gate is blocked in current evidence.",
+    "Phase 27.3/27.4 notebook/label gate is blocked in current evidence.",
+    "Phase 27.7 clean-kernel export is blocked in current evidence.",
+    "Phase 27.10 requirement matrix is blocked in current evidence.",
+    "Current git state is dirty; dirty paths are recorded in this report."
+  ]
+}

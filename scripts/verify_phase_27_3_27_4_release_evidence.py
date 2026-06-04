@@ -13,6 +13,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOK_DIR = ROOT / "training/notebooks"
 HUMAN_LABELS_PATH = ROOT / "artifacts/manual_validation/phase_16_human_labels_frozen.csv"
+REVIEW_QUEUE_PATH = ROOT / "artifacts/manual_validation/phase_16_review_queue.csv"
 PHASE16_REPORT_PATH = ROOT / "reports/phase_16_human_validation_label_governance.json"
 PHASE25_LABEL_MANIFEST_PATH = ROOT / "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json"
 REPORT_JSON_PATH = ROOT / "reports/phase_27_3_27_4_notebook_label_gate.json"
@@ -120,7 +121,7 @@ def notebook_summary(path: Path) -> dict[str, Any]:
                     )
 
     return {
-        "path": str(path.relative_to(ROOT)),
+        "path": path.relative_to(ROOT).as_posix(),
         "sha256": sha256_file(path),
         "retired": retired,
         "retirement_reason": RETIRED_NOTEBOOKS.get(path.name),
@@ -166,8 +167,16 @@ def load_human_labels() -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
+def load_review_queue() -> dict[str, dict[str, str]]:
+    if not REVIEW_QUEUE_PATH.exists():
+        return {}
+    with REVIEW_QUEUE_PATH.open(newline="", encoding="utf-8") as handle:
+        return {row.get("review_item_id", ""): row for row in csv.DictReader(handle)}
+
+
 def summarize_label_evidence() -> dict[str, Any]:
     rows = load_human_labels()
+    review_queue_by_item = load_review_queue()
     policy = PRODUCTION_LABEL_POLICY["minimum_release_validation_set"]
     by_item: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in rows:
@@ -178,16 +187,23 @@ def summarize_label_evidence() -> dict[str, Any]:
     item_band_counts = Counter()
     pair_type_counts = Counter()
     role_family_counts = Counter()
+    language_counts = Counter()
+    experience_band_counts = Counter()
     recommendation_relevance_counts = Counter(row.get("recommendation_relevance", "UNKNOWN") for row in rows)
     unsupported_claim_flags = Counter(row.get("unsupported_claim_flag", "UNKNOWN") for row in rows)
     disagreement_flags = Counter(row.get("disagreement_flag", "UNKNOWN") for row in rows)
 
     for item_rows in by_item.values():
         first = item_rows[0]
+        queue_row = review_queue_by_item.get(first.get("review_item_id", ""), {})
         item_band_counts[first.get("reviewer_job_fit_band", "UNKNOWN")] += 1
         note = first.get("evidence_notes", "")
-        role_family_counts[parse_evidence_note(note, "role_family") or "UNKNOWN"] += 1
-        pair_type_counts[parse_evidence_note(note, "pair_type") or "UNKNOWN"] += 1
+        role_family_counts[parse_evidence_note(note, "role_family") or queue_row.get("role_family") or "UNKNOWN"] += 1
+        pair_type_counts[parse_evidence_note(note, "pair_type") or queue_row.get("pair_type") or "UNKNOWN"] += 1
+        language_counts[queue_row.get("language") or parse_evidence_note(note, "language") or "UNKNOWN"] += 1
+        experience_band_counts[
+            queue_row.get("experience_band") or parse_evidence_note(note, "experience_band") or "UNKNOWN"
+        ] += 1
 
     minimum_reviewers_per_item = min(reviewer_counts_per_item.values()) if reviewer_counts_per_item else 0
     max_reviewers_per_item = max(reviewer_counts_per_item.values()) if reviewer_counts_per_item else 0
@@ -199,8 +215,8 @@ def summarize_label_evidence() -> dict[str, Any]:
         "score_band": dict(item_band_counts),
         "role_family": dict(role_family_counts),
         "pair_type": dict(pair_type_counts),
-        "language": {},
-        "experience_band": {},
+        "language": dict(language_counts),
+        "experience_band": dict(experience_band_counts),
     }
 
     blockers: list[str] = []
@@ -234,6 +250,8 @@ def summarize_label_evidence() -> dict[str, Any]:
         "policy_path": str(LABEL_POLICY_PATH.relative_to(ROOT)),
         "label_path": str(HUMAN_LABELS_PATH.relative_to(ROOT)),
         "label_sha256": sha256_file(HUMAN_LABELS_PATH) if HUMAN_LABELS_PATH.exists() else None,
+        "review_queue_path": str(REVIEW_QUEUE_PATH.relative_to(ROOT)),
+        "review_queue_sha256": sha256_file(REVIEW_QUEUE_PATH) if REVIEW_QUEUE_PATH.exists() else None,
         "row_count": len(rows),
         "unique_review_items": unique_items,
         "reviewer_count": reviewer_count,

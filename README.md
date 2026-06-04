@@ -114,13 +114,15 @@ python -m unittest tests.test_phase_31_release_gate
 
 Training is notebook-first. Do not add training package entrypoints under `training/*.py` unless the workflow is intentionally changed.
 
-Use Python `3.13.11` for TensorFlow training and release evidence:
+Use Python `3.13.x` for TensorFlow training and release evidence. The current verified local runtime is Python `3.13.13`.
 
 ```bash
-PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
+PYENV_VERSION=3.13.13 pyenv exec python -m venv training/.tf-venv-3.13
 source training/.tf-venv-3.13/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r training/requirements.txt
+python -m ipykernel install --sys-prefix --name bisakerja-model-tf-3.13 --display-name "Bisakerja Model TF 3.13"
+python scripts/verify_training_step_2_runtime.py --write
 ```
 
 Main production notebook:

@@ -269,7 +269,7 @@ def write_markdown(report: dict[str, Any]) -> None:
         "",
     ]
     for gate in report["gates"]:
-        lines.append(f"- {gate['status']} — `{gate['check']}`")
+        lines.append(f"- {gate['status']} - `{gate['check']}`")
     lines.extend(["", "## Blockers", ""])
     if report["blockers"]:
         lines.extend(f"- {blocker}" for blocker in report["blockers"])

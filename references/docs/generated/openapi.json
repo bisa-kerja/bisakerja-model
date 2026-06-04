@@ -1,0 +1,610 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Bisakerja AI CV Analyzer Contract Snapshot",
+    "version": "cv-analysis-v2"
+  },
+  "paths": {
+    "/api/v1/ai/cv-analyzer": {
+      "post": {
+        "operationId": "analyzeCv",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeCvMultipartRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "CV analysis result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CvAnalysisSuccessEnvelope"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload too large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Model API upstream error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Model API unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalyzeCvMultipartRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "jobRoles",
+          "language",
+          "inputMode"
+        ],
+        "properties": {
+          "jobRoles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "maxItems": 10
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "id",
+              "en"
+            ]
+          },
+          "inputMode": {
+            "type": "string",
+            "enum": [
+              "UPLOAD",
+              "REFERENCE"
+            ]
+          },
+          "compareSource": {
+            "type": "string",
+            "enum": [
+              "BOOKMARK",
+              "JOB_SEARCH",
+              "DIRECT_JOB_DETAIL"
+            ],
+            "default": "JOB_SEARCH"
+          },
+          "persistResult": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  "true",
+                  "false"
+                ]
+              }
+            ],
+            "default": false
+          },
+          "cvFileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cvFile": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "CvAnalysisSuccessEnvelope": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "success",
+          "message",
+          "data",
+          "meta"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "const": true
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CvAnalysis"
+          },
+          "meta": {
+            "type": "object"
+          }
+        }
+      },
+      "ErrorEnvelope": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "success",
+          "message",
+          "data",
+          "error"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "const": false
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "null"
+          },
+          "error": {
+            "type": "object"
+          }
+        }
+      },
+      "CvAnalysis": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "jobRoles",
+          "language",
+          "analysisResult"
+        ],
+        "properties": {
+          "jobRoles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 10
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "id",
+              "en"
+            ]
+          },
+          "analysisResult": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "schemaVersion",
+              "jobFitAlignment",
+              "atsFriendliness",
+              "overallImpression",
+              "topActionables",
+              "sectionReviews",
+              "jobRecommendations",
+              "generatedCv",
+              "model",
+              "analyzedAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "schemaVersion": {
+                "type": "string",
+                "const": "cv-analysis-v2"
+              },
+              "jobFitAlignment": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "score",
+                  "summary"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "summary": {
+                    "type": "string"
+                  }
+                }
+              },
+              "atsFriendliness": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "score",
+                  "summary"
+                ],
+                "properties": {
+                  "score": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "summary": {
+                    "type": "string"
+                  }
+                }
+              },
+              "overallImpression": {
+                "type": "string"
+              },
+              "topActionables": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "maxItems": 3
+              },
+              "sectionReviews": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "section",
+                    "status",
+                    "summary",
+                    "actionPoints"
+                  ],
+                  "properties": {
+                    "section": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "actionPoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1
+                    }
+                  }
+                }
+              },
+              "jobRecommendations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "jobId",
+                    "title",
+                    "companyName",
+                    "matchScore",
+                    "reason",
+                    "nextStep"
+                  ],
+                  "properties": {
+                    "jobId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "companyName": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "matchScore": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "reason": {
+                      "type": "string"
+                    },
+                    "nextStep": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "maxItems": 5
+              },
+              "generatedCv": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "available",
+                  "note"
+                ],
+                "properties": {
+                  "available": {
+                    "type": "boolean"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              },
+              "model": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "version"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "version": {
+                    "type": "string"
+                  }
+                }
+              },
+              "analyzedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      },
+      "CvAnalysisResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "schemaVersion",
+          "jobFitAlignment",
+          "atsFriendliness",
+          "overallImpression",
+          "topActionables",
+          "sectionReviews",
+          "jobRecommendations",
+          "generatedCv",
+          "model",
+          "analyzedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "string",
+            "const": "cv-analysis-v2"
+          },
+          "jobFitAlignment": {
+            "$ref": "#/components/schemas/CvAnalysisScoreSummary"
+          },
+          "atsFriendliness": {
+            "$ref": "#/components/schemas/CvAnalysisScoreSummary"
+          },
+          "overallImpression": {
+            "type": "string"
+          },
+          "topActionables": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 3
+          },
+          "sectionReviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CvAnalysisSectionReview"
+            }
+          },
+          "jobRecommendations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CvAnalysisJobRecommendation"
+            },
+            "maxItems": 5
+          },
+          "generatedCv": {
+            "$ref": "#/components/schemas/CvAnalysisGeneratedCv"
+          },
+          "model": {
+            "$ref": "#/components/schemas/CvAnalysisModelIdentity"
+          },
+          "analyzedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CvAnalysisScoreSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "score",
+          "summary"
+        ],
+        "properties": {
+          "score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      },
+      "CvAnalysisSectionReview": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "section",
+          "status",
+          "summary",
+          "actionPoints"
+        ],
+        "properties": {
+          "section": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "actionPoints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "CvAnalysisJobRecommendation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "jobId",
+          "title",
+          "companyName",
+          "matchScore",
+          "reason",
+          "nextStep"
+        ],
+        "properties": {
+          "jobId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "companyName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "matchScore": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "reason": {
+            "type": "string"
+          },
+          "nextStep": {
+            "type": "string"
+          }
+        }
+      },
+      "CvAnalysisGeneratedCv": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "available",
+          "note"
+        ],
+        "properties": {
+          "available": {
+            "type": "boolean"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "CvAnalysisModelIdentity": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "version"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

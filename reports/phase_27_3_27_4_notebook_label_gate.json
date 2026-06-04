@@ -1,6 +1,6 @@
 {
   "final_decision": "blocked",
-  "generated_at": "2026-06-03T10:37:04.454345+00:00",
+  "generated_at": "2026-06-04T03:31:43.962020+00:00",
   "phase_id": "phase_27_3_27_4_notebook_hygiene_label_evidence",
   "references": [
     "TODOS.md#phase-27",
@@ -26,7 +26,7 @@
             "path": "training/notebooks/phase_00_reproducibility_snapshot.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "da9579be5d004328dd3bba44893d087bd75b4fb89d4ce1ed79c3ee092f70d1ef",
+            "sha256": "bcc03450c190b982460bf63e5b3dc801a2b27adae65a9d0fb4cf5e3d975d8ea1",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -40,7 +40,7 @@
             "path": "training/notebooks/phase_01_data_audit_contracts.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "a5472d5976818b7ca62e720a94a3584772229b81c4ed66ab9f290498f80dab04",
+            "sha256": "3b7a08975b637accdf124672cb45e69cdb845bcc13b33a942d192066c2ca6d4e",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -54,7 +54,7 @@
             "path": "training/notebooks/phase_02_label_schema_baselines.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "e857f41bbd5504cebb15bc6a113c4252cc3c1d7830b0bd2526484319a60c4788",
+            "sha256": "c1effe262341b1e4de8ca8d5bbc30fdec1488ea014fd304b01dc0ab9ecc5b591",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -68,7 +68,7 @@
             "path": "training/notebooks/phase_03_normalization_feature_design.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "826a863b4c80b4b74234ea6b37c8932bb1aabde39447079d4c629188f1147885",
+            "sha256": "e208a3c689a51b3f282261a9eecee198660420f507813295c2cbb33c820c19f4",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -82,7 +82,7 @@
             "path": "training/notebooks/phase_04_pair_generation_splits.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "6722e0944a3e468369ae0d6cd18ce84daaa08927c4b5c7671ddcc66cf8922f41",
+            "sha256": "942132f34377005efcf0ca30f58f0e4e5cfb082e3254542edd24eb5f9896bea1",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -96,7 +96,7 @@
             "path": "training/notebooks/phase_05_baseline_evaluation.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "3166338a4484d4bbf138c72746953884673b070ae891c04b59298d4e1c587d33",
+            "sha256": "a1ea53e1b95ae4392a4ff85634a97e78ed7e052dcae22b414c24fe23e473d028",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -110,7 +110,7 @@
             "path": "training/notebooks/phase_06_jobfit_training_experiments.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "0f39d5952305adc78d72491c80aea0194bcd652e56d5dee789b2fa985640ed1e",
+            "sha256": "da35b0a8f4eaf7dcd434d7fa3cc84f2a42e0bd0cd544713b8ef57292b49867ec",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -124,7 +124,7 @@
             "path": "training/notebooks/phase_07_ats_friendliness_scoring.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "f99c70ba995476edaff1658f4f2d1a9c528f9ae7bafd60c197d5c6fb47d8fb0e",
+            "sha256": "ee9ecc0313f9a4ded7be25842ef721d8a86a760717eb6abe96153db89e61715a",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -138,7 +138,7 @@
             "path": "training/notebooks/phase_08_overall_impression_signals.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "348b8ebfd23868377213a08dbac56998fcdf980b948e77846e4885849de5416a",
+            "sha256": "527c05a56e2d3334b8f39ef3cca9e8a8e2a956e20f4dc3696ed32d62c0931b42",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -152,7 +152,7 @@
             "path": "training/notebooks/phase_09_candidate_reranking.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "9d3992d2f4757ec669d855f45120aae95bd800eb70d8449f8080aa293b31bde3",
+            "sha256": "ba44ee3f85ec32e3f415059c6ed97b4cd4fba08beb26ce63e2b505a7cd40882c",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -166,7 +166,7 @@
             "path": "training/notebooks/phase_10_calibration_model_card.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "8b919485c5358ae4dc8eeb353143b99ce76d221cf0c0ab8ad4346180ce5879f2",
+            "sha256": "f20c21503cc4dbb3596110ce7d345b15d222901941a7729c80a5063994a4a4e1",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -180,7 +180,7 @@
             "path": "training/notebooks/phase_11_final_gate_review.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "4f203779ec3e6da95af2a3d8d12811cab39b13d47f650279078e73953bbb81f8",
+            "sha256": "6602764ecd43cb3a366a9f2d06605d383606381233fa5732d26473af503c31b1",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -194,7 +194,7 @@
             "path": "training/notebooks/phase_12_repository_hygiene_runtime_bootstrap.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "7cf368c23933d90bea9832f1d7f09734f0c023f9cf475abacb4586581614d5f9",
+            "sha256": "96176ca1aa0253ee2df5f1089d32b7a09d023188b18914794f2e62b02ee45e96",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -208,7 +208,7 @@
             "path": "training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
             "retired": true,
             "retirement_reason": "Phase 13 execution evidence is frozen in reports/phase_13_*.json; executable cells are retired for production notebook hygiene.",
-            "sha256": "fc39bb897d0158358aeff973cb06adbdc90d7f253a03403a878dad7c3d9a4e66",
+            "sha256": "1c11efc1fb2ed42bbdf3661630efebb6ded00cff97299c96d3b1287177ad94c7",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -222,7 +222,7 @@
             "path": "training/notebooks/phase_14_normalization_feature_builder.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "7413fe6adbde5e47bb29e9f39bf451ed5e10a162c4f5c4d6606fdb8891b35fcd",
+            "sha256": "0c32e02cebc2bfedddf3cd46e0a77bdc6066562135c224e85e81ae2603c7626e",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -236,7 +236,7 @@
             "path": "training/notebooks/phase_15_balanced_pair_generation_splits.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "e2832bc3b304fa538a616e438a7d3eb3ac939cd10aeb3f9e66608ac19be9f6ed",
+            "sha256": "9c7b18f4e72aaba7faa2a12d024f14c95c3cdcd88acff2803da9ee9772933307",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -250,7 +250,7 @@
             "path": "training/notebooks/phase_16_human_validation_label_governance.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "9298ab4e12441e6cd4337caf42f7a38deb132d68da7495e6b49ae186fe6481fa",
+            "sha256": "c855c625c816ef213896783012b5b1fa62d8573726e53c109b9d1d181e2d2bf9",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -264,7 +264,7 @@
             "path": "training/notebooks/phase_17_baseline_evaluation_v2.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "3a76a8df8554ae432729f337817974a83e392c76698fdd7f38261b42466b968d",
+            "sha256": "22bb355318fd1b9d32dccb365ea84c793fb501fb89c515924285219f071a247f",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -278,7 +278,7 @@
             "path": "training/notebooks/phase_18_jobfit_training_v2.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "6e6d7d904bf8bbc1c7e6da846111cf95985cffbc999bdff984f2d20492b47cec",
+            "sha256": "e7b8e0e7d6ecca37dc396448ac7f6fcb70361367b5ecf5ec0333953bae6ace44",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -292,7 +292,7 @@
             "path": "training/notebooks/phase_19_5_jobfit_blocker_remediation.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "87480ee8efa4850e656d6196429f0cde9c06aca48fc60224a72460fea3fc0654",
+            "sha256": "b6542d338a11e20638235b75933efa998097b15fea0c5fc473d75fbb5ec2227c",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -306,7 +306,7 @@
             "path": "training/notebooks/phase_19_ats_friendliness_benchmark_scorer.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "c17685cb52f636dadefa95681abd98ed4f50fde1b11e782ef8feb4ac04e61ae0",
+            "sha256": "d0f41f480bfd512ec6f9411ea290feb828ef00eaa910aed160ead00b46dc7ab7",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -320,7 +320,7 @@
             "path": "training/notebooks/phase_20_overall_impression_signals.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "bdca09c54ecb85bf226fa5ebe32f96bea1dd1cf956ae7fdaf5b8c4da8d8d4513",
+            "sha256": "3bead29304f26b2b57920a4b27708d0ea4f596c78e4c867f77956ffd1ba39198",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -334,7 +334,7 @@
             "path": "training/notebooks/phase_21_backend_candidate_reranking.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "fd58067cc7a68e7f1a820d2329d89fcda262e3075935f81c337237c2dbe910be",
+            "sha256": "04cb99bda2e9ef94a078a43acf1f3c36d5f551c5bdbfd08e1394177b9ac52ab5",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -348,7 +348,7 @@
             "path": "training/notebooks/phase_22_calibration_model_card_export.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "ed084c1fb631941664fdfbec63a33f3b8f8285b7d26eb7c1fde5f2ad5ddd40c9",
+            "sha256": "f6c9d1dd50cc3346d305c8bbd440aaf3b5a177084d5a539c817284258ea83c1c",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -362,7 +362,7 @@
             "path": "training/notebooks/phase_23_model_api_contract_validation.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "e50a46f96543f62a0e10792fdc96919992fa94afbd11b8450d423dd57ad085e3",
+            "sha256": "40958f8f131165104465dbd64e423a9f4e5e4ab17b7de056687e80d4c3f7d6a9",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -376,7 +376,7 @@
             "path": "training/notebooks/phase_24_reproducibility_final_gate.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "75e6ac0b68916b7654629571939836d1ac939b3caea65eef1d0af2b5aef6d6b0",
+            "sha256": "ea545911eb565c14ea17976ab3ce30217af1ab4e47daaa8c8122a8e432408e4e",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           },
@@ -390,7 +390,7 @@
             "path": "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
             "retired": false,
             "retirement_reason": null,
-            "sha256": "d8db5fc73e8b31b542953de1a63a8bf9f355a607fe9edabba8fb554fd0d619de",
+            "sha256": "5756c19fc353ca51a24e11fcebe92b9fe67cf78c060be58c61765788ff204260",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           }
@@ -406,7 +406,7 @@
             "path": "training/notebooks/phase_13_data_snapshot_contract_freezing.ipynb",
             "retired": true,
             "retirement_reason": "Phase 13 execution evidence is frozen in reports/phase_13_*.json; executable cells are retired for production notebook hygiene.",
-            "sha256": "fc39bb897d0158358aeff973cb06adbdc90d7f253a03403a878dad7c3d9a4e66",
+            "sha256": "1c11efc1fb2ed42bbdf3661630efebb6ded00cff97299c96d3b1287177ad94c7",
             "unexecuted_code_cell_count": 0,
             "unexecuted_code_cells": []
           }
@@ -424,8 +424,8 @@
           "score band medium has 40 items < required 150",
           "score band high has 40 items < required 150",
           "required slice dimension role_family has under-covered buckets: {'backend': 12, 'web': 13, 'other': 19, 'cloud': 21, 'security': 11, 'data': 22, 'software_engineering': 17, 'frontend': 3, 'fullstack': 2}",
-          "required slice dimension language missing from frozen labels",
-          "required slice dimension experience_band missing from frozen labels",
+          "required slice dimension language has under-covered buckets: {'EN': 67, 'UNKNOWN': 52, 'ID': 1}",
+          "required slice dimension experience_band has under-covered buckets: {'profile:entry|job:entry': 13, 'profile:senior|job:junior': 4, 'profile:junior|job:junior': 12, 'profile:entry|job:junior': 19, 'profile:senior|job:senior': 3, 'profile:junior|job:entry': 8, 'profile:senior|job:mid': 12, 'profile:mid|job:entry': 10, 'profile:mid|job:junior': 13, 'profile:senior|job:entry': 5, 'profile:entry|job:lead': 7, 'profile:junior|job:senior': 1, 'profile:junior|job:lead': 5, 'profile:entry|job:senior': 1, 'profile:mid|job:senior': 1, 'profile:mid|job:lead': 1, 'profile:junior|job:mid': 4, 'profile:mid|job:mid': 1}",
           "required slice dimension pair_type has under-covered buckets: {'high_fit_positive': 40, 'hard_negative': 14, 'same_role_different_seniority': 8, 'cross_role_confusing': 10, 'random_negative': 8, 'medium_fit': 40}"
         ],
         "covered_score_bands": [
@@ -437,17 +437,19 @@
           "False": 240
         },
         "human_labels_are_model_inputs": false,
-        "label_path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
-        "label_sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa",
+        "label_path": "artifacts\\manual_validation\\phase_16_human_labels_frozen.csv",
+        "label_sha256": "ec7e0db9a1c2bb7bf0746e3e84c9b4ede064cf3801fa14d40853edf565c6e24a",
         "maximum_reviewers_per_item": 2,
         "minimum_reviewers_per_item": 2,
-        "policy_path": "artifacts/manual_validation/phase_27_production_label_policy.json",
+        "policy_path": "artifacts\\manual_validation\\phase_27_production_label_policy.json",
         "production_score_claims_allowed": false,
         "recommendation_relevance_counts_by_row": {
           "high": 80,
           "low": 80,
           "medium": 80
         },
+        "review_queue_path": "artifacts\\manual_validation\\phase_16_review_queue.csv",
+        "review_queue_sha256": "a485449b4bfd032988309c97651581f90c9bda8e182f272b54a47944d880bfec",
         "reviewer_count": 2,
         "row_count": 240,
         "schema_version": "phase-27-label-evidence-gate-v1",
@@ -462,8 +464,31 @@
           "medium": 80
         },
         "slice_dimensions": {
-          "experience_band": {},
-          "language": {},
+          "experience_band": {
+            "profile:entry|job:entry": 13,
+            "profile:entry|job:junior": 19,
+            "profile:entry|job:lead": 7,
+            "profile:entry|job:senior": 1,
+            "profile:junior|job:entry": 8,
+            "profile:junior|job:junior": 12,
+            "profile:junior|job:lead": 5,
+            "profile:junior|job:mid": 4,
+            "profile:junior|job:senior": 1,
+            "profile:mid|job:entry": 10,
+            "profile:mid|job:junior": 13,
+            "profile:mid|job:lead": 1,
+            "profile:mid|job:mid": 1,
+            "profile:mid|job:senior": 1,
+            "profile:senior|job:entry": 5,
+            "profile:senior|job:junior": 4,
+            "profile:senior|job:mid": 12,
+            "profile:senior|job:senior": 3
+          },
+          "language": {
+            "EN": 67,
+            "ID": 1,
+            "UNKNOWN": 52
+          },
           "pair_type": {
             "cross_role_confusing": 10,
             "hard_negative": 14,
@@ -581,7 +606,7 @@
             "status": "complete"
           },
           "phase25_label_manifest": {
-            "generated_at": "2026-06-03T01:45:36.646906+00:00",
+            "generated_at": "2026-06-04T00:31:18.195305+00:00",
             "labels": {
               "atsFriendliness.score": {
                 "api_scale": "0-100",
@@ -617,8 +642,8 @@
             "schema_version": "phase-25-label-manifest-v1",
             "source_label_manifests": {
               "phase16": {
-                "path": "reports/phase_16_label_manifest.json",
-                "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd",
+                "path": "reports\\phase_16_label_manifest.json",
+                "sha256": "c178aec9033052b41190b3ec3fee428ca1512dfb3fcc7d7a3fd8aa71589836f4",
                 "summary": {
                   "agreement": {
                     "disagreement_flag_rate": 0.0,
@@ -683,7 +708,7 @@
                       "medium": 80
                     },
                     "row_count": 240,
-                    "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+                    "sha256": "ec7e0db9a1c2bb7bf0746e3e84c9b4ede064cf3801fa14d40853edf565c6e24a"
                   },
                   "label_version": "human-validation-v1",
                   "manifest": {
@@ -728,12 +753,12 @@
                 }
               },
               "phase19": {
-                "path": "reports/phase_19_ats_issue_labels.json",
-                "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+                "path": "reports\\phase_19_ats_issue_labels.json",
+                "sha256": "98ef89fd68157c7e752052a9418225921cfd93169be431b14ccb5c6db5663194"
               },
               "phase21": {
-                "path": "reports/phase_21_backend_candidate_reranking.json",
-                "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
+                "path": "reports\\phase_21_backend_candidate_reranking.json",
+                "sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036",
                 "summary": {
                   "allowedValues": {
                     "0": "not relevant",

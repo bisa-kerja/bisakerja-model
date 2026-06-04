@@ -48,12 +48,12 @@ Use the dedicated TensorFlow training environment:
 
 ```bash
 deactivate 2>/dev/null || true
-PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
+PYENV_VERSION=3.13.13 pyenv exec python -m venv training/.tf-venv-3.13
 source training/.tf-venv-3.13/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r training/requirements.txt
 python -m pip install ipykernel jupyterlab
-python -m ipykernel install --user --name bisakerja-model-tf313 --display-name "Bisakerja Model TF 3.13"
+python -m ipykernel install --user --name bisakerja-model-tf-3.13 --display-name "Bisakerja Model TF 3.13"
 ```
 
 Open notebooks from repo root and select kernel `Bisakerja Model TF 3.13`.

@@ -13,7 +13,7 @@ Training is responsible for producing model-core evidence and artifacts for:
 - `overallImpression`
 - candidate reranking scores for Backend-provided job IDs
 
-Training does not own Backend auth, persistence, final public response formatting, hydrated job details, or GenAI wrapper prose.
+Training does not own Backend auth, persistence, request validation, final public response formatting, hydrated job details, GenAI orchestration, or GenAI wrapper prose.
 
 ## Layout
 
@@ -74,16 +74,37 @@ Phase 13 executable cells are intentionally retired for production notebook hygi
 
 ## Runtime
 
-Use Python `3.13.11` for the TensorFlow training runtime. Python `3.14` is not reliable for this project unless compatible TensorFlow wheels are available.
+Use Python `3.13.x` for the TensorFlow training runtime. The current verified local runtime is Python `3.13.13`. Python `3.14` is not reliable for this project unless compatible TensorFlow wheels are available.
+
+On Windows/Codex terminals, `python` may still resolve to Python `3.14`. For Step 2 and training verification, call the venv interpreter directly:
+
+```powershell
+training\.tf-venv-3.13\Scripts\python.exe -m pip install -r training\requirements.txt
+training\.tf-venv-3.13\Scripts\python.exe -m ipykernel install --sys-prefix --name bisakerja-model-tf-3.13 --display-name "Bisakerja Model TF 3.13"
+training\.tf-venv-3.13\Scripts\python.exe scripts\verify_training_step_2_runtime.py --write
+training\.tf-venv-3.13\Scripts\python.exe -m pytest tests\test_training_step_2_runtime.py
+```
+
+If `training\.tf-venv-3.13\Scripts\python.exe` returns `Access is denied`, recreate the venv from an installed Python `3.13.x` interpreter or a workspace-local `uv` managed Python, then rerun the Step 2 verifier. The Codex-verified Windows fallback keeps `uv` cache and Python installs inside the repo-local ignored paths `.uv-cache/` and `.uv-python/`:
+
+```powershell
+$env:UV_CACHE_DIR="D:\bisakerja-model\.uv-cache"
+$env:UV_PYTHON_INSTALL_DIR="D:\bisakerja-model\.uv-python"
+.\.codex-tools\uv\bin\uv.exe venv --clear --python 3.13 training\.tf-venv-3.13
+.\.codex-tools\uv\bin\uv.exe pip install --python training\.tf-venv-3.13\Scripts\python.exe -r training\requirements.txt ipykernel pip
+training\.tf-venv-3.13\Scripts\python.exe -m ipykernel install --sys-prefix --name bisakerja-model-tf-3.13 --display-name "Bisakerja Model TF 3.13"
+training\.tf-venv-3.13\Scripts\python.exe scripts\verify_training_step_2_runtime.py --write
+```
 
 ```bash
 deactivate 2>/dev/null || true
-PYENV_VERSION=3.13.11 pyenv exec python -m venv training/.tf-venv-3.13
+PYENV_VERSION=3.13.13 pyenv exec python -m venv training/.tf-venv-3.13
 source training/.tf-venv-3.13/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r training/requirements.txt
 python -m pip install ipykernel jupyterlab
-python -m ipykernel install --user --name bisakerja-model-tf313 --display-name "Bisakerja Model TF 3.13"
+python -m ipykernel install --sys-prefix --name bisakerja-model-tf-3.13 --display-name "Bisakerja Model TF 3.13"
+python scripts/verify_training_step_2_runtime.py --write
 ```
 
 Verify runtime:

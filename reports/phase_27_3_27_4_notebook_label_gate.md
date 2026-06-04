@@ -1,6 +1,6 @@
 # Phase 27.3-27.4 Notebook and Label Evidence Gate
 
-Generated at: `2026-06-03T10:37:04.454345+00:00`
+Generated at: `2026-06-04T03:31:43.962020+00:00`
 Final decision: **blocked**
 
 ## Notebook hygiene
@@ -15,8 +15,8 @@ Retired notebooks:
 
 ## Production label policy
 
-Policy artifact: `artifacts/manual_validation/phase_27_production_label_policy.json`
-Frozen label file: `artifacts/manual_validation/phase_16_human_labels_frozen.csv`
+Policy artifact: `artifacts\manual_validation\phase_27_production_label_policy.json`
+Frozen label file: `artifacts\manual_validation\phase_16_human_labels_frozen.csv`
 Status: **FAIL**
 Production score claims allowed: `False`
 Unique review items: `120`
@@ -29,8 +29,8 @@ Current blockers:
 - score band medium has 40 items < required 150
 - score band high has 40 items < required 150
 - required slice dimension role_family has under-covered buckets: {'backend': 12, 'web': 13, 'other': 19, 'cloud': 21, 'security': 11, 'data': 22, 'software_engineering': 17, 'frontend': 3, 'fullstack': 2}
-- required slice dimension language missing from frozen labels
-- required slice dimension experience_band missing from frozen labels
+- required slice dimension language has under-covered buckets: {'EN': 67, 'UNKNOWN': 52, 'ID': 1}
+- required slice dimension experience_band has under-covered buckets: {'profile:entry|job:entry': 13, 'profile:senior|job:junior': 4, 'profile:junior|job:junior': 12, 'profile:entry|job:junior': 19, 'profile:senior|job:senior': 3, 'profile:junior|job:entry': 8, 'profile:senior|job:mid': 12, 'profile:mid|job:entry': 10, 'profile:mid|job:junior': 13, 'profile:senior|job:entry': 5, 'profile:entry|job:lead': 7, 'profile:junior|job:senior': 1, 'profile:junior|job:lead': 5, 'profile:entry|job:senior': 1, 'profile:mid|job:senior': 1, 'profile:mid|job:lead': 1, 'profile:junior|job:mid': 4, 'profile:mid|job:mid': 1}
 - required slice dimension pair_type has under-covered buckets: {'high_fit_positive': 40, 'hard_negative': 14, 'same_role_different_seniority': 8, 'cross_role_confusing': 10, 'random_negative': 8, 'medium_fit': 40}
 
 Weak labels remain allowed only as bootstrap/training support. Human/recruiter-reviewed frozen labels are mandatory for production score claims.
