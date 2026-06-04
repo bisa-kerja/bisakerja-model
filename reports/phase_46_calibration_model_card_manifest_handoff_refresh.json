@@ -1,0 +1,99 @@
+{
+  "artifact_paths": {
+    "artifact_manifest": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json",
+    "artifact_root": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh",
+    "handoff_fixtures": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_fixtures.json",
+    "handoff_validation": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_validation.json",
+    "model_card": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json",
+    "score_calibration": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json"
+  },
+  "blockers": [],
+  "checks": {
+    "calibration_buckets_complete": true,
+    "calibration_outputs_complete": true,
+    "clean_reload_smoke_passed": true,
+    "feature_configs_refreshed": true,
+    "handoff_validation_complete": true,
+    "model_card_declares_multilingual_e5_small": true,
+    "model_core_contract_compatible": true,
+    "no_stale_phase25_runtime_references": true,
+    "notebook_exists_with_required_markdown": true,
+    "rollback_artifact_recorded": true,
+    "runtime_manifest_entries_hashed": true,
+    "tensorboard_references_recorded": true
+  },
+  "generated_at": "2026-06-04T08:50:24Z",
+  "git_state": {
+    "commit": "a6ac8eb4caae588437caca21e6143e5cc08c2e72",
+    "dirty_file_count": 8,
+    "dirty_sample": [
+      "M TODOS.md",
+      "?? BRAINSTORMING.md",
+      "?? artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/",
+      "?? reports/phase_46_calibration_model_card_manifest_handoff_refresh.json",
+      "?? reports/phase_46_calibration_model_card_manifest_handoff_refresh.md",
+      "?? scripts/verify_phase_46_calibration_model_card_manifest_handoff_refresh.py",
+      "?? tests/test_phase_46_calibration_model_card_manifest_handoff_refresh.py",
+      "?? training/notebooks/phase_46_calibration_model_card_manifest_handoff_refresh.ipynb"
+    ],
+    "production_claim_allowed": false
+  },
+  "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
+  "schema_version": "phase-46-calibration-model-card-manifest-handoff-refresh-v1",
+  "source_files": [
+    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
+    "REQUIREMENT.md",
+    "artifacts/phase_45_multilingual_e5_small_training_delivery/training_evaluation.json",
+    "artifacts/phase_45_multilingual_e5_small_training_delivery/baseline_comparison.json",
+    "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz"
+  ],
+  "status": "complete",
+  "summary": {
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "handoff_validation_status": "complete",
+    "jobfit_test_calibration": {
+      "bucket_agreement": 0.9722,
+      "bucket_mae_points": {
+        "0-20": 0.5085,
+        "21-40": 0.4224,
+        "41-60": 0.7402,
+        "61-80": 1.6269,
+        "81-100": 1.0984
+      },
+      "ece_points": 0.3842,
+      "mae_points": 0.7074,
+      "mce_points": 0.9083,
+      "passed": true,
+      "rmse_points": 2.2366,
+      "row_count": 540,
+      "score_band_agreement": 0.9722,
+      "within_10_points_rate": 0.987
+    },
+    "jobfit_validation_calibration": {
+      "bucket_agreement": 0.9722,
+      "bucket_mae_points": {
+        "0-20": 0.3796,
+        "21-40": 0.5004,
+        "41-60": 1.1248,
+        "61-80": 2.3033,
+        "81-100": 0.4679
+      },
+      "ece_points": 0.4144,
+      "mae_points": 0.7418,
+      "mce_points": 1.5912,
+      "passed": true,
+      "rmse_points": 2.9635,
+      "row_count": 540,
+      "score_band_agreement": 0.9722,
+      "within_10_points_rate": 0.9852
+    },
+    "model_artifact": {
+      "exists": true,
+      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+      "sha256": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
+      "size_bytes": 60594
+    },
+    "runtime_required_artifact_count": 5
+  }
+}

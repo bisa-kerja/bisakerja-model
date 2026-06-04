@@ -1,0 +1,245 @@
+{
+  "frozen_inputs": {
+    "ats_benchmark": {
+      "exists": true,
+      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17",
+      "size_bytes": 16367
+    },
+    "candidate_reranking_fixture": {
+      "exists": true,
+      "path": "reports/phase_21_backend_candidate_reranking.json",
+      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
+      "size_bytes": 18519
+    },
+    "pair_feature_matrix": {
+      "exists": true,
+      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_training_features_v1.npz",
+      "sha256": "0a57064e73f5cf61b79d675e983d133c015a5d69e5baf72452f5ff12b9afe2ee",
+      "size_bytes": 104619
+    },
+    "pair_predictions": {
+      "exists": true,
+      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz",
+      "sha256": "b5c67611e9aa7ee71f078b0310aeb46456ef73e0904ac9d9a03a8bd3da4e15f1",
+      "size_bytes": 75671
+    }
+  },
+  "generated_at": "2026-06-04T08:50:21Z",
+  "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
+  "schema_version": "phase-46-dataset-manifest-v1",
+  "source_dataset_manifest": {
+    "exists": true,
+    "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+    "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
+    "size_bytes": 7633
+  },
+  "source_dataset_summary": {
+    "datasets": {
+      "ats_benchmark": {
+        "bucket_counts": {
+          "high": 12,
+          "low": 3,
+          "medium": 6
+        },
+        "label_versions": [
+          "ats-issue-labels-v1"
+        ],
+        "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+        "required_issue_keys": [
+          "parseability_issue",
+          "section_completeness_issue",
+          "contact_detection_issue",
+          "date_detection_issue",
+          "metric_evidence_issue",
+          "formatting_risk_issue",
+          "empty_parse_risk"
+        ],
+        "row_count": 21,
+        "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+      },
+      "candidate_set_fixtures": {
+        "candidate_set_id": "candidate_set_phase23",
+        "output_jobs_subset_of_input": true,
+        "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
+        "request_job_count": 3,
+        "response_recommendation_count": 2,
+        "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3"
+      },
+      "human_validation": {
+        "band_counts": {
+          "high": 80,
+          "low": 80,
+          "medium": 80
+        },
+        "evaluation_only": true,
+        "label_versions": [
+          "human-validation-v1"
+        ],
+        "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+        "review_item_count": 120,
+        "reviewer_count": 2,
+        "row_count": 240,
+        "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+      },
+      "pairs_v2": {
+        "job_count": 813,
+        "label_versions": [
+          "weak-label-balanced-v2"
+        ],
+        "language_counts": {
+          "EN": 2260,
+          "ID": 22,
+          "MIXED": 14,
+          "UNKNOWN": 1304
+        },
+        "pair_type_counts": {
+          "cross_role_confusing": 600,
+          "hard_negative": 600,
+          "high_fit_positive": 600,
+          "medium_fit": 600,
+          "random_negative": 600,
+          "same_role_different_seniority": 600
+        },
+        "path": "artifacts/pairs_v2.parquet",
+        "profile_count": 920,
+        "row_count": 3600,
+        "schema_versions": [
+          "pairs-v2-balanced-splits-v1"
+        ],
+        "score_band_counts": {
+          "high": 600,
+          "low": 2398,
+          "medium": 602
+        },
+        "score_range": [
+          0.0,
+          1.0
+        ],
+        "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
+        "split_counts": {
+          "test": 540,
+          "train": 2520,
+          "validation": 540
+        }
+      },
+      "tensorflow_feature_matrix": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
+        "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5"
+      },
+      "tensorflow_predictions": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
+        "sha256": "2aa9a5b4266252dfe4dee634e44e0eb5713123bc1deff714cd9da3ace25be16a"
+      }
+    },
+    "generated_at": "2026-06-03T01:45:36.646906+00:00",
+    "language_counts": {
+      "EN": 2260,
+      "ID": 22,
+      "MIXED": 14,
+      "UNKNOWN": 1304
+    },
+    "phase_id": "phase_25_tensorflow_training_delivery",
+    "schema_version": "phase-25-dataset-manifest-v1",
+    "score_range": [
+      0.0,
+      1.0
+    ],
+    "source_artifacts": {
+      "architecture": {
+        "path": "reports/phase_25_tensorflow_architecture.json",
+        "sha256": "0596d93b257374b4453bfd3a851bcc84b609e55f4229d387038228fc80e7b1f4"
+      },
+      "ats_benchmark": {
+        "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+        "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+      },
+      "ats_metrics": {
+        "path": "reports/phase_19_ats_scorer_metrics.json",
+        "sha256": "9fba73b66e04dde2b0a5ba0c3efc18665d3762804f580c591e75f12269161086"
+      },
+      "baseline_gate": {
+        "path": "reports/phase_25_baseline_selection_gate.json",
+        "sha256": "d6999d851e0406917f756f8c501b48b09458ad68b764c2d82d4d2f20fa6c0ef2"
+      },
+      "candidate_notebook": {
+        "path": "training/notebooks/phase_21_backend_candidate_reranking.ipynb",
+        "sha256": "fd58067cc7a68e7f1a820d2329d89fcda262e3075935f81c337237c2dbe910be"
+      },
+      "candidate_reranking": {
+        "path": "reports/phase_21_backend_candidate_reranking.json",
+        "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef"
+      },
+      "custom_component": {
+        "path": "reports/phase_25_custom_component.json",
+        "sha256": "bb7b0e9b53d7c777ce5690b9483d55f5a79391b88130bf8e0c381b750145a0b2"
+      },
+      "data_feature_reuse": {
+        "path": "reports/phase_25_data_feature_reuse.json",
+        "sha256": "cce3d9dc6658bd25eae1427308d2f43f0c02799b4adf4c9e1faf9ee59ce06b6d"
+      },
+      "e5_contract": {
+        "path": "reports/phase_25_e5_embedding_contract.json",
+        "sha256": "36f818d0983891c22f307ff882fb7e0a5bd2fed369f829fdf8a1d06f0e57a54b"
+      },
+      "feature_matrix": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
+        "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5"
+      },
+      "human_labels": {
+        "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+        "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+      },
+      "pairs_v2": {
+        "path": "artifacts/pairs_v2.parquet",
+        "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
+      },
+      "phase16_label_manifest": {
+        "path": "reports/phase_16_label_manifest.json",
+        "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd"
+      },
+      "phase19_issue_labels": {
+        "path": "reports/phase_19_ats_issue_labels.json",
+        "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+      },
+      "phase23_contract_fixtures": {
+        "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
+        "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3"
+      },
+      "predictions": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
+        "sha256": "2aa9a5b4266252dfe4dee634e44e0eb5713123bc1deff714cd9da3ace25be16a"
+      },
+      "repro_setup": {
+        "path": "reports/phase_25_reproducibility_setup.json",
+        "sha256": "838251f56db45a635bbb8cc3c8eafa70fbaea90a504e22a85e5eb5d0b32d988e"
+      },
+      "tensorboard_manifest": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
+        "sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
+      },
+      "tensorboard_report": {
+        "path": "reports/phase_25_tensorboard_monitoring.json",
+        "sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
+      },
+      "tensorflow_feature_config": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+        "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5"
+      },
+      "trained_candidate_model": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
+        "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+      },
+      "training_history": {
+        "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
+        "sha256": "432705c47b2dd867ac4196c69d88314c1f90597fb90198668771810d1c29954e"
+      },
+      "training_report": {
+        "path": "reports/phase_25_training_evaluation_loop.json",
+        "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523"
+      }
+    },
+    "split_seed": 202621
+  },
+  "split_policy": "Frozen Phase 25/45 split names and pair IDs; no new labels introduced in Phase 46."
+}

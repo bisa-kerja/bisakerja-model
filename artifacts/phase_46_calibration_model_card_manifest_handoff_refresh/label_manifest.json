@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-06-04T08:50:21Z",
+  "inference_use": "labels are evaluation/calibration evidence only and are not model features",
+  "label_policy": {
+    "atsFriendliness.score": {
+      "api_scale": "0-100",
+      "label_version": "ats-issue-labels-v1",
+      "source": "phase_19_cv_benchmark.label_ats_score",
+      "synthetic_fixture_only": true
+    },
+    "jobFitAlignment.score": {
+      "api_scale": "0-100",
+      "human_validation": "evaluation_only",
+      "label_version": "weak-label-balanced-v2",
+      "source": "pairs_v2.job_fit_score",
+      "training_scale": "0-1"
+    },
+    "recommendations[].matchScore": {
+      "inference_use": "forbidden",
+      "label_version": "candidate-relevance-v1",
+      "relevance_to_score_anchor": {
+        "0": 15.0,
+        "1": 35.0,
+        "2": 72.0,
+        "3": 90.0
+      },
+      "source": "phase_21 backend-like manual review fixture relevanceLabel"
+    }
+  },
+  "label_sources": {
+    "atsFriendliness.score": "Frozen Phase 19 ATS benchmark labels.",
+    "jobFitAlignment.score": "Frozen Phase 25/45 pair labels; weak labels remain bootstrap/training support.",
+    "recommendations[].matchScore": "Phase 21 backend-like candidate fixture semantic anchors."
+  },
+  "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
+  "schema_version": "phase-46-label-manifest-v1",
+  "source_label_manifest": {
+    "exists": true,
+    "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+    "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
+    "size_bytes": 5900
+  }
+}

@@ -1509,7 +1509,7 @@ Verification:
 
 ### Phase 46 — Calibration, Model Card, Artifact Manifest, and Handoff Fixtures Refresh
 
-Status: Planned
+Status: Complete
 
 Goal: Produce a complete artifact package for the multilingual-E5-small model so Model API can load it safely without stale Phase 25 metadata.
 
@@ -1521,22 +1521,29 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 46.1: Recalibrate scores — Rebuild calibration tables for `jobFitAlignment.score`, `atsFriendliness.score`, and `recommendations[].matchScore` buckets `0-20`, `21-40`, `41-60`, `61-80`, and `81-100`.
-- [ ] Step 46.2: Validate calibration quality — Record ECE, MCE, bucket MAE, within-10-points rate, score-band agreement, and slice calibration.
-- [ ] Step 46.3: Export new TensorFlow artifact — Save selected model as `.keras`, reload it in a clean cell with registered custom objects, and run inference smoke without notebook state.
-- [ ] Step 46.4: Export refreshed configs — Write new `tensorflow_feature_config.json`, `feature_config.json`, `score_calibration.json`, `label_manifest.json`, and dataset manifest.
-- [ ] Step 46.5: Export model card — Document embedding model change, intended use, blocked use, metrics, slice performance, runtime benefits, known risks, and rollback artifact.
-- [ ] Step 46.6: Export artifact manifest — Include SHA-256, byte size, schema version, runtime/training-only classification, embedding model metadata, and TensorBoard references.
-- [ ] Step 46.7: Refresh handoff fixtures — Regenerate CV analysis and candidate reranking fixtures using the new model and prove response shape stays `model-core-cv-analysis-v1` compatible.
-- [ ] Step 46.8: Refresh validation report — Validate score bounds, candidate membership, language handling, duplicate rejection, max recommendations, and no backend-owned fields.
-- [ ] Step 46.9: Write migration report — Produce a concise Markdown/JSON report comparing E5-base vs multilingual-E5-small runtime and quality.
+- [x] Step 46.1: Recalibrate scores — Rebuild calibration tables for `jobFitAlignment.score`, `atsFriendliness.score`, and `recommendations[].matchScore` buckets `0-20`, `21-40`, `41-60`, `61-80`, and `81-100`.
+- [x] Step 46.2: Validate calibration quality — Record ECE, MCE, bucket MAE, within-10-points rate, score-band agreement, and slice calibration.
+- [x] Step 46.3: Export new TensorFlow artifact — Save selected model as `.keras`, reload it in a clean cell with registered custom objects, and run inference smoke without notebook state.
+- [x] Step 46.4: Export refreshed configs — Write new `tensorflow_feature_config.json`, `feature_config.json`, `score_calibration.json`, `label_manifest.json`, and dataset manifest.
+- [x] Step 46.5: Export model card — Document embedding model change, intended use, blocked use, metrics, slice performance, runtime benefits, known risks, and rollback artifact.
+- [x] Step 46.6: Export artifact manifest — Include SHA-256, byte size, schema version, runtime/training-only classification, embedding model metadata, and TensorBoard references.
+- [x] Step 46.7: Refresh handoff fixtures — Regenerate CV analysis and candidate reranking fixtures using the new model and prove response shape stays `model-core-cv-analysis-v1` compatible.
+- [x] Step 46.8: Refresh validation report — Validate score bounds, candidate membership, language handling, duplicate rejection, max recommendations, and no backend-owned fields.
+- [x] Step 46.9: Write migration report — Produce a concise Markdown/JSON report comparing E5-base vs multilingual-E5-small runtime and quality.
 
 Acceptance Criteria:
 
-- [ ] No stale Phase 25 hash/config/calibration is used by the new artifact package.
-- [ ] Model card explicitly says this is a multilingual-E5-small model version.
-- [ ] Artifact manifest verifies every runtime-required file.
-- [ ] Handoff fixtures remain Backend-compatible and model-core-only.
+- [x] No stale Phase 25 hash/config/calibration is used by the new artifact package.
+- [x] Model card explicitly says this is a multilingual-E5-small model version.
+- [x] Artifact manifest verifies every runtime-required file.
+- [x] Handoff fixtures remain Backend-compatible and model-core-only.
+
+Verification:
+
+- [x] `training/.tf-venv-3.13/bin/python scripts/verify_phase_46_calibration_model_card_manifest_handoff_refresh.py --write` — passed 2026-06-04.
+- [x] `training/.tf-venv-3.13/bin/python - <<'PY' ... nbclient.NotebookClient(...).execute()` — clean-kernel notebook execution passed 2026-06-04.
+- [x] `.venv/bin/python scripts/verify_phase_46_calibration_model_card_manifest_handoff_refresh.py` — passed 2026-06-04.
+- [x] `.venv/bin/python -m unittest tests.test_phase_46_calibration_model_card_manifest_handoff_refresh` — 5 tests passed 2026-06-04.
 
 ---
 

@@ -1,0 +1,1069 @@
+{
+  "buckets": [
+    {
+      "bucket": "0-20",
+      "max": 20,
+      "min": 0
+    },
+    {
+      "bucket": "21-40",
+      "max": 40,
+      "min": 21
+    },
+    {
+      "bucket": "41-60",
+      "max": 60,
+      "min": 41
+    },
+    {
+      "bucket": "61-80",
+      "max": 80,
+      "min": 61
+    },
+    {
+      "bucket": "81-100",
+      "max": 100,
+      "min": 81
+    }
+  ],
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "generated_at": "2026-06-04T08:50:21Z",
+  "metrics": {
+    "atsFriendliness.score": {
+      "benchmark": {
+        "bucket_agreement": 1.0,
+        "bucket_mae_points": {
+          "0-20": null,
+          "21-40": 0.0,
+          "41-60": 0.0,
+          "61-80": 0.0,
+          "81-100": 0.0
+        },
+        "ece_points": 0.0,
+        "mae_points": 0.0,
+        "mce_points": 0.0,
+        "passed": true,
+        "rmse_points": 0.0,
+        "row_count": 21,
+        "score_band_agreement": 1.0,
+        "within_10_points_rate": 1.0
+      }
+    },
+    "jobFitAlignment.score": {
+      "all": {
+        "bucket_agreement": 0.97,
+        "bucket_mae_points": {
+          "0-20": 0.4954,
+          "21-40": 0.4237,
+          "41-60": 0.6653,
+          "61-80": 1.674,
+          "81-100": 0.3857
+        },
+        "ece_points": 0.3145,
+        "mae_points": 0.6345,
+        "mce_points": 0.9601,
+        "passed": true,
+        "rmse_points": 2.1861,
+        "row_count": 3600,
+        "score_band_agreement": 0.97,
+        "within_10_points_rate": 0.9897
+      },
+      "slice_calibration": {
+        "language": {
+          "EN": {
+            "bucket_agreement": 0.9699,
+            "bucket_mae_points": {
+              "0-20": 0.4805,
+              "21-40": 0.3996,
+              "41-60": 0.5953,
+              "61-80": 1.5013,
+              "81-100": 0.6335
+            },
+            "ece_points": 0.293,
+            "mae_points": 0.6236,
+            "mce_points": 0.7805,
+            "passed": true,
+            "rmse_points": 1.9969,
+            "row_count": 2260,
+            "score_band_agreement": 0.9699,
+            "within_10_points_rate": 0.9903
+          },
+          "ID": {
+            "bucket_agreement": 1.0,
+            "bucket_mae_points": {
+              "0-20": 0.1686,
+              "21-40": 0.3908,
+              "41-60": 0.3339,
+              "61-80": null,
+              "81-100": null
+            },
+            "ece_points": 0.225,
+            "mae_points": 0.2388,
+            "mce_points": 0.3908,
+            "passed": true,
+            "rmse_points": 0.3018,
+            "row_count": 22,
+            "score_band_agreement": 1.0,
+            "within_10_points_rate": 1.0
+          },
+          "MIXED": {
+            "bucket_agreement": 1.0,
+            "bucket_mae_points": {
+              "0-20": 0.1955,
+              "21-40": null,
+              "41-60": null,
+              "61-80": null,
+              "81-100": null
+            },
+            "ece_points": 0.1249,
+            "mae_points": 0.1955,
+            "mce_points": 0.1249,
+            "passed": true,
+            "rmse_points": 0.2767,
+            "row_count": 14,
+            "score_band_agreement": 1.0,
+            "within_10_points_rate": 1.0
+          },
+          "UNKNOWN": {
+            "bucket_agreement": 0.9693,
+            "bucket_mae_points": {
+              "0-20": 0.5409,
+              "21-40": 0.4671,
+              "41-60": 0.8095,
+              "61-80": 2.1059,
+              "81-100": 0.2699
+            },
+            "ece_points": 0.3911,
+            "mae_points": 0.6649,
+            "mce_points": 1.4092,
+            "passed": true,
+            "rmse_points": 2.5061,
+            "row_count": 1304,
+            "score_band_agreement": 0.9693,
+            "within_10_points_rate": 0.9885
+          }
+        },
+        "pair_type": {
+          "cross_role_confusing": {
+            "bucket_agreement": 0.9417,
+            "bucket_mae_points": {
+              "0-20": 0.2026,
+              "21-40": 0.2309,
+              "41-60": null,
+              "61-80": null,
+              "81-100": 0.1959
+            },
+            "ece_points": 0.0773,
+            "mae_points": 0.2174,
+            "mce_points": 0.1508,
+            "passed": true,
+            "rmse_points": 0.2885,
+            "row_count": 600,
+            "score_band_agreement": 0.9417,
+            "within_10_points_rate": 1.0
+          },
+          "hard_negative": {
+            "bucket_agreement": 1.0,
+            "bucket_mae_points": {
+              "0-20": 0.2599,
+              "21-40": null,
+              "41-60": null,
+              "61-80": null,
+              "81-100": null
+            },
+            "ece_points": 0.1729,
+            "mae_points": 0.2599,
+            "mce_points": 0.1729,
+            "passed": true,
+            "rmse_points": 0.3855,
+            "row_count": 600,
+            "score_band_agreement": 1.0,
+            "within_10_points_rate": 1.0
+          },
+          "high_fit_positive": {
+            "bucket_agreement": 0.9933,
+            "bucket_mae_points": {
+              "0-20": null,
+              "21-40": null,
+              "41-60": 45.7121,
+              "61-80": 0.4295,
+              "81-100": 0.3265
+            },
+            "ece_points": 0.2966,
+            "mae_points": 0.4675,
+            "mce_points": 45.7121,
+            "passed": false,
+            "rmse_points": 2.213,
+            "row_count": 600,
+            "score_band_agreement": 0.9933,
+            "within_10_points_rate": 0.9933
+          },
+          "medium_fit": {
+            "bucket_agreement": 0.9433,
+            "bucket_mae_points": {
+              "0-20": null,
+              "21-40": null,
+              "41-60": 0.5404,
+              "61-80": 16.4918,
+              "81-100": 8.5554
+            },
+            "ece_points": 0.9875,
+            "mae_points": 1.4179,
+            "mce_points": 16.4918,
+            "passed": false,
+            "rmse_points": 3.98,
+            "row_count": 600,
+            "score_band_agreement": 0.9433,
+            "within_10_points_rate": 0.9467
+          },
+          "random_negative": {
+            "bucket_agreement": 1.0,
+            "bucket_mae_points": {
+              "0-20": 0.0065,
+              "21-40": null,
+              "41-60": null,
+              "61-80": null,
+              "81-100": null
+            },
+            "ece_points": 0.0065,
+            "mae_points": 0.0065,
+            "mce_points": 0.0065,
+            "passed": true,
+            "rmse_points": 0.01,
+            "row_count": 600,
+            "score_band_agreement": 1.0,
+            "within_10_points_rate": 1.0
+          },
+          "same_role_different_seniority": {
+            "bucket_agreement": 0.9417,
+            "bucket_mae_points": {
+              "0-20": 3.0608,
+              "21-40": 0.5996,
+              "41-60": 4.932,
+              "61-80": null,
+              "81-100": 0.5309
+            },
+            "ece_points": 1.3495,
+            "mae_points": 1.4379,
+            "mce_points": 4.932,
+            "passed": true,
+            "rmse_points": 2.7758,
+            "row_count": 600,
+            "score_band_agreement": 0.9417,
+            "within_10_points_rate": 0.9983
+          }
+        },
+        "role_family": {
+          "backend": {
+            "bucket_agreement": 0.9867,
+            "bucket_mae_points": {
+              "0-20": 0.2073,
+              "21-40": 0.8222,
+              "41-60": 0.4592,
+              "61-80": 0.6028,
+              "81-100": 0.6756
+            },
+            "ece_points": 0.2458,
+            "mae_points": 0.4641,
+            "mce_points": 0.7629,
+            "passed": true,
+            "rmse_points": 1.1807,
+            "row_count": 377,
+            "score_band_agreement": 0.9867,
+            "within_10_points_rate": 0.9973
+          },
+          "cloud": {
+            "bucket_agreement": 0.9626,
+            "bucket_mae_points": {
+              "0-20": 0.4858,
+              "21-40": 0.6306,
+              "41-60": 0.8334,
+              "61-80": 17.3552,
+              "81-100": 0.1214
+            },
+            "ece_points": 0.4186,
+            "mae_points": 0.5279,
+            "mce_points": 17.3552,
+            "passed": false,
+            "rmse_points": 1.6597,
+            "row_count": 454,
+            "score_band_agreement": 0.9626,
+            "within_10_points_rate": 0.9934
+          },
+          "data": {
+            "bucket_agreement": 0.9605,
+            "bucket_mae_points": {
+              "0-20": 0.1348,
+              "21-40": 0.2874,
+              "41-60": 0.6035,
+              "61-80": 3.5162,
+              "81-100": 0.213
+            },
+            "ece_points": 0.4679,
+            "mae_points": 0.6675,
+            "mce_points": 2.9325,
+            "passed": true,
+            "rmse_points": 2.6715,
+            "row_count": 608,
+            "score_band_agreement": 0.9605,
+            "within_10_points_rate": 0.9737
+          },
+          "frontend": {
+            "bucket_agreement": 0.964,
+            "bucket_mae_points": {
+              "0-20": 0.043,
+              "21-40": 0.2741,
+              "41-60": null,
+              "61-80": null,
+              "81-100": 0.1476
+            },
+            "ece_points": 0.1509,
+            "mae_points": 0.2237,
+            "mce_points": 0.1835,
+            "passed": true,
+            "rmse_points": 0.3029,
+            "row_count": 111,
+            "score_band_agreement": 0.964,
+            "within_10_points_rate": 1.0
+          },
+          "fullstack": {
+            "bucket_agreement": 0.9245,
+            "bucket_mae_points": {
+              "0-20": 0.0401,
+              "21-40": 0.2563,
+              "41-60": null,
+              "61-80": null,
+              "81-100": 0.2571
+            },
+            "ece_points": 0.0721,
+            "mae_points": 0.1544,
+            "mce_points": 0.2527,
+            "passed": true,
+            "rmse_points": 0.2262,
+            "row_count": 106,
+            "score_band_agreement": 0.9245,
+            "within_10_points_rate": 1.0
+          },
+          "mobile": {
+            "bucket_agreement": 1.0,
+            "bucket_mae_points": {
+              "0-20": 0.0057,
+              "21-40": null,
+              "41-60": null,
+              "61-80": null,
+              "81-100": null
+            },
+            "ece_points": 0.0057,
+            "mae_points": 0.0057,
+            "mce_points": 0.0057,
+            "passed": true,
+            "rmse_points": 0.0077,
+            "row_count": 18,
+            "score_band_agreement": 1.0,
+            "within_10_points_rate": 1.0
+          },
+          "other": {
+            "bucket_agreement": 0.9336,
+            "bucket_mae_points": {
+              "0-20": 0.1081,
+              "21-40": 0.301,
+              "41-60": 1.2022,
+              "61-80": 2.3904,
+              "81-100": 0.6278
+            },
+            "ece_points": 0.3441,
+            "mae_points": 0.6308,
+            "mce_points": 1.574,
+            "passed": true,
+            "rmse_points": 2.8715,
+            "row_count": 708,
+            "score_band_agreement": 0.9336,
+            "within_10_points_rate": 0.9802
+          },
+          "quality_assurance": {
+            "bucket_agreement": 1.0,
+            "bucket_mae_points": {
+              "0-20": 0.0057,
+              "21-40": null,
+              "41-60": null,
+              "61-80": null,
+              "81-100": null
+            },
+            "ece_points": 0.0057,
+            "mae_points": 0.0057,
+            "mce_points": 0.0057,
+            "passed": true,
+            "rmse_points": 0.0081,
+            "row_count": 40,
+            "score_band_agreement": 1.0,
+            "within_10_points_rate": 1.0
+          },
+          "security": {
+            "bucket_agreement": 0.9973,
+            "bucket_mae_points": {
+              "0-20": 1.7634,
+              "21-40": 0.4242,
+              "41-60": 0.6383,
+              "61-80": 0.1729,
+              "81-100": 2.0055
+            },
+            "ece_points": 0.9145,
+            "mae_points": 1.137,
+            "mce_points": 2.0055,
+            "passed": true,
+            "rmse_points": 2.6474,
+            "row_count": 365,
+            "score_band_agreement": 0.9973,
+            "within_10_points_rate": 1.0
+          },
+          "software_engineering": {
+            "bucket_agreement": 0.9955,
+            "bucket_mae_points": {
+              "0-20": 0.1708,
+              "21-40": 0.458,
+              "41-60": 0.4191,
+              "61-80": 0.5019,
+              "81-100": 6.7928
+            },
+            "ece_points": 0.1915,
+            "mae_points": 0.3482,
+            "mce_points": 6.7569,
+            "passed": true,
+            "rmse_points": 1.2123,
+            "row_count": 443,
+            "score_band_agreement": 0.9955,
+            "within_10_points_rate": 0.9955
+          },
+          "web": {
+            "bucket_agreement": 1.0,
+            "bucket_mae_points": {
+              "0-20": 1.9052,
+              "21-40": 0.7043,
+              "41-60": 0.5567,
+              "61-80": 0.4575,
+              "81-100": 1.118
+            },
+            "ece_points": 0.9067,
+            "mae_points": 1.0984,
+            "mce_points": 1.5335,
+            "passed": true,
+            "rmse_points": 2.3405,
+            "row_count": 370,
+            "score_band_agreement": 1.0,
+            "within_10_points_rate": 0.9973
+          }
+        },
+        "score_band": {
+          "high": {
+            "bucket_agreement": 0.9933,
+            "bucket_mae_points": {
+              "0-20": null,
+              "21-40": null,
+              "41-60": 45.7121,
+              "61-80": 0.4295,
+              "81-100": 0.3265
+            },
+            "ece_points": 0.2966,
+            "mae_points": 0.4675,
+            "mce_points": 45.7121,
+            "passed": false,
+            "rmse_points": 2.213,
+            "row_count": 600,
+            "score_band_agreement": 0.9933,
+            "within_10_points_rate": 0.9933
+          },
+          "low": {
+            "bucket_agreement": 0.9716,
+            "bucket_mae_points": {
+              "0-20": 0.4954,
+              "21-40": 0.4237,
+              "41-60": 6.3742,
+              "61-80": null,
+              "81-100": 0.3492
+            },
+            "ece_points": 0.2991,
+            "mae_points": 0.4791,
+            "mce_points": 6.3742,
+            "passed": true,
+            "rmse_points": 1.4079,
+            "row_count": 2398,
+            "score_band_agreement": 0.9716,
+            "within_10_points_rate": 0.9996
+          },
+          "medium": {
+            "bucket_agreement": 0.9402,
+            "bucket_mae_points": {
+              "0-20": null,
+              "21-40": null,
+              "41-60": 0.5458,
+              "61-80": 16.4918,
+              "81-100": 8.5554
+            },
+            "ece_points": 0.991,
+            "mae_points": 1.42,
+            "mce_points": 16.4918,
+            "passed": false,
+            "rmse_points": 3.9752,
+            "row_count": 602,
+            "score_band_agreement": 0.9402,
+            "within_10_points_rate": 0.9468
+          }
+        }
+      },
+      "test": {
+        "bucket_agreement": 0.9722,
+        "bucket_mae_points": {
+          "0-20": 0.5085,
+          "21-40": 0.4224,
+          "41-60": 0.7402,
+          "61-80": 1.6269,
+          "81-100": 1.0984
+        },
+        "ece_points": 0.3842,
+        "mae_points": 0.7074,
+        "mce_points": 0.9083,
+        "passed": true,
+        "rmse_points": 2.2366,
+        "row_count": 540,
+        "score_band_agreement": 0.9722,
+        "within_10_points_rate": 0.987
+      },
+      "train": {
+        "bucket_agreement": 0.969,
+        "bucket_mae_points": {
+          "0-20": 0.517,
+          "21-40": 0.4056,
+          "41-60": 0.553,
+          "61-80": 1.5545,
+          "81-100": 0.2232
+        },
+        "ece_points": 0.3229,
+        "mae_points": 0.5959,
+        "mce_points": 0.8832,
+        "passed": true,
+        "rmse_points": 1.9681,
+        "row_count": 2520,
+        "score_band_agreement": 0.969,
+        "within_10_points_rate": 0.9913
+      },
+      "validation": {
+        "bucket_agreement": 0.9722,
+        "bucket_mae_points": {
+          "0-20": 0.3796,
+          "21-40": 0.5004,
+          "41-60": 1.1248,
+          "61-80": 2.3033,
+          "81-100": 0.4679
+        },
+        "ece_points": 0.4144,
+        "mae_points": 0.7418,
+        "mce_points": 1.5912,
+        "passed": true,
+        "rmse_points": 2.9635,
+        "row_count": 540,
+        "score_band_agreement": 0.9722,
+        "within_10_points_rate": 0.9852
+      }
+    },
+    "recommendations[].matchScore": {
+      "candidate_fixture": {
+        "bucket_agreement": 0.8667,
+        "bucket_mae_points": {
+          "0-20": 3.5,
+          "21-40": 6.5,
+          "41-60": null,
+          "61-80": 2.75,
+          "81-100": 3.6
+        },
+        "ece_points": 3.4667,
+        "mae_points": 3.7333,
+        "mce_points": 6.5,
+        "passed": true,
+        "rmse_points": 4.8442,
+        "row_count": 15,
+        "score_band_agreement": 0.8667,
+        "within_10_points_rate": 0.9333
+      }
+    }
+  },
+  "notes": [
+    "Calibration buckets are predicted-score buckets and always include 0-20, 21-40, 41-60, 61-80, and 81-100 rows.",
+    "Job-fit calibration uses Phase 45 multilingual-E5-small predictions, not Phase 25 prediction hashes.",
+    "ATS calibration validates the embedding-independent Phase 19 transparent scorer against the frozen ATS benchmark.",
+    "Candidate reranking fixture calibration remains a handoff compatibility check; Backend still owns candidate retrieval and hydration."
+  ],
+  "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
+  "schema_version": "phase-46-score-calibration-v1",
+  "sources": {
+    "atsFriendliness.score": {
+      "exists": true,
+      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17",
+      "size_bytes": 16367
+    },
+    "jobFitAlignment.score": {
+      "exists": true,
+      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz",
+      "sha256": "b5c67611e9aa7ee71f078b0310aeb46456ef73e0904ac9d9a03a8bd3da4e15f1",
+      "size_bytes": 75671
+    },
+    "recommendations[].matchScore": {
+      "exists": true,
+      "path": "reports/phase_21_backend_candidate_reranking.json",
+      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
+      "size_bytes": 18519
+    }
+  },
+  "tables": [
+    {
+      "abs_gap": 0.3023,
+      "avg_predicted": 5.0593,
+      "avg_target": 5.3616,
+      "bucket": "0-20",
+      "bucket_agreement": 0.9991,
+      "count": 1128,
+      "mae": 0.517,
+      "mean_signed_error": -0.3023,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.5335,
+      "rmse": 1.6808,
+      "split": "train",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.3123,
+      "avg_predicted": 27.7031,
+      "avg_target": 27.3908,
+      "bucket": "21-40",
+      "bucket_agreement": 0.9578,
+      "count": 474,
+      "mae": 0.4056,
+      "mean_signed_error": 0.3123,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.8102,
+      "rmse": 0.566,
+      "split": "train",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.1623,
+      "avg_predicted": 51.1928,
+      "avg_target": 51.0305,
+      "bucket": "41-60",
+      "bucket_agreement": 0.9925,
+      "count": 402,
+      "mae": 0.553,
+      "mean_signed_error": 0.1623,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.904,
+      "rmse": 1.0997,
+      "split": "train",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.8832,
+      "avg_predicted": 71.5879,
+      "avg_target": 70.7047,
+      "bucket": "61-80",
+      "bucket_agreement": 0.9281,
+      "count": 292,
+      "mae": 1.5545,
+      "mean_signed_error": 0.8832,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 1.1767,
+      "rmse": 4.4569,
+      "split": "train",
+      "within_10_points_rate": 0.9281
+    },
+    {
+      "abs_gap": 0.0069,
+      "avg_predicted": 73.6228,
+      "avg_target": 73.6158,
+      "bucket": "81-100",
+      "bucket_agreement": 0.8527,
+      "count": 224,
+      "mae": 0.2232,
+      "mean_signed_error": 0.0069,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.504,
+      "rmse": 0.7795,
+      "split": "train",
+      "within_10_points_rate": 0.9955
+    },
+    {
+      "abs_gap": 0.145,
+      "avg_predicted": 5.2933,
+      "avg_target": 5.4383,
+      "bucket": "0-20",
+      "bucket_agreement": 1.0,
+      "count": 239,
+      "mae": 0.3796,
+      "mean_signed_error": -0.145,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.4881,
+      "rmse": 1.333,
+      "split": "validation",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.329,
+      "avg_predicted": 27.6588,
+      "avg_target": 27.3298,
+      "bucket": "21-40",
+      "bucket_agreement": 0.9735,
+      "count": 113,
+      "mae": 0.5004,
+      "mean_signed_error": 0.329,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.8943,
+      "rmse": 0.7933,
+      "split": "validation",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.4733,
+      "avg_predicted": 50.8627,
+      "avg_target": 51.3361,
+      "bucket": "41-60",
+      "bucket_agreement": 0.9762,
+      "count": 84,
+      "mae": 1.1248,
+      "mean_signed_error": -0.4733,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 1.253,
+      "rmse": 5.109,
+      "split": "validation",
+      "within_10_points_rate": 0.9881
+    },
+    {
+      "abs_gap": 1.5912,
+      "avg_predicted": 71.5959,
+      "avg_target": 70.0047,
+      "bucket": "61-80",
+      "bucket_agreement": 0.8833,
+      "count": 60,
+      "mae": 2.3033,
+      "mean_signed_error": 1.5912,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 11.4382,
+      "rmse": 5.6829,
+      "split": "validation",
+      "within_10_points_rate": 0.8833
+    },
+    {
+      "abs_gap": 0.3798,
+      "avg_predicted": 85.8068,
+      "avg_target": 86.1866,
+      "bucket": "81-100",
+      "bucket_agreement": 0.9318,
+      "count": 44,
+      "mae": 0.4679,
+      "mean_signed_error": -0.3798,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.6132,
+      "rmse": 1.6274,
+      "split": "validation",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.2809,
+      "avg_predicted": 5.467,
+      "avg_target": 5.7479,
+      "bucket": "0-20",
+      "bucket_agreement": 1.0,
+      "count": 252,
+      "mae": 0.5085,
+      "mean_signed_error": -0.2809,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.5443,
+      "rmse": 1.5681,
+      "split": "test",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.3351,
+      "avg_predicted": 27.2719,
+      "avg_target": 26.9368,
+      "bucket": "21-40",
+      "bucket_agreement": 1.0,
+      "count": 94,
+      "mae": 0.4224,
+      "mean_signed_error": 0.3351,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.8129,
+      "rmse": 0.5536,
+      "split": "test",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.2325,
+      "avg_predicted": 50.9771,
+      "avg_target": 50.7446,
+      "bucket": "41-60",
+      "bucket_agreement": 0.977,
+      "count": 87,
+      "mae": 0.7402,
+      "mean_signed_error": 0.2325,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 1.2249,
+      "rmse": 1.7108,
+      "split": "test",
+      "within_10_points_rate": 0.9885
+    },
+    {
+      "abs_gap": 0.7077,
+      "avg_predicted": 71.8146,
+      "avg_target": 71.1069,
+      "bucket": "61-80",
+      "bucket_agreement": 0.9344,
+      "count": 61,
+      "mae": 1.6269,
+      "mean_signed_error": 0.7077,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 1.7007,
+      "rmse": 4.3704,
+      "split": "test",
+      "within_10_points_rate": 0.9344
+    },
+    {
+      "abs_gap": 0.9083,
+      "avg_predicted": 77.3694,
+      "avg_target": 76.4611,
+      "bucket": "81-100",
+      "bucket_agreement": 0.8043,
+      "count": 46,
+      "mae": 1.0984,
+      "mean_signed_error": 0.9083,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.8149,
+      "rmse": 3.7098,
+      "split": "test",
+      "within_10_points_rate": 0.9565
+    },
+    {
+      "abs_gap": 0.2758,
+      "avg_predicted": 5.1573,
+      "avg_target": 5.4331,
+      "bucket": "0-20",
+      "bucket_agreement": 0.9994,
+      "count": 1619,
+      "mae": 0.4954,
+      "mean_signed_error": -0.2758,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.5311,
+      "rmse": 1.6166,
+      "split": "all",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.3182,
+      "avg_predicted": 27.6362,
+      "avg_target": 27.318,
+      "bucket": "21-40",
+      "bucket_agreement": 0.9662,
+      "count": 681,
+      "mae": 0.4237,
+      "mean_signed_error": 0.3182,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.8522,
+      "rmse": 0.6081,
+      "split": "all",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.0798,
+      "avg_predicted": 51.1117,
+      "avg_target": 51.0319,
+      "bucket": "41-60",
+      "bucket_agreement": 0.9878,
+      "count": 573,
+      "mae": 0.6653,
+      "mean_signed_error": 0.0798,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 1.0686,
+      "rmse": 2.2626,
+      "split": "all",
+      "within_10_points_rate": 0.9965
+    },
+    {
+      "abs_gap": 0.9601,
+      "avg_predicted": 71.6226,
+      "avg_target": 70.6624,
+      "bucket": "61-80",
+      "bucket_agreement": 0.9225,
+      "count": 413,
+      "mae": 1.674,
+      "mean_signed_error": 0.9601,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 1.4147,
+      "rmse": 4.6429,
+      "split": "all",
+      "within_10_points_rate": 0.9225
+    },
+    {
+      "abs_gap": 0.0848,
+      "avg_predicted": 75.879,
+      "avg_target": 75.7942,
+      "bucket": "81-100",
+      "bucket_agreement": 0.8567,
+      "count": 314,
+      "mae": 0.3857,
+      "mean_signed_error": 0.0848,
+      "output": "jobFitAlignment.score",
+      "p90_abs_error": 0.5906,
+      "rmse": 1.6795,
+      "split": "all",
+      "within_10_points_rate": 0.9904
+    },
+    {
+      "abs_gap": null,
+      "avg_predicted": null,
+      "avg_target": null,
+      "bucket": "0-20",
+      "bucket_agreement": null,
+      "count": 0,
+      "mae": null,
+      "mean_signed_error": null,
+      "output": "atsFriendliness.score",
+      "p90_abs_error": null,
+      "rmse": null,
+      "split": "benchmark",
+      "within_10_points_rate": null
+    },
+    {
+      "abs_gap": 0.0,
+      "avg_predicted": 30.0,
+      "avg_target": 30.0,
+      "bucket": "21-40",
+      "bucket_agreement": 1.0,
+      "count": 3,
+      "mae": 0.0,
+      "mean_signed_error": 0.0,
+      "output": "atsFriendliness.score",
+      "p90_abs_error": 0.0,
+      "rmse": 0.0,
+      "split": "benchmark",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.0,
+      "avg_predicted": 50.0,
+      "avg_target": 50.0,
+      "bucket": "41-60",
+      "bucket_agreement": 1.0,
+      "count": 6,
+      "mae": 0.0,
+      "mean_signed_error": 0.0,
+      "output": "atsFriendliness.score",
+      "p90_abs_error": 0.0,
+      "rmse": 0.0,
+      "split": "benchmark",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.0,
+      "avg_predicted": 75.0,
+      "avg_target": 75.0,
+      "bucket": "61-80",
+      "bucket_agreement": 1.0,
+      "count": 6,
+      "mae": 0.0,
+      "mean_signed_error": 0.0,
+      "output": "atsFriendliness.score",
+      "p90_abs_error": 0.0,
+      "rmse": 0.0,
+      "split": "benchmark",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 0.0,
+      "avg_predicted": 100.0,
+      "avg_target": 100.0,
+      "bucket": "81-100",
+      "bucket_agreement": 1.0,
+      "count": 6,
+      "mae": 0.0,
+      "mean_signed_error": 0.0,
+      "output": "atsFriendliness.score",
+      "p90_abs_error": 0.0,
+      "rmse": 0.0,
+      "split": "benchmark",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 3.5,
+      "avg_predicted": 16.5,
+      "avg_target": 20.0,
+      "bucket": "0-20",
+      "bucket_agreement": 1.0,
+      "count": 4,
+      "mae": 3.5,
+      "mean_signed_error": -3.5,
+      "output": "recommendations[].matchScore",
+      "p90_abs_error": 5.0,
+      "rmse": 4.3589,
+      "split": "candidate_fixture",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 6.5,
+      "avg_predicted": 26.5,
+      "avg_target": 20.0,
+      "bucket": "21-40",
+      "bucket_agreement": 0.0,
+      "count": 2,
+      "mae": 6.5,
+      "mean_signed_error": 6.5,
+      "output": "recommendations[].matchScore",
+      "p90_abs_error": 1.0,
+      "rmse": 8.5147,
+      "split": "candidate_fixture",
+      "within_10_points_rate": 0.5
+    },
+    {
+      "abs_gap": null,
+      "avg_predicted": null,
+      "avg_target": null,
+      "bucket": "41-60",
+      "bucket_agreement": null,
+      "count": 0,
+      "mae": null,
+      "mean_signed_error": null,
+      "output": "recommendations[].matchScore",
+      "p90_abs_error": null,
+      "rmse": null,
+      "split": "candidate_fixture",
+      "within_10_points_rate": null
+    },
+    {
+      "abs_gap": 1.75,
+      "avg_predicted": 73.25,
+      "avg_target": 75.0,
+      "bucket": "61-80",
+      "bucket_agreement": 1.0,
+      "count": 4,
+      "mae": 2.75,
+      "mean_signed_error": -1.75,
+      "output": "recommendations[].matchScore",
+      "p90_abs_error": 3.0,
+      "rmse": 2.8723,
+      "split": "candidate_fixture",
+      "within_10_points_rate": 1.0
+    },
+    {
+      "abs_gap": 3.6,
+      "avg_predicted": 93.6,
+      "avg_target": 90.0,
+      "bucket": "81-100",
+      "bucket_agreement": 1.0,
+      "count": 5,
+      "mae": 3.6,
+      "mean_signed_error": 3.6,
+      "output": "recommendations[].matchScore",
+      "p90_abs_error": 6.0,
+      "rmse": 4.4272,
+      "split": "candidate_fixture",
+      "within_10_points_rate": 1.0
+    }
+  ]
+}

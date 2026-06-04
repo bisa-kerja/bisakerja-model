@@ -1,0 +1,35 @@
+{
+  "clean_reload_with_registered_custom_objects": true,
+  "custom_objects": [
+    "CosineInteractionLayer",
+    "ProductionGateCallback",
+    "WeightedHuberLoss"
+  ],
+  "feature_source": {
+    "exists": true,
+    "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_training_features_v1.npz",
+    "sha256": "0a57064e73f5cf61b79d675e983d133c015a5d69e5baf72452f5ff12b9afe2ee",
+    "size_bytes": 104619
+  },
+  "generated_at": "2026-06-04T08:50:21Z",
+  "input_shape": [
+    8,
+    6
+  ],
+  "model": {
+    "artifact": {
+      "exists": true,
+      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+      "sha256": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
+      "size_bytes": 60594
+    },
+    "name": "bisakerja_jobfit_tf_phase46_multilingual_e5_small_v1",
+    "version": "jobfit_tf_phase46_multilingual_e5_small_v1"
+  },
+  "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
+  "prediction_count": 8,
+  "prediction_max": 0.50557727,
+  "prediction_min": 3.201e-05,
+  "schema_version": "phase-46-inference-smoke-fixture-v1",
+  "score_bounds_passed": true
+}

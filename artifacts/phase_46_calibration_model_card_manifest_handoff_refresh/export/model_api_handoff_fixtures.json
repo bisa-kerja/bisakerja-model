@@ -1,0 +1,722 @@
+{
+  "cv_analysis_v2_wrapper_mapping": {
+    "boundary_note": "Training exports model-core scores/signals only. Backend/API wrapper owns prose, generated actionables, section reviews, CV file handling, auth, persistence, and job detail hydration.",
+    "model_core_to_wrapper": [
+      {
+        "model_core": "jobFitAlignment.score",
+        "owner": "model",
+        "wrapper_target": "analysisResult.jobFitAlignment.score"
+      },
+      {
+        "model_core": "jobFitAlignment.summarySignals + missingSkills",
+        "owner": "api-wrapper",
+        "wrapper_target": "analysisResult.jobFitAlignment.summary"
+      },
+      {
+        "model_core": "atsFriendliness.score",
+        "owner": "model",
+        "wrapper_target": "analysisResult.atsFriendliness.score"
+      },
+      {
+        "model_core": "atsFriendliness.detectedIssues",
+        "owner": "api-wrapper",
+        "wrapper_target": "analysisResult.atsFriendliness.summary"
+      },
+      {
+        "model_core": "overallImpression.summary",
+        "owner": "api-wrapper",
+        "wrapper_target": "analysisResult.overallImpression"
+      },
+      {
+        "model_core": "candidateReranking.recommendations[].jobId",
+        "owner": "backend-hydration",
+        "wrapper_target": "analysisResult.jobRecommendations[].jobId"
+      },
+      {
+        "model_core": "candidateReranking.recommendations[].matchScore",
+        "owner": "model",
+        "wrapper_target": "analysisResult.jobRecommendations[].matchScore"
+      },
+      {
+        "model_core": "candidateReranking.recommendations[].matchedSkills + missingSkills + rankingSignals",
+        "owner": "api-wrapper",
+        "wrapper_target": "analysisResult.jobRecommendations[].reason + nextStep"
+      }
+    ],
+    "openapi_checks": {
+      "AnalyzeCvMultipartRequest.language": [
+        "id",
+        "en"
+      ],
+      "CvAnalysis.analysisResult.atsFriendliness.score": {
+        "maximum": 100,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "CvAnalysis.analysisResult.jobFitAlignment.score": {
+        "maximum": 100,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "CvAnalysis.analysisResult.jobRecommendations[].matchScore": {
+        "maximum": 100,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "CvAnalysis.analysisResult.overallImpression": {
+        "type": "string"
+      },
+      "CvAnalysis.analysisResult.schemaVersion": "cv-analysis-v2"
+    },
+    "target_schema": "cv-analysis-v2",
+    "wrapper_backend_owned_fields": [
+      "auth",
+      "availability",
+      "company",
+      "companyName",
+      "cvFile",
+      "cvFileId",
+      "experienceLevel",
+      "generatedCv",
+      "hasApplied",
+      "hydratedJob",
+      "isBookmarked",
+      "location",
+      "nextStep",
+      "nextSteps",
+      "persistence",
+      "reason",
+      "sectionReviews",
+      "title",
+      "topActionables",
+      "userId",
+      "visibility",
+      "workType"
+    ]
+  },
+  "generated_at": "2026-06-04T08:50:21Z",
+  "negative": {
+    "cv_invalid_language": {
+      "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be grouped more clearly",
+          "impact metrics are sparse"
+        ],
+        "evidence": {
+          "languageSupported": true,
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "E5-backed job-fit features and calibrated TensorFlow score available"
+        ],
+        "matchedSkills": [
+          "rest api",
+          "postgresql",
+          "typescript"
+        ],
+        "missingSkills": [
+          "deployment evidence",
+          "automated testing evidence"
+        ],
+        "score": 78,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "REST API, PostgreSQL, and TypeScript evidence found"
+          },
+          {
+            "key": "role_match",
+            "label": "Backend role signals align with requested role"
+          },
+          {
+            "key": "experience_match",
+            "label": "Junior-mid project evidence present"
+          }
+        ]
+      },
+      "language": "jp",
+      "model": {
+        "artifact": {
+          "format": ".keras",
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+        },
+        "name": "bisakerja_jobfit_tf_functional_custom_v1",
+        "version": "jobfit_tf_phase25_gradient_tape_v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported hiring-outcome, seniority, salary, or protected-class claim included"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "role_match",
+          "ats_parseable_text"
+        ],
+        "score": 80,
+        "summary": "CV shows solid backend evidence with clear REST API and PostgreSQL signals; deployment and measurable impact evidence remain sparse."
+      },
+      "requestId": "req_phase25_cv_handoff_001",
+      "schemaVersion": "model-core-cv-analysis-v1"
+    },
+    "cv_score_out_of_range": {
+      "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be grouped more clearly",
+          "impact metrics are sparse"
+        ],
+        "evidence": {
+          "languageSupported": true,
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "E5-backed job-fit features and calibrated TensorFlow score available"
+        ],
+        "matchedSkills": [
+          "rest api",
+          "postgresql",
+          "typescript"
+        ],
+        "missingSkills": [
+          "deployment evidence",
+          "automated testing evidence"
+        ],
+        "score": 101,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "REST API, PostgreSQL, and TypeScript evidence found"
+          },
+          {
+            "key": "role_match",
+            "label": "Backend role signals align with requested role"
+          },
+          {
+            "key": "experience_match",
+            "label": "Junior-mid project evidence present"
+          }
+        ]
+      },
+      "language": "id",
+      "model": {
+        "artifact": {
+          "format": ".keras",
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+        },
+        "name": "bisakerja_jobfit_tf_functional_custom_v1",
+        "version": "jobfit_tf_phase25_gradient_tape_v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported hiring-outcome, seniority, salary, or protected-class claim included"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "role_match",
+          "ats_parseable_text"
+        ],
+        "score": 80,
+        "summary": "CV shows solid backend evidence with clear REST API and PostgreSQL signals; deployment and measurable impact evidence remain sparse."
+      },
+      "requestId": "req_phase25_cv_handoff_001",
+      "schemaVersion": "model-core-cv-analysis-v1"
+    },
+    "cv_wrapper_owned_field": {
+      "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be grouped more clearly",
+          "impact metrics are sparse"
+        ],
+        "evidence": {
+          "languageSupported": true,
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "E5-backed job-fit features and calibrated TensorFlow score available"
+        ],
+        "matchedSkills": [
+          "rest api",
+          "postgresql",
+          "typescript"
+        ],
+        "missingSkills": [
+          "deployment evidence",
+          "automated testing evidence"
+        ],
+        "score": 78,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "REST API, PostgreSQL, and TypeScript evidence found"
+          },
+          {
+            "key": "role_match",
+            "label": "Backend role signals align with requested role"
+          },
+          {
+            "key": "experience_match",
+            "label": "Junior-mid project evidence present"
+          }
+        ]
+      },
+      "language": "id",
+      "model": {
+        "artifact": {
+          "format": ".keras",
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+        },
+        "name": "bisakerja_jobfit_tf_functional_custom_v1",
+        "version": "jobfit_tf_phase25_gradient_tape_v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported hiring-outcome, seniority, salary, or protected-class claim included"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "role_match",
+          "ats_parseable_text"
+        ],
+        "score": 80,
+        "summary": "CV shows solid backend evidence with clear REST API and PostgreSQL signals; deployment and measurable impact evidence remain sparse."
+      },
+      "requestId": "req_phase25_cv_handoff_001",
+      "schemaVersion": "model-core-cv-analysis-v1",
+      "topActionables": [
+        "Wrapper owns this field"
+      ]
+    },
+    "rerank_duplicate_candidate": {
+      "candidateSetId": "candidate_set_phase25_backend_001",
+      "language": "en",
+      "model": {
+        "artifact": {
+          "format": ".keras",
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+        },
+        "name": "bisakerja_jobfit_tf_functional_custom_v1",
+        "version": "jobfit_tf_phase25_gradient_tape_v1"
+      },
+      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "recommendations": [
+        {
+          "jobId": "11111111-1111-4111-8111-111111111111",
+          "matchLevel": "strong",
+          "matchScore": 92,
+          "matchedSkills": [
+            "typescript",
+            "postgresql",
+            "rest api"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.92
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            }
+          ]
+        },
+        {
+          "jobId": "11111111-1111-4111-8111-111111111111",
+          "matchLevel": "strong",
+          "matchScore": 92,
+          "matchedSkills": [
+            "typescript",
+            "postgresql",
+            "rest api"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.92
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req_phase25_rerank_handoff_001",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "rerank_score_out_of_range": {
+      "candidateSetId": "candidate_set_phase25_backend_001",
+      "language": "en",
+      "model": {
+        "artifact": {
+          "format": ".keras",
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+        },
+        "name": "bisakerja_jobfit_tf_functional_custom_v1",
+        "version": "jobfit_tf_phase25_gradient_tape_v1"
+      },
+      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "recommendations": [
+        {
+          "jobId": "11111111-1111-4111-8111-111111111111",
+          "matchLevel": "strong",
+          "matchScore": -1,
+          "matchedSkills": [
+            "typescript",
+            "postgresql",
+            "rest api"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.92
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req_phase25_rerank_handoff_001",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "rerank_unknown_candidate": {
+      "candidateSetId": "candidate_set_phase25_backend_001",
+      "language": "en",
+      "model": {
+        "artifact": {
+          "format": ".keras",
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+        },
+        "name": "bisakerja_jobfit_tf_functional_custom_v1",
+        "version": "jobfit_tf_phase25_gradient_tape_v1"
+      },
+      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "recommendations": [
+        {
+          "jobId": "99999999-9999-4999-8999-999999999999",
+          "matchLevel": "strong",
+          "matchScore": 92,
+          "matchedSkills": [
+            "typescript",
+            "postgresql",
+            "rest api"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.92
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            }
+          ]
+        }
+      ],
+      "requestId": "req_phase25_rerank_handoff_001",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "rerank_wrapper_owned_field": {
+      "candidateSetId": "candidate_set_phase25_backend_001",
+      "language": "en",
+      "model": {
+        "artifact": {
+          "format": ".keras",
+          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+        },
+        "name": "bisakerja_jobfit_tf_functional_custom_v1",
+        "version": "jobfit_tf_phase25_gradient_tape_v1"
+      },
+      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "recommendations": [
+        {
+          "jobId": "11111111-1111-4111-8111-111111111111",
+          "matchLevel": "strong",
+          "matchScore": 92,
+          "matchedSkills": [
+            "typescript",
+            "postgresql",
+            "rest api"
+          ],
+          "missingSkills": [],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 1.0
+            },
+            {
+              "key": "semantic_similarity",
+              "value": 0.92
+            },
+            {
+              "key": "role_match",
+              "value": 1.0
+            }
+          ],
+          "title": "Backend Developer"
+        }
+      ],
+      "requestId": "req_phase25_rerank_handoff_001",
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    }
+  },
+  "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
+  "positive": {
+    "candidateRerankingCoreOutput": {
+      "candidateSetId": "phase46-handoff-candidates",
+      "model": {
+        "name": "bisakerja_jobfit_tf_phase46_multilingual_e5_small_v1",
+        "version": "jobfit_tf_phase46_multilingual_e5_small_v1"
+      },
+      "recommendations": [
+        {
+          "jobId": "job-data-003",
+          "matchLevel": "partial",
+          "matchScore": 53,
+          "matchedSkills": [
+            "python",
+            "sql"
+          ],
+          "missingSkills": [
+            "role-specific evidence"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.53
+            },
+            {
+              "key": "multilingual_e5_small_score",
+              "value": 0.53
+            }
+          ]
+        },
+        {
+          "jobId": "job-ops-005",
+          "matchLevel": "weak",
+          "matchScore": 27,
+          "matchedSkills": [
+            "documentation"
+          ],
+          "missingSkills": [
+            "role-specific evidence"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.27
+            },
+            {
+              "key": "multilingual_e5_small_score",
+              "value": 0.27
+            }
+          ]
+        },
+        {
+          "jobId": "job-ml-001",
+          "matchLevel": "weak",
+          "matchScore": 26,
+          "matchedSkills": [
+            "python",
+            "sql"
+          ],
+          "missingSkills": [
+            "role-specific evidence"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.26
+            },
+            {
+              "key": "multilingual_e5_small_score",
+              "value": 0.26
+            }
+          ]
+        },
+        {
+          "jobId": "job-qa-004",
+          "matchLevel": "stretch",
+          "matchScore": 4,
+          "matchedSkills": [
+            "documentation"
+          ],
+          "missingSkills": [
+            "role-specific evidence"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.04
+            },
+            {
+              "key": "multilingual_e5_small_score",
+              "value": 0.04
+            }
+          ]
+        },
+        {
+          "jobId": "job-backend-002",
+          "matchLevel": "stretch",
+          "matchScore": 0,
+          "matchedSkills": [
+            "python",
+            "sql"
+          ],
+          "missingSkills": [
+            "role-specific evidence"
+          ],
+          "rankingSignals": [
+            {
+              "key": "skill_overlap",
+              "value": 0.0
+            },
+            {
+              "key": "multilingual_e5_small_score",
+              "value": 0.0
+            }
+          ]
+        }
+      ],
+      "schemaVersion": "model-core-candidate-reranking-v1"
+    },
+    "candidateRerankingCoreRequest": {
+      "candidateJobIds": [
+        "job-data-003",
+        "job-ops-005",
+        "job-ml-001",
+        "job-qa-004",
+        "job-backend-002"
+      ],
+      "candidateSetId": "phase46-handoff-candidates",
+      "maxRecommendations": 5,
+      "schemaVersion": "backend-candidate-reranking-v1"
+    },
+    "cvAnalysisCoreOutput": {
+      "atsFriendliness": {
+        "detectedIssues": [
+          "skills section could be grouped more clearly",
+          "impact metrics are sparse"
+        ],
+        "evidence": {
+          "languageSupported": true,
+          "parseableText": true,
+          "sectionCompleteness": "present"
+        },
+        "fallback": false,
+        "score": 84
+      },
+      "jobFitAlignment": {
+        "confidenceNotes": [
+          "Score uses Phase 46 multilingual-E5-small self-contained artifact package"
+        ],
+        "matchedSkills": [
+          "python",
+          "sql"
+        ],
+        "missingSkills": [
+          "deployment evidence"
+        ],
+        "score": 50,
+        "summarySignals": [
+          {
+            "key": "skill_overlap",
+            "label": "Python and SQL evidence found"
+          },
+          {
+            "key": "embedding_model",
+            "label": "multilingual-E5-small feature package used"
+          }
+        ]
+      },
+      "language": "id",
+      "model": {
+        "artifact": {
+          "exists": true,
+          "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+          "sha256": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
+          "size_bytes": 60594
+        },
+        "name": "bisakerja_jobfit_tf_phase46_multilingual_e5_small_v1",
+        "version": "jobfit_tf_phase46_multilingual_e5_small_v1"
+      },
+      "overallImpression": {
+        "confidenceNotes": [
+          "No unsupported hiring-outcome, seniority, salary, or protected-class claim included"
+        ],
+        "evidenceKeys": [
+          "skill_overlap",
+          "ats_parseable_text"
+        ],
+        "summary": "CV shows relevant Python and SQL evidence with deployment proof still missing."
+      },
+      "schemaVersion": "model-core-cv-analysis-v1"
+    }
+  },
+  "schema_version": "phase-46-model-api-handoff-fixtures-v1",
+  "source_context": {
+    "feature_config": {
+      "exists": true,
+      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/feature_config.json",
+      "sha256": "ed0a1e959f10911b485158971dbf7f83e43d5dcd02fab67cbf2c5e5ae38da033",
+      "size_bytes": 3301
+    },
+    "phase45_predictions": {
+      "exists": true,
+      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz",
+      "sha256": "b5c67611e9aa7ee71f078b0310aeb46456ef73e0904ac9d9a03a8bd3da4e15f1",
+      "size_bytes": 75671
+    },
+    "score_calibration": {
+      "exists": true,
+      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json",
+      "sha256": "3e522e8555be55a531d5ea09984f6182b0799ecfdbe6fc03acb4a29644921f39",
+      "size_bytes": 30021
+    }
+  }
+}

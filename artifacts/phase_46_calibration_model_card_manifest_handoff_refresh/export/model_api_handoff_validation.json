@@ -1,0 +1,33 @@
+{
+  "candidate_ids": [
+    "job-backend-002",
+    "job-data-003",
+    "job-ml-001",
+    "job-ops-005",
+    "job-qa-004"
+  ],
+  "checks": {
+    "ats_score_bounds": true,
+    "candidate_membership": true,
+    "cv_schema_version_compatible": true,
+    "duplicate_rejection": true,
+    "jobfit_score_bounds": true,
+    "language_handling": true,
+    "max_recommendations": true,
+    "no_backend_owned_fields": true,
+    "recommendation_score_bounds": true,
+    "reranking_schema_version_compatible": true
+  },
+  "leaked_backend_owned_fields": [],
+  "model_core_only": true,
+  "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
+  "recommendation_ids": [
+    "job-data-003",
+    "job-ops-005",
+    "job-ml-001",
+    "job-qa-004",
+    "job-backend-002"
+  ],
+  "schema_version": "phase-46-handoff-validation-v1",
+  "status": "complete"
+}
