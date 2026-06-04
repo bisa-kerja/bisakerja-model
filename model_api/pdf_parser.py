@@ -28,7 +28,7 @@ DATE_RE = re.compile(r"\b(?:20\d{2}|19\d{2}|jan|feb|mar|apr|may|jun|jul|aug|sep|
 TEXT_LITERAL_RE = re.compile(rb"\((?:\\.|[^\\()])*\)\s*T[Jj]")
 TEXT_ARRAY_RE = re.compile(rb"\[(.*?)\]\s*TJ", re.S)
 ARRAY_LITERAL_RE = re.compile(rb"\((?:\\.|[^\\()])*\)")
-FLATE_STREAM_RE = re.compile(rb"<<(?:.|\n|\r)*?/FlateDecode(?:.|\n|\r)*?>>\s*stream\r?\n(.*?)\r?\nendstream", re.S)
+MAX_DECOMPRESSED_STREAM_BYTES = 1_000_000
 
 
 @dataclass(frozen=True)
@@ -74,13 +74,50 @@ def _extract_text_literals_from_stream(stream: bytes) -> list[str]:
     return parts
 
 
+def _pdf_streams(pdf_bytes: bytes) -> list[tuple[bytes, bytes]]:
+    """Return (stream_dictionary_window, raw_stream_bytes) without broad PDF regex backtracking."""
+
+    streams: list[tuple[bytes, bytes]] = []
+    position = 0
+    marker = b"stream"
+    end_marker = b"endstream"
+    while True:
+        stream_start = pdf_bytes.find(marker, position)
+        if stream_start < 0:
+            break
+        data_start = stream_start + len(marker)
+        if pdf_bytes[data_start : data_start + 2] == b"\r\n":
+            data_start += 2
+        elif pdf_bytes[data_start : data_start + 1] in {b"\n", b"\r"}:
+            data_start += 1
+        data_end = pdf_bytes.find(end_marker, data_start)
+        if data_end < 0:
+            break
+        dictionary_window = pdf_bytes[max(0, stream_start - 2048) : stream_start]
+        streams.append((dictionary_window, pdf_bytes[data_start:data_end].strip(b"\r\n")))
+        position = data_end + len(end_marker)
+    return streams
+
+
+def _decompress_flate_stream(stream: bytes) -> bytes | None:
+    try:
+        decompressor = zlib.decompressobj()
+        data = decompressor.decompress(stream, MAX_DECOMPRESSED_STREAM_BYTES)
+        if decompressor.unconsumed_tail:
+            return None
+        return data + decompressor.flush(MAX_DECOMPRESSED_STREAM_BYTES - len(data))
+    except zlib.error:
+        return None
+
+
 def _decompressed_flate_streams(pdf_bytes: bytes) -> list[bytes]:
     streams: list[bytes] = []
-    for match in FLATE_STREAM_RE.finditer(pdf_bytes):
-        try:
-            streams.append(zlib.decompress(match.group(1).strip()))
-        except zlib.error:
+    for dictionary_window, stream in _pdf_streams(pdf_bytes):
+        if b"/FlateDecode" not in dictionary_window:
             continue
+        decompressed = _decompress_flate_stream(stream)
+        if decompressed is not None:
+            streams.append(decompressed)
     return streams
 
 

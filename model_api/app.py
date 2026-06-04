@@ -59,6 +59,7 @@ from .validators import validate_model_core_payload
 
 
 LOGGER = logging.getLogger(__name__)
+SERVER_LOGGER = logging.getLogger("uvicorn.error")
 
 
 def _model_identity_payload(identity: ModelIdentity | None, *, include_artifact: bool = False) -> dict[str, object] | None:
@@ -601,8 +602,17 @@ def _build_cv_payload_from_multipart(form: Any, pdf_bytes: bytes, runtime_config
                 candidate_skill_hints.extend(str(value) for value in required_skills if isinstance(value, str))
             candidate_skill_hints.extend(_candidate_requirement_hints(scoring.get("requirements")))
 
+    request_id = str(form.get("requestId") or "")
+    SERVER_LOGGER.info("Model API cv-analysis PDF parse started request_id=%s", request_id)
     parse_started_at = perf_counter()
     parsed_pdf = parse_pdf_bytes(pdf_bytes, max_bytes=runtime_config.max_pdf_bytes, max_pages=runtime_config.max_pdf_pages)
+    SERVER_LOGGER.info(
+        "Model API cv-analysis PDF parse completed request_id=%s parse_latency_ms=%s text_length=%s page_count=%s",
+        request_id,
+        _latency_ms(parse_started_at),
+        len(parsed_pdf.text),
+        parsed_pdf.page_count,
+    )
     if not parsed_pdf.text.strip():
         raise ContractValidationError(["cvFile has no extractable PDF text"])
     parse_latency_ms = _latency_ms(parse_started_at)
@@ -912,7 +922,7 @@ def create_app(
     @app.post("/internal/model/cv-analysis")
     async def internal_model_cv_analysis(http_request: Request):
         request_id = http_request.headers.get("x-request-id", "")
-        LOGGER.info("Model API cv-analysis request received request_id=%s", request_id)
+        SERVER_LOGGER.info("Model API cv-analysis request received request_id=%s", request_id)
         auth_error = _authorize_internal_request(http_request.headers, runtime_config)
         if auth_error is not None:
             return JSONResponse(status_code=401, content=auth_error)
@@ -920,6 +930,7 @@ def create_app(
         if "multipart/form-data" not in content_type:
             raise ContractValidationError(["Content-Type must be multipart/form-data"])
         form = await http_request.form()
+        SERVER_LOGGER.info("Model API cv-analysis multipart parsed request_id=%s", request_id)
         file_values = [value for value in form.values() if hasattr(value, "filename") and hasattr(value, "read")]
         if len(file_values) != 1 or "cvFile" not in form:
             raise ContractValidationError(["multipart request must include exactly one cvFile"])
@@ -927,11 +938,12 @@ def create_app(
         if getattr(upload, "content_type", None) not in {"application/pdf", "application/octet-stream"}:
             raise ContractValidationError(["cvFile content type must be application/pdf"])
         pdf_bytes = await upload.read()
+        SERVER_LOGGER.info("Model API cv-analysis file read request_id=%s cv_bytes=%s", request_id, len(pdf_bytes))
         _validate_pdf_upload_bytes(pdf_bytes, runtime_config)
         payload = _build_cv_payload_from_multipart(form, pdf_bytes, runtime_config)
         parsed_pdf_evidence = payload.pop("_parsedPdfEvidence")
         job_candidates = payload.get("jobCandidates")
-        LOGGER.info(
+        SERVER_LOGGER.info(
             "Model API cv-analysis payload built request_id=%s cv_bytes=%s candidate_count=%s",
             request_id,
             len(pdf_bytes),
@@ -939,6 +951,7 @@ def create_app(
         )
         request = parse_cv_analysis_model_core_request(payload)
         include_observability = http_request.headers.get("x-model-api-include-observability") == "true"
+        SERVER_LOGGER.info("Model API cv-analysis inference started request_id=%s", request_id)
         data = build_cv_analysis_response_payload(
             request,
             service=inference_service,
@@ -972,7 +985,7 @@ def create_app(
             data["atsFriendliness"]["parseQuality"] = parse_quality if parse_quality in {"high", "medium", "low", "failed"} else "low"
             data["atsFriendliness"]["evidence"] = ["deterministic_pdf_parser"]
         validate_model_core_payload(data, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
-        LOGGER.info("Model API cv-analysis completed request_id=%s", request_id)
+        SERVER_LOGGER.info("Model API cv-analysis completed request_id=%s", request_id)
         return data
 
     return app
