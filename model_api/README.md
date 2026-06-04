@@ -306,10 +306,10 @@ Run this only inside a Python `3.13.x` serving environment after `python -m pip 
 See `docs/runbooks/hugging-face-docker-deployment.md` for Hugging Face Spaces and `docs/runbooks/vps-docker-deployment.md` for VPS Docker Compose deployment.
 
 - Build images from repo root so relative artifact paths resolve.
-- Mount Phase 25 artifact directory read-only.
+- Include Phase 46 artifact directory in the image; keep Phase 25 artifact directory available only for rollback.
 - Set env vars explicitly in staging/production.
 - Keep Model API private behind Backend/internal routing.
-- Set `SENTENCE_TRANSFORMERS_HOME` to persistent cache storage; set optional `HF_TOKEN` only when needed for Hugging Face rate limits.
+- Keep `SENTENCE_TRANSFORMERS_HOME` on the image-baked cache path; do not mount over it or the build-time E5 predownload is hidden.
 - Use `/live` for uptime checks that must not wait for TensorFlow/E5 readiness; use `/ready` as the traffic gate.
 - Run `python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url "$MODEL_API_URL" --token "$MODEL_API_SERVICE_TOKEN" --latency-budget-ms 30000` before routing inference traffic.
 - Keep `MODEL_API_TIMEOUT_MS` greater than measured cold-start latency, or make warmup mandatory before traffic.

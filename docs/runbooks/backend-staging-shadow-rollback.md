@@ -11,7 +11,7 @@ Run this before routing broader staging/demo traffic to the multilingual-E5-smal
 
 ## Deploy staging Model API revision
 
-Use versioned env vars and persistent cache. Do not change Backend public contracts.
+Use versioned env vars and image-baked E5 cache. Do not change Backend public contracts.
 
 ```env
 MODEL_API_ENV=production
@@ -22,10 +22,10 @@ MODEL_API_WARMUP_REQUIRED=true
 SENTENCE_TRANSFORMERS_HOME=/home/user/.cache/sentence-transformers
 ```
 
-Persistent cache requirements:
+Cache requirements:
 
-- Mount `SENTENCE_TRANSFORMERS_HOME` to stable VPS/container storage.
-- Keep cache across deploys so multilingual-E5-small is not fetched on every restart.
+- Keep `SENTENCE_TRANSFORMERS_HOME` pointed at the image-baked cache path.
+- Do not mount a Docker volume over `SENTENCE_TRANSFORMERS_HOME`; it hides the model predownloaded during image build.
 - Do not write service tokens, `DATABASE_URL`, `OPENROUTER_API_KEY`, raw CV text, or uploaded bytes into reports.
 
 Docker Compose deploy example:

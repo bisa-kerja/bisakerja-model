@@ -183,17 +183,17 @@ COMPOSE_PROJECT_NAME=bisakerja-model-api \
 
 `docker-compose.production.yml` supports these optional env overrides:
 
-| Env var                              | Default                                   | Purpose                                                  |
-| ------------------------------------ | ----------------------------------------- | -------------------------------------------------------- |
-| `MODEL_API_IMAGE`                    | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                                            |
-| `MODEL_API_BIND_ADDRESS`             | `127.0.0.1`                               | Local host bind address for Nginx upstream.              |
-| `MODEL_API_PORT`                     | `3004`                                    | Host port mapped to container port `7860`.               |
-| `MODEL_API_ENV_FILE`                 | `.env.production`                         | Compose env file path.                                   |
-| `MODEL_API_MEM_LIMIT`                | `8g`                                      | Container memory limit.                                  |
-| `SENTENCE_TRANSFORMERS_HOME`         | `/home/user/.cache/sentence-transformers` | Persistent E5 cache path mounted to a Docker volume.     |
-| `MODEL_API_ARTIFACT_ROOT`            | app default                               | Versioned artifact package root for model/config switch. |
-| `MODEL_API_EXPECTED_EMBEDDING_MODEL` | unset                                     | Optional startup assertion for deployed embedding model. |
-| `COMPOSE_PROJECT_NAME`               | `bisakerja-model-api`                     | Compose project name.                                    |
+| Env var                              | Default                                   | Purpose                                                                              |
+| ------------------------------------ | ----------------------------------------- | ------------------------------------------------------------------------------------ |
+| `MODEL_API_IMAGE`                    | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                                                                        |
+| `MODEL_API_BIND_ADDRESS`             | `127.0.0.1`                               | Local host bind address for Nginx upstream.                                          |
+| `MODEL_API_PORT`                     | `3004`                                    | Host port mapped to container port `7860`.                                           |
+| `MODEL_API_ENV_FILE`                 | `.env.production`                         | Compose env file path.                                                               |
+| `MODEL_API_MEM_LIMIT`                | `8g`                                      | Container memory limit.                                                              |
+| `SENTENCE_TRANSFORMERS_HOME`         | `/home/user/.cache/sentence-transformers` | Image-baked E5 cache path; do not mount over it or build-time predownload is hidden. |
+| `MODEL_API_ARTIFACT_ROOT`            | app default                               | Versioned artifact package root for model/config switch.                             |
+| `MODEL_API_EXPECTED_EMBEDDING_MODEL` | unset                                     | Optional startup assertion for deployed embedding model.                             |
+| `COMPOSE_PROJECT_NAME`               | `bisakerja-model-api`                     | Compose project name.                                                                |
 
 For a 4 vCPU / 12 GB VPS, keep defaults first. Increase `MODEL_API_TIMEOUT_MS` before raising memory limits. The compose file intentionally does not set Docker CPU quota because some VPS kernels/cgroup drivers reject `cpu.cfs_quota_us` writes.
 

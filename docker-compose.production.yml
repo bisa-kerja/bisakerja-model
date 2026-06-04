@@ -12,8 +12,6 @@ services:
     mem_limit: ${MODEL_API_MEM_LIMIT:-8g}
     environment:
       SENTENCE_TRANSFORMERS_HOME: ${SENTENCE_TRANSFORMERS_HOME:-/home/user/.cache/sentence-transformers}
-    volumes:
-      - sentence-transformers-cache:/home/user/.cache/sentence-transformers
     security_opt:
       - no-new-privileges:true
     healthcheck:
@@ -24,14 +22,10 @@ services:
         - "import json, urllib.request; data=json.loads(urllib.request.urlopen('http://127.0.0.1:7860/ready', timeout=5).read()); raise SystemExit(0 if data.get('ready') is True else 1)"
       interval: 30s
       timeout: 10s
-      start_period: 180s
-      retries: 3
+      start_period: 600s
+      retries: 10
     logging:
       driver: json-file
       options:
         max-size: 10m
         max-file: "3"
-
-volumes:
-  sentence-transformers-cache:
-    driver: local

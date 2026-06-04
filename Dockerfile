@@ -47,7 +47,7 @@ COPY --chown=user artifacts/phase_46_calibration_model_card_manifest_handoff_ref
 
 EXPOSE 7860
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=180s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=600s --retries=10 \
     CMD python -c "import json, urllib.request; data=json.loads(urllib.request.urlopen('http://127.0.0.1:7860/ready', timeout=5).read()); raise SystemExit(0 if data.get('ready') is True else 1)" || exit 1
 
 CMD ["uvicorn", "model_api.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "7860"]

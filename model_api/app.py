@@ -9,6 +9,7 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 import asyncio
 import json
+import logging
 from secrets import compare_digest
 from time import perf_counter
 from typing import Any
@@ -55,6 +56,9 @@ from .schemas import (
 )
 from .schemas import MODEL_CORE_CV_ANALYZER_INPUT_VERSION, ModelIdentity
 from .validators import validate_model_core_payload
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def _model_identity_payload(identity: ModelIdentity | None, *, include_artifact: bool = False) -> dict[str, object] | None:
@@ -664,12 +668,14 @@ def create_app(
     inference_service = service or InferenceService()
     runtime_embedding_backend = embedding_backend or SentenceTransformerE5Embedder(embedding_contract.embedding_model)
     validate_e5_backend(runtime_embedding_backend, runtime_config.environment, expected_model_name=embedding_contract.embedding_model)
-    warmup_state: dict[str, object] = {"completed": False, "latencyMs": None, "error": None}
+    warmup_state: dict[str, object] = {"completed": False, "inProgress": False, "latencyMs": None, "error": None}
 
     def _load_runtime_once() -> RuntimeState:
         state = inference_service.load_once(runtime_config.artifact_paths, artifact_report)
         if runtime_config.warmup_on_startup and state.ready:
             try:
+                warmup_state.update({"completed": False, "inProgress": True, "error": None})
+                LOGGER.info("Model API startup warmup started")
                 warmup_state.update(
                     _run_cv_analysis_warmup(
                         service=inference_service,
@@ -680,8 +686,12 @@ def create_app(
                         timeout_ms=runtime_config.timeout_ms,
                     )
                 )
+                LOGGER.info("Model API startup warmup completed latencyMs=%s", warmup_state.get("latencyMs"))
             except Exception as exc:  # pragma: no cover - depends on live TensorFlow/E5 runtime
                 warmup_state.update({"completed": False, "error": repr(exc)})
+                LOGGER.exception("Model API startup warmup failed")
+            finally:
+                warmup_state["inProgress"] = False
         return inference_service.state
 
     @asynccontextmanager
@@ -823,6 +833,7 @@ def create_app(
                 "required": runtime_config.warmup_required,
                 "onStartup": runtime_config.warmup_on_startup,
                 "completed": bool(warmup_state.get("completed")),
+                "inProgress": bool(warmup_state.get("inProgress")),
                 "latencyMs": warmup_state.get("latencyMs"),
                 "error": warmup_state.get("error"),
             },
@@ -874,6 +885,7 @@ def create_app(
         warmup_state.update(
             {
                 "completed": True,
+                "inProgress": False,
                 "latencyMs": observability.get("totalLatencyMs") if isinstance(observability, dict) else None,
                 "error": None,
             }
@@ -932,6 +944,7 @@ def create_app(
         warmup_state.update(
             {
                 "completed": True,
+                "inProgress": False,
                 "latencyMs": observability.get("totalLatencyMs") if isinstance(observability, dict) else None,
                 "error": None,
             }

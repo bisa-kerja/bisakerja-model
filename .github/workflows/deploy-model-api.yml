@@ -64,10 +64,10 @@ jobs:
           deploy_branch="${{ github.event_name == 'workflow_dispatch' && inputs.deploy_branch || github.ref_name }}"
 
           case "$deploy_branch" in
-            develop|main)
+            main)
               ;;
             *)
-              echo "::error::Unsupported deploy branch: $deploy_branch"
+              echo "::error::Unsupported production deploy branch: $deploy_branch"
               exit 1
               ;;
           esac
@@ -80,7 +80,7 @@ jobs:
             echo "deploy_branch=$deploy_branch"
             echo "image_name=$image_name"
             echo "image_tag=$image_tag"
-            echo "image_ref=$image_name:$image_tag"
+            echo "image_ref=$image_name:sha-$source_sha"
             echo "source_sha=$source_sha"
           } >> "$GITHUB_OUTPUT"
 
@@ -110,7 +110,7 @@ jobs:
     name: Deploy To VPS
     if: ${{ (github.event_name == 'workflow_dispatch' && inputs.deploy_enabled == 'true') || (github.event_name == 'push' && vars.MODEL_API_CD_ENABLED != 'false') }}
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     needs: build-and-push
     environment: production
 
@@ -235,10 +235,29 @@ jobs:
             ' "$RUNTIME_ENV_FILE"
           }
 
+          artifact_root="$(env_value MODEL_API_ARTIFACT_ROOT)"
+          expected_embedding="$(env_value MODEL_API_EXPECTED_EMBEDDING_MODEL)"
           warmup_required="$(env_value MODEL_API_WARMUP_REQUIRED)"
           warmup_on_startup="$(env_value MODEL_API_WARMUP_ON_STARTUP)"
+          sentence_transformers_home="$(env_value SENTENCE_TRANSFORMERS_HOME)"
+
+          if [ "$artifact_root" != "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh" ]; then
+            echo "MODEL_API_ARTIFACT_ROOT must be phase46 multilingual package for production deploy; actual=${artifact_root:-<unset>}" >&2
+            exit 1
+          fi
+
+          if [ "$expected_embedding" != "intfloat/multilingual-e5-small" ]; then
+            echo "MODEL_API_EXPECTED_EMBEDDING_MODEL must be intfloat/multilingual-e5-small for production deploy; actual=${expected_embedding:-<unset>}" >&2
+            exit 1
+          fi
+
           if [ "$warmup_required" = "true" ] && [ "$warmup_on_startup" != "true" ]; then
             echo "MODEL_API_WARMUP_REQUIRED=true requires MODEL_API_WARMUP_ON_STARTUP=true for deploy readiness gate" >&2
+            exit 1
+          fi
+
+          if [ -n "$sentence_transformers_home" ] && [ "$sentence_transformers_home" != "/home/user/.cache/sentence-transformers" ]; then
+            echo "SENTENCE_TRANSFORMERS_HOME must stay on image-baked cache path; actual=$sentence_transformers_home" >&2
             exit 1
           fi
 
@@ -289,13 +308,13 @@ jobs:
           curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/health" || true
 
           ready_ok=0
-          for attempt in $(seq 1 120); do
+          for attempt in $(seq 1 180); do
             if python -c 'import json, sys, urllib.request; port=sys.argv[1]; data=json.loads(urllib.request.urlopen(f"http://127.0.0.1:{port}/ready", timeout=5).read()); raise SystemExit(0 if data.get("ready") is True else 1)' "$MODEL_API_PORT" >/dev/null 2>&1; then
               ready_ok=1
               break
             fi
             if [ "$attempt" = "1" ] || [ $((attempt % 12)) -eq 0 ]; then
-              echo "Waiting for Model API /ready... attempt=${attempt}/120"
+              echo "Waiting for Model API /ready... attempt=${attempt}/180"
               curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/ready" || true
             fi
             sleep 5
