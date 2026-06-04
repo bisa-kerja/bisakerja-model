@@ -248,35 +248,45 @@ jobs:
           COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
             docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" up -d --remove-orphans model-api
 
-          for attempt in $(seq 1 40); do
-            if curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/live" >/dev/null; then
+          for attempt in $(seq 1 60); do
+            if curl -fsS --connect-timeout 2 --max-time 5 "http://127.0.0.1:${MODEL_API_PORT}/live" >/dev/null 2>&1; then
               break
+            fi
+            if [ "$attempt" = "1" ] || [ $((attempt % 10)) -eq 0 ]; then
+              echo "Waiting for Model API /live... attempt=${attempt}/60"
+              docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api || true
             fi
             sleep 5
           done
 
-          if ! curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/live" >/dev/null; then
+          if ! curl -fsS --connect-timeout 2 --max-time 5 "http://127.0.0.1:${MODEL_API_PORT}/live" >/dev/null 2>&1; then
             docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
             docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" logs --tail=150 model-api
             exit 1
           fi
 
           docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
-          curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/health" || true
+          curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/health" || true
 
           ready_ok=0
-          for attempt in $(seq 1 60); do
-            if curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/ready" | grep -q '"ready":true'; then
+          for attempt in $(seq 1 120); do
+            if python -c 'import json, sys, urllib.request; port=sys.argv[1]; data=json.loads(urllib.request.urlopen(f"http://127.0.0.1:{port}/ready", timeout=5).read()); raise SystemExit(0 if data.get("ready") is True else 1)' "$MODEL_API_PORT" >/dev/null 2>&1; then
               ready_ok=1
               break
+            fi
+            if [ "$attempt" = "1" ] || [ $((attempt % 12)) -eq 0 ]; then
+              echo "Waiting for Model API /ready... attempt=${attempt}/120"
+              curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/health" || true
             fi
             sleep 5
           done
 
           if [ "$ready_ok" -ne 1 ]; then
-            echo "Model API live but not ready yet after readiness wait; leaving service running for background load." >&2
-            curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/ready" || true
-            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" logs --tail=80 model-api
+            echo "Model API live but not ready after readiness wait." >&2
+            curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/ready" || true
+            curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/health" || true
+            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" logs --tail=150 model-api
+            exit 1
           fi
 
           docker image prune -af --filter "until=24h"

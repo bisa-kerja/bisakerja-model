@@ -22,6 +22,7 @@ from model_api.contracts import load_backend_openapi_contract, load_prisma_cv_an
 from model_api.custom_objects import (
     PHASE25_CUSTOM_OBJECT_NAMES,
     PHASE25_REGISTERED_CUSTOM_OBJECT_NAMES,
+    PHASE45_REGISTERED_CUSTOM_OBJECT_NAMES,
     CustomObjectRegistrationError,
     get_phase25_custom_objects,
     load_phase25_keras_model,
@@ -658,6 +659,15 @@ class Phase26LayoutTest(unittest.TestCase):
                 "BisakerjaPhase25>HighRecallCalibrationLayer",
             ),
         )
+        self.assertEqual(
+            PHASE45_REGISTERED_CUSTOM_OBJECT_NAMES,
+            (
+                "BisakerjaPhase45>CosineInteractionLayer",
+                "BisakerjaPhase45>WeightedHuberLoss",
+                "BisakerjaPhase45>ProductionGateCallback",
+                "BisakerjaPhase45>HighRecallCalibrationLayer",
+            ),
+        )
 
     def test_phase25_keras_file_references_registered_custom_objects(self) -> None:
         model_path = Path("artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras")
@@ -681,6 +691,30 @@ class Phase26LayoutTest(unittest.TestCase):
         self.assertIn("BisakerjaPhase25>CosineInteractionLayer", seen)
         self.assertIn("BisakerjaPhase25>HighRecallCalibrationLayer", seen)
 
+    def test_phase46_keras_file_references_phase45_registered_custom_objects(self) -> None:
+        model_path = Path(
+            "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras"
+        )
+        with zipfile.ZipFile(model_path) as archive:
+            config = json.loads(archive.read("config.json"))
+
+        seen: set[str] = set()
+
+        def walk(value: object) -> None:
+            if isinstance(value, dict):
+                registered_name = value.get("registered_name")
+                if isinstance(registered_name, str) and registered_name.startswith("BisakerjaPhase45>"):
+                    seen.add(registered_name)
+                for child in value.values():
+                    walk(child)
+            elif isinstance(value, list):
+                for child in value:
+                    walk(child)
+
+        walk(config)
+        self.assertIn("BisakerjaPhase45>CosineInteractionLayer", seen)
+        self.assertIn("BisakerjaPhase45>CosineInteractionLayer", PHASE45_REGISTERED_CUSTOM_OBJECT_NAMES)
+
     def test_phase25_custom_object_registration_is_lazy_and_stable(self) -> None:
         try:
             names = register_phase25_custom_objects()
@@ -690,7 +724,11 @@ class Phase26LayoutTest(unittest.TestCase):
 
         self.assertEqual(names, PHASE25_CUSTOM_OBJECT_NAMES)
         custom_objects = get_phase25_custom_objects()
-        self.assertEqual(tuple(custom_objects), PHASE25_CUSTOM_OBJECT_NAMES)
+        for name in PHASE25_CUSTOM_OBJECT_NAMES:
+            self.assertIn(name, custom_objects)
+        for name in (*PHASE25_REGISTERED_CUSTOM_OBJECT_NAMES, *PHASE45_REGISTERED_CUSTOM_OBJECT_NAMES):
+            self.assertIn(name, custom_objects)
+        self.assertIs(custom_objects["BisakerjaPhase45>CosineInteractionLayer"], custom_objects["CosineInteractionLayer"])
         layer_config = custom_objects["CosineInteractionLayer"]().get_config()
         self.assertEqual(layer_config["cosine_index"], 0)
         self.assertEqual(layer_config["interaction_indices"], [1, 2, 3, 4])

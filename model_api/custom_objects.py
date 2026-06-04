@@ -13,6 +13,7 @@ from typing import Any
 from .errors import ModelApiError
 
 PHASE25_KERAS_PACKAGE = "BisakerjaPhase25"
+PHASE45_KERAS_PACKAGE = "BisakerjaPhase45"
 PHASE25_CUSTOM_OBJECT_NAMES: tuple[str, ...] = (
     "CosineInteractionLayer",
     "WeightedHuberLoss",
@@ -21,6 +22,9 @@ PHASE25_CUSTOM_OBJECT_NAMES: tuple[str, ...] = (
 )
 PHASE25_REGISTERED_CUSTOM_OBJECT_NAMES: tuple[str, ...] = tuple(
     f"{PHASE25_KERAS_PACKAGE}>{name}" for name in PHASE25_CUSTOM_OBJECT_NAMES
+)
+PHASE45_REGISTERED_CUSTOM_OBJECT_NAMES: tuple[str, ...] = tuple(
+    f"{PHASE45_KERAS_PACKAGE}>{name}" for name in PHASE25_CUSTOM_OBJECT_NAMES
 )
 
 HIGH_RECALL_CALIBRATION_THRESHOLD = 0.556
@@ -45,7 +49,7 @@ def _import_keras_runtime() -> tuple[Any, Any, Any, Any]:
         import tensorflow as tf  # type: ignore[import-not-found]
     except ModuleNotFoundError as exc:  # pragma: no cover - depends on runtime deps
         raise CustomObjectRegistrationError(
-            "TensorFlow/Keras dependency missing; install serving requirements before loading Phase 25 model"
+            "TensorFlow/Keras dependency missing; install serving requirements before loading supported Keras model"
         ) from exc
 
     try:
@@ -116,6 +120,8 @@ def _build_custom_objects() -> dict[str, type[Any]]:
             )
             return config
 
+    register(package=PHASE45_KERAS_PACKAGE)(CosineInteractionLayer)
+
     @register(package=PHASE25_KERAS_PACKAGE)
     class WeightedHuberLoss(keras.losses.Loss):  # type: ignore[misc, valid-type]
         """Huber loss with extra weight for high-fit and low-fit examples."""
@@ -162,6 +168,8 @@ def _build_custom_objects() -> dict[str, type[Any]]:
             )
             return config
 
+    register(package=PHASE45_KERAS_PACKAGE)(WeightedHuberLoss)
+
     @register(package=PHASE25_KERAS_PACKAGE)
     class ProductionGateCallback(keras.callbacks.Callback):  # type: ignore[misc, valid-type]
         """Record whether validation metrics pass Phase 25 production gates."""
@@ -203,6 +211,8 @@ def _build_custom_objects() -> dict[str, type[Any]]:
                 "monitor_r2": self.monitor_r2,
             }
 
+    register(package=PHASE45_KERAS_PACKAGE)(ProductionGateCallback)
+
     @register(package=PHASE25_KERAS_PACKAGE)
     class HighRecallCalibrationLayer(layers.Layer):  # type: ignore[misc, valid-type]
         """Lift high-recall predictions above configured floor, then clamp 0..1."""
@@ -227,12 +237,17 @@ def _build_custom_objects() -> dict[str, type[Any]]:
             config.update({"threshold": self.threshold, "high_floor": self.high_floor})
             return config
 
+    register(package=PHASE45_KERAS_PACKAGE)(HighRecallCalibrationLayer)
+
     custom_objects: dict[str, type[Any]] = {
         "CosineInteractionLayer": CosineInteractionLayer,
         "WeightedHuberLoss": WeightedHuberLoss,
         "ProductionGateCallback": ProductionGateCallback,
         "HighRecallCalibrationLayer": HighRecallCalibrationLayer,
     }
+    for package in (PHASE25_KERAS_PACKAGE, PHASE45_KERAS_PACKAGE):
+        for name, custom_object in tuple(custom_objects.items()):
+            custom_objects[f"{package}>{name}"] = custom_object
     globals().update(custom_objects)
     return custom_objects
 
@@ -260,11 +275,11 @@ def register_phase25_custom_objects() -> tuple[str, ...]:
 
 
 def load_phase25_keras_model(model_path: str | Path) -> Any:
-    """Register custom objects, then load Phase 25 Keras model with compile=False."""
+    """Register custom objects, then load supported Phase 25/45/46 Keras model with compile=False."""
 
-    register_phase25_custom_objects()
+    custom_objects = get_phase25_custom_objects()
     _, keras, _, _ = _import_keras_runtime()
-    return keras.models.load_model(str(Path(model_path)), compile=False)
+    return keras.models.load_model(str(Path(model_path)), compile=False, custom_objects=custom_objects)
 
 
 def __getattr__(name: str) -> Any:
@@ -279,7 +294,9 @@ __all__ = [
     "CustomObjectRegistrationError",
     "PHASE25_CUSTOM_OBJECT_NAMES",
     "PHASE25_REGISTERED_CUSTOM_OBJECT_NAMES",
+    "PHASE45_REGISTERED_CUSTOM_OBJECT_NAMES",
     "PHASE25_KERAS_PACKAGE",
+    "PHASE45_KERAS_PACKAGE",
     "register_phase25_custom_objects",
     "get_phase25_custom_objects",
     "load_phase25_keras_model",
