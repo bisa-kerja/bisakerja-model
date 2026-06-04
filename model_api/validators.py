@@ -9,6 +9,7 @@ from .errors import ContractValidationError
 from .schemas import (
     ALLOWED_LANGUAGES,
     ALLOWED_MATCH_LEVELS,
+    MAX_RECOMMENDATIONS,
     MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
     MODEL_CORE_CV_ANALYSIS_SCHEMA_VERSION,
 )
@@ -48,7 +49,7 @@ FORBIDDEN_MODEL_CORE_FIELDS: frozenset[str] = frozenset(
     }
 )
 
-DEFAULT_MAX_RECOMMENDATIONS = 5
+DEFAULT_MAX_RECOMMENDATIONS = MAX_RECOMMENDATIONS
 
 
 def ensure_score_0_100(value: Any, path: str) -> list[str]:

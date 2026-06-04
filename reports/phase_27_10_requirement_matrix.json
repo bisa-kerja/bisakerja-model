@@ -35,9 +35,7 @@
       "missing_evidence": [],
       "requirement_id": "deliverables",
       "status": "failed-gate",
-      "untracked_evidence": [
-        "README.md"
-      ]
+      "untracked_evidence": []
     }
   ],
   "coverage": {
@@ -72,7 +70,7 @@
     "satisfied_count": 7
   },
   "final_decision": "blocked",
-  "generated_at": "2026-06-03T13:16:43.145683Z",
+  "generated_at": "2026-06-04T15:25:07.533741Z",
   "matrix": [
     {
       "checks": {
@@ -103,8 +101,8 @@
         {
           "exists": true,
           "path": "reports/phase_27_7_clean_kernel_production_export.json",
-          "sha256": "b4a092b58692befb8a8fbae6116bac98f7be116bcfb74379f1ac9b0b7bd39a7d",
-          "size_bytes": 8276,
+          "sha256": "f718c27f84e9c2020bb96e9174cd6128ce4c1ef4ef4bf7046c22a70a2eb3ee2f",
+          "size_bytes": 8784,
           "tracked": true
         }
       ],
@@ -131,8 +129,8 @@
         {
           "exists": true,
           "path": "model_api/custom_objects.py",
-          "sha256": "08b8b3ef00b7867027163291312cc02b4a23af6be5c61434c112717a1d875862",
-          "size_bytes": 11266,
+          "sha256": "166c6d8c95d3df046cd8489d026a017479422e39f342edd625580c0e72244dd7",
+          "size_bytes": 12067,
           "tracked": true
         },
         {
@@ -145,8 +143,8 @@
         {
           "exists": true,
           "path": "reports/phase_27_7_clean_kernel_production_export.json",
-          "sha256": "b4a092b58692befb8a8fbae6116bac98f7be116bcfb74379f1ac9b0b7bd39a7d",
-          "size_bytes": 8276,
+          "sha256": "f718c27f84e9c2020bb96e9174cd6128ce4c1ef4ef4bf7046c22a70a2eb3ee2f",
+          "size_bytes": 8784,
           "tracked": true
         }
       ],
@@ -182,8 +180,8 @@
         {
           "exists": true,
           "path": "reports/phase_27_7_clean_kernel_production_export.json",
-          "sha256": "b4a092b58692befb8a8fbae6116bac98f7be116bcfb74379f1ac9b0b7bd39a7d",
-          "size_bytes": 8276,
+          "sha256": "f718c27f84e9c2020bb96e9174cd6128ce4c1ef4ef4bf7046c22a70a2eb3ee2f",
+          "size_bytes": 8784,
           "tracked": true
         }
       ],
@@ -253,15 +251,15 @@
         {
           "exists": true,
           "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-          "sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
+          "sha256": "dc899f0588d2716d1427474f9faf4d08dcade303bd33bc4294b761a7fe0cd982",
           "size_bytes": 13283,
           "tracked": true
         },
         {
           "exists": true,
           "path": "reports/phase_27_7_clean_kernel_production_export.json",
-          "sha256": "b4a092b58692befb8a8fbae6116bac98f7be116bcfb74379f1ac9b0b7bd39a7d",
-          "size_bytes": 8276,
+          "sha256": "f718c27f84e9c2020bb96e9174cd6128ce4c1ef4ef4bf7046c22a70a2eb3ee2f",
+          "size_bytes": 8784,
           "tracked": true
         }
       ],
@@ -297,14 +295,14 @@
         {
           "exists": true,
           "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-          "sha256": "f4293487c2eb7804eed19ebc71f8136ea7f52c33b8836955283f87dfb0566449",
+          "sha256": "f5d541188345225e41e44d6c0d1f8a5536ab5baaf5a16b870cfde49645650db6",
           "size_bytes": 24278,
           "tracked": true
         },
         {
           "exists": true,
           "path": "reports/phase_27_8_model_card_manifest_refresh.json",
-          "sha256": "46ca0d69430c19de507e067f3587b4168f5733c0a33baefe833d41689c57eb2a",
+          "sha256": "7a86f70ff40010602a28dd0a61301cdbb796f71da3b2f8976fdad5844999671f",
           "size_bytes": 6413,
           "tracked": true
         }
@@ -326,8 +324,8 @@
         {
           "exists": true,
           "path": "model_api/inference.py",
-          "sha256": "efe341ae0cfad4bde263f036395c542455c7a29ff48b68040d0749c495d4be91",
-          "size_bytes": 13388,
+          "sha256": "ab5ac9884140fbc3d71384e209bde7a2e0897e5f7805ffdaa6142a7648fa7476",
+          "size_bytes": 14269,
           "tracked": true
         },
         {
@@ -347,8 +345,8 @@
         {
           "exists": true,
           "path": "reports/phase_27_9_model_api_production_smoke.json",
-          "sha256": "af3bc3b6dac850be459b17468e9090d22b698d6aa8e98a0ede11125f7af2e099",
-          "size_bytes": 3458,
+          "sha256": "773c774ed133e64ae792d831819859c4d853c510d5f4b5fd741f2c53ca1cab43",
+          "size_bytes": 3499,
           "tracked": true
         }
       ],
@@ -373,29 +371,29 @@
         {
           "exists": true,
           "path": "model_api/app.py",
-          "sha256": "e37205f98005fa6b678bf02a311259b1e89b94798136c8c1b9c860714c89f705",
-          "size_bytes": 28937,
+          "sha256": "c04ed18bbb9f66c1e2972c1fa3cb8d0b28bee97a2b7e8d39f97be18721dd2bac",
+          "size_bytes": 48231,
           "tracked": true
         },
         {
           "exists": true,
           "path": "model_api/README.md",
-          "sha256": "0ab53a4c0944f522cf58042cb30e54ca6de01e1a19bb2516bd1ba95b7aa39200",
-          "size_bytes": 11197,
+          "sha256": "9bb090f2f9e4b350752026856ff7cd8472d2448726c233ef8491c05ce90a3acf",
+          "size_bytes": 14366,
           "tracked": true
         },
         {
           "exists": true,
           "path": "tests/model_api/test_phase_26_layout.py",
-          "sha256": "cda5f7e7da517e15461a5f203de2ee96aa0f8b32aac685e32b72d8d3258da702",
-          "size_bytes": 44232,
+          "sha256": "7fb3d5c612fb340657d80215746847a997e836557213cfb2d0918bc1a08283e5",
+          "size_bytes": 48347,
           "tracked": true
         },
         {
           "exists": true,
           "path": "reports/phase_27_9_model_api_production_smoke.json",
-          "sha256": "af3bc3b6dac850be459b17468e9090d22b698d6aa8e98a0ede11125f7af2e099",
-          "size_bytes": 3458,
+          "sha256": "773c774ed133e64ae792d831819859c4d853c510d5f4b5fd741f2c53ca1cab43",
+          "size_bytes": 3499,
           "tracked": true
         }
       ],
@@ -418,36 +416,36 @@
         {
           "exists": true,
           "path": "model_api/app.py",
-          "sha256": "e37205f98005fa6b678bf02a311259b1e89b94798136c8c1b9c860714c89f705",
-          "size_bytes": 28937,
+          "sha256": "c04ed18bbb9f66c1e2972c1fa3cb8d0b28bee97a2b7e8d39f97be18721dd2bac",
+          "size_bytes": 48231,
           "tracked": true
         },
         {
           "exists": true,
           "path": "model_api/schemas.py",
-          "sha256": "32a39dfdae91c3f68a682e477e6541a62d56af0033a7fc0f1587e0fa5a3e8f6d",
-          "size_bytes": 30270,
+          "sha256": "4023e33d44e426f86cb6f058c02a7b78ad0979ba7feb7942d6f65bf24f7df7c4",
+          "size_bytes": 33832,
           "tracked": true
         },
         {
           "exists": true,
           "path": "model_api/inference.py",
-          "sha256": "efe341ae0cfad4bde263f036395c542455c7a29ff48b68040d0749c495d4be91",
-          "size_bytes": 13388,
+          "sha256": "ab5ac9884140fbc3d71384e209bde7a2e0897e5f7805ffdaa6142a7648fa7476",
+          "size_bytes": 14269,
           "tracked": true
         },
         {
           "exists": true,
           "path": "tests/model_api/test_phase_26_layout.py",
-          "sha256": "cda5f7e7da517e15461a5f203de2ee96aa0f8b32aac685e32b72d8d3258da702",
-          "size_bytes": 44232,
+          "sha256": "7fb3d5c612fb340657d80215746847a997e836557213cfb2d0918bc1a08283e5",
+          "size_bytes": 48347,
           "tracked": true
         },
         {
           "exists": true,
           "path": "reports/phase_27_9_model_api_production_smoke.json",
-          "sha256": "af3bc3b6dac850be459b17468e9090d22b698d6aa8e98a0ede11125f7af2e099",
-          "size_bytes": 3458,
+          "sha256": "773c774ed133e64ae792d831819859c4d853c510d5f4b5fd741f2c53ca1cab43",
+          "size_bytes": 3499,
           "tracked": true
         }
       ],
@@ -523,8 +521,8 @@
         {
           "exists": true,
           "path": "model_api/custom_objects.py",
-          "sha256": "08b8b3ef00b7867027163291312cc02b4a23af6be5c61434c112717a1d875862",
-          "size_bytes": 11266,
+          "sha256": "166c6d8c95d3df046cd8489d026a017479422e39f342edd625580c0e72244dd7",
+          "size_bytes": 12067,
           "tracked": true
         },
         {
@@ -544,15 +542,15 @@
         {
           "exists": true,
           "path": "model_api/inference.py",
-          "sha256": "efe341ae0cfad4bde263f036395c542455c7a29ff48b68040d0749c495d4be91",
-          "size_bytes": 13388,
+          "sha256": "ab5ac9884140fbc3d71384e209bde7a2e0897e5f7805ffdaa6142a7648fa7476",
+          "size_bytes": 14269,
           "tracked": true
         },
         {
           "exists": true,
           "path": "model_api/app.py",
-          "sha256": "e37205f98005fa6b678bf02a311259b1e89b94798136c8c1b9c860714c89f705",
-          "size_bytes": 28937,
+          "sha256": "c04ed18bbb9f66c1e2972c1fa3cb8d0b28bee97a2b7e8d39f97be18721dd2bac",
+          "size_bytes": 48231,
           "tracked": true
         },
         {
@@ -579,30 +577,30 @@
         {
           "exists": true,
           "path": "requirements.txt",
-          "sha256": "84f801a5fe96a224eaaf328b0f2d4a522a7bd0cdac915cc3f39040ba192153bd",
-          "size_bytes": 576,
+          "sha256": "7e5823ab4f30abb0007ab461ad8abc6e186c86ae009c28f2183244796926440f",
+          "size_bytes": 928,
           "tracked": true
         },
         {
           "exists": true,
           "path": "training/README.md",
-          "sha256": "974693a7ea087c9265e408bf35929c56a60bb2064547b55bfdb4deb59be36caa",
-          "size_bytes": 5890,
+          "sha256": "a0a0634a0c80d452a86560eaf43aa6bcf359280562f40563bed19c7badd906f7",
+          "size_bytes": 6083,
           "tracked": true
         },
         {
           "exists": true,
           "path": "model_api/README.md",
-          "sha256": "0ab53a4c0944f522cf58042cb30e54ca6de01e1a19bb2516bd1ba95b7aa39200",
-          "size_bytes": 11197,
+          "sha256": "9bb090f2f9e4b350752026856ff7cd8472d2448726c233ef8491c05ce90a3acf",
+          "size_bytes": 14366,
           "tracked": true
         },
         {
           "exists": true,
           "path": "README.md",
-          "sha256": "f85b8c73796ca0887c0b33eb5c5f8c917b58c52c01df88e5603b67323a96beb2",
-          "size_bytes": 6946,
-          "tracked": false
+          "sha256": "58e7b85ae986dce661cf8b8ed648583945f67a50b24bb96f061582cc7aee98fa",
+          "size_bytes": 7965,
+          "tracked": true
         }
       ],
       "failed_checks": [
@@ -615,9 +613,7 @@
       "requirement": "Repository contains training source, custom component, GradientTape loop, model export, inference code, REST API, GenAI boundary, TensorBoard logs, docs, requirements, README.",
       "requirement_id": "deliverables",
       "status": "failed-gate",
-      "untracked_evidence": [
-        "README.md"
-      ]
+      "untracked_evidence": []
     }
   ],
   "phase_id": "phase_27_10_requirement_matrix",

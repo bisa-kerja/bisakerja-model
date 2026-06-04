@@ -146,7 +146,7 @@ class RuntimeConfig:
 
     service_name: str = "bisakerja-model-api"
     environment: str = "local"
-    max_recommendations: int = 5
+    max_recommendations: int = 10
     timeout_ms: int = 10_000
     service_token: str | None = None
     allow_unauthenticated_local: bool = True
@@ -175,7 +175,7 @@ class RuntimeConfig:
         return cls(
             service_name=data.get("MODEL_API_SERVICE_NAME", "bisakerja-model-api"),
             environment=environment,
-            max_recommendations=int(data.get("MODEL_API_MAX_RECOMMENDATIONS", "5")),
+            max_recommendations=int(data.get("MODEL_API_MAX_RECOMMENDATIONS", "10")),
             timeout_ms=int(data.get("MODEL_API_TIMEOUT_MS", "10000")),
             service_token=data.get("MODEL_API_SERVICE_TOKEN") or None,
             allow_unauthenticated_local=data.get("MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL", "true").lower() == "true",

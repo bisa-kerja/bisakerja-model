@@ -572,7 +572,7 @@
     "profile_prefix": "query:",
     "sentence_transformers_version": "5.5.1"
   },
-  "generated_at": "2026-06-04T08:01:48Z",
+  "generated_at": "2026-06-04T15:25:10Z",
   "jobfit_metrics": {
     "test": {
       "calibration": {
@@ -872,7 +872,7 @@
     "model_card": {
       "exists": true,
       "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
+      "sha256": "dc899f0588d2716d1427474f9faf4d08dcade303bd33bc4294b761a7fe0cd982",
       "size_bytes": 13283
     },
     "phase25_final_gate": {

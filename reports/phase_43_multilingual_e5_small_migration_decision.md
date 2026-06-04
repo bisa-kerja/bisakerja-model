@@ -10,7 +10,7 @@ Phase 43 freezes E5-base behavior before any multilingual-E5-small implementatio
 - Phase 25 status: `staging-ready`
 - Validation MAE: `0.84428` points
 - Test MAE: `0.86032` points
-- First CV analysis latency: `11122.109` ms
+- First CV analysis latency: `None` ms
 - Warm internal latency: `733.644` ms
 - E5-base cache size: `877935460` bytes
 

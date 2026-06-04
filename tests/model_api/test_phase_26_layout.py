@@ -142,7 +142,7 @@ class Phase26LayoutTest(unittest.TestCase):
                     "targetRoles": ["Backend Developer"],
                 },
                 "rankingPolicy": {
-                    "maxRecommendations": 5,
+                    "maxRecommendations": 10,
                     "requireCandidateJobIds": True,
                     "deduplicateByJobId": True,
                     "backendOwnsHydration": True,
@@ -596,6 +596,11 @@ class Phase26LayoutTest(unittest.TestCase):
                     {"jobId": "job-4", "matchScore": 49},
                     {"jobId": "job-5", "matchScore": 48},
                     {"jobId": "job-6", "matchScore": 47},
+                    {"jobId": "job-7", "matchScore": 46},
+                    {"jobId": "job-8", "matchScore": 45},
+                    {"jobId": "job-9", "matchScore": 44},
+                    {"jobId": "job-10", "matchScore": 43},
+                    {"jobId": "job-11", "matchScore": 42},
                 ],
             },
         }
@@ -608,7 +613,7 @@ class Phase26LayoutTest(unittest.TestCase):
         self.assertIn("$.atsFriendliness.score must be integer 0-100; actual=101", errors)
         self.assertIn("$.overallImpression.score must be integer 0-100; actual=-1", errors)
         self.assertIn("$.candidateReranking.schemaVersion must be 'model-core-candidate-reranking-v1'", errors)
-        self.assertIn("$.candidateReranking.recommendations max items 5; actual=6", errors)
+        self.assertIn("$.candidateReranking.recommendations max items 10; actual=11", errors)
         self.assertIn("$.candidateReranking.recommendations[0].title is wrapper/backend-owned", errors)
         self.assertIn("$.candidateReranking.recommendations[1].jobId duplicate: 'job-1'", errors)
         self.assertIn("$.candidateReranking.recommendations[2].jobId not in candidate set: 'job-3'", errors)
@@ -639,7 +644,7 @@ class Phase26LayoutTest(unittest.TestCase):
     def test_runtime_layout_names_are_importable_without_tensorflow_or_fastapi(self) -> None:
         config = RuntimeConfig.from_env({"MODEL_API_ENV": "test"})
         self.assertEqual(config.environment, "test")
-        self.assertEqual(config.max_recommendations, 5)
+        self.assertEqual(config.max_recommendations, 10)
         self.assertEqual(config.openrouter.base_url, "https://openrouter.ai/api/v1")
         self.assertEqual(
             PHASE25_CUSTOM_OBJECT_NAMES,

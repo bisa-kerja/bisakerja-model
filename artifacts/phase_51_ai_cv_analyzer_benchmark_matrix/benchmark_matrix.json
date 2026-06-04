@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "phase-51-ai-cv-analyzer-benchmark-matrix-v1",
+  "phaseScope": "steps-51.1-51.7",
+  "inputMode": "UPLOAD",
+  "languagePolicy": {
+    "outputLanguage": "en",
+    "properNounException": true,
+    "fields": [
+      "overallImpression.evidence",
+      "jobFitAlignment.matchedSignals",
+      "jobFitAlignment.missingSignals",
+      "jobFitAlignment.matchedSkills",
+      "jobFitAlignment.missingSkills",
+      "jobFitAlignment.evidence",
+      "atsFriendliness.detectedIssues",
+      "atsFriendliness.evidence",
+      "candidateReranking.recommendations[].rankingSignals",
+      "candidateReranking.recommendations[].matchedSkills",
+      "candidateReranking.recommendations[].missingSkills"
+    ]
+  },
+  "targetRoles": [
+    {
+      "role": "Software Engineer",
+      "candidateJobId": "phase51-software-engineer",
+      "scoringInput": {
+        "titleText": "Software Engineer",
+        "requirementSummary": "Build web applications, APIs, and reliable backend services.",
+        "requiredSkills": ["javascript", "react", "node.js", "sql", "docker"],
+        "requirements": ["Develop maintainable software", "Debug production issues", "Collaborate with product and design"],
+        "roleFamily": "software_engineering",
+        "experienceBand": "junior"
+      }
+    },
+    {
+      "role": "Product Manager",
+      "candidateJobId": "phase51-product-manager",
+      "scoringInput": {
+        "titleText": "Product Manager",
+        "requirementSummary": "Define product requirements, prioritize roadmap work, and use data to improve user outcomes.",
+        "requiredSkills": ["product management", "project management", "data analysis", "communication skills", "agile"],
+        "requirements": ["Write product requirements", "Coordinate cross-functional delivery", "Track product metrics"],
+        "roleFamily": "product",
+        "experienceBand": "junior"
+      }
+    },
+    {
+      "role": "Data Analyst",
+      "candidateJobId": "phase51-data-analyst",
+      "scoringInput": {
+        "titleText": "Data Analyst",
+        "requirementSummary": "Analyze business data, build dashboards, and communicate insights.",
+        "requiredSkills": ["sql", "data analysis", "power bi", "excel", "dashboard reporting"],
+        "requirements": ["Clean datasets", "Build KPI dashboards", "Explain trends to stakeholders"],
+        "roleFamily": "data",
+        "experienceBand": "junior"
+      }
+    }
+  ],
+  "benchmarkFiles": [
+    {
+      "caseId": "salman-abdurrahman-ats",
+      "path": "cv_examples/CV Salman Abdurrahman ATS.pdf",
+      "sha256": "09f4c4959777d7da32858f702bf2efbb98668449670eb346065ca20c8c89d841",
+      "sizeBytes": 135597,
+      "parserSnapshot": {
+        "expectedPageCount": 2,
+        "expectedParseQuality": "partial",
+        "minTextLength": 4500,
+        "wordCountRange": [150, 190],
+        "expectedSections": ["summary", "experience", "education", "skills"],
+        "expectedRoleTitlesInclude": ["Full Stack Developer Intern"],
+        "expectedCompaniesInclude": ["AMIKOM Computer Club"],
+        "expectedIssuesInclude": [
+          "quantified impact signal not detected",
+          "image content present"
+        ],
+        "atsScoreRange": [60, 75]
+      },
+      "expectedSkillsInclude": ["css", "docker", "javascript", "mysql", "node.js", "react", "sql", "typescript"]
+    },
+    {
+      "caseId": "agil-2026",
+      "path": "cv_examples/Agil's CV New 2026.pdf",
+      "sha256": "cf64d7f546095085fed62cad840cb01cde23edba302513b897dddeea52bf3d40",
+      "sizeBytes": 2530744,
+      "parserSnapshot": {
+        "expectedPageCount": 1,
+        "expectedParseQuality": "partial",
+        "minTextLength": 250,
+        "wordCountRange": [50, 70],
+        "expectedSections": ["education"],
+        "expectedIssuesInclude": [
+          "contact signal not detected",
+          "image content present"
+        ],
+        "atsScoreRange": [60, 75]
+      },
+      "expectedSkillsInclude": ["c++"]
+    },
+    {
+      "caseId": "dzikri-albantani",
+      "path": "cv_examples/CV_DZIKRIALBANTANI (4).pdf",
+      "sha256": "0c4342c2749bd77b127c81014b8f78712595c81951d465bb0abd984e6445d54c",
+      "sizeBytes": 150024,
+      "parserSnapshot": {
+        "expectedPageCount": 2,
+        "expectedParseQuality": "partial",
+        "minTextLength": 3500,
+        "wordCountRange": [110, 150],
+        "expectedSections": [],
+        "expectedIssuesInclude": [
+          "standard CV sections not detected",
+          "date or timeline signal not detected",
+          "quantified impact signal not detected",
+          "image content present"
+        ],
+        "atsScoreRange": [35, 50]
+      },
+      "expectedSkillsInclude": []
+    }
+  ],
+  "matrixExpectations": {
+    "requiredCaseCount": 9,
+    "jobFitScoreRanges": {
+      "salman-abdurrahman-ats:Software Engineer": [45, 95],
+      "salman-abdurrahman-ats:Product Manager": [20, 80],
+      "salman-abdurrahman-ats:Data Analyst": [15, 75],
+      "agil-2026:Software Engineer": [0, 70],
+      "agil-2026:Product Manager": [0, 70],
+      "agil-2026:Data Analyst": [0, 70],
+      "dzikri-albantani:Software Engineer": [0, 70],
+      "dzikri-albantani:Product Manager": [0, 70],
+      "dzikri-albantani:Data Analyst": [0, 70]
+    }
+  },
+  "safety": {
+    "noRawCvTextInOutputs": true,
+    "noBackendOwnedFields": ["topActionables", "sectionReviews", "reason", "nextStep"],
+    "benchmarkRolesAreProbesOnly": true,
+    "implementationMustUseRoleFamilyAndRequirementEvidence": true
+  }
+}

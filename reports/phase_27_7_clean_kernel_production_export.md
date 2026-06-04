@@ -1,9 +1,9 @@
 # Phase 27.7 Clean-Kernel Production Export Gate
 
-Generated at: `2026-06-03T11:19:45.908138+00:00`
+Generated at: `2026-06-04T15:25:07.045034+00:00`
 Final decision: **blocked**
-Git commit: `3194f629441d5e5b45658219651c7de7e21f72a5`
-Dirty files: `39`
+Git commit: `3be5465cb988c7b7aa89458ce7206a85d4bda98f`
+Dirty files: `33`
 
 ## Gate checks
 

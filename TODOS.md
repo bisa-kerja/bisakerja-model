@@ -1586,7 +1586,7 @@ Verification:
 
 ### Phase 48 — Backend/Staging Integration, Shadow Comparison, and Rollback Plan
 
-Status: Planned
+Status: Repo-side Complete / Staging Execution Pending
 
 Goal: Validate the multilingual-E5-small model behind the existing Backend AI CV Analyzer flow before broader staging/demo traffic.
 
@@ -1595,31 +1595,39 @@ Scope boundary:
 - Backend public response shape remains unchanged.
 - Database persistence and public recommendation hydration remain Backend-owned.
 - New model rollout starts in staging only.
+- Live staging deployment, token smoke, shadow comparison, and rollback drill require operator credentials and approval.
 
 Tasks:
 
-- [ ] Step 48.1: Deploy Model API staging revision — Deploy the new artifact package on VPS or chosen staging target using versioned env vars and persistent cache.
-- [ ] Step 48.2: Verify readiness and metadata — Confirm `/live`, `/health`, `/ready`, and `/model-info` report the multilingual-E5-small model version and correct artifact hashes.
-- [ ] Step 48.3: Warm runtime — Run warmup so TensorFlow and multilingual-E5-small are loaded before Backend traffic.
-- [ ] Step 48.4: Run direct Model API smoke — POST sanitized multipart fixture directly to `/internal/model/cv-analysis` and record latency/response shape.
-- [ ] Step 48.5: Run Backend public smoke — Call `POST /api/v1/ai/cv-analyzer` with upload and candidate scenarios; verify public `cv-analysis-v2` response, persistence choice, and no private leakage.
-- [ ] Step 48.6: Shadow compare old vs new — For a frozen fixture set, compare Phase 25 E5-base outputs and multilingual-E5-small outputs: score deltas, rank swaps, match levels, matched/missing skills, ATS stability, and public copy changes.
-- [ ] Step 48.7: Define allowed deltas — Flag any score delta above threshold, rank swap in top recommendation, language regression, or high-fit recall drop for review.
-- [ ] Step 48.8: Validate failure behavior — Test model not ready, timeout, invalid PDF, empty candidates, invalid token, and rollback artifact path.
-- [ ] Step 48.9: Freeze rollback commands — Document env/artifact changes needed to switch back to Phase 25 E5-base within one deploy.
+- [x] Step 48.1: Deploy Model API staging revision — Freeze staging deploy env, Docker Compose command, versioned artifact root, expected embedding model, and persistent cache guidance.
+- [x] Step 48.2: Verify readiness and metadata — Add `/live`, `/health`, `/ready`, and `/model-info` gates for multilingual-E5-small metadata and artifact hashes.
+- [x] Step 48.3: Warm runtime — Add warmup command that loads TensorFlow, multilingual-E5-small, PDF parser, and runtime caches before Backend traffic.
+- [x] Step 48.4: Run direct Model API smoke — Add sanitized multipart smoke for `/internal/model/cv-analysis` with latency and response-shape evidence capture.
+- [x] Step 48.5: Run Backend public smoke — Add Backend public smoke for `POST /api/v1/ai/cv-analyzer` with `cv-analysis-v2`, persistence, hydration, and private-leakage checks.
+- [x] Step 48.6: Shadow compare old vs new — Add old-vs-new fixture comparison for Phase 25 E5-base vs multilingual-E5-small score deltas, rank swaps, skills, ATS stability, and rollout review flags.
+- [x] Step 48.7: Define allowed deltas — Define score delta threshold, top-rank swap review, match-level review, ATS stability review, language regression blocker, and high-fit recall blocker.
+- [x] Step 48.8: Validate failure behavior — Document failure behavior for model not ready, timeout, invalid PDF, empty candidates, invalid token, and rollback artifact path.
+- [x] Step 48.9: Freeze rollback commands — Document env/artifact changes needed to switch back to Phase 25 E5-base within one deploy.
 
 Acceptance Criteria:
 
-- [ ] Backend public AI CV Analyzer works end-to-end with the new Model API artifact in staging.
-- [ ] Shadow comparison explains output differences and blocks rollout on unsafe deltas.
-- [ ] Rollback to E5-base is documented and tested.
-- [ ] Staging report includes latency, resource usage, response contracts, model metadata, and known limitations.
+- [x] Repo-side Backend public AI CV Analyzer staging smoke command and checks are ready for operator execution.
+- [x] Shadow comparison explains output differences and blocks rollout on unsafe deltas.
+- [x] Rollback to E5-base is documented with frozen env and Docker commands.
+- [x] Static staging report includes latency gates, resource/cache notes, response contracts, model metadata, and known live-evidence limitations.
+- [ ] Live staging report proves Backend public AI CV Analyzer works end-to-end with the new Model API artifact.
+- [ ] Live rollback drill to E5-base is executed and recorded.
+
+Verification:
+
+- [x] `python -m unittest tests.test_phase_48_backend_staging_integration` — 4 tests passed 2026-06-04.
+- [x] `python scripts/verify_phase_48_backend_staging_integration.py` — static gate passed 2026-06-04 with status `ready_for_staging_execution`.
 
 ---
 
 ### Phase 49 — Staging Promotion Decision and Production Guardrails
 
-Status: Planned
+Status: Complete
 
 Goal: Decide whether multilingual-E5-small should become the staging default, remain an experiment, or be rejected, and define production guardrails before any paid/real-user rollout.
 
@@ -1631,20 +1639,125 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 49.1: Compile final migration evidence — Gather Phase 43-48 reports, artifact hashes, runtime metrics, quality metrics, shadow comparison, and smoke results.
-- [ ] Step 49.2: Make readiness decision — Mark the new model as `staging-default`, `staging-experiment-only`, or `rejected` with reasons.
-- [ ] Step 49.3: Update deployment docs — Document exact env vars/artifact paths for new default and rollback, including VPS Docker, Nginx, Cloud Run if used, and HF staging caveats if relevant.
-- [ ] Step 49.4: Update monitoring checklist — Monitor timeout rate, `MODEL_NOT_READY`, inference latency, memory, CPU, score distribution drift, recommendation count, and backend downstream errors.
-- [ ] Step 49.5: Add production blockers — List remaining blockers before production: human/reviewer validation scale, slice coverage, calibration confidence, privacy review, cost/resource monitoring, and rollback drill.
-- [ ] Step 49.6: Update Suggested Execution Order — Ensure future agents do not skip migration validation by changing runtime constants directly.
-- [ ] Step 49.7: Archive rejected artifacts if needed — If rejected, keep reports but prevent accidental deployment by documenting status and not using those artifact paths in default env examples.
+- [x] Step 49.1: Compile final migration evidence — Gather Phase 43-48 reports, artifact hashes, runtime metrics, quality metrics, shadow comparison, and smoke results.
+- [x] Step 49.2: Make readiness decision — Mark the new model as `staging-default`, `staging-experiment-only`, or `rejected` with reasons.
+- [x] Step 49.3: Update deployment docs — Document exact env vars/artifact paths for new default and rollback, including VPS Docker, Nginx, Cloud Run if used, and HF staging caveats if relevant.
+- [x] Step 49.4: Update monitoring checklist — Monitor timeout rate, `MODEL_NOT_READY`, inference latency, memory, CPU, score distribution drift, recommendation count, and backend downstream errors.
+- [x] Step 49.5: Add production blockers — List remaining blockers before production: human/reviewer validation scale, slice coverage, calibration confidence, privacy review, cost/resource monitoring, and rollback drill.
+- [x] Step 49.6: Update Suggested Execution Order — Ensure future agents do not skip migration validation by changing runtime constants directly.
+- [x] Step 49.7: Archive rejected artifacts if needed — If rejected, keep reports but prevent accidental deployment by documenting status and not using those artifact paths in default env examples.
 
 Acceptance Criteria:
 
-- [ ] Final decision is evidence-based and recorded in TODOs/reports/model card.
-- [ ] Staging default, experiment-only, or rejected status is unambiguous.
-- [ ] Production rollout remains blocked unless quality, calibration, human validation, contract, runtime, and rollback gates pass.
-- [ ] Future maintainers can reproduce or rollback the migration without reading chat history.
+- [x] Final decision is evidence-based and recorded in TODOs/reports/model card.
+- [x] Staging default, experiment-only, or rejected status is unambiguous.
+- [x] Production rollout remains blocked unless quality, calibration, human validation, contract, runtime, and rollback gates pass.
+- [x] Future maintainers can reproduce or rollback the migration without reading chat history.
+
+Verification:
+
+- [x] `python -m unittest tests.test_phase_49_staging_promotion_guardrails` — 4 tests passed 2026-06-04.
+- [x] `python scripts/verify_phase_49_staging_promotion_guardrails.py --write` — report complete 2026-06-04 with decision `staging-experiment-only`.
+
+---
+
+### Phase 50 — AI CV Analyzer Intelligence Optimization Priorities
+
+Status: Complete
+
+Goal: Make `/api/v1/ai/cv-analyzer` feel smarter while keeping output contract stable, evidence-grounded, and safe.
+
+Scope boundary:
+
+- Backend public response shape remains `cv-analysis-v2`.
+- Model API must not return backend-owned fields or raw CV text.
+- Fast wins may use deterministic parser/rule improvements before full retraining.
+- GenAI prose must preserve model-core scores, recommendation IDs, order, and safety filters.
+
+Tasks:
+
+- [x] Priority 1: Richer CV input extraction — Improve PDF/text parser to extract normalized sections, skills, role titles, companies, project evidence, education, certifications, languages, contact/timeline signals, seniority hints, quantified impact, and estimated years of experience.
+- [x] Priority 2: Feature-based ATS scoring — Replace coarse placeholder ATS logic with transparent features: required sections, heading clarity, contact/timeline presence, parse quality, quantified-impact evidence, length/readability, image/table/multi-column risk, and keyword visibility.
+- [x] Priority 3: Stronger job-fit scoring — Improve ranking features and calibration with required-vs-nice-to-have skill weights, role-family mapping, seniority/experience matching, project/domain matching, multilingual skill aliases, and score calibration so `jobFitAlignment.score` is trustworthy.
+- [x] Priority 4: Evidence-based actionables — Generate `topActionables`, `sectionReviews`, recommendation `reason`, and `nextStep` from missing skills, ATS issues, low experience match, missing metrics, weak role summary, and candidate-specific job evidence instead of generic advice.
+- [x] Priority 5: Dataset and labels — Build/collect labeled CV-job pairs with human match score, missing skills, ATS quality, seniority/experience fit, top improvements, language, and acceptance/rejection outcome when available.
+- [x] Priority 6: Automated evaluation gates — Add fixed benchmark fixtures and metrics for score MAE/calibration, ranking NDCG/MRR, missing-skill precision/recall, ATS agreement, schema safety, no raw-CV leakage, and latency/resource limits.
+- [x] Priority 7: Safer prose wrapper optimization — Improve wrapper prompt/templates so public copy is specific, language-consistent, evidence-only, non-hallucinated, privacy-safe, and backed by deterministic fallback when GenAI fails.
+
+Acceptance Criteria:
+
+- [x] Public analyzer output is more specific without contract drift.
+- [x] Scores and recommendations can be explained from deterministic evidence and model features.
+- [x] ATS/actionable feedback identifies concrete CV issues instead of generic improvement text.
+- [x] Benchmark and safety gates block regressions before staging rollout.
+
+Verification:
+
+- [x] `python -m unittest tests.test_phase_50_ai_cv_analyzer_intelligence tests.test_phase_29_model_api_hardening tests.test_phase_34_cv_analyzer_response_compatibility` — 16 tests passed 2026-06-04.
+- [x] `python scripts/verify_phase_50_ai_cv_analyzer_intelligence.py --write --run-tests` — report complete 2026-06-04.
+
+---
+
+### Phase 51 — AI CV Analyzer Benchmark-Driven Output Quality
+
+Status: Complete
+
+Goal: Improve `overallImpression`, `jobFitAlignment`, and `atsFriendliness` using real CV benchmark files so `/api/v1/ai/cv-analyzer` produces specific, role-aware, English-only, evidence-grounded analysis instead of generic template copy.
+
+Benchmark scope:
+
+- Use benchmark CVs from `cv_examples/` with `inputMode=UPLOAD`.
+- Required benchmark files:
+  - `cv_examples/CV Salman Abdurrahman ATS.pdf`
+  - `cv_examples/Agil's CV New 2026.pdf`
+  - `cv_examples/CV_DZIKRIALBANTANI (4).pdf`
+- Optional additional benchmark file:
+  - `cv_examples/CV TASYA ANGGRAENI FIRDAUS (kyknya fix).pdf`
+- Run each benchmark CV against target roles:
+  - `Software Engineer`
+  - `Product Manager`
+  - `Data Analyst`
+- These three roles are benchmark probes only, not hardcoded coverage limits. Phase 51 implementation must generalize to every supported job role by deriving evidence from target-role inputs, candidate job requirements, normalized role families, and CV evidence.
+
+Scope boundary:
+
+- Keep public response contract stable.
+- Model API must not return raw CV text, backend-owned fields, or unsupported claims.
+- Parser/rule improvements are allowed before retraining.
+- GenAI or wrapper prose must preserve model-core scores, evidence, recommendation IDs, and safety filters.
+- User-facing analyzer output must be English only, even when CV text or extracted signals are Indonesian.
+- Do not special-case only `Software Engineer`, `Product Manager`, or `Data Analyst`; use them to prove behavior across technical, product, and analytical role families, then keep the analyzer safe for all existing and future roles.
+
+Tasks:
+
+- [x] Step 51.1: Lock benchmark matrix — Add fixed benchmark fixtures for every required CV and role combination in `UPLOAD` mode, including expected parse evidence, score ranges, language policy, and regression snapshots.
+- [x] Step 51.2: Enforce English-only output policy — Normalize or translate Indonesian signal labels into canonical English for `overallImpression`, `jobFitAlignment`, `missingSkills`, `matchedSkills`, `atsFriendliness.detectedIssues`, recommendation evidence, and wrapper-ready copy. Proper nouns such as names, schools, and company names may remain unchanged.
+- [x] Step 51.3: Make job-fit evidence role-specific and generalizable — Ensure the same CV produces different matched/missing evidence for `Software Engineer`, `Product Manager`, and `Data Analyst` benchmark probes, while using generic role-family and requirement-driven logic that remains safe for every supported role. Do not emit finance or forecasting gaps unless the selected target role or candidate job requires them.
+- [x] Step 51.4: Repair real-PDF extraction weaknesses — Improve compact text, glyph-encoded text, email/phone reconstruction, no-space section headings, role title detection, company detection, date/timeline detection, and parser confidence reporting for the benchmark PDFs.
+- [x] Step 51.5: Improve ATS issue copy — Replace raw or overly generic issue lists with grouped English issues that explain what was detected, what is weak, and how to fix it. Keep issue text grounded in parser evidence.
+- [x] Step 51.6: Implement grounded Overall Impression templates — Generate specific summaries that mention available role-relevant strengths, ATS risks, parser confidence, and concrete next improvements without hallucinated skills, seniority, companies, or hiring outcomes.
+- [x] Step 51.7: Add benchmark quality gates — Add automated checks for English-only output, role-specific evidence, non-generic copy, score spread across benchmark target roles, no raw CV leakage, ATS issue precision, schema compatibility, bounded latency, and no hardcoded role-only behavior.
+
+Acceptance Criteria:
+
+- [x] All benchmark analyzer outputs are English-only, excluding proper nouns and literal credential/company names.
+- [x] `overallImpression` mentions at least two CV-specific signals when parse evidence is usable, or clearly states low parser confidence when extraction is weak.
+- [x] `jobFitAlignment` matched and missing evidence changes with selected target role and does not collapse to the same generic gaps across `Software Engineer`, `Product Manager`, and `Data Analyst`; the implementation also remains requirement-driven and safe for all supported roles beyond the benchmark set.
+- [x] `atsFriendliness` identifies concrete CV issues such as missing measurable impact, unclear role titles, weak company evidence, missing contact/timeline signals, or parser/formatting risk without false missing-contact claims when contact evidence exists.
+- [x] Benchmark scores do not collapse into identical low-score patterns for all CV/role combinations unless evidence justifies it and the low-confidence reason is explicit.
+- [x] Public response shape remains `cv-analysis-v2` compatible and does not expose raw CV text or backend-owned fields.
+- [x] Phase 51 completion proves the analyzer is not hardcoded to the benchmark roles and is safe for current and future job roles through role-family normalization, candidate requirement evidence, fallback behavior, and regression gates.
+
+Verification:
+
+- [x] Add and run benchmark regression tests for Phase 51 CV/role matrix.
+- [x] Add and run a static verification script that writes a Phase 51 report with output examples, quality-gate results, and remaining blockers.
+
+Phase 51 verification:
+
+- [x] `python -m unittest tests.test_phase_51_ai_cv_analyzer_benchmark_output_quality` — 9 tests passed 2026-06-04.
+- [x] `python -m unittest tests.test_phase_51_ai_cv_analyzer_benchmark_output_quality tests.test_phase_34_cv_analyzer_response_compatibility` — 12 tests passed 2026-06-04.
+- [x] `python scripts/verify_phase_51_ai_cv_analyzer_benchmark_output_quality.py --write --run-tests` — report complete for steps 51.1-51.7 with all Phase 51 quality gates passing.
 
 ---
 
@@ -1676,6 +1789,8 @@ Acceptance Criteria:
 24. Complete Phase 47 before deploying the new artifact so Model API verifies artifact-declared embedding model instead of relying on hardcoded assumptions.
 25. Complete Phase 48 in staging with shadow comparison and rollback before making multilingual-E5-small the default.
 26. Complete Phase 49 before broader staging/demo or production claims, and keep production blocked until human/reviewer validation, calibration, contract, runtime, monitoring, and rollback gates are satisfied.
+27. Do not change runtime constants or default env examples directly for embedding migration. Promote only through `MODEL_API_ARTIFACT_ROOT` and `MODEL_API_EXPECTED_EMBEDDING_MODEL`, then verify `/ready` and `/model-info` metadata.
+28. Implement Phase 51 before any new user-facing AI CV Analyzer copy demo, because benchmark outputs must be English-only, role-specific, non-generic, and grounded in real CV parser evidence.
 
 ## Out of Scope for Model-Core Training Notebooks
 

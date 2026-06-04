@@ -13,7 +13,3 @@ Decision: `go`
 ## Commands
 - `model_api_warmup`: `python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url http://127.0.0.1:8000 --token ${MODEL_API_SERVICE_TOKEN} --latency-budget-ms 30000 --output reports/ai_cv_analyzer_warmup_staging.json`
 - `phase38_gate`: `python scripts/verify_phase_38_ai_cv_analyzer_runtime_gate.py --write`
-
-## Public Smoke Follow-up
-
-Phase 38.6 public Backend-to-Model smoke is superseded by this public staging smoke evidence in `reports/phase_41_ai_cv_analyzer_public_staging_gate.*`, live smoke output at `reports/phase_41_ai_cv_analyzer_public_staging_smoke.json`, and `scripts/smoke_ai_cv_analyzer_public_staging.py`.

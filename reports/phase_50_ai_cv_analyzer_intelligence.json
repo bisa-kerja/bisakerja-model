@@ -1,0 +1,41 @@
+{
+  "blockers": [],
+  "checks": {
+    "benchmark_and_safety_tests": true,
+    "evidence_based_actionable_inputs_without_backend_fields": true,
+    "feature_based_ats_scoring": true,
+    "genai_safe_wrapper_boundary_preserved": true,
+    "richer_cv_extraction": true,
+    "stronger_job_fit_evidence": true,
+    "unit_tests_pass": true
+  },
+  "contract_safety": {
+    "backend_owned_fields_returned_by_model_api": [],
+    "backend_public_schema_remains": "cv-analysis-v2",
+    "external_genai_in_model_api": false,
+    "model_core_schema": "model-core-cv-analysis-v1",
+    "raw_cv_text_in_response": false
+  },
+  "deterministic_features": [
+    "normalized section detection",
+    "role title, company, education, certification, language, seniority signals",
+    "experience years and quantified-impact evidence",
+    "feature-based ATS score penalties",
+    "job-fit evidence strings from matched/missing skills and experience band"
+  ],
+  "evaluation_gates": [
+    "parser signal extraction fixture",
+    "ATS missing-metrics/formatting-risk fixture",
+    "model-core evidence + no backend-owned fields + no raw-CV leakage fixture"
+  ],
+  "generated_at": "2026-06-04T17:04:00Z",
+  "phase_id": "phase_50_ai_cv_analyzer_intelligence_optimization_priorities",
+  "schema_version": "phase-50-ai-cv-analyzer-intelligence-v1",
+  "status": "complete",
+  "test_result": {
+    "command": "python -m unittest tests.test_phase_50_ai_cv_analyzer_intelligence",
+    "returncode": 0,
+    "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.003s\n\nOK",
+    "stdout": ""
+  }
+}

@@ -14,7 +14,7 @@
     "rollback_policy": "Phase 25 artifacts remain immutable rollback baseline; migration artifacts must live under Phase 43+ namespaces."
   },
   "decision": "approved_for_staging_experiment_only",
-  "generated_at": "2026-06-04T08:01:48Z",
+  "generated_at": "2026-06-04T15:25:10Z",
   "go_no_go_thresholds": {
     "contract": {
       "candidate_membership": "All recommendations must remain subset of backend-provided candidates, max 5, unique job IDs.",

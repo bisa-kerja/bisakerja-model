@@ -1,7 +1,7 @@
 {
   "decision": "retrain_required_recalibration_required_direct_swap_blocked",
   "direct_artifact_swap_allowed": false,
-  "generated_at": "2026-06-04T08:17:04Z",
+  "generated_at": "2026-06-04T15:25:11Z",
   "observed": {
     "material_normalization_shift": true,
     "max_abs_cosine_delta": 0.12737274169921875,

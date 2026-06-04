@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import unittest
 
-import numpy as np
+if importlib.util.find_spec("numpy") is not None:
+    import numpy as np
+else:  # pragma: no cover - exercised only in minimal local envs.
+    np = None
 
 from scripts.verify_phase_45_multilingual_e5_small_training_delivery import (
     APPROVED_FEATURES,
@@ -19,6 +23,7 @@ from scripts.verify_phase_45_multilingual_e5_small_training_delivery import (
 )
 
 
+@unittest.skipUnless(importlib.util.find_spec("numpy") is not None, "numpy is required for Phase 45 artifact matrix checks")
 class Phase45MultilingualE5SmallTrainingDeliveryTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

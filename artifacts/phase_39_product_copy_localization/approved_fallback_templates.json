@@ -24,8 +24,8 @@
       "CV structure is readable based on parser evidence. Keep section titles, dates, and skill keywords easy to scan."
     ],
     "overallImpression": [
-      "Overall impression is grounded in {evidence}. The CV is usable for review, but stronger quantified examples can make the fit clearer.",
-      "Overall impression is grounded in model evidence. Use this result as a conservative review, not a hiring guarantee."
+      "Overall impression combines {evidence} to describe how clearly this CV matches the target role and how reliably ATS systems can read it. Current evidence is usable for recruiter review, but adding measurable achievements, role-specific impact, and clearer skill proof will make the candidate fit easier to understand.",
+      "Overall impression summarizes model evidence across role fit and ATS readability. Treat this as a conservative review of CV strength, not a hiring guarantee."
     ],
     "topActionables": [
       "Add one measurable bullet or project example that proves {missingSkill}.",

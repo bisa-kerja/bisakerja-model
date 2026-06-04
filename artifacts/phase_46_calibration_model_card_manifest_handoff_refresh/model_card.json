@@ -2130,6 +2130,24 @@
     "phase25_mixed_metadata_used": false,
     "production_claim_allowed": false
   },
+  "promotion_decision": {
+    "decision": "staging-experiment-only",
+    "default_artifact_root": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh",
+    "default_embedding_model": "intfloat/multilingual-e5-small",
+    "production_claim_allowed": false,
+    "production_blockers": [
+      "live staging Backend public AI CV Analyzer smoke",
+      "old-vs-new shadow comparison on frozen fixtures",
+      "rollback drill to Phase 25 E5-base",
+      "human/reviewer validation scale",
+      "slice coverage",
+      "calibration confidence",
+      "privacy review",
+      "cost/resource monitoring"
+    ],
+    "rollback_artifact_root": "artifacts/phase_25_tensorflow_training_delivery",
+    "rollback_embedding_model": "intfloat/e5-base-v2"
+  },
   "rollback_artifact": {
     "artifact_root": "artifacts/phase_25_tensorflow_training_delivery",
     "embedding_model": "intfloat/e5-base-v2",

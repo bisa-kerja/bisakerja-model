@@ -12,7 +12,7 @@ from model_api.config import RuntimeConfig
 from model_api.errors import FeatureBuildError
 from model_api.features import E5_MODEL_NAME, TensorFlowFeatureConfig, validate_e5_backend
 from model_api.inference import InferenceService, RuntimeState, ScoreCalibrationPolicy
-from model_api.pdf_parser import ats_score_from_pdf_evidence, parse_pdf_bytes
+from model_api.pdf_parser import ats_score_from_pdf_evidence, estimate_experience_years_from_text, normalized_skills_from_text, parse_pdf_bytes
 from model_api.schemas import (
     MODEL_CORE_CANDIDATE_RERANKING_REQUEST_VERSION,
     CandidateJobInput,
@@ -111,6 +111,49 @@ class Phase29ModelApiHardeningTest(unittest.TestCase):
         self.assertIn("Backend developer", evidence.text)
         self.assertIn("skills", evidence.section_names)
         self.assertIn("experience", evidence.section_names)
+
+    def test_pdf_parser_extracts_hex_utf16_text_and_indonesian_sections(self) -> None:
+        text = "Tentang Saya Backend developer Keahlian Python Pengalaman Kerja 2021 Email dev@example.com"
+        hex_text = text.encode("utf-16-be").hex().encode()
+        pdf = b"%PDF-1.4\n1 0 obj<</Type /Page>>stream\n<" + hex_text + b"> Tj\nendstream\n%%EOF"
+        evidence = parse_pdf_bytes(pdf, max_bytes=5000, max_pages=5)
+
+        self.assertIn("Tentang Saya", evidence.text)
+        self.assertIn("summary", evidence.section_names)
+        self.assertIn("skills", evidence.section_names)
+        self.assertIn("experience", evidence.section_names)
+        self.assertTrue(evidence.has_contact_signal)
+
+    def test_pdf_parser_extracts_tounicode_cmap_hex_text(self) -> None:
+        cmap = b"/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n7 beginbfchar\n<01> <0053>\n<02> <0075>\n<03> <006D>\n<04> <006D>\n<05> <0061>\n<06> <0072>\n<07> <0079>\nendbfchar\nendcmap\nCMapName currentdict /CMap defineresource pop\nend\nend"
+        stream = zlib.compress(cmap + b"\nBT <01020304050607> Tj ET")
+        pdf = b"%PDF-1.4\n1 0 obj<</Type /Page>>endobj\n2 0 obj<</Filter /FlateDecode /Length " + str(len(stream)).encode() + b">>stream\n" + stream + b"\nendstream\nendobj\n%%EOF"
+        evidence = parse_pdf_bytes(pdf, max_bytes=5000, max_pages=5)
+
+        self.assertIn("Summary", evidence.text)
+
+    def test_pdf_parser_extracts_skill_aliases_experience_years_and_impact_gaps(self) -> None:
+        text = """
+        Summary Backend developer with 4+ years of experience.
+        Skills React.js, Node.js, PostgreSQL, Docker, CI/CD.
+        Experience improved API latency by 35% for 10000 users.
+        """
+
+        self.assertEqual(estimate_experience_years_from_text(text), 4.0)
+        self.assertEqual(
+            normalized_skills_from_text(text, ("React", "Node.js", "PostgreSQL", "Docker", "CI/CD")),
+            ("ci/cd", "docker", "node.js", "postgresql", "react"),
+        )
+
+        long_cv_without_metrics = "%PDF-1.4\n1 0 obj<</Type /Page>>stream\n(" + " ".join(
+            ["Summary Skills Experience Education Python SQL backend developer project delivery"] * 10
+        ) + " 2020 dev@example.com) Tj\nendstream\n%%EOF"
+        evidence = parse_pdf_bytes(long_cv_without_metrics.encode(), max_bytes=5000, max_pages=5)
+        score, issues, fallback = ats_score_from_pdf_evidence(evidence)
+
+        self.assertIn("quantified impact signal not detected", issues)
+        self.assertLess(score, 100)
+        self.assertTrue(fallback)
 
     def test_pdf_parser_rejects_magic_bytes_and_scanned_empty_text_without_hallucination(self) -> None:
         bad = parse_pdf_bytes(b"not a pdf", max_bytes=100, max_pages=1)

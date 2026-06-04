@@ -1,6 +1,23 @@
 {
-  "artifact_switch": {
-    "new": {
+  "blockers": [],
+  "checks": {
+    "deployment_docs_cover_default_and_rollback_env": true,
+    "monitoring_checklist_complete": true,
+    "phase43_to_48_evidence_compiled": true,
+    "production_blockers_are_explicit": true,
+    "production_remains_blocked_by_live_evidence": true,
+    "readiness_decision_is_experiment_only": true,
+    "rejected_artifact_policy_documented": true,
+    "suggested_execution_order_blocks_direct_constant_changes": true
+  },
+  "decision": "staging-experiment-only",
+  "decision_reasons": [
+    "Phase 46 multilingual-E5-small artifact is complete and runtime-verifiable.",
+    "Phase 48 live staging smoke, shadow evidence, and rollback drill are still operator-executed gates.",
+    "Production claims remain blocked until human/reviewer validation, calibration, contract, runtime, monitoring, privacy, and rollback gates pass."
+  ],
+  "deployment": {
+    "default_staging": {
       "embedding_model": "intfloat/multilingual-e5-small",
       "root": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh"
     },
@@ -8,27 +25,6 @@
       "embedding_model": "intfloat/e5-base-v2",
       "root": "artifacts/phase_25_tensorflow_training_delivery"
     }
-  },
-  "blockers": [],
-  "checks": {
-    "backend_public_smoke_supported": true,
-    "failure_behavior_matrix_defined": true,
-    "phase25_rollback_artifact_preserved": true,
-    "phase46_artifact_selected_for_staging": true,
-    "phase47_runtime_support_complete": true,
-    "readiness_metadata_gate_documented": true,
-    "rollback_commands_frozen": true,
-    "secrets_redacted_in_evidence": true,
-    "shadow_compare_and_allowed_deltas_defined": true,
-    "staging_deploy_env_documented": true,
-    "warmup_and_direct_model_smoke_supported": true
-  },
-  "commands": {
-    "phase48_backend_public_smoke": "python scripts/run_phase_48_backend_staging_shadow.py --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --backend-api-url ${BACKEND_API_URL} --user-access-token ${USER_ACCESS_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --output reports/phase_48_backend_staging_shadow_report.json",
-    "phase48_gate": "python scripts/verify_phase_48_backend_staging_integration.py --write",
-    "phase48_new_model_api_smoke": "python scripts/run_phase_48_backend_staging_shadow.py --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --output reports/phase_48_backend_staging_shadow_report.json",
-    "phase48_shadow_compare": "python scripts/run_phase_48_backend_staging_shadow.py --old-model-api-url ${OLD_MODEL_API_URL} --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --score-delta-threshold 5 --output reports/phase_48_backend_staging_shadow_report.json",
-    "rollback_to_phase25": "MODEL_API_ARTIFACT_ROOT=artifacts/phase_25_tensorflow_training_delivery MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/e5-base-v2 docker compose -f docker-compose.production.yml --env-file .env.production up -d --remove-orphans model-api"
   },
   "generated_at": "2026-06-04T16:00:45Z",
   "git": {
@@ -76,30 +72,39 @@
       "?? tests/test_phase_49_staging_promotion_guardrails.py"
     ]
   },
-  "live_staging_evidence_required": [
-    "Deploy staging Model API revision with Phase 46 artifact env.",
-    "Run readiness probes and record /model-info metadata.",
-    "Run direct Model API multipart smoke.",
-    "Run Backend public AI CV Analyzer smoke with non-production token.",
-    "Run old-vs-new shadow comparison over frozen fixtures.",
-    "Run rollback drill to Phase 25 E5-base artifact path."
+  "monitoring_required": [
+    "timeout rate",
+    "MODEL_NOT_READY",
+    "inference latency",
+    "memory RSS",
+    "CPU saturation",
+    "score distribution drift",
+    "recommendation count",
+    "backend downstream errors"
   ],
   "operator_execution_required": true,
-  "phase_id": "phase_48_backend_staging_integration_shadow_rollback",
-  "schema_version": "phase-48-backend-staging-integration-v1",
+  "phase_id": "phase_49_staging_promotion_decision_production_guardrails",
+  "production_blockers": [
+    "live staging Backend public AI CV Analyzer smoke",
+    "old-vs-new shadow comparison",
+    "rollback drill",
+    "human/reviewer validation scale",
+    "slice coverage",
+    "calibration confidence",
+    "privacy review",
+    "cost/resource monitoring"
+  ],
+  "schema_version": "phase-49-staging-promotion-guardrails-v1",
   "sources": [
-    "docs/runbooks/backend-staging-shadow-rollback.md",
-    "scripts/run_phase_48_backend_staging_shadow.py",
-    "reports/phase_47_model_api_runtime_support.json",
+    "docs/runbooks/staging-promotion-production-guardrails.md",
+    "reports/phase_43_multilingual_e5_small_migration_decision.json",
+    "reports/phase_44_embedding_compatibility_audit.json",
+    "reports/phase_45_multilingual_e5_small_training_delivery.json",
     "reports/phase_46_calibration_model_card_manifest_handoff_refresh.json",
-    "artifacts/phase_43_multilingual_e5_small_migration/migration_decision_risk_register.json",
-    "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+    "reports/phase_47_model_api_runtime_support.json",
+    "reports/phase_48_backend_staging_integration.json",
     "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json",
-    "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-    "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json",
-    "GAP_MODEL_TRAINING.md",
-    "REQUIREMENT.md",
     "TODOS.md"
   ],
-  "status": "ready_for_staging_execution"
+  "status": "complete"
 }

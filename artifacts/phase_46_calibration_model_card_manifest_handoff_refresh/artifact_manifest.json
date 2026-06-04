@@ -131,8 +131,8 @@
       "role": "release_evidence",
       "runtime_classification": "runtime-required",
       "schema_version": "phase-46-model-card-v1",
-      "sha256": "a6d258e0a07ed98374cca142817caa5963f8f167c882f46c9af26b23e0ab41aa",
-      "size_bytes": 69848
+      "sha256": "7f294919938daf100e6d3291798be312555e56f3fb5effd375b87b870f5ae3aa",
+      "size_bytes": 70609
     },
     {
       "artifact_id": "handoff_fixtures",

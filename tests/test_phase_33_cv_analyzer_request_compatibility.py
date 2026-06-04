@@ -80,12 +80,12 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
             "profile": {"cvText": "Backend developer with TypeScript and PostgreSQL", "targetRoles": ["Backend Developer"]},
             "jobCandidates": [self.backend_candidate()],
             "rankingPolicy": {
-                "maxRecommendations": 5,
+                "maxRecommendations": 10,
                 "requireCandidateJobIds": True,
                 "deduplicateByJobId": True,
                 "backendOwnsHydration": True,
             },
-            "maxRecommendations": 5,
+            "maxRecommendations": 10,
         }
 
     def test_backend_requirement_objects_numeric_signals_and_location_display_are_accepted(self) -> None:
@@ -120,7 +120,7 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
                 "jobCandidates": json.dumps([self.backend_candidate()]),
                 "rankingPolicy": json.dumps(
                     {
-                        "maxRecommendations": 5,
+                        "maxRecommendations": 10,
                         "requireCandidateJobIds": True,
                         "deduplicateByJobId": True,
                         "backendOwnsHydration": True,
@@ -181,9 +181,9 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
             parse_cv_analysis_model_core_request(bad_policy)
 
         too_many_recommendations = self.base_payload()
-        too_many_recommendations["rankingPolicy"]["maxRecommendations"] = 6
-        too_many_recommendations["maxRecommendations"] = 6
-        with self.assertRaisesRegex(ContractValidationError, "maxRecommendations must be integer 0-5"):
+        too_many_recommendations["rankingPolicy"]["maxRecommendations"] = 11
+        too_many_recommendations["maxRecommendations"] = 11
+        with self.assertRaisesRegex(ContractValidationError, "maxRecommendations must be integer 0-10"):
             parse_cv_analysis_model_core_request(too_many_recommendations)
 
     def test_malformed_oversized_empty_pdf_and_empty_roles_fail_closed(self) -> None:
@@ -193,19 +193,22 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
                 "language": "en",
                 "inputMode": "UPLOAD",
                 "compareSource": "JOB_SEARCH",
-                "jobRoles": [],
+                "jobRoles": ["Backend Developer"],
                 "jobCandidates": json.dumps([self.backend_candidate()]),
-                "rankingPolicy": json.dumps({"maxRecommendations": 5, "requireCandidateJobIds": True, "deduplicateByJobId": True, "backendOwnsHydration": True}),
+                "rankingPolicy": json.dumps({"maxRecommendations": 10, "requireCandidateJobIds": True, "deduplicateByJobId": True, "backendOwnsHydration": True}),
             }
         )
         pdf = b"%PDF-1.4\n1 0 obj<</Type /Page /XObject 2 0 R>>\n%%EOF"
 
-        with self.assertRaisesRegex(ContractValidationError, "no extractable PDF text"):
-            _build_cv_payload_from_multipart(form, pdf, RuntimeConfig.from_env({}))
+        payload = _build_cv_payload_from_multipart(form, pdf, RuntimeConfig.from_env({}))
+        self.assertEqual(payload["profile"]["cvText"], "")
+        self.assertEqual(payload["_parsedPdfEvidence"]["parseQuality"], "empty")
+        self.assertTrue(payload["_parsedPdfEvidence"]["fallback"])
 
+        empty_roles_form = FakeMultipartForm(dict(form, jobRoles=[]))
         valid_pdf = b"%PDF-1.4\n1 0 obj<</Type /Page>>stream\n(Summary Backend developer) Tj\n(Skills TypeScript PostgreSQL REST API) Tj\n(Experience 2020) Tj\nendstream\n%%EOF"
         with self.assertRaisesRegex(ContractValidationError, "jobRoles must contain at least 1 role"):
-            _build_cv_payload_from_multipart(form, valid_pdf, RuntimeConfig.from_env({}))
+            _build_cv_payload_from_multipart(empty_roles_form, valid_pdf, RuntimeConfig.from_env({}))
         with self.assertRaisesRegex(ContractValidationError, "cvFile must start with PDF magic bytes"):
             _build_cv_payload_from_multipart(form, b"not a pdf", RuntimeConfig.from_env({}))
         with self.assertRaisesRegex(ContractValidationError, "cvFile exceeds MODEL_API_MAX_PDF_BYTES"):
@@ -252,7 +255,7 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
                     None,
                     json.dumps(
                         {
-                            "maxRecommendations": 5,
+                            "maxRecommendations": 10,
                             "requireCandidateJobIds": True,
                             "deduplicateByJobId": True,
                             "backendOwnsHydration": True,

@@ -309,6 +309,7 @@ class InferenceService:
         max_recommendations: int = MAX_RECOMMENDATIONS,
         calibration_policy: ScoreCalibrationPolicy | None = None,
         timeout_ms: int | None = None,
+        allow_internal_full_ranking: bool = False,
     ) -> tuple[RecommendationScore, ...]:
         """Run batch model scoring, calibrate, sort, and cap recommendations."""
 
@@ -348,7 +349,8 @@ class InferenceService:
                 f"expected={len(vectors)} actual={len(raw_predictions)}"
             )
 
-        limit = max(0, min(MAX_RECOMMENDATIONS, int(max_recommendations)))
+        limit_cap = len(vectors) if allow_internal_full_ranking else MAX_RECOMMENDATIONS
+        limit = max(0, min(limit_cap, int(max_recommendations)))
         recommendations: list[tuple[int, RecommendationScore]] = []
         for index, (vector, raw_prediction) in enumerate(zip(vectors, raw_predictions, strict=True)):
             score_0_1 = _coerce_prediction_score(raw_prediction)

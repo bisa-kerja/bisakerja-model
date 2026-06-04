@@ -1,6 +1,6 @@
 # Phase 27.10 Requirement Matrix
 
-Generated: `2026-06-03T13:16:43.145683Z`
+Generated: `2026-06-04T15:25:07.533741Z`
 Decision: `blocked`
 
 ## Matrix
@@ -26,4 +26,3 @@ Decision: `blocked`
   - failed check: `live_fastapi_health_model_info_inference_smoke_passed`
 - `deliverables` failed-gate
   - failed check: `runtime_smoke_production_passed`
-  - untracked: `README.md`

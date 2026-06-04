@@ -108,6 +108,47 @@ class Phase34CvAnalyzerResponseCompatibilityTest(unittest.TestCase):
         self.assertNotIn("topActionables", json.dumps(payload))
         self.assertEqual(payload["candidateReranking"]["recommendations"][0]["jobId"], "job-34-001")
 
+    def test_long_requirement_text_is_bounded_for_backend_zod_contract(self) -> None:
+        long_requirement = " ".join(["Build secure observable production APIs with PostgreSQL ownership"] * 8)
+        request = CvAnalysisModelCoreRequest(
+            requestId="req-phase34-long-requirement",
+            inputVersion="cv-analyzer-v1",
+            language="en",
+            inputMode="UPLOAD",
+            compareSource="JOB_SEARCH",
+            profile=SanitizedProfileInput(
+                cvText="Backend developer with Python",
+                normalizedSkills=("python",),
+                targetRoles=("Backend Developer",),
+                detectedCvSectionNames=("summary",),
+            ),
+            jobCandidates=(
+                CandidateJobInput(
+                    jobId="job-34-long",
+                    scoringInput=CandidateScoringInput(
+                        titleText="Backend Developer",
+                        requiredSkills=("python",),
+                        requirements=(long_requirement,),
+                    ),
+                ),
+            ),
+        )
+
+        payload = build_cv_analysis_response_payload(
+            request,
+            service=self.service(),
+            feature_config=self.feature_config(),
+            calibration_policy=ScoreCalibrationPolicy(),
+            embedding_backend=FakeE5Backend(),
+            environment="test",
+        )
+
+        recommendation = payload["candidateReranking"]["recommendations"][0]
+        for value in (*payload["jobFitAlignment"]["matchedSkills"], *payload["jobFitAlignment"]["missingSkills"], *recommendation["matchedSkills"], *recommendation["missingSkills"]):
+            self.assertLessEqual(len(value), 120)
+        for value in (*payload["jobFitAlignment"]["evidence"], *recommendation["rankingSignals"]):
+            self.assertLessEqual(len(value), 200)
+
     def test_internal_multipart_endpoint_returns_raw_model_core_payload(self) -> None:
         try:
             from fastapi.testclient import TestClient
@@ -143,7 +184,7 @@ class Phase34CvAnalyzerResponseCompatibilityTest(unittest.TestCase):
             ),
             (
                 "rankingPolicy",
-                (None, json.dumps({"maxRecommendations": 5, "requireCandidateJobIds": True, "deduplicateByJobId": True, "backendOwnsHydration": True})),
+                (None, json.dumps({"maxRecommendations": 10, "requireCandidateJobIds": True, "deduplicateByJobId": True, "backendOwnsHydration": True})),
             ),
             ("cvFile", ("cv.pdf", pdf, "application/pdf")),
         ]

@@ -222,7 +222,7 @@
       }
     }
   },
-  "generated_at": "2026-06-03T11:19:45.581545Z",
+  "generated_at": "2026-06-04T15:25:07.126762Z",
   "intended_use": [
     "Model-core job-fit scoring for backend-provided CV/profile and job context.",
     "Training-owned calibrated scores and artifact handoff for separate Model API runtime.",
@@ -264,9 +264,9 @@
     "calibration_hash": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
     "dataset_hash": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
     "feature_config_hash": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-    "generated_at": "2026-06-03T11:19:45.581545Z",
-    "git_commit": "3194f629441d5e5b45658219651c7de7e21f72a5",
-    "git_dirty_file_count": 39,
+    "generated_at": "2026-06-04T15:25:07.126762Z",
+    "git_commit": "3be5465cb988c7b7aa89458ce7206a85d4bda98f",
+    "git_dirty_file_count": 33,
     "label_hash": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
     "model_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
     "production_claim_allowed": false,

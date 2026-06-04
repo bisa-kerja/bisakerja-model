@@ -1,0 +1,380 @@
+{
+  "benchmarkExamples": [
+    {
+      "atsScore": 67,
+      "caseId": "salman-abdurrahman-ats",
+      "companyNames": [
+        "AMIKOM Computer Club"
+      ],
+      "detectedSections": [
+        "summary",
+        "experience",
+        "education",
+        "skills"
+      ],
+      "fallback": true,
+      "hasContactSignal": true,
+      "hasDateSignal": true,
+      "issueCount": 2,
+      "issues": [
+        "quantified impact signal not detected",
+        "image content present"
+      ],
+      "pageCount": 2,
+      "parseQuality": "partial",
+      "path": "cv_examples/CV Salman Abdurrahman ATS.pdf",
+      "roleTitles": [
+        "Full Stack Developer Intern",
+        "Backend Web Programming Instructor Coordinator",
+        "Backend Web Programming Instructor",
+        "Assistant Lecturer",
+        "Lab Assistant",
+        "Software Engineer"
+      ],
+      "skills": [
+        "css",
+        "docker",
+        "javascript",
+        "mysql",
+        "node.js",
+        "react",
+        "sql",
+        "typescript"
+      ],
+      "textLength": 4895,
+      "wordCount": 159
+    },
+    {
+      "atsScore": 65,
+      "caseId": "agil-2026",
+      "companyNames": [],
+      "detectedSections": [
+        "education"
+      ],
+      "fallback": true,
+      "hasContactSignal": false,
+      "hasDateSignal": true,
+      "issueCount": 2,
+      "issues": [
+        "contact signal not detected",
+        "image content present"
+      ],
+      "pageCount": 1,
+      "parseQuality": "partial",
+      "path": "cv_examples/Agil's CV New 2026.pdf",
+      "roleTitles": [],
+      "skills": [
+        "c++"
+      ],
+      "textLength": 291,
+      "wordCount": 60
+    },
+    {
+      "atsScore": 42,
+      "caseId": "dzikri-albantani",
+      "companyNames": [],
+      "detectedSections": [],
+      "fallback": true,
+      "hasContactSignal": true,
+      "hasDateSignal": false,
+      "issueCount": 4,
+      "issues": [
+        "standard CV sections not detected",
+        "date or timeline signal not detected",
+        "quantified impact signal not detected",
+        "image content present"
+      ],
+      "pageCount": 2,
+      "parseQuality": "partial",
+      "path": "cv_examples/CV_DZIKRIALBANTANI (4).pdf",
+      "roleTitles": [],
+      "skills": [],
+      "textLength": 3975,
+      "wordCount": 128
+    }
+  ],
+  "benchmarkQualityGateExamples": [
+    {
+      "atsIssues": [],
+      "caseId": "salman-abdurrahman-ats",
+      "jobFitScore": 65,
+      "latencyMs": 5,
+      "matchedSkills": [
+        "docker",
+        "javascript",
+        "node.js",
+        "react",
+        "sql"
+      ],
+      "missingSkills": [
+        "collaborate with product and design",
+        "debug production issues",
+        "develop maintainable software"
+      ],
+      "overallEvidence": [
+        "summary: For Software Engineer, evidence shows matched skills docker, javascript, node.js, react plus CV sections summary, experience, education, skills.",
+        "parser confidence: high",
+        "next improvement: add evidence for collaborate with product and design, debug production issues, develop maintainable software"
+      ],
+      "role": "Software Engineer"
+    },
+    {
+      "atsIssues": [],
+      "caseId": "salman-abdurrahman-ats",
+      "jobFitScore": 64,
+      "latencyMs": 4,
+      "matchedSkills": [],
+      "missingSkills": [
+        "agile",
+        "communication skills",
+        "coordinate cross-functional delivery",
+        "data analysis",
+        "product management",
+        "project management"
+      ],
+      "overallEvidence": [
+        "summary: For Product Manager, evidence shows CV sections summary, experience, education, skills plus parser confidence high.",
+        "parser confidence: high",
+        "next improvement: add evidence for agile, communication skills, coordinate cross-functional delivery, data analysis"
+      ],
+      "role": "Product Manager"
+    },
+    {
+      "atsIssues": [],
+      "caseId": "salman-abdurrahman-ats",
+      "jobFitScore": 64,
+      "latencyMs": 5,
+      "matchedSkills": [
+        "sql"
+      ],
+      "missingSkills": [
+        "build kpi dashboards",
+        "clean datasets",
+        "dashboard reporting",
+        "data analysis",
+        "excel",
+        "explain trends to stakeholders"
+      ],
+      "overallEvidence": [
+        "summary: For Data Analyst, evidence shows matched skills sql plus CV sections summary, experience, education, skills.",
+        "parser confidence: high",
+        "next improvement: add evidence for build kpi dashboards, clean datasets, dashboard reporting, data analysis"
+      ],
+      "role": "Data Analyst"
+    },
+    {
+      "atsIssues": [],
+      "caseId": "agil-2026",
+      "jobFitScore": 64,
+      "latencyMs": 4,
+      "matchedSkills": [],
+      "missingSkills": [
+        "collaborate with product and design",
+        "debug production issues",
+        "develop maintainable software",
+        "docker",
+        "javascript",
+        "node.js"
+      ],
+      "overallEvidence": [
+        "summary: For Software Engineer, evidence shows CV sections education plus experience evidence 3 years.",
+        "parser confidence: high",
+        "next improvement: add evidence for collaborate with product and design, debug production issues, develop maintainable software, docker"
+      ],
+      "role": "Software Engineer"
+    },
+    {
+      "atsIssues": [],
+      "caseId": "agil-2026",
+      "jobFitScore": 64,
+      "latencyMs": 4,
+      "matchedSkills": [],
+      "missingSkills": [
+        "agile",
+        "communication skills",
+        "coordinate cross-functional delivery",
+        "data analysis",
+        "product management",
+        "project management"
+      ],
+      "overallEvidence": [
+        "summary: For Product Manager, evidence shows CV sections education plus experience evidence 3 years.",
+        "parser confidence: high",
+        "next improvement: add evidence for agile, communication skills, coordinate cross-functional delivery, data analysis"
+      ],
+      "role": "Product Manager"
+    },
+    {
+      "atsIssues": [],
+      "caseId": "agil-2026",
+      "jobFitScore": 64,
+      "latencyMs": 4,
+      "matchedSkills": [],
+      "missingSkills": [
+        "build kpi dashboards",
+        "clean datasets",
+        "dashboard reporting",
+        "data analysis",
+        "excel",
+        "explain trends to stakeholders"
+      ],
+      "overallEvidence": [
+        "summary: For Data Analyst, evidence shows CV sections education plus experience evidence 3 years.",
+        "parser confidence: high",
+        "next improvement: add evidence for build kpi dashboards, clean datasets, dashboard reporting, data analysis"
+      ],
+      "role": "Data Analyst"
+    },
+    {
+      "atsIssues": [
+        "Section structure weak: standard CV headings were not detected. Fix: add clear Summary, Experience, Education, and Skills headings."
+      ],
+      "caseId": "dzikri-albantani",
+      "jobFitScore": 64,
+      "latencyMs": 4,
+      "matchedSkills": [],
+      "missingSkills": [
+        "collaborate with product and design",
+        "debug production issues",
+        "develop maintainable software",
+        "docker",
+        "javascript",
+        "node.js"
+      ],
+      "overallEvidence": [
+        "summary: For Software Engineer, evidence shows limited role-relevant evidence plus parser confidence medium. ATS risk: Section structure weak: standard CV headings were not detected.",
+        "parser confidence: medium",
+        "next improvement: add evidence for collaborate with product and design, debug production issues, develop maintainable software, docker"
+      ],
+      "role": "Software Engineer"
+    },
+    {
+      "atsIssues": [
+        "Section structure weak: standard CV headings were not detected. Fix: add clear Summary, Experience, Education, and Skills headings."
+      ],
+      "caseId": "dzikri-albantani",
+      "jobFitScore": 64,
+      "latencyMs": 4,
+      "matchedSkills": [],
+      "missingSkills": [
+        "agile",
+        "communication skills",
+        "coordinate cross-functional delivery",
+        "data analysis",
+        "product management",
+        "project management"
+      ],
+      "overallEvidence": [
+        "summary: For Product Manager, evidence shows limited role-relevant evidence plus parser confidence medium. ATS risk: Section structure weak: standard CV headings were not detected.",
+        "parser confidence: medium",
+        "next improvement: add evidence for agile, communication skills, coordinate cross-functional delivery, data analysis"
+      ],
+      "role": "Product Manager"
+    },
+    {
+      "atsIssues": [
+        "Section structure weak: standard CV headings were not detected. Fix: add clear Summary, Experience, Education, and Skills headings."
+      ],
+      "caseId": "dzikri-albantani",
+      "jobFitScore": 64,
+      "latencyMs": 4,
+      "matchedSkills": [],
+      "missingSkills": [
+        "build kpi dashboards",
+        "clean datasets",
+        "dashboard reporting",
+        "data analysis",
+        "excel",
+        "explain trends to stakeholders"
+      ],
+      "overallEvidence": [
+        "summary: For Data Analyst, evidence shows limited role-relevant evidence plus parser confidence medium. ATS risk: Section structure weak: standard CV headings were not detected.",
+        "parser confidence: medium",
+        "next improvement: add evidence for build kpi dashboards, clean datasets, dashboard reporting, data analysis"
+      ],
+      "role": "Data Analyst"
+    }
+  ],
+  "blockers": [],
+  "checks": {
+    "benchmark_ats_issue_precision_gate": true,
+    "benchmark_bounded_latency_gate": true,
+    "benchmark_english_only_outputs": true,
+    "benchmark_fixture_exists": true,
+    "benchmark_no_hardcoded_role_only_behavior_gate": true,
+    "benchmark_no_raw_cv_leakage_gate": true,
+    "benchmark_non_generic_copy_gate": true,
+    "benchmark_regression_tests_exist": true,
+    "benchmark_role_specific_evidence_gate": true,
+    "benchmark_schema_compatibility_gate": true,
+    "benchmark_score_spread_gate": true,
+    "english_only_policy_declared": true,
+    "english_output_normalizer_implemented": true,
+    "grounded_ats_issue_copy_implemented": true,
+    "grounded_overall_impression_templates_implemented": true,
+    "no_raw_cv_text_in_fixture": true,
+    "parser_snapshots_match_real_pdfs": true,
+    "phase51_5_51_6_regression_tests_exist": true,
+    "phase51_7_regression_tests_exist": true,
+    "real_pdf_parser_repairs_implemented": true,
+    "required_upload_matrix_locked": true,
+    "role_specific_job_fit_evidence": true,
+    "score_ranges_recorded": true,
+    "unit_tests_pass": true
+  },
+  "generatedAt": "2026-06-04T19:47:32Z",
+  "phaseId": "phase_51_ai_cv_analyzer_benchmark_driven_output_quality",
+  "remainingPhase51Steps": [],
+  "roleSpecificEvidence": {
+    "phase51-data-analyst": {
+      "matchedSkills": [
+        "sql"
+      ],
+      "missingSkills": [
+        "build kpi dashboards",
+        "clean datasets",
+        "dashboard reporting",
+        "data analysis",
+        "excel",
+        "explain trends to stakeholders",
+        "power bi"
+      ]
+    },
+    "phase51-product-manager": {
+      "matchedSkills": [],
+      "missingSkills": [
+        "agile",
+        "communication skills",
+        "coordinate cross-functional delivery",
+        "data analysis",
+        "product management",
+        "project management",
+        "track product metrics",
+        "write product requirements"
+      ]
+    },
+    "phase51-software-engineer": {
+      "matchedSkills": [
+        "docker",
+        "javascript",
+        "node.js",
+        "react",
+        "sql"
+      ],
+      "missingSkills": [
+        "collaborate with product and design",
+        "debug production issues",
+        "develop maintainable software"
+      ]
+    }
+  },
+  "schemaVersion": "phase-51-ai-cv-analyzer-benchmark-output-quality-v4",
+  "scope": "steps_51_1_51_7",
+  "status": "complete",
+  "testResult": {
+    "command": "python -m unittest tests.test_phase_51_ai_cv_analyzer_benchmark_output_quality",
+    "returncode": 0,
+    "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 35.816s\n\nOK",
+    "stdout": ""
+  }
+}
