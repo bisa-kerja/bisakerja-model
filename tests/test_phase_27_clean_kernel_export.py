@@ -27,7 +27,7 @@ class Phase27CleanKernelExportTest(unittest.TestCase):
         self.assertFalse(gates["gradient_tape_loop_no_model_fit"]["evidence"]["uses_model_fit"])
         self.assertGreaterEqual(gates["tensorboard_events_recorded"]["evidence"]["event_file_count"], 1)
 
-    def test_production_ready_is_blocked_until_clean_git_and_phase25_production_status(self) -> None:
+    def test_production_ready_passes_with_clean_git_and_phase25_production_status(self) -> None:
         report = build_report()
         gates = {item["check"]: item for item in report["gates"]}
 
