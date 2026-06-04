@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
   workflow_dispatch:
     inputs:
       deploy_branch:
@@ -222,6 +221,27 @@ jobs:
             exit 1
           fi
 
+          env_value() {
+            awk -F= -v key="$1" '
+              $1 == key {
+                value=$2
+                for (i=3; i<=NF; i++) value=value "=" $i
+                gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+                gsub(/^"|"$/, "", value)
+                gsub(/^'\''|'\''$/, "", value)
+                print value
+                exit
+              }
+            ' "$RUNTIME_ENV_FILE"
+          }
+
+          warmup_required="$(env_value MODEL_API_WARMUP_REQUIRED)"
+          warmup_on_startup="$(env_value MODEL_API_WARMUP_ON_STARTUP)"
+          if [ "$warmup_required" = "true" ] && [ "$warmup_on_startup" != "true" ]; then
+            echo "MODEL_API_WARMUP_REQUIRED=true requires MODEL_API_WARMUP_ON_STARTUP=true for deploy readiness gate" >&2
+            exit 1
+          fi
+
           printf '%s' '${{ secrets.GHCR_READ_PACKAGES_TOKEN }}' | docker login ghcr.io -u '${{ secrets.GH_USERNAME }}' --password-stdin
 
           if [ '${{ env.STOP_MODEL_API_BEFORE_PULL }}' = 'true' ]; then
@@ -276,7 +296,7 @@ jobs:
             fi
             if [ "$attempt" = "1" ] || [ $((attempt % 12)) -eq 0 ]; then
               echo "Waiting for Model API /ready... attempt=${attempt}/120"
-              curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/health" || true
+              curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/ready" || true
             fi
             sleep 5
           done
