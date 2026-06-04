@@ -305,6 +305,12 @@ jobs:
           fi
 
           docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
+          MODEL_API_IMAGE="$MODEL_API_IMAGE" \
+          MODEL_API_PORT="$MODEL_API_PORT" \
+          MODEL_API_ENV_FILE="$RUNTIME_ENV_FILE" \
+          COMPOSE_PROJECT_NAME="$COMPOSE_PROJECT_NAME" \
+            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" exec -T model-api \
+              python -c "import sentence_transformers; print('sentence-transformers', sentence_transformers.__version__)"
           curl -fsS --connect-timeout 2 --max-time 10 "http://127.0.0.1:${MODEL_API_PORT}/health" || true
 
           ready_ok=0

@@ -284,8 +284,10 @@ class SentenceTransformerE5Embedder:
                 return self._model
             try:
                 from sentence_transformers import SentenceTransformer  # type: ignore[import-not-found]
+            except ModuleNotFoundError as exc:  # pragma: no cover - optional runtime dependency
+                raise FeatureBuildError(f"sentence-transformers dependency missing for {self.model_name} embeddings: {exc}") from exc
             except Exception as exc:  # pragma: no cover - optional runtime dependency
-                raise FeatureBuildError(f"sentence-transformers dependency missing for {self.model_name} embeddings") from exc
+                raise FeatureBuildError(f"sentence-transformers import failed for {self.model_name} embeddings: {exc!r}") from exc
             self._model = SentenceTransformer(self.model_name)
             return self._model
 
