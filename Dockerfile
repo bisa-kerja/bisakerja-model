@@ -9,7 +9,9 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -m -u 1000 user
+RUN useradd -m -u 1000 user \
+    && mkdir -p /home/user/.cache/sentence-transformers \
+    && chown -R user:user /home/user/.cache
 
 USER user
 ENV HOME=/home/user \
@@ -25,7 +27,8 @@ ENV HOME=/home/user \
     MODEL_API_MAX_PDF_PAGES=10 \
     MODEL_API_ENABLE_GENAI_WRAPPER=false \
     CUDA_VISIBLE_DEVICES=-1 \
-    TF_CPP_MIN_LOG_LEVEL=2
+    TF_CPP_MIN_LOG_LEVEL=2 \
+    SENTENCE_TRANSFORMERS_HOME=/home/user/.cache/sentence-transformers
 
 WORKDIR $HOME/app
 

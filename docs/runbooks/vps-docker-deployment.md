@@ -120,8 +120,9 @@ Workflow steps:
 7. Stop existing `model-api` before pull when `STOP_MODEL_API_BEFORE_PULL=true` to free disk on small VPS volumes.
 8. Prune unused Docker containers, images, and build cache.
 9. Restart `model-api` with Docker Compose.
-10. Poll `http://127.0.0.1:3004/health`.
-11. Print compose diagnostics on failure.
+10. Poll `http://127.0.0.1:3004/live` as the deploy success gate.
+11. Wait for `/ready`; if not ready yet, leave service running and print diagnostics because model loading continues in the background.
+12. Print compose diagnostics on failure.
 
 ## Nginx Reverse Proxy
 
@@ -152,6 +153,7 @@ docker compose -f docker-compose.production.yml --env-file .env.production ps
 
 docker compose -f docker-compose.production.yml --env-file .env.production logs --tail=150 model-api
 
+curl -fsS http://127.0.0.1:3004/live
 curl -fsS http://127.0.0.1:3004/health
 curl -fsS http://127.0.0.1:3004/ready
 ```
@@ -170,17 +172,17 @@ COMPOSE_PROJECT_NAME=bisakerja-model-api \
 
 `docker-compose.production.yml` supports these optional env overrides:
 
-| Env var                  | Default                                   | Purpose                                     |
-| ------------------------ | ----------------------------------------- | ------------------------------------------- |
-| `MODEL_API_IMAGE`        | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                               |
-| `MODEL_API_BIND_ADDRESS` | `127.0.0.1`                               | Local host bind address for Nginx upstream. |
-| `MODEL_API_PORT`         | `3004`                                    | Host port mapped to container port `7860`.  |
-| `MODEL_API_ENV_FILE`     | `.env.production`                         | Compose env file path.                      |
-| `MODEL_API_MEM_LIMIT`    | `8g`                                      | Container memory limit.                     |
-| `MODEL_API_CPUS`         | `3.0`                                     | Container CPU quota.                        |
-| `COMPOSE_PROJECT_NAME`   | `bisakerja-model-api`                     | Compose project name.                       |
+| Env var                      | Default                                   | Purpose                                              |
+| ---------------------------- | ----------------------------------------- | ---------------------------------------------------- |
+| `MODEL_API_IMAGE`            | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                                        |
+| `MODEL_API_BIND_ADDRESS`     | `127.0.0.1`                               | Local host bind address for Nginx upstream.          |
+| `MODEL_API_PORT`             | `3004`                                    | Host port mapped to container port `7860`.           |
+| `MODEL_API_ENV_FILE`         | `.env.production`                         | Compose env file path.                               |
+| `MODEL_API_MEM_LIMIT`        | `8g`                                      | Container memory limit.                              |
+| `SENTENCE_TRANSFORMERS_HOME` | `/home/user/.cache/sentence-transformers` | Persistent E5 cache path mounted to a Docker volume. |
+| `COMPOSE_PROJECT_NAME`       | `bisakerja-model-api`                     | Compose project name.                                |
 
-For a 4 vCPU / 12 GB VPS, keep defaults first. Increase `MODEL_API_TIMEOUT_MS` before raising CPU/memory limits.
+For a 4 vCPU / 12 GB VPS, keep defaults first. Increase `MODEL_API_TIMEOUT_MS` before raising memory limits. The compose file intentionally does not set Docker CPU quota because some VPS kernels/cgroup drivers reject `cpu.cfs_quota_us` writes.
 
 ## Rollback
 
@@ -197,6 +199,7 @@ COMPOSE_PROJECT_NAME=bisakerja-model-api \
 Then verify:
 
 ```bash
+curl -fsS http://127.0.0.1:3004/live
 curl -fsS http://127.0.0.1:3004/health
 ```
 
@@ -205,7 +208,9 @@ curl -fsS http://127.0.0.1:3004/health
 - `MODEL_API_ENV mismatch for deploy`: update `DEPLOY_ENV_FILE` so it contains `MODEL_API_ENV=production`, or change `EXPECTED_MODEL_API_ENV` in the workflow for a non-production target. GitHub may mask the found value as `***` when it matches a secret.
 - Build fails on dependency install: check Python/TensorFlow wheel compatibility for image platform. The Dockerfile installs CPU-only `torch` before `sentence-transformers` to avoid CUDA-sized layers.
 - `no space left on device` during image pull/extract: run `docker system df`, then `docker image prune -af` and `docker builder prune -af`. The workflow defaults `STOP_MODEL_API_BEFORE_PULL=true`, causing short deploy downtime so the old image can be removed before pulling the new image.
+- `cpu.cfs_quota_us: invalid argument`: remove Docker CPU quota. Current compose intentionally does not set `cpus` for VPS compatibility.
 - Container exits during startup: inspect `docker compose logs --tail=150 model-api`.
-- Health fails but container runs: wait for TensorFlow and E5 model load, then check `/ready`.
+- `/live` fails: process/proxy is down; inspect container logs and Nginx logs.
+- `/health` works but `/ready` is false: wait for TensorFlow and E5 model load; inference should retry on `503 MODEL_NOT_READY`.
 - Out-of-memory symptoms: add swap, reduce concurrency from Backend, keep `MODEL_API_MEM_LIMIT=8g`, inspect `docker stats`.
 - Public timeout: keep Backend request timeout above `MODEL_API_TIMEOUT_MS`; if adding reverse proxy later, keep public listener on port `3004`.

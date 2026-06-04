@@ -249,18 +249,39 @@ jobs:
             docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" up -d --remove-orphans model-api
 
           for attempt in $(seq 1 40); do
-            if curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/health" >/dev/null; then
-              docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
-              docker image prune -af --filter "until=24h"
-              docker builder prune -af --filter "until=24h" || true
-              exit 0
+            if curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/live" >/dev/null; then
+              break
             fi
             sleep 5
           done
 
+          if ! curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/live" >/dev/null; then
+            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
+            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" logs --tail=150 model-api
+            exit 1
+          fi
+
           docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" ps model-api
-          docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" logs --tail=150 model-api
-          exit 1
+          curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/health" || true
+
+          ready_ok=0
+          for attempt in $(seq 1 60); do
+            if curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/ready" | grep -q '"ready":true'; then
+              ready_ok=1
+              break
+            fi
+            sleep 5
+          done
+
+          if [ "$ready_ok" -ne 1 ]; then
+            echo "Model API live but not ready yet after readiness wait; leaving service running for background load." >&2
+            curl -fsS "http://127.0.0.1:${MODEL_API_PORT}/ready" || true
+            docker compose -f "$COMPOSE_FILE" --env-file "$RUNTIME_ENV_FILE" logs --tail=80 model-api
+          fi
+
+          docker image prune -af --filter "until=24h"
+          docker builder prune -af --filter "until=24h" || true
+          exit 0
           REMOTE_SCRIPT
 
       - name: Collect remote diagnostics on failure
