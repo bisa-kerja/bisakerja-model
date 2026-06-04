@@ -911,6 +911,8 @@ def create_app(
 
     @app.post("/internal/model/cv-analysis")
     async def internal_model_cv_analysis(http_request: Request):
+        request_id = http_request.headers.get("x-request-id", "")
+        LOGGER.info("Model API cv-analysis request received request_id=%s", request_id)
         auth_error = _authorize_internal_request(http_request.headers, runtime_config)
         if auth_error is not None:
             return JSONResponse(status_code=401, content=auth_error)
@@ -928,6 +930,13 @@ def create_app(
         _validate_pdf_upload_bytes(pdf_bytes, runtime_config)
         payload = _build_cv_payload_from_multipart(form, pdf_bytes, runtime_config)
         parsed_pdf_evidence = payload.pop("_parsedPdfEvidence")
+        job_candidates = payload.get("jobCandidates")
+        LOGGER.info(
+            "Model API cv-analysis payload built request_id=%s cv_bytes=%s candidate_count=%s",
+            request_id,
+            len(pdf_bytes),
+            len(job_candidates) if isinstance(job_candidates, list) else None,
+        )
         request = parse_cv_analysis_model_core_request(payload)
         include_observability = http_request.headers.get("x-model-api-include-observability") == "true"
         data = build_cv_analysis_response_payload(
@@ -963,6 +972,7 @@ def create_app(
             data["atsFriendliness"]["parseQuality"] = parse_quality if parse_quality in {"high", "medium", "low", "failed"} else "low"
             data["atsFriendliness"]["evidence"] = ["deterministic_pdf_parser"]
         validate_model_core_payload(data, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
+        LOGGER.info("Model API cv-analysis completed request_id=%s", request_id)
         return data
 
     return app
