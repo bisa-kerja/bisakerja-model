@@ -1,0 +1,73 @@
+{
+  "artifact_switch": {
+    "new": {
+      "embedding_model": "intfloat/multilingual-e5-small",
+      "root": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh"
+    },
+    "rollback": {
+      "embedding_model": "intfloat/e5-base-v2",
+      "root": "artifacts/phase_25_tensorflow_training_delivery"
+    }
+  },
+  "blockers": [],
+  "checks": {
+    "backend_public_smoke_supported": true,
+    "failure_behavior_matrix_defined": true,
+    "phase25_rollback_artifact_preserved": true,
+    "phase46_artifact_selected_for_staging": true,
+    "phase47_runtime_support_complete": true,
+    "readiness_metadata_gate_documented": true,
+    "rollback_commands_frozen": true,
+    "secrets_redacted_in_evidence": true,
+    "shadow_compare_and_allowed_deltas_defined": true,
+    "staging_deploy_env_documented": true,
+    "warmup_and_direct_model_smoke_supported": true
+  },
+  "commands": {
+    "phase48_backend_public_smoke": "python scripts/run_phase_48_backend_staging_shadow.py --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --backend-api-url ${BACKEND_API_URL} --user-access-token ${USER_ACCESS_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --output reports/phase_48_backend_staging_shadow_report.json",
+    "phase48_gate": "python scripts/verify_phase_48_backend_staging_integration.py --write",
+    "phase48_new_model_api_smoke": "python scripts/run_phase_48_backend_staging_shadow.py --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --output reports/phase_48_backend_staging_shadow_report.json",
+    "phase48_shadow_compare": "python scripts/run_phase_48_backend_staging_shadow.py --old-model-api-url ${OLD_MODEL_API_URL} --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --score-delta-threshold 5 --output reports/phase_48_backend_staging_shadow_report.json",
+    "rollback_to_phase25": "MODEL_API_ARTIFACT_ROOT=artifacts/phase_25_tensorflow_training_delivery MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/e5-base-v2 docker compose -f docker-compose.production.yml --env-file .env.production up -d --remove-orphans model-api"
+  },
+  "generated_at": "2026-06-04T09:21:54Z",
+  "git": {
+    "commit": "5fa718b4f9b84643e99ec5273aea45231f725ac4",
+    "dirty_file_count": 7,
+    "dirty_sample": [
+      "?? BRAINSTORMING.md",
+      "?? docs/runbooks/backend-staging-shadow-rollback.md",
+      "?? reports/phase_48_backend_staging_integration.json",
+      "?? reports/phase_48_backend_staging_integration.md",
+      "?? scripts/run_phase_48_backend_staging_shadow.py",
+      "?? scripts/verify_phase_48_backend_staging_integration.py",
+      "?? tests/test_phase_48_backend_staging_integration.py"
+    ]
+  },
+  "live_staging_evidence_required": [
+    "Deploy staging Model API revision with Phase 46 artifact env.",
+    "Run readiness probes and record /model-info metadata.",
+    "Run direct Model API multipart smoke.",
+    "Run Backend public AI CV Analyzer smoke with non-production token.",
+    "Run old-vs-new shadow comparison over frozen fixtures.",
+    "Run rollback drill to Phase 25 E5-base artifact path."
+  ],
+  "operator_execution_required": true,
+  "phase_id": "phase_48_backend_staging_integration_shadow_rollback",
+  "schema_version": "phase-48-backend-staging-integration-v1",
+  "sources": [
+    "docs/runbooks/backend-staging-shadow-rollback.md",
+    "scripts/run_phase_48_backend_staging_shadow.py",
+    "reports/phase_47_model_api_runtime_support.json",
+    "reports/phase_46_calibration_model_card_manifest_handoff_refresh.json",
+    "artifacts/phase_43_multilingual_e5_small_migration/migration_decision_risk_register.json",
+    "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+    "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json",
+    "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+    "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json",
+    "GAP_MODEL_TRAINING.md",
+    "REQUIREMENT.md",
+    "TODOS.md"
+  ],
+  "status": "ready_for_staging_execution"
+}
