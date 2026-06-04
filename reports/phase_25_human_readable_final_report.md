@@ -1,14 +1,14 @@
 # Phase 25 Final Human-Readable Report
 
-Generated at: `2026-06-03T01:45:43.809468+00:00`
+Generated at: `2026-06-04T04:40:07.475477+00:00`
 
 ## Final decision
 
-- Status: **staging-ready**
+- Status: **production-ready**
 - Model version: `jobfit_tf_phase25_gradient_tape_v1`
 - Model API: `Keras Functional API`
 - Score scale: training `0-1`, API `0-100`
-- Production cap: dirty worktree at export blocks production-ready claim
+- Production cap: no dirty-worktree cap detected
 
 ## Requirement compliance
 
@@ -45,11 +45,11 @@ Generated at: `2026-06-03T01:45:43.809468+00:00`
 
 | Gate | Status |
 |---|---|
-| final_status | staging-ready |
+| final_status | production-ready |
 | all_strict_checks_passed | PASS |
 | production_selection_passed | PASS |
 | strict_failure_count | 0 |
-| git_dirty_at_export | WARN |
+| git_dirty_at_export | PASS |
 | baseline_readiness_cap | production-ready |
 
 ## Calibration and manifest checks
@@ -65,12 +65,12 @@ Generated at: `2026-06-03T01:45:43.809468+00:00`
 
 | Artifact | Path |
 |---|---|
-| final_model | artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras |
-| model_card | artifacts/phase_25_tensorflow_training_delivery/model_card.json |
-| artifact_manifest | artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json |
-| tensorboard_log_root | artifacts/tensorboard/phase_25_tensorflow_training_delivery |
-| api_handoff_fixtures | artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json |
-| api_handoff_validation | artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json |
+| final_model | artifacts\phase_25_tensorflow_training_delivery\export\selected_jobfit_tf_phase25.keras |
+| model_card | artifacts\phase_25_tensorflow_training_delivery\model_card.json |
+| artifact_manifest | artifacts\phase_25_tensorflow_training_delivery\artifact_manifest.json |
+| tensorboard_log_root | artifacts\tensorboard\phase_25_tensorflow_training_delivery |
+| api_handoff_fixtures | artifacts\phase_25_tensorflow_training_delivery\export\model_api_handoff_fixtures.json |
+| api_handoff_validation | artifacts\phase_25_tensorflow_training_delivery\export\model_api_handoff_validation.json |
 
 ## Model API handoff
 
@@ -90,10 +90,11 @@ Files:
 ## Known limitations
 
 - Automated hiring decision, rejection, eligibility, salary, or protected-class inference.
-- Production score claims without replacing fixture/weak-label evidence with validated labels.
-- Backend-owned persistence, auth, job hydration, or GenAI wrapper output generation.
+- Production score claims without frozen human/reviewer validation coverage.
+- Backend-owned persistence, auth, DB hydration, or GenAI wrapper output generation.
+- Scoring candidate jobs not supplied by the backend request.
 
 ## Next action
 
-- Commit or otherwise freeze the clean-run artifacts before claiming production-ready status.
+- Ready for artifact promotion review.
 
