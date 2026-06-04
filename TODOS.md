@@ -1468,7 +1468,7 @@ Verification:
 
 ### Phase 45 — TensorFlow Retraining with multilingual-e5-small Features
 
-Status: Planned
+Status: Complete
 
 Goal: Train a new TensorFlow scorer using multilingual-E5-small-derived features, preserving the Phase 25 model-core contract while producing a new artifact version.
 
@@ -1480,23 +1480,30 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 45.1: Create migration notebook — Add a new notebook such as `training/notebooks/phase_45_multilingual_e5_small_training_delivery.ipynb` with required English Markdown sections: Purpose, Required input, Action, Expected output, Verification.
-- [ ] Step 45.2: Freeze inputs — Use the same frozen dataset, labels, splits, pair IDs, human validation labels, ATS benchmark, and backend candidate fixtures as Phase 25 unless a documented update is approved.
-- [ ] Step 45.3: Generate approved features — Rebuild `e5_cosine`, `skill_overlap`, `requirement_coverage`, `role_match`, `experience_match`, and `experience_gap_years_clipped` using multilingual-E5-small embeddings.
-- [ ] Step 45.4: Recompute normalization stats — Generate new train-split mean/std for every approved feature and write a new `tensorflow_feature_config.json` with embedding model metadata.
-- [ ] Step 45.5: Train TensorFlow model — Use TensorFlow Functional API or subclassing plus existing custom components and `tf.GradientTape`; do not use `model.fit()` for the main training path.
-- [ ] Step 45.6: Compare baselines — Compare against constant, skill-only, E5-base Phase 25 scorer, cosine-only multilingual-E5-small, and previous selected scorer.
-- [ ] Step 45.7: Evaluate quality metrics — Record MAE, RMSE, R², Spearman, score-band agreement, high-fit recall, NDCG/MAP for candidate reranking, and slice metrics by role/language/experience/pair type.
-- [ ] Step 45.8: Evaluate Indonesian behavior — Include dedicated ID and mixed-language CV/job examples to ensure multilingual migration improves or preserves practical staging behavior.
-- [ ] Step 45.9: Export TensorBoard evidence — Write bounded TensorBoard logs under the new artifact namespace and record hash/byte-size metadata.
-- [ ] Step 45.10: Select or reject model — Select the new model only if it meets predefined thresholds; otherwise keep E5-base as selected and record rejection evidence.
+- [x] Step 45.1: Create migration notebook — Add a new notebook such as `training/notebooks/phase_45_multilingual_e5_small_training_delivery.ipynb` with required English Markdown sections: Purpose, Required input, Action, Expected output, Verification.
+- [x] Step 45.2: Freeze inputs — Use the same frozen dataset, labels, splits, pair IDs, human validation labels, ATS benchmark, and backend candidate fixtures as Phase 25 unless a documented update is approved.
+- [x] Step 45.3: Generate approved features — Rebuild `e5_cosine`, `skill_overlap`, `requirement_coverage`, `role_match`, `experience_match`, and `experience_gap_years_clipped` using multilingual-E5-small embeddings.
+- [x] Step 45.4: Recompute normalization stats — Generate new train-split mean/std for every approved feature and write a new `tensorflow_feature_config.json` with embedding model metadata.
+- [x] Step 45.5: Train TensorFlow model — Use TensorFlow Functional API or subclassing plus existing custom components and `tf.GradientTape`; do not use `model.fit()` for the main training path.
+- [x] Step 45.6: Compare baselines — Compare against constant, skill-only, E5-base Phase 25 scorer, cosine-only multilingual-E5-small, and previous selected scorer.
+- [x] Step 45.7: Evaluate quality metrics — Record MAE, RMSE, R², Spearman, score-band agreement, high-fit recall, NDCG/MAP for candidate reranking, and slice metrics by role/language/experience/pair type.
+- [x] Step 45.8: Evaluate Indonesian behavior — Include dedicated ID and mixed-language CV/job examples to ensure multilingual migration improves or preserves practical staging behavior.
+- [x] Step 45.9: Export TensorBoard evidence — Write bounded TensorBoard logs under the new artifact namespace and record hash/byte-size metadata.
+- [x] Step 45.10: Select or reject model — Select the new model only if it meets predefined thresholds; otherwise keep E5-base as selected and record rejection evidence.
 
 Acceptance Criteria:
 
-- [ ] New training notebook runs from a clean Python 3.13 kernel without hidden state.
-- [ ] New feature config records `intfloat/multilingual-e5-small` and new normalization stats.
-- [ ] TensorFlow model is trained and evaluated with the same or stricter gates as Phase 25.
-- [ ] New model is selected only when quality and slice metrics pass staging thresholds.
+- [x] New training notebook runs from a clean Python 3.13 kernel without hidden state.
+- [x] New feature config records `intfloat/multilingual-e5-small` and new normalization stats.
+- [x] TensorFlow model is trained and evaluated with the same or stricter gates as Phase 25.
+- [x] New model is selected only when quality and slice metrics pass staging thresholds.
+
+Verification:
+
+- [x] `training/.tf-venv-3.13/bin/python scripts/verify_phase_45_multilingual_e5_small_training_delivery.py --write` — passed 2026-06-04.
+- [x] `training/.tf-venv-3.13/bin/python - <<'PY' ... nbclient.NotebookClient(...).execute()` — clean-kernel notebook execution passed 2026-06-04.
+- [x] `.venv/bin/python scripts/verify_phase_45_multilingual_e5_small_training_delivery.py` — passed 2026-06-04.
+- [x] `.venv/bin/python -m unittest tests.test_phase_45_multilingual_e5_small_training_delivery` — 4 tests passed 2026-06-04.
 
 ---
 

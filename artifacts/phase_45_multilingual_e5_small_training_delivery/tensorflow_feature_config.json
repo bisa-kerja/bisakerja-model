@@ -1,0 +1,101 @@
+{
+  "approved_features": [
+    "e5_cosine",
+    "skill_overlap",
+    "requirement_coverage",
+    "role_match",
+    "experience_match",
+    "experience_gap_years_clipped"
+  ],
+  "embedding_model_metadata": {
+    "embedding_dimension": 384,
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "job_prefix": "passage:",
+    "normalized_embeddings": true,
+    "profile_prefix": "query:",
+    "source_phase": "phase_44_embedding_compatibility_audit"
+  },
+  "feature_matrix": {
+    "feature_count": 6,
+    "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_training_features_v1.npz",
+    "row_count": 3600,
+    "sha256": "0a57064e73f5cf61b79d675e983d133c015a5d69e5baf72452f5ff12b9afe2ee",
+    "split_counts": {
+      "test": 540,
+      "train": 2520,
+      "validation": 540
+    },
+    "target_max": 1.0,
+    "target_min": 0.0
+  },
+  "feature_policy": {
+    "feature_order_changed_from_phase25": false,
+    "normalization_fit_split": "train",
+    "only_e5_cosine_source_changed_from_phase25": true,
+    "uses_e5_derived_similarity": true,
+    "uses_manual_human_labels_as_training_features": false,
+    "uses_raw_embedding_vectors": false,
+    "uses_wrapper_or_backend_owned_fields": false
+  },
+  "generated_at": "2026-06-04T08:31:33Z",
+  "model_name": "bisakerja_jobfit_tf_phase45_multilingual_e5_small_v1",
+  "model_version": "jobfit_tf_phase45_multilingual_e5_small_v1",
+  "normalization": {
+    "mean": {
+      "e5_cosine": 0.8497282266616821,
+      "experience_gap_years_clipped": 2.772420644760132,
+      "experience_match": 0.5379295945167542,
+      "requirement_coverage": 0.28649988770484924,
+      "role_match": 0.6666666865348816,
+      "skill_overlap": 0.11912918090820312
+    },
+    "std": {
+      "e5_cosine": 0.02291564643383026,
+      "experience_gap_years_clipped": 2.0281004905700684,
+      "experience_match": 0.3380166292190552,
+      "requirement_coverage": 0.2504648268222809,
+      "role_match": 0.4714072346687317,
+      "skill_overlap": 0.11099912226200104
+    }
+  },
+  "phase_id": "phase_45_multilingual_e5_small_training_delivery",
+  "schema_version": "phase-45-multilingual-e5-small-training-delivery-v1",
+  "source_artifacts": {
+    "phase25_dataset_manifest": {
+      "exists": true,
+      "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+      "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
+      "size_bytes": 7633
+    },
+    "phase25_label_manifest": {
+      "exists": true,
+      "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+      "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
+      "size_bytes": 5900
+    },
+    "phase25_tensorflow_feature_config": {
+      "exists": true,
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
+      "size_bytes": 2029
+    },
+    "phase44_decision": {
+      "exists": true,
+      "path": "artifacts/phase_44_embedding_compatibility_audit/retrain_vs_recalibrate_decision.json",
+      "sha256": "88dd4ad1223aad1d4bc6318d06427641867f3af600633c6297255e42e07308d1",
+      "size_bytes": 1208
+    },
+    "phase44_pair_features": {
+      "exists": true,
+      "path": "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_pair_features.json",
+      "sha256": "89771300790a1afc25e09a7f70e6aa94ef1372c18732f59086043430234d0f0b",
+      "size_bytes": 2700489
+    }
+  },
+  "target": {
+    "api_scale": "0-100",
+    "api_transform": "score_0_100 = score_0_1 * 100",
+    "column": "job_fit_score",
+    "training_scale": "0-1"
+  }
+}

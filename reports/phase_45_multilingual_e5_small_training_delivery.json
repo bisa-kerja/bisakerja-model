@@ -1,0 +1,93 @@
+{
+  "artifact_paths": {
+    "baseline_comparison": "artifacts/phase_45_multilingual_e5_small_training_delivery/baseline_comparison.json",
+    "feature_config": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_feature_config.json",
+    "feature_matrix": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_training_features_v1.npz",
+    "model": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_trained_candidate.keras",
+    "selection_decision": "artifacts/phase_45_multilingual_e5_small_training_delivery/selection_decision.json",
+    "tensorboard_manifest": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorboard_monitoring_manifest.json",
+    "training_evaluation": "artifacts/phase_45_multilingual_e5_small_training_delivery/training_evaluation.json"
+  },
+  "blockers": [],
+  "checks": {
+    "approved_feature_contract_preserved": true,
+    "custom_components_present": true,
+    "feature_config_records_multilingual_e5_small": true,
+    "gradient_tape_training_used": true,
+    "indonesian_behavior_recorded": true,
+    "notebook_exists_with_required_markdown": true,
+    "phase25_artifacts_not_mutated_by_namespace": true,
+    "ranking_metrics_present": true,
+    "required_metrics_present": true,
+    "selection_or_rejection_recorded": true,
+    "tensorboard_manifest_has_event_file_hashes": true,
+    "train_split_normalization_written": true
+  },
+  "generated_at": "2026-06-04T08:32:45Z",
+  "git_state": {
+    "commit": "f34e6c39bf963a26bc04ec44db4306614af28da3",
+    "dirty_file_count": 8,
+    "dirty_sample": [
+      "M TODOS.md",
+      "?? BRAINSTORMING.md",
+      "?? artifacts/phase_45_multilingual_e5_small_training_delivery/",
+      "?? reports/phase_45_multilingual_e5_small_training_delivery.json",
+      "?? reports/phase_45_multilingual_e5_small_training_delivery.md",
+      "?? scripts/verify_phase_45_multilingual_e5_small_training_delivery.py",
+      "?? tests/test_phase_45_multilingual_e5_small_training_delivery.py",
+      "?? training/notebooks/phase_45_multilingual_e5_small_training_delivery.ipynb"
+    ],
+    "production_claim_allowed": false
+  },
+  "phase_id": "phase_45_multilingual_e5_small_training_delivery",
+  "schema_version": "phase-45-multilingual-e5-small-training-delivery-v1",
+  "selection_decision": "select_for_staging_shadow_validation",
+  "selection_failures": [],
+  "source_files": [
+    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
+    "REQUIREMENT.md",
+    "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_pair_features.json",
+    "artifacts/phase_44_embedding_compatibility_audit/retrain_vs_recalibrate_decision.json",
+    "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json"
+  ],
+  "status": "complete",
+  "summary": {
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "feature_count": 6,
+    "row_count": 3600,
+    "split_counts": {
+      "test": 540,
+      "train": 2520,
+      "validation": 540
+    },
+    "test_metrics": {
+      "high_fit_recall": 0.94444444,
+      "loss": 0.00014651,
+      "mae": 0.0070744,
+      "mae_0_100": 0.70744,
+      "predicted_high_count": 85,
+      "r2": 0.9941131,
+      "rmse": 0.022366,
+      "rmse_0_100": 2.2366,
+      "row_count": 540,
+      "score_band_agreement": 0.98888889,
+      "spearman": 0.9955746,
+      "true_high_count": 90
+    },
+    "validation_metrics": {
+      "high_fit_recall": 0.93333333,
+      "loss": 0.00016084,
+      "mae": 0.00741753,
+      "mae_0_100": 0.741753,
+      "predicted_high_count": 85,
+      "r2": 0.98998901,
+      "rmse": 0.02963539,
+      "rmse_0_100": 2.963539,
+      "row_count": 540,
+      "score_band_agreement": 0.98518519,
+      "spearman": 0.99543045,
+      "true_high_count": 90
+    }
+  }
+}

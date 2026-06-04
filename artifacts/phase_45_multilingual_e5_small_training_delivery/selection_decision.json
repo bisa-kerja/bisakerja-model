@@ -1,0 +1,19 @@
+{
+  "generated_at": "2026-06-04T08:31:33Z",
+  "phase_id": "phase_45_multilingual_e5_small_training_delivery",
+  "schema_version": "phase-45-multilingual-e5-small-training-delivery-v1",
+  "selection_checks": {
+    "test_high_fit_recall_min": true,
+    "test_mae_le_0_02": true,
+    "test_phase25_mae_non_regression": true,
+    "test_r2_min": true,
+    "test_score_band_agreement_min": true,
+    "validation_high_fit_recall_min": true,
+    "validation_mae_le_0_02": true,
+    "validation_phase25_mae_non_regression": true,
+    "validation_r2_min": true,
+    "validation_score_band_agreement_min": true
+  },
+  "selection_decision": "select_for_staging_shadow_validation",
+  "selection_failures": []
+}

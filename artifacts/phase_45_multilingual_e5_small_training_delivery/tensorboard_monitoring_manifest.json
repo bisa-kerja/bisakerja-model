@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-06-04T08:31:33Z",
+  "phase_id": "phase_45_multilingual_e5_small_training_delivery",
+  "schema_version": "phase-45-multilingual-e5-small-training-delivery-v1",
+  "status": "complete",
+  "tensorboard": {
+    "event_file_count": 6,
+    "event_files": [
+      {
+        "exists": true,
+        "path": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery/jobfit_tf_phase45_multilingual_e5_small_v1_20260604T082658/events.out.tfevents.1780561648.Macbook-Pro-M1-Pro.local.21205.0.v2",
+        "sha256": "24c4e57224535e019e4c5fb69bb6d52cc1c2c569f4047dfff7ea75da03479a93",
+        "size_bytes": 76716
+      },
+      {
+        "exists": true,
+        "path": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery/jobfit_tf_phase45_multilingual_e5_small_v1_20260604T082846/events.out.tfevents.1780561730.Macbook-Pro-M1-Pro.local.28942.0.v2",
+        "sha256": "431a85b15ffca61b5192426e48aa22f813ea42ba9dc52ed29da3888f1138e8ed",
+        "size_bytes": 76716
+      },
+      {
+        "exists": true,
+        "path": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery/jobfit_tf_phase45_multilingual_e5_small_v1_20260604T082846/events.out.tfevents.1780561787.Macbook-Pro-M1-Pro.local.28942.1.v2",
+        "sha256": "7ca13a5ace44472ef92f625e9d2a0a2f28f2e9313c2f7a3c1a4c7d632914194e",
+        "size_bytes": 8104
+      },
+      {
+        "exists": true,
+        "path": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery/jobfit_tf_phase45_multilingual_e5_small_v1_20260604T082954/events.out.tfevents.1780561798.Macbook-Pro-M1-Pro.local.33177.0.v2",
+        "sha256": "cacb605d401b6b895e62ebb3f56b68e4a141404a3c3f45ed34db80a693c6d1af",
+        "size_bytes": 78
+      },
+      {
+        "exists": true,
+        "path": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery/jobfit_tf_phase45_multilingual_e5_small_v1_20260604T083133/events.out.tfevents.1780561897.Macbook-Pro-M1-Pro.local.42462.0.v2",
+        "sha256": "48505340e7400ac7e2a595b540fc802a30dd48a67d69647568c5aecbc4235f1a",
+        "size_bytes": 76716
+      },
+      {
+        "exists": true,
+        "path": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery/jobfit_tf_phase45_multilingual_e5_small_v1_20260604T083133/events.out.tfevents.1780561965.Macbook-Pro-M1-Pro.local.42462.1.v2",
+        "sha256": "ea213c7ebd3ba8ca706920050a6f9dc38bdfcf5e43fa7b03af9d724922876bba",
+        "size_bytes": 8104
+      }
+    ],
+    "log_root": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery",
+    "run_dir": "artifacts/tensorboard/phase_45_multilingual_e5_small_training_delivery/jobfit_tf_phase45_multilingual_e5_small_v1_20260604T083133",
+    "run_id": "jobfit_tf_phase45_multilingual_e5_small_v1_20260604T083133",
+    "total_event_bytes": 246434
+  },
+  "written_summaries": {
+    "histograms": [
+      "prediction_0_1",
+      "target_0_1",
+      "e5_cosine",
+      "skill_overlap",
+      "requirement_coverage",
+      "role_match",
+      "experience_match",
+      "experience_gap_years_clipped"
+    ],
+    "scalars": [
+      "loss/train",
+      "mae/train",
+      "loss/validation",
+      "mae/validation",
+      "final/*"
+    ]
+  }
+}
