@@ -1431,7 +1431,7 @@ Verification:
 
 ### Phase 44 — Embedding Compatibility Audit and Feature Drift Study
 
-Status: Planned
+Status: Complete
 
 Goal: Measure how `intfloat/multilingual-e5-small` changes text embeddings and `e5_cosine` features before retraining TensorFlow.
 
@@ -1443,21 +1443,26 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 44.1: Verify embedding model metadata — Record model name, library version, embedding dimension, normalized embedding behavior, prefix policy (`query:` and `passage:`), license/reference URL, cache path, and runtime hardware.
-- [ ] Step 44.2: Confirm dimension and finite values — Generate embeddings for representative profile/CV/job texts and verify expected dimension, finite values, deterministic normalization, and no fallback backend.
-- [ ] Step 44.3: Regenerate paired embedding cache — Build a small-to-full cache for the same frozen pair set used by Phase 25 using `intfloat/multilingual-e5-small`, stored under a new cache path.
-- [ ] Step 44.4: Compare cosine distributions — Compare E5-base vs multilingual-E5-small `e5_cosine` mean, std, min/max, percentiles, and histogram by split, language, role family, pair type, and score band.
-- [ ] Step 44.5: Analyze rank correlation — Compute Spearman/Pearson correlation between old and new cosine values and identify worst drift examples.
-- [ ] Step 44.6: Analyze multilingual slices — Compare Indonesian, English, mixed, and unknown-language examples; flag improvements/regressions for ID CVs and English job descriptions.
-- [ ] Step 44.7: Check feature normalization impact — Recompute the approved six-feature vectors and identify whether Phase 25 mean/std normalization remains invalid for new cosine distribution.
-- [ ] Step 44.8: Decide retrain vs recalibrate-only — Block direct artifact swap if cosine drift exceeds threshold or feature normalization changes materially.
+- [x] Step 44.1: Verify embedding model metadata — Record model name, library version, embedding dimension, normalized embedding behavior, prefix policy (`query:` and `passage:`), license/reference URL, cache path, and runtime hardware.
+- [x] Step 44.2: Confirm dimension and finite values — Generate embeddings for representative profile/CV/job texts and verify expected dimension, finite values, deterministic normalization, and no fallback backend.
+- [x] Step 44.3: Regenerate paired embedding cache — Build a small-to-full cache for the same frozen pair set used by Phase 25 using `intfloat/multilingual-e5-small`, stored under a new cache path.
+- [x] Step 44.4: Compare cosine distributions — Compare E5-base vs multilingual-E5-small `e5_cosine` mean, std, min/max, percentiles, and histogram by split, language, role family, pair type, and score band.
+- [x] Step 44.5: Analyze rank correlation — Compute Spearman/Pearson correlation between old and new cosine values and identify worst drift examples.
+- [x] Step 44.6: Analyze multilingual slices — Compare Indonesian, English, mixed, and unknown-language examples; flag improvements/regressions for ID CVs and English job descriptions.
+- [x] Step 44.7: Check feature normalization impact — Recompute the approved six-feature vectors and identify whether Phase 25 mean/std normalization remains invalid for new cosine distribution.
+- [x] Step 44.8: Decide retrain vs recalibrate-only — Block direct artifact swap if cosine drift exceeds threshold or feature normalization changes materially.
 
 Acceptance Criteria:
 
-- [ ] Embedding dimension, normalization, prefix behavior, and runtime dependency behavior are verified.
-- [ ] Old-vs-new `e5_cosine` drift is quantified across important slices.
-- [ ] Direct replacement without retraining is explicitly rejected unless drift evidence proves it safe.
-- [ ] Recommendation for retraining/recalibration is recorded with data, not assumptions.
+- [x] Embedding dimension, normalization, prefix behavior, and runtime dependency behavior are verified.
+- [x] Old-vs-new `e5_cosine` drift is quantified across important slices.
+- [x] Direct replacement without retraining is explicitly rejected unless drift evidence proves it safe.
+- [x] Recommendation for retraining/recalibration is recorded with data, not assumptions.
+
+Verification:
+
+- [x] `training/.tf-venv-3.13/bin/python scripts/verify_phase_44_embedding_compatibility_audit.py --write --allow-download --regenerate` — passed 2026-06-04.
+- [x] `.venv/bin/python -m unittest tests.test_phase_44_embedding_compatibility_audit` — 4 tests passed 2026-06-04.
 
 ---
 

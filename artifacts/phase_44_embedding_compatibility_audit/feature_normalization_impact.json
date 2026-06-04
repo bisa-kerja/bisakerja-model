@@ -1,0 +1,41 @@
+{
+  "approved_feature_order": [
+    "e5_cosine",
+    "skill_overlap",
+    "requirement_coverage",
+    "role_match",
+    "experience_match",
+    "experience_gap_years_clipped"
+  ],
+  "feature_contract_impact": {
+    "feature_order_changed": false,
+    "only_e5_cosine_source_changed": true,
+    "phase45_must_write_new_tensorflow_feature_config": true,
+    "six_feature_vector_recomputed": true
+  },
+  "generated_at": "2026-06-04T08:17:04Z",
+  "material_normalization_shift": true,
+  "mean_delta": 0.04807462039447963,
+  "mean_shift_std_units": 1.3892304578627181,
+  "multilingual_e5_small_train_cosine": {
+    "count": 2520,
+    "max": 0.9068382382392883,
+    "mean": 0.849728303580057,
+    "min": 0.7859638929367065,
+    "p05": 0.8143214464187621,
+    "p25": 0.83119136095047,
+    "p50": 0.8506752848625183,
+    "p75": 0.8661491125822067,
+    "p95": 0.8878830850124358,
+    "std": 0.022915645295038273
+  },
+  "normalization_decision": "phase25_mean_std_invalid_for_multilingual_e5_small",
+  "phase25_e5_cosine_normalization": {
+    "mean": 0.8016536831855774,
+    "std": 0.03460521623492241
+  },
+  "phase_id": "phase_44_embedding_compatibility_audit",
+  "schema_version": "phase-44-embedding-compatibility-audit-v1",
+  "status": "complete",
+  "std_ratio": 0.6622020547270149
+}

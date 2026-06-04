@@ -16,13 +16,14 @@ This directory stores files that are too operationally important to hide inside 
 
 ## Important Subdirectories
 
-| Path                                     | Purpose                                                         |
-| ---------------------------------------- | --------------------------------------------------------------- |
-| `phase_25_tensorflow_training_delivery/` | Current production-track training export and manifest set.      |
-| `backend_model_api_contract/`            | Backend/Model API internal contract fixtures and owner matrix.  |
-| `phase_27_validation_expansion/`         | ATS benchmark and recommendation validation expansion evidence. |
-| `manual_validation/`                     | Human-label governance files and frozen validation labels.      |
-| `ats_benchmark/`                         | CV benchmark fixtures for ATS readiness checks.                 |
+| Path                                      | Purpose                                                           |
+| ----------------------------------------- | ----------------------------------------------------------------- |
+| `phase_25_tensorflow_training_delivery/`  | Current production-track training export and manifest set.        |
+| `phase_44_embedding_compatibility_audit/` | multilingual-E5-small embedding drift and compatibility evidence. |
+| `backend_model_api_contract/`             | Backend/Model API internal contract fixtures and owner matrix.    |
+| `phase_27_validation_expansion/`          | ATS benchmark and recommendation validation expansion evidence.   |
+| `manual_validation/`                      | Human-label governance files and frozen validation labels.        |
+| `ats_benchmark/`                          | CV benchmark fixtures for ATS readiness checks.                   |
 
 ## Rules
 

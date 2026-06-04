@@ -1,0 +1,62 @@
+{
+  "artifact_paths": {
+    "cache": "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_pair_embeddings_v1.npz",
+    "decision": "artifacts/phase_44_embedding_compatibility_audit/retrain_vs_recalibrate_decision.json",
+    "drift_report": "artifacts/phase_44_embedding_compatibility_audit/embedding_cosine_drift_report.json",
+    "metadata": "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_embedding_metadata.json",
+    "normalization_impact": "artifacts/phase_44_embedding_compatibility_audit/feature_normalization_impact.json",
+    "pair_features": "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_pair_features.json"
+  },
+  "blockers": [],
+  "checks": {
+    "cosine_drift_quantified_by_required_slices": true,
+    "direct_replacement_rejected_with_retrain_recalibrate_decision": true,
+    "feature_normalization_impact_recorded": true,
+    "metadata_verifies_model_dimension_prefix_norms_and_runtime": true,
+    "multilingual_slices_cover_id_en_mixed_unknown_when_present": true,
+    "paired_embedding_cache_matches_frozen_phase25_pair_set": true,
+    "rank_correlation_and_worst_examples_recorded": true
+  },
+  "final_decision": "retrain_required_recalibration_required_direct_swap_blocked",
+  "generated_at": "2026-06-04T08:17:04Z",
+  "git_state": {
+    "commit": "3ae462977b83c8463b055a77a6081eaa8ab49507",
+    "dirty_file_count": 9,
+    "dirty_sample": [
+      "M TODOS.md",
+      " M artifacts/README.md",
+      " M scripts/README.md",
+      "?? BRAINSTORMING.md",
+      "?? artifacts/phase_44_embedding_compatibility_audit/",
+      "?? reports/phase_44_embedding_compatibility_audit.json",
+      "?? reports/phase_44_embedding_compatibility_audit.md",
+      "?? scripts/verify_phase_44_embedding_compatibility_audit.py",
+      "?? tests/test_phase_44_embedding_compatibility_audit.py"
+    ],
+    "production_claim_allowed": false
+  },
+  "phase_id": "phase_44_embedding_compatibility_audit",
+  "schema_version": "phase-44-embedding-compatibility-audit-v1",
+  "source_files": [
+    "artifacts/pairs_v2.parquet",
+    "artifacts/phase_25_tensorflow_training_delivery/e5_pair_features.parquet",
+    "artifacts/phase_25_tensorflow_training_delivery/e5_embedding_contract.json",
+    "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+    "reports/phase_43_multilingual_e5_small_migration_decision.json",
+    "GAP_MODEL_TRAINING.md",
+    "REQUIREMENT.md"
+  ],
+  "status": "complete",
+  "summary": {
+    "embedding_dimension": 384,
+    "embedding_model": "intfloat/multilingual-e5-small",
+    "material_normalization_shift": true,
+    "max_abs_cosine_delta": 0.12737274169921875,
+    "mean_abs_cosine_delta": 0.04841541873084174,
+    "new_model": "intfloat/multilingual-e5-small",
+    "old_model": "intfloat/e5-base-v2",
+    "pearson": 0.8642641530224022,
+    "row_count": 3600,
+    "spearman": 0.864807930599793
+  }
+}

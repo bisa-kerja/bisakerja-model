@@ -1,0 +1,64 @@
+{
+  "backend": "sentence-transformers",
+  "cache": {
+    "exists": true,
+    "path": "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_pair_embeddings_v1.npz",
+    "sha256": "b3e1e7f5d14c833267c4a91b98203d22bc7c8a731a53a251bc214e4693dcb110",
+    "size_bytes": 8066039
+  },
+  "cache_path": "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_pair_embeddings_v1.npz",
+  "embedding_dimension": 384,
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "expected_embedding_dimension": 384,
+  "fallback_backend_used": false,
+  "generated_at": "2026-06-04T08:13:22Z",
+  "hf_cache_path": "/Users/macbookpro/.cache/huggingface/hub/models--intfloat--multilingual-e5-small",
+  "hf_cache_size_bytes": 986585696,
+  "job_prefix": "passage:",
+  "license_reference_url": "https://huggingface.co/intfloat/multilingual-e5-small",
+  "normalized_embeddings": true,
+  "pair_embedding_check": {
+    "cosine_max": 0.9089922308921814,
+    "cosine_min": 0.7859638929367065,
+    "dimension": 384,
+    "passage_finite_values": true,
+    "passage_norm_max": 1.0000001192092896,
+    "passage_norm_min": 0.9999998807907104,
+    "query_finite_values": true,
+    "query_norm_max": 1.0000001192092896,
+    "query_norm_min": 0.9999998211860657,
+    "row_count": 3600
+  },
+  "phase_id": "phase_44_embedding_compatibility_audit",
+  "profile_prefix": "query:",
+  "reference_url": "https://huggingface.co/intfloat/multilingual-e5-small",
+  "representative_embedding_check": {
+    "deterministic_max_abs_delta": 0.0,
+    "dimension": 384,
+    "finite_values": true,
+    "norm_max": 1.0000001192092896,
+    "norm_min": 1.0
+  },
+  "representative_text_count": 4,
+  "runtime_hardware": {
+    "cpu_brand": "Apple M1 Pro",
+    "machine": "arm64",
+    "memory_bytes": "17179869184",
+    "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "python": "3.13.11"
+  },
+  "schema_version": "phase-44-embedding-compatibility-audit-v1",
+  "sentence_transformers_version": "5.5.1",
+  "source_diagnostics": {
+    "built_pair_count": 3600,
+    "empty_job_text_count": 0,
+    "empty_profile_text_count": 0,
+    "missing_job_count": 0,
+    "missing_phase25_cosine_count": 0,
+    "missing_profile_count": 0,
+    "requested_pair_count": 3600,
+    "sample_size": null
+  },
+  "torch_version": "2.12.0"
+}
