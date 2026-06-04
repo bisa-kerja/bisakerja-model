@@ -231,9 +231,14 @@ def update_artifact_manifest(release: dict[str, Any]) -> None:
     write_json(PHASE25_MANIFEST_PATH, manifest)
 
 
-def build_report(release: dict[str, Any] | None = None) -> dict[str, Any]:
-    dirty = git_dirty_paths()
-    commit = git_commit()
+def build_report(
+    release: dict[str, Any] | None = None,
+    *,
+    baseline_dirty: list[str] | None = None,
+    baseline_commit: str | None = None,
+) -> dict[str, Any]:
+    dirty = git_dirty_paths() if baseline_dirty is None else baseline_dirty
+    commit = git_commit() if baseline_commit is None else baseline_commit
     release_manifest_exists = TENSORBOARD_RELEASE_MANIFEST_PATH.exists()
     if release is None and release_manifest_exists:
         release_manifest = load_json(TENSORBOARD_RELEASE_MANIFEST_PATH)
@@ -357,12 +362,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--write", action="store_true", help="copy TensorBoard evidence and write reports/manifests")
     args = parser.parse_args(argv)
 
+    baseline_dirty = git_dirty_paths()
+    baseline_commit = git_commit()
     release = None
     if args.write:
         release = ensure_tensorboard_release_evidence()
         update_artifact_manifest(release)
 
-    report = build_report(release)
+    report = build_report(
+        release,
+        baseline_dirty=baseline_dirty if args.write else None,
+        baseline_commit=baseline_commit if args.write else None,
+    )
     if args.write:
         write_json(REPORT_JSON_PATH, report)
         write_markdown_report(report)
