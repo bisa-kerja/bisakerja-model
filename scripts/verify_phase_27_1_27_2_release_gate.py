@@ -109,6 +109,7 @@ def source_tensorboard_event() -> dict[str, Any]:
 
     candidates = [ROOT / str(event["path"])]
     candidates.extend((ROOT / "artifacts/tensorboard").glob(f"**/{expected_name}"))
+    candidates.extend(TENSORBOARD_RELEASE_DIR.glob(f"**/{expected_name}"))
 
     for candidate in candidates:
         if not candidate.exists() or not candidate.is_file():
