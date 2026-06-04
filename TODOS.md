@@ -1387,6 +1387,243 @@ Verification:
 
 ---
 
+## Embedding Runtime Migration Phases — multilingual E5 Small Performance Track
+
+These phases define a safe migration from `intfloat/e5-base-v2` to `intfloat/multilingual-e5-small` for staging performance. This is a model-version change, not a drop-in runtime tweak. The migration must preserve contract safety, artifact reproducibility, calibration semantics, backend integration behavior, and rollback ability.
+
+### Phase 43 — multilingual-e5-small Migration Decision, Baseline Capture, and Risk Register
+
+Status: Complete
+
+Goal: Freeze the current Phase 25 E5-base behavior and decide whether `intfloat/multilingual-e5-small` is acceptable for a staging performance experiment before any model or serving code changes.
+
+Scope boundary:
+
+- Do not overwrite Phase 25 artifacts.
+- Do not change production/staging Model API env to a new embedding model yet.
+- Do not claim quality equivalence between E5-base and multilingual-E5-small without measured evidence.
+- This phase produces decision evidence only.
+
+Tasks:
+
+- [x] Step 43.1: Capture current runtime baseline — Record VPS/container startup time, `/live`, `/health`, `/ready`, first `/internal/model/cv-analysis` latency, warm inference latency, CPU, RAM, disk, Docker image size, and E5 cache size for `intfloat/e5-base-v2`.
+- [x] Step 43.2: Capture current quality baseline — Export current Phase 25 validation metrics, calibration tables, score distribution, candidate reranking examples, and representative public AI CV Analyzer responses.
+- [x] Step 43.3: Define migration hypothesis — State expected benefits of `intfloat/multilingual-e5-small`: lower startup latency, lower RAM, faster embedding, smaller cache, better Indonesian/English coverage, and lower timeout risk.
+- [x] Step 43.4: Define migration risks — Document cosine distribution drift, score calibration drift, ranking changes, possible loss of English-only semantic quality, multilingual tokenization behavior, and user-facing recommendation changes.
+- [x] Step 43.5: Define go/no-go thresholds — Freeze staging acceptance thresholds for runtime, quality, calibration, contract, and rollback before training starts.
+- [x] Step 43.6: Define artifact namespace — Reserve a new artifact root such as `artifacts/phase_43_multilingual_e5_small_migration/` or a later selected training delivery root; do not reuse `phase_25_tensorflow_training_delivery`.
+- [x] Step 43.7: Define model version naming — Reserve names such as `jobfit_tf_phase43_multilingual_e5_small_v1` and `model-core-cv-analysis-v1` compatibility notes.
+- [x] Step 43.8: Document stakeholder decision — Record that this track is approved for staging experiment only until all validation gates pass.
+
+Acceptance Criteria:
+
+- [x] Current E5-base runtime and quality baselines are recorded with commands, timestamps, model version, artifact hash, and environment.
+- [x] `multilingual-e5-small` migration risks and go/no-go thresholds are explicit before implementation.
+- [x] New artifact/model version namespace is defined so Phase 25 remains rollback-safe.
+- [x] Reviewer can compare old vs new behavior without guessing which artifacts were used.
+
+Verification:
+
+- [x] `python scripts/verify_phase_43_multilingual_e5_small_migration.py --write` — passed 2026-06-04.
+- [x] `python -m unittest tests.test_phase_43_multilingual_e5_small_migration` — 4 tests passed 2026-06-04.
+
+---
+
+### Phase 44 — Embedding Compatibility Audit and Feature Drift Study
+
+Status: Planned
+
+Goal: Measure how `intfloat/multilingual-e5-small` changes text embeddings and `e5_cosine` features before retraining TensorFlow.
+
+Scope boundary:
+
+- This phase evaluates embeddings and feature distributions only.
+- Do not train the selected TensorFlow scorer yet.
+- Do not modify Model API production defaults.
+
+Tasks:
+
+- [ ] Step 44.1: Verify embedding model metadata — Record model name, library version, embedding dimension, normalized embedding behavior, prefix policy (`query:` and `passage:`), license/reference URL, cache path, and runtime hardware.
+- [ ] Step 44.2: Confirm dimension and finite values — Generate embeddings for representative profile/CV/job texts and verify expected dimension, finite values, deterministic normalization, and no fallback backend.
+- [ ] Step 44.3: Regenerate paired embedding cache — Build a small-to-full cache for the same frozen pair set used by Phase 25 using `intfloat/multilingual-e5-small`, stored under a new cache path.
+- [ ] Step 44.4: Compare cosine distributions — Compare E5-base vs multilingual-E5-small `e5_cosine` mean, std, min/max, percentiles, and histogram by split, language, role family, pair type, and score band.
+- [ ] Step 44.5: Analyze rank correlation — Compute Spearman/Pearson correlation between old and new cosine values and identify worst drift examples.
+- [ ] Step 44.6: Analyze multilingual slices — Compare Indonesian, English, mixed, and unknown-language examples; flag improvements/regressions for ID CVs and English job descriptions.
+- [ ] Step 44.7: Check feature normalization impact — Recompute the approved six-feature vectors and identify whether Phase 25 mean/std normalization remains invalid for new cosine distribution.
+- [ ] Step 44.8: Decide retrain vs recalibrate-only — Block direct artifact swap if cosine drift exceeds threshold or feature normalization changes materially.
+
+Acceptance Criteria:
+
+- [ ] Embedding dimension, normalization, prefix behavior, and runtime dependency behavior are verified.
+- [ ] Old-vs-new `e5_cosine` drift is quantified across important slices.
+- [ ] Direct replacement without retraining is explicitly rejected unless drift evidence proves it safe.
+- [ ] Recommendation for retraining/recalibration is recorded with data, not assumptions.
+
+---
+
+### Phase 45 — TensorFlow Retraining with multilingual-e5-small Features
+
+Status: Planned
+
+Goal: Train a new TensorFlow scorer using multilingual-E5-small-derived features, preserving the Phase 25 model-core contract while producing a new artifact version.
+
+Scope boundary:
+
+- Training remains notebook-first.
+- Do not mutate Phase 25 notebooks/artifacts except for docs linking to this migration track.
+- The selected model must still consume the approved feature contract or explicitly version any changed feature contract.
+
+Tasks:
+
+- [ ] Step 45.1: Create migration notebook — Add a new notebook such as `training/notebooks/phase_45_multilingual_e5_small_training_delivery.ipynb` with required English Markdown sections: Purpose, Required input, Action, Expected output, Verification.
+- [ ] Step 45.2: Freeze inputs — Use the same frozen dataset, labels, splits, pair IDs, human validation labels, ATS benchmark, and backend candidate fixtures as Phase 25 unless a documented update is approved.
+- [ ] Step 45.3: Generate approved features — Rebuild `e5_cosine`, `skill_overlap`, `requirement_coverage`, `role_match`, `experience_match`, and `experience_gap_years_clipped` using multilingual-E5-small embeddings.
+- [ ] Step 45.4: Recompute normalization stats — Generate new train-split mean/std for every approved feature and write a new `tensorflow_feature_config.json` with embedding model metadata.
+- [ ] Step 45.5: Train TensorFlow model — Use TensorFlow Functional API or subclassing plus existing custom components and `tf.GradientTape`; do not use `model.fit()` for the main training path.
+- [ ] Step 45.6: Compare baselines — Compare against constant, skill-only, E5-base Phase 25 scorer, cosine-only multilingual-E5-small, and previous selected scorer.
+- [ ] Step 45.7: Evaluate quality metrics — Record MAE, RMSE, R², Spearman, score-band agreement, high-fit recall, NDCG/MAP for candidate reranking, and slice metrics by role/language/experience/pair type.
+- [ ] Step 45.8: Evaluate Indonesian behavior — Include dedicated ID and mixed-language CV/job examples to ensure multilingual migration improves or preserves practical staging behavior.
+- [ ] Step 45.9: Export TensorBoard evidence — Write bounded TensorBoard logs under the new artifact namespace and record hash/byte-size metadata.
+- [ ] Step 45.10: Select or reject model — Select the new model only if it meets predefined thresholds; otherwise keep E5-base as selected and record rejection evidence.
+
+Acceptance Criteria:
+
+- [ ] New training notebook runs from a clean Python 3.13 kernel without hidden state.
+- [ ] New feature config records `intfloat/multilingual-e5-small` and new normalization stats.
+- [ ] TensorFlow model is trained and evaluated with the same or stricter gates as Phase 25.
+- [ ] New model is selected only when quality and slice metrics pass staging thresholds.
+
+---
+
+### Phase 46 — Calibration, Model Card, Artifact Manifest, and Handoff Fixtures Refresh
+
+Status: Planned
+
+Goal: Produce a complete artifact package for the multilingual-E5-small model so Model API can load it safely without stale Phase 25 metadata.
+
+Scope boundary:
+
+- New artifacts must be self-contained and hash-verified.
+- Do not point Model API to mixed Phase 25/Phase 45 files.
+- Do not reuse old calibration unless validated against new score distribution.
+
+Tasks:
+
+- [ ] Step 46.1: Recalibrate scores — Rebuild calibration tables for `jobFitAlignment.score`, `atsFriendliness.score`, and `recommendations[].matchScore` buckets `0-20`, `21-40`, `41-60`, `61-80`, and `81-100`.
+- [ ] Step 46.2: Validate calibration quality — Record ECE, MCE, bucket MAE, within-10-points rate, score-band agreement, and slice calibration.
+- [ ] Step 46.3: Export new TensorFlow artifact — Save selected model as `.keras`, reload it in a clean cell with registered custom objects, and run inference smoke without notebook state.
+- [ ] Step 46.4: Export refreshed configs — Write new `tensorflow_feature_config.json`, `feature_config.json`, `score_calibration.json`, `label_manifest.json`, and dataset manifest.
+- [ ] Step 46.5: Export model card — Document embedding model change, intended use, blocked use, metrics, slice performance, runtime benefits, known risks, and rollback artifact.
+- [ ] Step 46.6: Export artifact manifest — Include SHA-256, byte size, schema version, runtime/training-only classification, embedding model metadata, and TensorBoard references.
+- [ ] Step 46.7: Refresh handoff fixtures — Regenerate CV analysis and candidate reranking fixtures using the new model and prove response shape stays `model-core-cv-analysis-v1` compatible.
+- [ ] Step 46.8: Refresh validation report — Validate score bounds, candidate membership, language handling, duplicate rejection, max recommendations, and no backend-owned fields.
+- [ ] Step 46.9: Write migration report — Produce a concise Markdown/JSON report comparing E5-base vs multilingual-E5-small runtime and quality.
+
+Acceptance Criteria:
+
+- [ ] No stale Phase 25 hash/config/calibration is used by the new artifact package.
+- [ ] Model card explicitly says this is a multilingual-E5-small model version.
+- [ ] Artifact manifest verifies every runtime-required file.
+- [ ] Handoff fixtures remain Backend-compatible and model-core-only.
+
+---
+
+### Phase 47 — Model API Runtime Support for Versioned Embedding Artifacts
+
+Status: Planned
+
+Goal: Update Model API so it can safely load the multilingual-E5-small artifact package through config/env without hardcoded E5-base assumptions or mixed artifacts.
+
+Scope boundary:
+
+- Model API must still reject fallback embeddings in staging/production.
+- Frontend must not call Model API directly.
+- Public Backend API contract must not change unless a separate Backend phase approves it.
+
+Tasks:
+
+- [ ] Step 47.1: Make embedding model configurable from artifact config — Read the approved embedding model name from `tensorflow_feature_config.json` or `feature_config.json` instead of a hardcoded runtime constant.
+- [ ] Step 47.2: Validate artifact/runtime embedding match — Fail startup when env/model card says multilingual-E5-small but feature config/model card/manifest disagree.
+- [ ] Step 47.3: Preserve prefix policy — Keep `query:` for CV/profile text and `passage:` for job text; record prefix policy in model info.
+- [ ] Step 47.4: Update E5 backend validation — Allow only the embedding model declared by the loaded artifact package; reject local-hash/TF-IDF/fallback and reject undeclared model swaps.
+- [ ] Step 47.5: Support artifact root switching — Add env/runbook support for selecting the new artifact root, model path, feature config, calibration, model card, and manifest together.
+- [ ] Step 47.6: Update `/model-info` — Return embedding model name, artifact phase, model version, artifact hash, and readiness so backend/staging can confirm the correct model is deployed.
+- [ ] Step 47.7: Add runtime tests — Cover E5-base artifact load, multilingual-E5-small artifact load, mismatch rejection, fallback rejection, missing config, and response contract stability.
+- [ ] Step 47.8: Add performance smoke — Measure startup, `/ready`, first inference, warm inference, memory, and cache behavior for the new artifact on VPS.
+
+Acceptance Criteria:
+
+- [ ] Model API cannot silently run a different embedding model than the artifact declares.
+- [ ] Both old and new artifact packages can be selected explicitly for rollback/testing.
+- [ ] `/ready` and `/model-info` expose enough metadata to verify deployment correctness.
+- [ ] Runtime tests prove no backend-owned fields leak and no fallback embeddings are used.
+
+---
+
+### Phase 48 — Backend/Staging Integration, Shadow Comparison, and Rollback Plan
+
+Status: Planned
+
+Goal: Validate the multilingual-E5-small model behind the existing Backend AI CV Analyzer flow before broader staging/demo traffic.
+
+Scope boundary:
+
+- Backend public response shape remains unchanged.
+- Database persistence and public recommendation hydration remain Backend-owned.
+- New model rollout starts in staging only.
+
+Tasks:
+
+- [ ] Step 48.1: Deploy Model API staging revision — Deploy the new artifact package on VPS or chosen staging target using versioned env vars and persistent cache.
+- [ ] Step 48.2: Verify readiness and metadata — Confirm `/live`, `/health`, `/ready`, and `/model-info` report the multilingual-E5-small model version and correct artifact hashes.
+- [ ] Step 48.3: Warm runtime — Run warmup so TensorFlow and multilingual-E5-small are loaded before Backend traffic.
+- [ ] Step 48.4: Run direct Model API smoke — POST sanitized multipart fixture directly to `/internal/model/cv-analysis` and record latency/response shape.
+- [ ] Step 48.5: Run Backend public smoke — Call `POST /api/v1/ai/cv-analyzer` with upload and candidate scenarios; verify public `cv-analysis-v2` response, persistence choice, and no private leakage.
+- [ ] Step 48.6: Shadow compare old vs new — For a frozen fixture set, compare Phase 25 E5-base outputs and multilingual-E5-small outputs: score deltas, rank swaps, match levels, matched/missing skills, ATS stability, and public copy changes.
+- [ ] Step 48.7: Define allowed deltas — Flag any score delta above threshold, rank swap in top recommendation, language regression, or high-fit recall drop for review.
+- [ ] Step 48.8: Validate failure behavior — Test model not ready, timeout, invalid PDF, empty candidates, invalid token, and rollback artifact path.
+- [ ] Step 48.9: Freeze rollback commands — Document env/artifact changes needed to switch back to Phase 25 E5-base within one deploy.
+
+Acceptance Criteria:
+
+- [ ] Backend public AI CV Analyzer works end-to-end with the new Model API artifact in staging.
+- [ ] Shadow comparison explains output differences and blocks rollout on unsafe deltas.
+- [ ] Rollback to E5-base is documented and tested.
+- [ ] Staging report includes latency, resource usage, response contracts, model metadata, and known limitations.
+
+---
+
+### Phase 49 — Staging Promotion Decision and Production Guardrails
+
+Status: Planned
+
+Goal: Decide whether multilingual-E5-small should become the staging default, remain an experiment, or be rejected, and define production guardrails before any paid/real-user rollout.
+
+Scope boundary:
+
+- This phase does not force production rollout.
+- Production-ready claims still require Phase 27-quality evidence and any updated human/reviewer validation gates.
+- If staging-only, docs and model card must say staging-only.
+
+Tasks:
+
+- [ ] Step 49.1: Compile final migration evidence — Gather Phase 43-48 reports, artifact hashes, runtime metrics, quality metrics, shadow comparison, and smoke results.
+- [ ] Step 49.2: Make readiness decision — Mark the new model as `staging-default`, `staging-experiment-only`, or `rejected` with reasons.
+- [ ] Step 49.3: Update deployment docs — Document exact env vars/artifact paths for new default and rollback, including VPS Docker, Nginx, Cloud Run if used, and HF staging caveats if relevant.
+- [ ] Step 49.4: Update monitoring checklist — Monitor timeout rate, `MODEL_NOT_READY`, inference latency, memory, CPU, score distribution drift, recommendation count, and backend downstream errors.
+- [ ] Step 49.5: Add production blockers — List remaining blockers before production: human/reviewer validation scale, slice coverage, calibration confidence, privacy review, cost/resource monitoring, and rollback drill.
+- [ ] Step 49.6: Update Suggested Execution Order — Ensure future agents do not skip migration validation by changing runtime constants directly.
+- [ ] Step 49.7: Archive rejected artifacts if needed — If rejected, keep reports but prevent accidental deployment by documenting status and not using those artifact paths in default env examples.
+
+Acceptance Criteria:
+
+- [ ] Final decision is evidence-based and recorded in TODOs/reports/model card.
+- [ ] Staging default, experiment-only, or rejected status is unambiguous.
+- [ ] Production rollout remains blocked unless quality, calibration, human validation, contract, runtime, and rollback gates pass.
+- [ ] Future maintainers can reproduce or rollback the migration without reading chat history.
+
+---
+
 ## Suggested Execution Order
 
 1. Treat Phase 0-11 as completed design and audit baseline.
@@ -1409,6 +1646,12 @@ Verification:
 18. Complete Phase 40 before any new AI CV Analyzer staging-ready claim, because Backend route regressions and empty-candidate policy are current blockers.
 19. Complete Phase 41 before broader staging/demo traffic, because public Backend-to-Model smoke evidence and payload hygiene must be reproducible.
 20. Implement Phase 42 for AI CV Generate after Phase 41, keeping generation backend-owned and leaving Model API unchanged unless a separate architecture decision approves Model API GenAI ownership.
+21. Start Phase 43 before changing any embedding runtime constant; capture E5-base runtime/quality baseline first.
+22. Complete Phase 44 before retraining so embedding drift is measured and direct replacement is not assumed safe.
+23. Complete Phases 45-46 to retrain, recalibrate, export, and document a complete multilingual-E5-small artifact package.
+24. Complete Phase 47 before deploying the new artifact so Model API verifies artifact-declared embedding model instead of relying on hardcoded assumptions.
+25. Complete Phase 48 in staging with shadow comparison and rollback before making multilingual-E5-small the default.
+26. Complete Phase 49 before broader staging/demo or production claims, and keep production blocked until human/reviewer validation, calibration, contract, runtime, monitoring, and rollback gates are satisfied.
 
 ## Out of Scope for Model-Core Training Notebooks
 

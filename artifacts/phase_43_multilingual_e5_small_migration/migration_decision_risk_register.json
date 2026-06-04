@@ -1,0 +1,86 @@
+{
+  "artifact_namespace": {
+    "forbidden_root": "artifacts/phase_25_tensorflow_training_delivery/",
+    "later_training_root": "artifacts/phase_45_multilingual_e5_small_training_delivery/",
+    "report_paths": [
+      "reports/phase_43_multilingual_e5_small_migration_decision.json",
+      "reports/phase_43_multilingual_e5_small_migration_decision.md"
+    ],
+    "reserved_root": "artifacts/phase_43_multilingual_e5_small_migration/"
+  },
+  "current_baseline": {
+    "artifact_root": "artifacts/phase_25_tensorflow_training_delivery/",
+    "embedding_model": "intfloat/e5-base-v2",
+    "rollback_policy": "Phase 25 artifacts remain immutable rollback baseline; migration artifacts must live under Phase 43+ namespaces."
+  },
+  "decision": "approved_for_staging_experiment_only",
+  "generated_at": "2026-06-04T08:01:48Z",
+  "go_no_go_thresholds": {
+    "contract": {
+      "candidate_membership": "All recommendations must remain subset of backend-provided candidates, max 5, unique job IDs.",
+      "owned_fields": "No backend/wrapper-owned fields may appear in model-core output.",
+      "schema": "Model-core response must stay model-core-cv-analysis-v1 compatible unless a later phase explicitly versions it."
+    },
+    "quality": {
+      "calibration": "ECE must not increase by more than 0.5 points and max bucket gap must remain <= 3.5 points after recalibration.",
+      "high_fit_recall": "Validation/test high-fit recall must remain >= 0.98 and no lower than Phase 25 by more than 0.02.",
+      "language_slices": "ID/EN/MIXED/UNKNOWN slices must be reported; any ID improvement cannot mask EN regression beyond allowed deltas.",
+      "mae_normalized": "Validation and test MAE must remain <= 0.02 and no worse than Phase 25 by more than 0.002 normalized.",
+      "mae_points": "Validation/test MAE must remain <= 2.0 points and no worse than Phase 25 by more than 0.25 points.",
+      "r2": "Validation/test R\u00b2 must remain >= 0.98 or trigger model rejection review.",
+      "ranking": "NDCG/MAP must not regress by more than 0.02; top recommendation swaps require review when score delta > 5 points.",
+      "score_band_agreement": "Validation/test score-band agreement must remain >= 0.98 and no lower than Phase 25 by more than 0.01.",
+      "spearman": "Validation/test Spearman must remain >= 0.99 and no lower than Phase 25 by more than 0.01."
+    },
+    "rollback": {
+      "artifact_switch": "Phase 25 E5-base artifact paths and env must remain documented and selectable.",
+      "no_overwrite": "Do not overwrite artifacts/phase_25_tensorflow_training_delivery or selected_jobfit_tf_phase25.keras.",
+      "rollback_drill": "Staging rollback command must be tested before default promotion."
+    },
+    "runtime": {
+      "disk_cache": "HF/E5 cache size must be smaller than E5-base cache; any larger cache requires explicit rejection or infra approval.",
+      "docker_image": "Image size must not increase versus E5-base staging image; missing image-size evidence blocks rollout beyond experiment.",
+      "embedding_latency_ms": "Must be <= E5-base warm embedding baseline and preferably improve by >= 30%.",
+      "first_internal_cv_analysis_ms": "Must be <= current E5-base first inference baseline and <= 30000 ms staging timeout budget.",
+      "live_health_ready": "All /live, /health, and /ready probes must return 200; /ready.ready=true after warmup before traffic.",
+      "ram": "Peak RSS must not exceed E5-base baseline; staging target is >= 25% reduction or explicit no-go review.",
+      "warm_internal_cv_analysis_ms": "Must be <= 5000 ms and preferably improve E5-base warm baseline by >= 30%."
+    }
+  },
+  "migration_hypothesis": [
+    "intfloat/multilingual-e5-small should reduce startup latency and first embedding latency versus intfloat/e5-base-v2.",
+    "Smaller model/cache should reduce RAM pressure, disk use, image pull/cache warmup time, and timeout risk on VPS/container staging.",
+    "Multilingual training may improve Indonesian/English mixed CV-job semantic coverage versus English-focused E5-base behavior.",
+    "Lower resource use may make warmup more reliable before demo/staging traffic."
+  ],
+  "migration_risks": [
+    "Cosine distribution drift can invalidate Phase 25 e5_cosine normalization mean/std.",
+    "Score calibration drift can make 0-100 score semantics inaccurate without recalibration.",
+    "Ranking order can change, including top recommendation swaps that affect user-facing hydrated jobs.",
+    "English-only semantic quality may regress even if Indonesian slices improve.",
+    "Multilingual tokenization can change skill/requirement similarity and false-positive overlap behavior.",
+    "User-facing recommendation prose may change because Backend wrapper uses model-core evidence and rank order.",
+    "Direct runtime swap can silently mix E5-base artifacts with multilingual-E5-small embeddings unless artifact/runtime checks are added."
+  ],
+  "model_version_naming": {
+    "compatibility_note": "Schema compatibility does not imply score/ranking equivalence; quality, calibration, and shadow comparison must pass first.",
+    "compatible_core_schema": "model-core-cv-analysis-v1",
+    "later_selected_model_version": "jobfit_tf_phase45_multilingual_e5_small_v1",
+    "reserved_training_model_version": "jobfit_tf_phase43_multilingual_e5_small_v1"
+  },
+  "phase_id": "phase_43_multilingual_e5_small_migration",
+  "schema_version": "phase-43-multilingual-e5-small-migration-decision-v1",
+  "stakeholder_decision_record": {
+    "approved_changes_now": [
+      "Capture E5-base runtime/quality baseline.",
+      "Reserve artifact/model namespaces.",
+      "Proceed to Phase 44 embedding compatibility audit."
+    ],
+    "blocked_changes_now": [
+      "No production/staging env default switch to intfloat/multilingual-e5-small.",
+      "No direct artifact swap without retraining/recalibration evidence.",
+      "No quality-equivalence claim before shadow comparison and gate evidence."
+    ],
+    "status": "approved_for_staging_experiment_only_until_phase44_49_gates_pass"
+  }
+}

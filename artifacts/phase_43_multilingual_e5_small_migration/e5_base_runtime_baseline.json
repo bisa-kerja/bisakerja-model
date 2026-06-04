@@ -1,0 +1,212 @@
+{
+  "baseline_model": {
+    "artifact_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+    "embedding_backend": "sentence-transformers",
+    "embedding_dimension": 768,
+    "embedding_model": "intfloat/e5-base-v2",
+    "feature_order": [
+      "e5_cosine",
+      "skill_overlap",
+      "requirement_coverage",
+      "role_match",
+      "experience_match",
+      "experience_gap_years_clipped"
+    ],
+    "job_prefix": "passage:",
+    "model_card_version": "jobfit_tf_phase25_gradient_tape_v1",
+    "normalized_embeddings": true,
+    "profile_prefix": "query:",
+    "tensorflow_model_version": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras"
+  },
+  "endpoint_latency_baseline": {
+    "local_live_probe_2026_06_04": {
+      "command": "MODEL_API_ENV=local MODEL_API_SERVICE_TOKEN=<local-service-token> .venv/bin/python -m uvicorn model_api.app:create_app --factory --host 127.0.0.1 --port 8011; curl /live,/health,/ready,/model-info",
+      "health_loading": {
+        "body_key": "message=loading",
+        "status_code": 200,
+        "time_total_seconds": 0.003029
+      },
+      "live": {
+        "body_key": "live=true",
+        "status_code": 200,
+        "time_total_seconds": 0.003328
+      },
+      "model_info_loading": {
+        "body_key": "ready=false, artifact paths exposed to internal caller only",
+        "status_code": 200,
+        "time_total_seconds": 0.00666
+      },
+      "ready_loading": {
+        "body_key": "ready=false while TensorFlow loads",
+        "status_code": 200,
+        "time_total_seconds": 0.002189
+      }
+    },
+    "phase27_endpoint_latency_ms": {
+      "cv_analysis": 11122.109,
+      "health": 1.308,
+      "model_info": 0.665
+    },
+    "phase27_live_fastapi_first_cv_analysis": {
+      "cv_analysis": 11122.109,
+      "health": 1.308,
+      "model_info": 0.665
+    },
+    "warm_internal_cv_analysis": {
+      "latency_ms": 733.644,
+      "observability": {
+        "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+        "candidateCount": 1,
+        "embeddingLatencyMs": 688,
+        "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+        "parseLatencyMs": 0,
+        "parseQuality": "high",
+        "requestId": "warmup_cv_analysis_staging_fixture",
+        "tensorflowLatencyMs": 39,
+        "totalLatencyMs": 728,
+        "wrapperLatencyMs": 0
+      },
+      "schemaVersion": "model-core-cv-analysis-v1",
+      "status_code": 200
+    },
+    "warmup_ready_after": {
+      "body": {
+        "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+        "checks": {
+          "artifactsVerified": true,
+          "e5BackendConfigured": true,
+          "pdfParserAvailable": true,
+          "serviceTokenConfigured": true,
+          "tensorflowModelLoaded": true,
+          "warmupCompleted": true
+        },
+        "environment": "local",
+        "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+        "ready": true,
+        "service": "bisakerja-model-api",
+        "warmup": {
+          "completed": true,
+          "error": null,
+          "latencyMs": 728,
+          "onStartup": false,
+          "required": false
+        }
+      },
+      "latency_ms": 1.231,
+      "status_code": 200
+    },
+    "warmup_ready_before": {
+      "body": {
+        "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+        "checks": {
+          "artifactsVerified": true,
+          "e5BackendConfigured": true,
+          "pdfParserAvailable": true,
+          "serviceTokenConfigured": true,
+          "tensorflowModelLoaded": true,
+          "warmupCompleted": true
+        },
+        "environment": "local",
+        "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+        "ready": true,
+        "service": "bisakerja-model-api",
+        "warmup": {
+          "completed": true,
+          "error": null,
+          "latencyMs": 11918,
+          "onStartup": false,
+          "required": false
+        }
+      },
+      "latency_ms": 23.863,
+      "status_code": 200
+    }
+  },
+  "generated_at": "2026-06-04T08:01:48Z",
+  "git_state": {
+    "commit": "cd35b634d6ceca99bc22b69dbb3b9affac9035fa",
+    "dirty_file_count": 9,
+    "dirty_sample": [
+      "M TODOS.md",
+      " M docs/runbooks/release-gates.md",
+      " M scripts/README.md",
+      "?? BRAINSTORMING.md",
+      "?? artifacts/phase_43_multilingual_e5_small_migration/",
+      "?? reports/phase_43_multilingual_e5_small_migration_decision.json",
+      "?? reports/phase_43_multilingual_e5_small_migration_decision.md",
+      "?? scripts/verify_phase_43_multilingual_e5_small_migration.py",
+      "?? tests/test_phase_43_multilingual_e5_small_migration.py"
+    ],
+    "production_claim_allowed": false
+  },
+  "limitations": [
+    "Local Phase 43 probe captured process liveness/readiness behavior, not VPS/container production load.",
+    "Docker image size was not available in local Docker images and must be captured in Phase 48 staging deployment evidence.",
+    "No multilingual-E5-small runtime was executed in this phase; Phase 44 owns embedding compatibility measurement."
+  ],
+  "phase_id": "phase_43_multilingual_e5_small_migration",
+  "resource_baseline": {
+    "cpu_brand": "Apple M1 Pro",
+    "disk_usage_repo": {
+      "free": 168633294848,
+      "total": 494384795648,
+      "used": 325751500800
+    },
+    "docker_image_size": {
+      "command": "docker images --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep -E 'bisakerja|model'",
+      "note": "No matching local Docker image was present during Phase 43 local capture; staging/VPS capture must fill this before rollout.",
+      "status": "not_found_in_local_docker_images"
+    },
+    "e5_base_hf_cache_path": "/Users/macbookpro/.cache/huggingface/hub/models--intfloat--e5-base-v2",
+    "e5_base_hf_cache_size_bytes": 877935460,
+    "machine": "arm64",
+    "memory_bytes": "17179869184",
+    "phase25_artifact_root_size_bytes": 18374552,
+    "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "python": "3.14.2"
+  },
+  "runtime_commands": {
+    "first_internal_cv_analysis": "python scripts/verify_phase_27_9_model_api_production_smoke.py --write --run-live",
+    "health": "curl http://127.0.0.1:8000/health",
+    "live": "curl http://127.0.0.1:8000/live",
+    "model_api_local_start": "MODEL_API_ENV=local MODEL_API_SERVICE_TOKEN=<token> uvicorn model_api.app:create_app --factory --host 127.0.0.1 --port 8000",
+    "model_info": "curl -H 'authorization: Bearer ${MODEL_API_SERVICE_TOKEN}' http://127.0.0.1:8000/model-info",
+    "ready": "curl http://127.0.0.1:8000/ready",
+    "resource_inventory": "du -sh artifacts/phase_25_tensorflow_training_delivery ~/.cache/huggingface/hub/models--intfloat--e5-base-v2; df -h .; docker images",
+    "warm_internal_cv_analysis": "python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url http://127.0.0.1:8000 --token ${MODEL_API_SERVICE_TOKEN} --latency-budget-ms 30000 --output reports/ai_cv_analyzer_warmup_staging.json"
+  },
+  "schema_version": "phase-43-e5-base-runtime-baseline-v1",
+  "source_reports": {
+    "model_card": {
+      "exists": true,
+      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      "sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
+      "size_bytes": 13283
+    },
+    "phase25_final_gate": {
+      "exists": true,
+      "path": "reports/phase_25_tensorflow_training_delivery.json",
+      "sha256": "16e42357b8037dfbfaf79dbf28c6eeebd2dd2b1325822edb5a994dd7c7572db9",
+      "size_bytes": 20613
+    },
+    "phase27_model_api_smoke": {
+      "exists": true,
+      "path": "reports/phase_27_9_model_api_production_smoke.json",
+      "sha256": "76e17a2624f4c76a97f5136c5826ecab82576fc01f9be8e431effdfe0d1c8806",
+      "size_bytes": 5350
+    },
+    "tensorflow_feature_config": {
+      "exists": true,
+      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
+      "size_bytes": 2029
+    },
+    "warmup_report": {
+      "exists": true,
+      "path": "reports/ai_cv_analyzer_warmup_staging.json",
+      "sha256": "5111e9baf6be987d749d775f0044d7a55e4b61cb1710fd44da469af78aae437c",
+      "size_bytes": 2480
+    }
+  }
+}

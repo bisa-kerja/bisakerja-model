@@ -1,0 +1,48 @@
+{
+  "baseline_summary": {
+    "artifact_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+    "e5_base_cache_size_bytes": 877935460,
+    "embedding_model": "intfloat/e5-base-v2",
+    "first_cv_analysis_latency_ms": 11122.109,
+    "phase25_status": "staging-ready",
+    "phase25_test_mae_0_100": 0.86032,
+    "phase25_validation_mae_0_100": 0.84428,
+    "warm_internal_latency_ms": 733.644
+  },
+  "blockers": [],
+  "checks": {
+    "artifact_namespace_keeps_phase25_rollback_safe": true,
+    "go_no_go_thresholds_cover_runtime_quality_contract_rollback": true,
+    "migration_hypothesis_and_risks_explicit": true,
+    "model_version_names_reserved_and_schema_compatibility_noted": true,
+    "quality_baseline_has_metrics_calibration_distribution_examples": true,
+    "runtime_baseline_has_model_hash_environment_commands": true,
+    "runtime_baseline_records_required_endpoint_latency_fields": true,
+    "staging_experiment_only_decision_recorded": true
+  },
+  "decision_path": "artifacts/phase_43_multilingual_e5_small_migration/migration_decision_risk_register.json",
+  "final_decision": "approved_for_staging_experiment_only",
+  "generated_at": "2026-06-04T08:01:48Z",
+  "next_phase": "Phase 44 must quantify embedding dimension, cosine drift, normalization drift, language-slice behavior, and retrain-vs-recalibrate decision before any runtime change.",
+  "phase_id": "phase_43_multilingual_e5_small_migration",
+  "quality_baseline_path": "artifacts/phase_43_multilingual_e5_small_migration/e5_base_quality_baseline.json",
+  "runtime_baseline_path": "artifacts/phase_43_multilingual_e5_small_migration/e5_base_runtime_baseline.json",
+  "schema_version": "phase-43-multilingual-e5-small-migration-decision-v1",
+  "sources": [
+    "reports/phase_25_tensorflow_training_delivery.json",
+    "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+    "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+    "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+    "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+    "reports/phase_25_data_feature_reuse.json",
+    "reports/phase_25_baseline_selection_gate.json",
+    "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+    "reports/phase_27_9_model_api_production_smoke.json",
+    "reports/ai_cv_analyzer_warmup_staging.json",
+    "reports/phase_39_product_copy_localization.json",
+    "GAP_MODEL_TRAINING.md",
+    "REQUIREMENT.md",
+    "model_api/README.md"
+  ],
+  "status": "complete"
+}

@@ -16,6 +16,7 @@ python scripts/verify_phase_28_contract_realignment.py --write
 python scripts/verify_phase_31_release_gate.py
 python scripts/verify_phase_36_ai_cv_analyzer_staging_gate.py
 python scripts/verify_phase_38_ai_cv_analyzer_runtime_gate.py --write
+python scripts/verify_phase_43_multilingual_e5_small_migration.py --write
 ```
 
 ## Evidence Areas
@@ -47,3 +48,4 @@ python scripts/verify_phase_38_ai_cv_analyzer_runtime_gate.py --write
 - Do not use the small handoff fixture as the only recommendation-quality evidence.
 - Keep Model API private/internal and service-token protected.
 - Run `scripts/warmup_ai_cv_analyzer_runtime.py` before demo/staging traffic and keep cold-start latency plus warm inference latency evidence.
+- Before changing embedding runtime defaults, run `scripts/verify_phase_43_multilingual_e5_small_migration.py --write` and keep Phase 25 E5-base artifacts as rollback baseline.
