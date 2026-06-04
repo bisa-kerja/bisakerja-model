@@ -15,11 +15,17 @@ from time import perf_counter
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 REPORT_JSON_PATH = ROOT / "reports/phase_27_9_model_api_production_smoke.json"
 REPORT_MD_PATH = ROOT / "reports/phase_27_9_model_api_production_smoke.md"
 REQUIREMENTS_PATH = ROOT / "requirements.txt"
 HANDOFF_FIXTURES_PATH = ROOT / "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json"
+BACKEND_CONTRACT_FIXTURES_PATH = ROOT / "artifacts/backend_model_api_contract/internal_contract_fixtures.json"
 KERAS_SMOKE_SCRIPT = ROOT / "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py"
+KERAS_MODEL_PATH = ROOT / "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras"
+KERAS_FEATURE_MATRIX_PATH = ROOT / "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz"
+KERAS_SMOKE_OUTPUT_PATH = ROOT / "reports/phase_27_9_keras_custom_object_loader_smoke.json"
 
 REQUIRED_MODULES = ("fastapi", "tensorflow", "keras", "sentence_transformers", "numpy", "uvicorn")
 PHASE26_TEST_COMMAND = [sys.executable, "-m", "unittest", "tests.model_api.test_phase_26_layout"]
@@ -99,6 +105,35 @@ def fake_not_allowed_live_smoke_possible() -> bool:
     return sys.version_info[:2] == (3, 13) and all(module_available(name) for name in REQUIRED_MODULES)
 
 
+def run_real_keras_smoke() -> dict[str, Any]:
+    if not (sys.version_info[:2] == (3, 13) and module_available("tensorflow") and module_available("keras")):
+        return {"status": "not_run", "reason": "Python 3.13 with TensorFlow/Keras required"}
+    if not KERAS_SMOKE_SCRIPT.exists():
+        return {"status": "not_run", "reason": f"Missing smoke script: {KERAS_SMOKE_SCRIPT}"}
+    result = run_command(
+        [
+            sys.executable,
+            str(KERAS_SMOKE_SCRIPT),
+            str(KERAS_MODEL_PATH),
+            str(KERAS_FEATURE_MATRIX_PATH),
+            str(KERAS_SMOKE_OUTPUT_PATH),
+        ],
+        timeout=180,
+    )
+    output: dict[str, Any] | None = None
+    if KERAS_SMOKE_OUTPUT_PATH.exists():
+        try:
+            output = json.loads(KERAS_SMOKE_OUTPUT_PATH.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            output = {"status": "invalid_json", "error": str(exc)}
+    return {
+        "status": "PASS" if result.get("returncode") == 0 and output and output.get("status") == "complete" else "FAIL",
+        "result": result,
+        "output_path": str(KERAS_SMOKE_OUTPUT_PATH.relative_to(ROOT)),
+        "output": output,
+    }
+
+
 def run_live_fastapi_smoke() -> dict[str, Any]:
     """Run actual app endpoints when Python 3.13 serving deps are installed.
 
@@ -115,8 +150,45 @@ def run_live_fastapi_smoke() -> dict[str, Any]:
         from fastapi.testclient import TestClient  # type: ignore[import-not-found]
         from model_api.app import create_app
 
+        backend_case = json.loads(BACKEND_CONTRACT_FIXTURES_PATH.read_text(encoding="utf-8"))["positiveCases"][0]["form"]
+        handoff = json.loads(HANDOFF_FIXTURES_PATH.read_text(encoding="utf-8"))
+        fixture = handoff.get("positive", {}).get("cvAnalysisCoreRequest")
+        if fixture is None:
+            fixture = {
+                "requestId": "req_phase27_9_json_smoke",
+                "inputVersion": "cv-analyzer-v1",
+                "language": backend_case["language"],
+                "inputMode": backend_case["inputMode"],
+                "compareSource": backend_case["compareSource"],
+                "profile": {
+                    "cvText": "Summary Backend developer. Skills TypeScript PostgreSQL REST API. Experience 2020.",
+                    "profileText": "Backend developer with TypeScript, PostgreSQL, and REST API experience.",
+                    "normalizedSkills": ["typescript", "postgresql", "rest api"],
+                    "targetRoles": backend_case["jobRoles"],
+                    "detectedCvSectionNames": ["summary", "skills", "experience"],
+                },
+                "jobCandidates": backend_case["jobCandidates"],
+                "rankingPolicy": backend_case["rankingPolicy"],
+                "maxRecommendations": backend_case["rankingPolicy"].get("maxRecommendations", 5),
+            }
         app = create_app()
-        fixture = json.loads(HANDOFF_FIXTURES_PATH.read_text(encoding="utf-8"))["positive"]["cvAnalysisCoreRequest"]
+        pdf_bytes = (
+            b"%PDF-1.4\n1 0 obj<</Type /Page>>stream\n"
+            b"(Summary Backend developer) Tj\n"
+            b"(Skills TypeScript PostgreSQL REST API) Tj\n"
+            b"(Experience 2020) Tj\n"
+            b"endstream\n%%EOF"
+        )
+        multipart = [
+            ("requestId", (None, str(backend_case["requestId"]))),
+            ("language", (None, str(backend_case["language"]))),
+            ("inputMode", (None, str(backend_case["inputMode"]))),
+            ("compareSource", (None, str(backend_case["compareSource"]))),
+            *[("jobRoles", (None, str(role))) for role in backend_case["jobRoles"]],
+            ("jobCandidates", (None, json.dumps(backend_case["jobCandidates"]))),
+            ("rankingPolicy", (None, json.dumps(backend_case["rankingPolicy"]))),
+            ("cvFile", ("cv.pdf", pdf_bytes, "application/pdf")),
+        ]
         with TestClient(app) as client:
             health_started = perf_counter()
             health = client.get("/health")
@@ -127,15 +199,36 @@ def run_live_fastapi_smoke() -> dict[str, Any]:
             inference_started = perf_counter()
             inference = client.post("/inference/cv-analysis", json=fixture)
             inference_ms = round((perf_counter() - inference_started) * 1000, 3)
+            internal_started = perf_counter()
+            internal = client.post("/internal/model/cv-analysis", files=multipart)
+            internal_ms = round((perf_counter() - internal_started) * 1000, 3)
         total_ms = round((perf_counter() - started) * 1000, 3)
         return {
-            "status": "PASS" if health.status_code == 200 and model_info.status_code == 200 and inference.status_code == 200 else "FAIL",
+            "status": (
+                "PASS"
+                if health.status_code == 200
+                and model_info.status_code == 200
+                and inference.status_code == 200
+                and internal.status_code == 200
+                else "FAIL"
+            ),
             "total_elapsed_ms": total_ms,
-            "endpoint_latency_ms": {"health": health_ms, "model_info": model_info_ms, "cv_analysis": inference_ms},
+            "endpoint_latency_ms": {
+                "health": health_ms,
+                "model_info": model_info_ms,
+                "cv_analysis": inference_ms,
+                "internal_model_cv_analysis": internal_ms,
+            },
             "responses": {
                 "health": {"status_code": health.status_code, "body": health.json()},
                 "model_info": {"status_code": model_info.status_code, "ready": model_info.json().get("ready"), "model": model_info.json().get("model")},
                 "cv_analysis": {"status_code": inference.status_code, "success": inference.json().get("success"), "data_keys": sorted((inference.json().get("data") or {}).keys())},
+                "internal_model_cv_analysis": {
+                    "status_code": internal.status_code,
+                    "schemaVersion": internal.json().get("schemaVersion"),
+                    "hasEnvelope": "success" in internal.json() or "data" in internal.json(),
+                    "modelKeys": sorted((internal.json().get("model") or {}).keys()),
+                },
             },
         }
     except Exception as exc:  # pragma: no cover - depends on optional runtime deps
@@ -158,7 +251,7 @@ def build_report(run_live: bool = False, run_tests: bool = True) -> dict[str, An
     deps_available = all(module_map.values())
     tests_result = run_command(PHASE26_TEST_COMMAND, timeout=180) if run_tests else {"returncode": None, "skipped": None, "not_run": True}
     parsed_tests = parse_unittest_result(tests_result) if run_tests else {"passed": False, "skipped": None, "tests_run": None}
-    keras_smoke = run_command([sys.executable, str(KERAS_SMOKE_SCRIPT)], timeout=180) if python_313 and deps_available and KERAS_SMOKE_SCRIPT.exists() else {"status": "not_run", "reason": "Python 3.13 with TensorFlow/Keras required"}
+    keras_smoke = run_real_keras_smoke()
     live_smoke = run_live_fastapi_smoke() if run_live else {"status": "not_run", "reason": "pass --run-live to execute real FastAPI/TensorFlow/E5 endpoint smoke"}
 
     gates = [
@@ -166,7 +259,7 @@ def build_report(run_live: bool = False, run_tests: bool = True) -> dict[str, An
         gate("root_requirements_pin_serving_runtime", {"fastapi", "tensorflow", "keras", "sentence-transformers", "numpy"}.issubset(set(pins)), {"pins": pins}),
         gate("serving_dependencies_importable", deps_available, {"modules": module_map}, "Install root requirements.txt in Python 3.13 env" if not deps_available else None),
         gate("phase26_tests_unskipped", parsed_tests["passed"] and parsed_tests["skipped"] == 0, {"summary": parsed_tests, "result": tests_result}, "Phase 26 tests must run with zero skips" if parsed_tests.get("skipped") else None),
-        gate("real_keras_custom_object_loader_smoke", keras_smoke.get("returncode") == 0, keras_smoke, "Real .keras custom-object loader smoke not run or failed"),
+        gate("real_keras_custom_object_loader_smoke", keras_smoke.get("status") == "PASS", keras_smoke, "Real .keras custom-object loader smoke not run or failed"),
         gate("live_fastapi_health_model_info_inference_smoke", live_smoke.get("status") == "PASS", live_smoke, "Live FastAPI/TensorFlow/E5 smoke not run or failed"),
     ]
     blockers = [item["check"] for item in gates if item["status"] != "PASS"]

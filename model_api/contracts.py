@@ -17,6 +17,8 @@ from typing import Any
 from .config import DEFAULT_OPENAPI_PATH, DEFAULT_PRISMA_SCHEMA_PATH
 from .errors import ContractReferenceError
 
+DEFAULT_OWNER_MATRIX_PATH = Path("artifacts/backend_model_api_contract/openapi_prisma_owner_matrix.json")
+
 
 @dataclass(frozen=True)
 class BackendOpenApiContract:
@@ -136,8 +138,8 @@ def load_prisma_cv_analysis_contract(path: Path = DEFAULT_PRISMA_SCHEMA_PATH) ->
 
     try:
         schema_text = path.read_text(encoding="utf-8")
-    except FileNotFoundError as exc:
-        raise ContractReferenceError(f"Prisma schema not found: {path}") from exc
+    except FileNotFoundError:
+        return load_prisma_cv_analysis_contract_from_owner_matrix(DEFAULT_OWNER_MATRIX_PATH)
 
     return PrismaCvAnalysisContract(
         source_path=path,
@@ -145,6 +147,38 @@ def load_prisma_cv_analysis_contract(path: Path = DEFAULT_PRISMA_SCHEMA_PATH) ->
         cv_input_mode_enum=_extract_enum(schema_text, "CvInputMode"),
         cv_compare_source_enum=_extract_enum(schema_text, "CvCompareSource"),
         job_recommendation_match_level_enum=_extract_enum(schema_text, "JobRecommendationMatchLevel"),
+        cv_analysis_result_json_fields=(
+            "jobFitAlignment",
+            "atsFriendliness",
+            "topActionables",
+            "sectionReviews",
+            "jobRecommendations",
+            "inputSummary",
+        ),
+        job_recommendation_item_json_fields=("reasons", "matchedSkills", "missingSkills", "nextSteps"),
+    )
+
+
+def load_prisma_cv_analysis_contract_from_owner_matrix(path: Path = DEFAULT_OWNER_MATRIX_PATH) -> PrismaCvAnalysisContract:
+    """Read backend DB enum/storage fields from the generated owner matrix snapshot."""
+
+    matrix = _read_json_object(path)
+    enum_mappings = matrix.get("enumMappings")
+    if not isinstance(enum_mappings, dict):
+        raise ContractReferenceError(f"Owner matrix missing enumMappings: {path}")
+
+    def prisma_enum(name: str) -> tuple[str, ...]:
+        payload = enum_mappings.get(name)
+        if not isinstance(payload, dict) or not isinstance(payload.get("prisma"), list):
+            raise ContractReferenceError(f"Owner matrix Prisma enum missing: {name}")
+        return tuple(str(value) for value in payload["prisma"])
+
+    return PrismaCvAnalysisContract(
+        source_path=path,
+        analysis_language_enum=prisma_enum("language"),
+        cv_input_mode_enum=prisma_enum("inputMode"),
+        cv_compare_source_enum=prisma_enum("compareSource"),
+        job_recommendation_match_level_enum=prisma_enum("matchLevel"),
         cv_analysis_result_json_fields=(
             "jobFitAlignment",
             "atsFriendliness",

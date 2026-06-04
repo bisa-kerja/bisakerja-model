@@ -1,0 +1,196 @@
+{
+  "acceptance": {
+    "generated_artifacts_and_reports_accounted_for": true,
+    "no_cache_venv_secret_or_private_data_pending": true,
+    "production_readiness_claim_supported_by_reports": true,
+    "remaining_risks_are_explicit": true,
+    "training_docs_match_runtime_and_workflow": true,
+    "working_tree_only_intended_changes": true
+  },
+  "blocking_checks": [],
+  "checks": {
+    "generated_evidence_tracking": {
+      "blockers": [],
+      "ignored_generated_paths": [],
+      "pending_track_generated_paths": [
+        "reports/training_step_10_calibration_model_card_manifest.json",
+        "reports/training_step_10_calibration_model_card_manifest.md",
+        "reports/training_step_11_release_gates.json",
+        "reports/training_step_11_release_gates.md",
+        "reports/training_step_12_model_api_handoff.json",
+        "reports/training_step_12_model_api_handoff.md",
+        "reports/training_step_13_final_stability.json",
+        "reports/training_step_13_final_stability.md"
+      ],
+      "status": "WARN",
+      "tracked_generated_dirty_paths": [
+        "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+        "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "reports/phase_25_model_api_handoff_fixtures.json",
+        "reports/phase_27_10_requirement_matrix.json",
+        "reports/phase_27_10_requirement_matrix.md",
+        "reports/phase_27_8_model_card_manifest_refresh.json",
+        "reports/phase_27_8_model_card_manifest_refresh.md",
+        "reports/phase_27_9_model_api_production_smoke.json",
+        "reports/phase_27_9_model_api_production_smoke.md"
+      ],
+      "warnings": [
+        "New Step verifier/report/test evidence is not tracked yet; include it in the release commit if accepted."
+      ]
+    },
+    "release_evidence": {
+      "blockers": [],
+      "evidence_files": {
+        "artifact_manifest": {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+          "sha256": "8f7ca8714f26f35ba0dec8cd38499c745b1dd9f0a7d51936d5b657f12035d8bf",
+          "size_bytes": 24757
+        },
+        "model_card": {
+          "exists": true,
+          "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+          "sha256": "97f37c48975762c1a729005127b2f1620a994fc9f126f499e2a6d09aa2d555ad",
+          "size_bytes": 14478
+        },
+        "phase25": {
+          "exists": true,
+          "path": "reports/phase_25_tensorflow_training_delivery.json",
+          "sha256": "97c163e7e53c036441d6338c4034901e1f6680b3df048b19789ef70bcd44bde9",
+          "size_bytes": 27109
+        },
+        "phase27_7": {
+          "exists": true,
+          "path": "reports/phase_27_7_clean_kernel_production_export.json",
+          "sha256": "2b4f82505fe4399347db8dc9e7325b1a104e829b06f260ea142a317b1bd621c0",
+          "size_bytes": 5281
+        },
+        "phase27_9": {
+          "exists": true,
+          "path": "reports/phase_27_9_model_api_production_smoke.json",
+          "sha256": "3866844f3950ae29b83a690c7d9c2972d3752324fbcb697b872f36250a552163",
+          "size_bytes": 7028
+        },
+        "phase31": {
+          "exists": true,
+          "path": "reports/phase_31_release_gate_report.json",
+          "sha256": "836098695491b644f4fe97752e0d4c475c6bec57b4af6ee260b81e3cd5fa11cf",
+          "size_bytes": 1666
+        },
+        "step11": {
+          "exists": true,
+          "path": "reports/training_step_11_release_gates.json",
+          "sha256": "fe235ddef70009a2fbd0e881da0cae003566e4a5050185276ce0396c5365508e",
+          "size_bytes": 7535
+        }
+      },
+      "model_card_production_claim_allowed": false,
+      "phase25_generated_at": "2026-06-04T04:39:58.810410+00:00",
+      "phase25_status": "production-ready",
+      "phase27_7_final_decision": "production-ready",
+      "phase27_7_generated_at": "2026-06-04T04:43:43.259369+00:00",
+      "phase27_9_blockers": [
+        "serving_dependencies_importable",
+        "phase26_tests_unskipped",
+        "real_keras_custom_object_loader_smoke",
+        "live_fastapi_health_model_info_inference_smoke"
+      ],
+      "phase27_9_final_decision": "blocked",
+      "phase31_final_decision": "passed",
+      "status": "WARN",
+      "step11_final_decision": "pass-with-documented-limitations",
+      "warnings": [
+        "Model API production smoke remains blocked and must stay documented as a serving/integration limitation.",
+        "Model card still disables broad production score claims until all policy/integration gates are satisfied."
+      ]
+    },
+    "runtime_workflow_docs": {
+      "blockers": [],
+      "checks": {
+        "running_steps_backend_boundary": true,
+        "running_steps_model_api_runtime": true,
+        "running_steps_phase25": true,
+        "running_steps_python_3_13": true,
+        "training_readme_artifact_outputs": true,
+        "training_readme_phase25_workflow": true,
+        "training_readme_python_3_13": true,
+        "training_readme_release_gates": true
+      },
+      "documents": [
+        "training/README.md",
+        "RUNNING_STEPS.md"
+      ],
+      "status": "PASS",
+      "warnings": []
+    },
+    "sensitive_cache_private_data": {
+      "blockers": [],
+      "large_pending_paths": [],
+      "max_pending_file_bytes": 26214400,
+      "pending_forbidden_paths": [],
+      "status": "WARN",
+      "tracked_forbidden_paths": [
+        ".ipynb_checkpoints/Untitled-checkpoint.ipynb"
+      ],
+      "warnings": [
+        "Repository already contains historical cache/secret-like tracked paths; no new pending path may add to this."
+      ]
+    },
+    "working_tree_intent": {
+      "blockers": [],
+      "dirty_file_count": 27,
+      "intended_patterns": [
+        "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+        "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "reports/phase_25_model_api_handoff_fixtures.json",
+        "reports/phase_27_*.json",
+        "reports/phase_27_*.md",
+        "reports/training_step_*.json",
+        "reports/training_step_*.md",
+        "scripts/verify_phase_27_*.py",
+        "scripts/verify_training_step_*.py",
+        "tests/test_training_step_*.py",
+        "training/TODOS.md"
+      ],
+      "staged_file_count": 0,
+      "staged_paths": [],
+      "status": "WARN",
+      "unexpected_dirty_paths": [],
+      "warnings": [
+        "Working tree is intentionally dirty with pending Step 10-13 evidence; review/stage before release commit."
+      ]
+    }
+  },
+  "final_decision": "pass-with-documented-limitations",
+  "final_stability_note": {
+    "artifact_export_folder": "artifacts/phase_25_tensorflow_training_delivery/export",
+    "clean_kernel_gate_at": "2026-06-04T04:43:43.259369+00:00",
+    "limitations": [
+      "Current git working tree contains intentional Step 10-13 evidence and still needs human review/staging before commit.",
+      "Production score claims remain limited by release-scale human/recruiter validation policy.",
+      "Model API production smoke is blocked until serving dependencies, Prisma snapshot, real Keras loader smoke, and live FastAPI smoke pass.",
+      "Backend auth, persistence, public response formatting, and job hydration remain outside this training repository."
+    ],
+    "model_api_smoke_status": "blocked",
+    "notebook_rerun_at": "2026-06-04T04:39:58.810410+00:00",
+    "phase25_status": "production-ready",
+    "release_gate_status": "pass-with-documented-limitations",
+    "runtime": {
+      "current_verifier_python": "3.13.13",
+      "keras": "3.14.1",
+      "serving_smoke_python": "3.13.13",
+      "target_python": "3.13.x",
+      "tensorflow": "2.21.0"
+    }
+  },
+  "generated_at": "2026-06-04T08:14:06.378873+00:00",
+  "phase_id": "training_step_13_final_stability",
+  "schema_version": "training-step-13-final-stability-v1",
+  "todo_source": "training/TODOS.md#step-13-review-stabilitas-final",
+  "warning_checks": [
+    "working_tree_intent",
+    "generated_evidence_tracking",
+    "sensitive_cache_private_data",
+    "release_evidence"
+  ]
+}

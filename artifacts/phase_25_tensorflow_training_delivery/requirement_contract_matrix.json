@@ -17,7 +17,7 @@
     "request_required_fields_present": true,
     "requirement_rows_cover_assignment_sections": true
   },
-  "generatedAt": "2026-06-03T01:44:23.823503+00:00",
+  "generatedAt": "2026-06-04T08:17:19.164550+00:00",
   "openapiBoundary": [
     {
       "contract_area": "AnalyzeCvMultipartRequest",
@@ -154,19 +154,19 @@
   "sources": {
     "gapModelTraining": {
       "path": "GAP_MODEL_TRAINING.md",
-      "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67"
+      "sha256": "35a9ea1021e8401dd2342a15feb9a2351f0b7f9f363d23f694312d22e782003e"
     },
     "openapi": {
       "path": "references/docs/generated/openapi.json",
-      "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+      "sha256": "51beae913df6632993c0f0ce83deaa52fd3b769bd138e9a99e8d1e867a597640"
     },
     "phase23Contract": {
       "path": "artifacts/phase_23_model_api_contract_validation/model_core_contract.json",
-      "sha256": "345f6a9b86cef6ba462a7dbbc73d90469805a172c8ea4c040caed2e8e7d218b8"
+      "sha256": "c62928b0b0be866c3d1df1c7ded488b55dcb5fe41fb37b905dea914ca57a4d9f"
     },
     "requirement": {
       "path": "REQUIREMENT.md",
-      "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723"
+      "sha256": "ef60fa7cfe2733daeae98f4cc53c93184bda31fc6eb8129d7bc588ce9ad19de5"
     }
   },
   "status": "passed"

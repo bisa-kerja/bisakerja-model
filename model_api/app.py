@@ -395,6 +395,105 @@ def _candidate_requirement_hints(values: Any) -> list[str]:
     return hints
 
 
+def _parse_quality_for_backend(value: object) -> str:
+    quality = str(value or "").lower()
+    if quality in {"high", "medium", "low", "failed"}:
+        return quality
+    if quality in {"text_ok", "parsed", "ok"}:
+        return "high"
+    if quality in {"partial_text", "fallback", "warning"}:
+        return "medium"
+    if quality in {"empty_text", "scanned", "image_only"}:
+        return "low"
+    return "failed" if quality == "failed" else "medium"
+
+
+def _internal_cv_analysis_response_payload(
+    data: dict[str, object],
+    request: CvAnalysisModelCoreRequest,
+    parsed_pdf_evidence: dict[str, object],
+) -> dict[str, object]:
+    """Map debug Model API output into Backend's raw model-core contract."""
+
+    model_payload: dict[str, object] | None = None
+    if isinstance(data.get("model"), dict):
+        raw_model = data["model"]
+        model_payload = {
+            "name": str(raw_model.get("name") or ""),
+            "version": str(raw_model.get("version") or ""),
+        }
+    if model_payload is None:
+        model_payload = {"name": "", "version": ""}
+
+    raw_job_fit = data.get("jobFitAlignment") if isinstance(data.get("jobFitAlignment"), dict) else {}
+    raw_ats = data.get("atsFriendliness") if isinstance(data.get("atsFriendliness"), dict) else {}
+    raw_overall = data.get("overallImpression") if isinstance(data.get("overallImpression"), dict) else {}
+    raw_reranking = data.get("candidateReranking") if isinstance(data.get("candidateReranking"), dict) else {}
+    parse_quality = _parse_quality_for_backend(parsed_pdf_evidence.get("parseQuality"))
+
+    recommendations = raw_reranking.get("recommendations", ()) if isinstance(raw_reranking, dict) else ()
+    response: dict[str, object] = {
+        "requestId": request.requestId,
+        "schemaVersion": MODEL_CORE_CV_ANALYSIS_SCHEMA_VERSION,
+        "language": request.language,
+        "parsedCv": {
+            "status": "parsed" if request.profile.cvText.strip() else "failed",
+            "pageCount": parsed_pdf_evidence.get("pageCount", 0),
+            "textLength": len(request.profile.cvText),
+            "detectedSections": list(request.profile.detectedCvSectionNames),
+            "extractionEvidence": {
+                "source": "deterministic_pdf_parser",
+                "parseQuality": parse_quality,
+                "hasExtractableText": bool(request.profile.cvText.strip()),
+            },
+        },
+        "jobFitAlignment": {
+            "score": raw_job_fit.get("score", 0),
+            "matchedSkills": list(raw_job_fit.get("matchedSkills", ())),
+            "missingSkills": list(raw_job_fit.get("missingSkills", ())),
+            "evidence": [
+                signal.get("key")
+                for signal in raw_job_fit.get("summarySignals", ())
+                if isinstance(signal, dict) and isinstance(signal.get("key"), str)
+            ],
+        },
+        "atsFriendliness": {
+            "score": parsed_pdf_evidence.get("atsScore", raw_ats.get("score", 0)),
+            "detectedIssues": list(parsed_pdf_evidence.get("detectedIssues", raw_ats.get("detectedIssues", ()))),
+            "parseQuality": parse_quality,
+            "evidence": ["deterministic_pdf_parser", *list(request.profile.detectedCvSectionNames)],
+        },
+        "overallImpression": {
+            "score": raw_overall.get("score", 0),
+            "evidence": ["jobFitAlignment", "atsFriendliness", "candidateReranking"],
+        },
+        "candidateReranking": {
+            "schemaVersion": MODEL_CORE_CANDIDATE_RERANKING_SCHEMA_VERSION,
+            "language": request.language,
+            "recommendations": [
+                {
+                    "jobId": item.get("jobId"),
+                    "matchScore": item.get("matchScore"),
+                    "matchLevel": item.get("matchLevel"),
+                    "matchedSkills": list(item.get("matchedSkills", ())),
+                    "missingSkills": list(item.get("missingSkills", ())),
+                    "evidence": [
+                        signal.get("key")
+                        for signal in item.get("rankingSignals", ())
+                        if isinstance(signal, dict) and isinstance(signal.get("key"), str)
+                    ],
+                }
+                for item in recommendations
+                if isinstance(item, dict)
+            ],
+        },
+        "model": model_payload,
+        "createdAt": str(data.get("analyzedAt") or utc_now_iso()),
+    }
+    validate_model_core_payload(response, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
+    return response
+
+
 def _validate_pdf_upload_bytes(pdf_bytes: bytes, runtime_config: RuntimeConfig) -> None:
     if len(pdf_bytes) > runtime_config.max_pdf_bytes:
         raise ContractValidationError(["cvFile exceeds MODEL_API_MAX_PDF_BYTES"])
@@ -686,7 +785,6 @@ def create_app(
                 "parseLatencyMs": parsed_pdf_evidence["parseLatencyMs"],
                 "fallbackReason": "pdf_parse_fallback" if parsed_pdf_evidence["fallback"] else existing_observability.get("fallbackReason"),
             }
-        validate_model_core_payload(data, {candidate.jobId for candidate in request.jobCandidates}, request.maxRecommendations)
-        return {"success": True, "message": "Model-core PDF inference completed", "data": data, "error": None}
+        return _internal_cv_analysis_response_payload(data, request, parsed_pdf_evidence)
 
     return app

@@ -146,6 +146,17 @@ def _coerce_prediction_score(value: Any) -> float:
     return score
 
 
+def _model_input_rows(vectors: Sequence[FeatureVector]) -> Any:
+    """Return a single 2D model input, not a Python list interpreted as inputs."""
+
+    rows = [vector.as_model_row() for vector in vectors]
+    try:
+        import numpy as np  # type: ignore[import-not-found]
+    except Exception:
+        return rows
+    return np.asarray(rows, dtype="float32")
+
+
 @dataclass(frozen=True)
 class RuntimeState:
     ready: bool
@@ -304,7 +315,7 @@ class InferenceService:
         if timeout_ms is not None and timeout_ms <= 0:
             raise InferenceTimeoutError(f"TensorFlow inference timeout before prediction; timeout_ms={timeout_ms}")
 
-        model_rows = [vector.as_model_row() for vector in vectors]
+        model_rows = _model_input_rows(vectors)
         started_at = monotonic()
         try:
             raw_predictions = self._model.predict(model_rows, verbose=0)  # type: ignore[union-attr]

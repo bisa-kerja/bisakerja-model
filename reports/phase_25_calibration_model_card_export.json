@@ -8,7 +8,7 @@
     "label_manifest_exported_with_hash": true,
     "model_card_has_required_fields": true
   },
-  "artifact_manifest_sha256": "ec6bfc01af9cca3c37671c8ec8ff000e55a2a253e4b38535f32ab7df5fc80c40",
+  "artifact_manifest_sha256": "12e3dc297e1fd027ca312e6060912d291b5e6c82ad44b1718184c6f320d5aede",
   "bucket_checks": [
     {
       "all_buckets_present": true,
@@ -86,34 +86,34 @@
     },
     "jobFitAlignment.score": {
       "test": {
-        "bucket_agreement": 0.9685,
-        "ece_points": 0.533,
-        "mae_points": 0.8603,
-        "mce_points": 3.0195,
+        "bucket_agreement": 0.9593,
+        "ece_points": 1.2132,
+        "mae_points": 1.4959,
+        "mce_points": 10.831,
         "passed": true,
-        "rmse_points": 2.9776,
+        "rmse_points": 6.4215,
         "row_count": 540,
-        "within_10_points_rate": 0.9759
+        "within_10_points_rate": 0.9667
       },
       "train": {
-        "bucket_agreement": 0.9786,
-        "ece_points": 0.405,
-        "mae_points": 0.6729,
-        "mce_points": 1.944,
+        "bucket_agreement": 0.9643,
+        "ece_points": 1.1371,
+        "mae_points": 1.377,
+        "mce_points": 9.5456,
         "passed": true,
-        "rmse_points": 2.5668,
+        "rmse_points": 6.1705,
         "row_count": 2520,
-        "within_10_points_rate": 0.9849
+        "within_10_points_rate": 0.971
       },
       "validation": {
-        "bucket_agreement": 0.9722,
-        "ece_points": 0.3469,
-        "mae_points": 0.8443,
-        "mce_points": 1.955,
+        "bucket_agreement": 0.9667,
+        "ece_points": 0.9353,
+        "mae_points": 1.1891,
+        "mce_points": 5.2838,
         "passed": true,
-        "rmse_points": 3.3282,
+        "rmse_points": 5.1772,
         "row_count": 540,
-        "within_10_points_rate": 0.9741
+        "within_10_points_rate": 0.9704
       }
     },
     "recommendations[].matchScore": {
@@ -130,26 +130,26 @@
     }
   },
   "export_hashes": {
-    "artifact_manifest": "ec6bfc01af9cca3c37671c8ec8ff000e55a2a253e4b38535f32ab7df5fc80c40",
-    "calibration_tables_csv": "1236b81ed4366331dc6e2904fbef0ea6d9a85d1ae3a9f6f5420c02dd8e1b8cf1",
-    "dataset_manifest": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
-    "feature_config": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-    "label_manifest": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
-    "model_card": "f5ee680ae54dc4fca2d83dca3d24b62608e604b02320e775ecdb2c9d6ddcfc22",
-    "report": "82b315d217af29a7878a90e1f52886e80da9416972c55c0fab255e6c8d634d3a",
-    "score_calibration": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236"
+    "artifact_manifest": "12e3dc297e1fd027ca312e6060912d291b5e6c82ad44b1718184c6f320d5aede",
+    "calibration_tables_csv": "cc41822a853f95d212478c440088a99e4e636db65e4ea7a12709690bf11372f4",
+    "dataset_manifest": "f4adbdbd17d3ca6ce75b235c689f434adb2e7cf5922f504361bb05f6f59de606",
+    "feature_config": "ef6739c2fdfc6855bbcf4df3b9d46dea7ef60100f59ff60d86c067ce1c2ff91b",
+    "label_manifest": "741be3733472e2dc6c9a46738afef5172e61a9fc5887cc6e22b7588f306e6830",
+    "model_card": "e25cbd68c2cd5c72baaaa97c9b4d2569c125734c9c666d5635799c3037990729",
+    "report": "aea230b794ce9621cad8e2a57e3df3b4befaa95ce8bd26ba9bf97c591ebb498b",
+    "score_calibration": "ae96653a420f79478914b5f3daf3b6598bab61b62bd8717af28fe69c2204c2f5"
   },
   "export_paths": {
-    "artifact_manifest": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-    "calibration_tables_csv": "artifacts/phase_25_tensorflow_training_delivery/score_calibration_tables.csv",
-    "dataset_manifest": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
-    "feature_config": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
-    "label_manifest": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
-    "model_card": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-    "report": "reports/phase_25_calibration_model_card_export.json",
-    "score_calibration": "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json"
+    "artifact_manifest": "artifacts\\phase_25_tensorflow_training_delivery\\artifact_manifest.json",
+    "calibration_tables_csv": "artifacts\\phase_25_tensorflow_training_delivery\\score_calibration_tables.csv",
+    "dataset_manifest": "artifacts\\phase_25_tensorflow_training_delivery\\dataset_manifest.json",
+    "feature_config": "artifacts\\phase_25_tensorflow_training_delivery\\feature_config.json",
+    "label_manifest": "artifacts\\phase_25_tensorflow_training_delivery\\label_manifest.json",
+    "model_card": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+    "report": "reports\\phase_25_calibration_model_card_export.json",
+    "score_calibration": "artifacts\\phase_25_tensorflow_training_delivery\\score_calibration.json"
   },
-  "generated_at": "2026-06-03T01:45:36.646906+00:00",
+  "generated_at": "2026-06-04T08:19:46.706696+00:00",
   "model_card_summary": {
     "blocked_use": [
       "Automated hiring decision, rejection, eligibility, salary, or protected-class inference.",
@@ -192,7 +192,7 @@
     "readiness": {
       "git_dirty_at_setup": true,
       "production_ready_blocked_when_dirty": true,
-      "status_cap": "production-ready"
+      "status_cap": "staging-ready"
     }
   },
   "notes": [

@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-06-03T01:45:36.137378+00:00",
+  "generated_at": "2026-06-04T08:19:45.332313+00:00",
   "hash_references": {
-    "event_files_manifest_hash": "61143734f97f15898f50c6fb55b3fe76aa26f7529aabb4cca9110cd8dfc23d75",
+    "event_files_manifest_hash": "19587630a5d12f02654c0c0e33773874c8ebd4407ab80eb603232299a2622c07",
     "feature_matrix": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
-      "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz",
+      "sha256": "0aec69bbd7f906ab8381e776c0f4de4c4ed0a354771fb0ba12f2e39c2c5254ca"
     },
     "predictions": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
-      "sha256": "2aa9a5b4266252dfe4dee634e44e0eb5713123bc1deff714cd9da3ace25be16a"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\gradient_tape_predictions_v1.npz",
+      "sha256": "ba4965706dfeccbb37bc692cb03ec27af6cf5527e4da9e18bfdb08a8da8d6907"
     },
     "tensorboard_manifest": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
-      "sha256": "8a036986f2abfb03f538f90bcc29cd035546ba7a61046c09edcb14610b2c8725"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorboard_monitoring_manifest.json",
+      "sha256": "bf2dc086d31df6adafe713b7595018bed1fc1c480827ec2425d90b2644567bc7"
     },
     "training_history": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
-      "sha256": "432705c47b2dd867ac4196c69d88314c1f90597fb90198668771810d1c29954e"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\gradient_tape_training_history.csv",
+      "sha256": "edf8ffa1b1fd6a46faa5a4d49466cdc7cca610d7bd4e8397f24ae3617ebd09c1"
     },
     "training_report": {
-      "path": "reports/phase_25_training_evaluation_loop.json",
-      "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523"
+      "path": "reports\\phase_25_training_evaluation_loop.json",
+      "sha256": "7a9a64930c3a23f75a6421a36ae5f4b4c3f54dfe0053a16152c86496e5bb1a94"
     }
   },
   "phase_id": "phase_25_tensorflow_training_delivery",
@@ -30,17 +30,17 @@
     "event_file_count": 1,
     "event_files": [
       {
-        "bytes": 126450,
-        "path": "artifacts/tensorboard/phase_25_tensorflow_training_delivery/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
-        "sha256": "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1"
+        "bytes": 94509,
+        "path": "artifacts\\tensorboard\\phase_25_tensorflow_training_delivery\\jobfit_tf_phase25_gradient_tape_v1_20260604T081723\\events.out.tfevents.1780561185.DESKTOP-PPOCB26.6108.0.v2",
+        "sha256": "4ec21c8c3845ff6de5f8e1867885afc675d02e68b55371dd25f77149be56c2b9"
       }
     ],
-    "log_root": "artifacts/tensorboard/phase_25_tensorflow_training_delivery",
+    "log_root": "artifacts\\tensorboard\\phase_25_tensorflow_training_delivery",
     "max_event_bytes": 20971520,
     "max_event_files": 16,
-    "run_dir": "artifacts/tensorboard/phase_25_tensorflow_training_delivery/jobfit_tf_phase25_gradient_tape_v1_20260603T014424",
-    "run_id": "jobfit_tf_phase25_gradient_tape_v1_20260603T014424",
-    "total_event_bytes": 126450
+    "run_dir": "artifacts\\tensorboard\\phase_25_tensorflow_training_delivery\\jobfit_tf_phase25_gradient_tape_v1_20260604T081723",
+    "run_id": "jobfit_tf_phase25_gradient_tape_v1_20260604T081723",
+    "total_event_bytes": 94509
   },
   "verification": {
     "missing_histogram_groups": [],

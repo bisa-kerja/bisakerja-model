@@ -1,68 +1,68 @@
 {
   "artifacts": {
     "clean_reload_script": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py",
-      "sha256": "3dc2c703929fa460acdf5468cf4e2abfccc3993f816cbe9ddcf97495eb09b657",
-      "size_bytes": 7375
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\registered_custom_objects_smoke.py",
+      "sha256": "38a73290c3c273b8a18291517079ae64bc41560b3ac18034602b718bcf9e58ea",
+      "size_bytes": 7523
     },
     "final_keras_model": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
-      "size_bytes": 80901
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+      "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73",
+      "size_bytes": 80919
     },
     "inference_smoke_fixture": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
-      "sha256": "d0d0558cb16f3db60c379c11c4d2c33f057c64f6fdd646dd00555113052ef94d",
-      "size_bytes": 1515
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\inference_smoke_fixture.json",
+      "sha256": "cbb683f0c99bd6826b58c1a0cded659d9f8812e9fe2a611c9051a830a546c318",
+      "size_bytes": 1549
     }
   },
   "clean_reload": {
-    "fixture": "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
+    "fixture": "artifacts\\phase_25_tensorflow_training_delivery\\export\\inference_smoke_fixture.json",
     "sample_predictions": [
       {
         "pair_id": "c1966cac7f07407a22a5fe7a",
-        "score_0_1": 0.713413,
-        "score_0_100": 71.341,
+        "score_0_1": 0.7,
+        "score_0_100": 70.0,
         "split": "validation",
         "target_0_1": 0.702
       },
       {
         "pair_id": "6b2ec14c33e34197a0430050",
-        "score_0_1": 0.732709,
-        "score_0_100": 73.271,
+        "score_0_1": 0.7,
+        "score_0_100": 70.0,
         "split": "validation",
         "target_0_1": 0.7067
       },
       {
         "pair_id": "93a8e5792dfbd972a8750d13",
-        "score_0_1": 0.7,
-        "score_0_100": 70.0,
+        "score_0_1": 0.961601,
+        "score_0_100": 96.16,
         "split": "validation",
         "target_0_1": 1.0
       },
       {
         "pair_id": "0ebd55720e44e63b8c109a8c",
-        "score_0_1": 0.729129,
-        "score_0_100": 72.913,
+        "score_0_1": 0.731125,
+        "score_0_100": 73.113,
         "split": "test",
         "target_0_1": 0.73
       },
       {
         "pair_id": "77eec81454bacfe75491286d",
-        "score_0_1": 0.999988,
-        "score_0_100": 99.999,
+        "score_0_1": 1.0,
+        "score_0_100": 100.0,
         "split": "test",
         "target_0_1": 1.0
       },
       {
         "pair_id": "6b81295c60b0648cbe42a91a",
-        "score_0_1": 0.999987,
-        "score_0_100": 99.999,
+        "score_0_1": 1.0,
+        "score_0_100": 100.0,
         "split": "test",
         "target_0_1": 1.0
       }
     ],
-    "script": "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py"
+    "script": "artifacts\\phase_25_tensorflow_training_delivery\\export\\registered_custom_objects_smoke.py"
   },
   "export_format": ".keras",
   "failures": [],
@@ -97,7 +97,7 @@
     },
     {
       "check": "clean_subprocess_reload",
-      "command": "python artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
+      "command": "python.exe artifacts\\phase_25_tensorflow_training_delivery\\export\\registered_custom_objects_smoke.py artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz artifacts\\phase_25_tensorflow_training_delivery\\export\\inference_smoke_fixture.json",
       "status": "PASS"
     },
     {
@@ -117,7 +117,7 @@
       "status": "PASS"
     }
   ],
-  "generated_at": "2026-06-03T01:45:36.745597+00:00",
+  "generated_at": "2026-06-04T08:19:47.021018+00:00",
   "keras_archive": {
     "checks": [
       {
@@ -134,7 +134,7 @@
       }
     ],
     "metadata": {
-      "date_saved": "2026-06-03@08:45:36",
+      "date_saved": "2026-06-04@15:19:45",
       "keras_version": "3.14.1"
     },
     "registered_custom_names": [
@@ -174,44 +174,44 @@
   "schema_version": "phase-25-tensorflow-artifact-export-v1",
   "source_artifacts": {
     "artifact_manifest": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-      "sha256": "ec6bfc01af9cca3c37671c8ec8ff000e55a2a253e4b38535f32ab7df5fc80c40",
-      "size_bytes": 11434
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\artifact_manifest.json",
+      "sha256": "12e3dc297e1fd027ca312e6060912d291b5e6c82ad44b1718184c6f320d5aede",
+      "size_bytes": 11755
     },
     "calibration_report": {
-      "path": "reports/phase_25_calibration_model_card_export.json",
-      "sha256": "e4fb2d9e1c7022934706fa8a7891d98441d2b7e6c12e316246b41019c2bebc19",
-      "size_bytes": 7003
+      "path": "reports\\phase_25_calibration_model_card_export.json",
+      "sha256": "ec437bd1d131ccc52bc68b239beb24f4dd9db9012280a8b594ad0809333c48af",
+      "size_bytes": 7223
     },
     "feature_config": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
-      "sha256": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-      "size_bytes": 2741
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\feature_config.json",
+      "sha256": "ef6739c2fdfc6855bbcf4df3b9d46dea7ef60100f59ff60d86c067ce1c2ff91b",
+      "size_bytes": 2843
     },
     "feature_matrix": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
-      "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5",
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz",
+      "sha256": "0aec69bbd7f906ab8381e776c0f4de4c4ed0a354771fb0ba12f2e39c2c5254ca",
       "size_bytes": 105262
     },
     "model_card": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "sha256": "f5ee680ae54dc4fca2d83dca3d24b62608e604b02320e775ecdb2c9d6ddcfc22",
-      "size_bytes": 7361
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+      "sha256": "e25cbd68c2cd5c72baaaa97c9b4d2569c125734c9c666d5635799c3037990729",
+      "size_bytes": 8179
     },
     "source_candidate_model": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
-      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
-      "size_bytes": 80901
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\gradient_tape_trained_candidate.keras",
+      "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73",
+      "size_bytes": 80919
     },
     "tensorflow_feature_config": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
-      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
-      "size_bytes": 2029
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_feature_config.json",
+      "sha256": "a3e9ff9b46fe9833a0ffcdbff26c3df5f50c544bcc994487c57d697cc81a6c36",
+      "size_bytes": 2092
     },
     "training_report": {
-      "path": "reports/phase_25_training_evaluation_loop.json",
-      "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523",
-      "size_bytes": 10737
+      "path": "reports\\phase_25_training_evaluation_loop.json",
+      "sha256": "7a9a64930c3a23f75a6421a36ae5f4b4c3f54dfe0053a16152c86496e5bb1a94",
+      "size_bytes": 11144
     }
   },
   "status": "complete"

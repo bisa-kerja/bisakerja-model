@@ -16,28 +16,68 @@
     "staging-ready": "Release and requirement gates pass, but production is capped by dirty worktree, selection cap, or readiness cap."
   },
   "final_status_reasons": {
-    "baseline_readiness_cap": "production-ready",
-    "failure_count": 0,
-    "git_dirty_at_export": false,
-    "production_cap_failure_count": 0,
-    "production_selection_passed": true,
-    "prototype_tradeoffs": []
+    "baseline_readiness_cap": "staging-ready",
+    "failure_count": 1,
+    "git_dirty_at_export": true,
+    "production_cap_failure_count": 1,
+    "production_selection_passed": false,
+    "prototype_tradeoffs": [
+      {
+        "actual": 0.97777778,
+        "check": "score_band_agreement_preserve_or_improve",
+        "direction": ">=",
+        "reference": "phase18_selected_scorer",
+        "required": 0.97962963,
+        "split": "validation",
+        "status": "FAIL"
+      },
+      {
+        "actual": 1.495885,
+        "check": "mae_0_100_preserve_or_improve",
+        "direction": "<=",
+        "reference": "phase18_selected_scorer",
+        "required": 1.21344534,
+        "split": "test",
+        "status": "FAIL"
+      }
+    ]
   },
-  "generated_at": "2026-06-04T04:39:58.810410+00:00",
+  "generated_at": "2026-06-04T08:20:00.361224+00:00",
   "git_state": {
     "check": "git_dirty_at_export",
-    "dirty": false,
-    "dirty_file_count": 0,
-    "sample": [],
-    "status": "PASS"
+    "dirty": true,
+    "dirty_file_count": 65,
+    "sample": [
+      " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/custom_component_smoke_model.keras",
+      " M artifacts/phase_25_tensorflow_training_delivery/data_feature_reuse.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/e5_embedding_contract.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+      " M artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
+      " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
+      " M artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
+      " M artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/requirement_contract_matrix.json"
+    ],
+    "status": "WARN"
   },
   "hash_verification": {
     "critical_hashes": {
       "artifact_manifest": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\artifact_manifest.json",
-        "sha256": "953d5a026ed6d089d7f3ba4b32d6cc1108693f067f4e022b41d960fd6da5725c",
-        "size_bytes": 24762
+        "sha256": "a2e21fa86b1becc19ce6d478f58041d681c2b1a556a80016877349bce2aab8df",
+        "size_bytes": 21581
       },
       "clean_reload_script": {
         "exists": true,
@@ -54,317 +94,202 @@
       "final_keras_model": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
-        "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
-        "size_bytes": 80901
+        "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73",
+        "size_bytes": 80919
       },
       "genai_wrapper_handoff_contract": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\genai_wrapper_handoff_contract.json",
-        "sha256": "d51b3c922d22b73af8f498b8faa997e2e6b55d4a657d6fc566468d19d6220cf6",
-        "size_bytes": 5076
+        "sha256": "5fe5b7cad326c8a2a1c76d67626b52b5ddcf4e6936de0b5f15b684363f3b31ce",
+        "size_bytes": 5069
       },
       "inference_smoke_fixture": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\inference_smoke_fixture.json",
-        "sha256": "4e2cd8cb099c759eae2f80dcff0e2949ef8ebfb55cac8da0c231e1b1179538de",
-        "size_bytes": 1583
+        "sha256": "cbb683f0c99bd6826b58c1a0cded659d9f8812e9fe2a611c9051a830a546c318",
+        "size_bytes": 1549
       },
       "model_api_handoff_fixtures": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_fixtures.json",
-        "sha256": "2b73284121c9de2d53c2c36b1ce02ea930958f5dbd0daba394472c1ffa9b1a39",
-        "size_bytes": 24006
+        "sha256": "564e3872db870f615e854828dcbeb8fc0fd081366db47108ad8857011a35e92a",
+        "size_bytes": 24041
       },
       "model_api_handoff_validation": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_validation.json",
-        "sha256": "bd5a88dfafe9a4956392ef81a1ea896bb9ef8a808e2d8c2e81bd1973803fa69d",
+        "sha256": "6894b41ca24efd0d19ebbe45008250bd06caff02e45f6b0ca35deea47c16ebba",
         "size_bytes": 2361
       },
       "model_card": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
-        "sha256": "f336c9e6c17bacc91e8b3bfbb38b9275f24a8c396bf136e7de135bab17e4c2fe",
-        "size_bytes": 13644
+        "sha256": "3a4e17efd695e43c611f10b9bb35ec424bbbf9a59ca520ec0d7db11555907b33",
+        "size_bytes": 10804
       },
       "step_25_10_calibration_model_card_export": {
         "exists": true,
         "path": "reports\\phase_25_calibration_model_card_export.json",
-        "sha256": "aea230b794ce9621cad8e2a57e3df3b4befaa95ce8bd26ba9bf97c591ebb498b",
-        "size_bytes": 7209
+        "sha256": "ec437bd1d131ccc52bc68b239beb24f4dd9db9012280a8b594ad0809333c48af",
+        "size_bytes": 7223
       },
       "step_25_11_tensorflow_artifact_export": {
         "exists": true,
         "path": "reports\\phase_25_tensorflow_artifact_export.json",
-        "sha256": "cdaa578e3299916beb4c7f5007bce2b857637203216b5a5f8bcbbfb726ff514d",
-        "size_bytes": 7316
+        "sha256": "853582232a6c5f451bd2d64a9447df4439e33b0e1dcbb08ed5896e192e4f57c3",
+        "size_bytes": 7340
       },
       "step_25_12_model_api_handoff_fixtures": {
         "exists": true,
         "path": "reports\\phase_25_model_api_handoff_fixtures.json",
-        "sha256": "c8b5c8e527c10969a209955fa33009b62373ded7d9116a790b09381107ac2b92",
-        "size_bytes": 4256
+        "sha256": "68cbdfb47aa38d0a3d7e88bb5cce4a6a3578cb2752f67163aef7ff70356d731a",
+        "size_bytes": 4267
       },
       "step_25_13_training_only_genai_boundary": {
         "exists": true,
         "path": "reports\\phase_25_training_only_genai_boundary.json",
-        "sha256": "8a791afe0774676dc02917f3aded4f084c5b94ec9f6d5563909e8515f8d5862d",
-        "size_bytes": 3104
+        "sha256": "bbd7c2ec3f438bdc7ab300b0254a151c6f4d030bdb1bce5449583cadc17efc5a",
+        "size_bytes": 3097
       },
       "step_25_15_human_readable_final_report": {
         "path": "reports\\phase_25_human_readable_final_report.md",
-        "sha256": "b70ea60a91e0179880d343ae8c79bdae409a6675faa711c6a2bd055c4f613f02",
-        "size_bytes": 3479
+        "sha256": "ae9180ab865142d1bb5727df74967457641bb20e39db335e93f9e37d1c4793f6",
+        "size_bytes": 3507
       },
       "step_25_15_human_readable_final_report_audit": {
         "path": "reports\\phase_25_human_readable_final_report.json",
-        "sha256": "7c93d0394d97546cd57bbd25b224cf390f7f9f5d84c05d30f31ff7153dcf4a16",
+        "sha256": "07f10b8205f675190e7966081fe37b15aeca1adea4ca43287fe81526a4db66a7",
         "size_bytes": 2169
       },
       "step_25_1_requirement_contract_matrix": {
         "exists": true,
         "path": "reports\\phase_25_requirement_contract_matrix.json",
-        "sha256": "c1cd11ac61cbbbde5a9d6ec610a9ecd85443711408566e553a344fd5dce47d50",
+        "sha256": "594780a520bab6e1d86602a2c9eecdf179fe162e37b7451e27b706a3514380ca",
         "size_bytes": 7599
       },
       "step_25_2_reproducibility_setup": {
         "exists": true,
         "path": "reports\\phase_25_reproducibility_setup.json",
-        "sha256": "c11f8ba58215b1a20863d2d27659000c271db634112df78ccdffd165876496f2",
-        "size_bytes": 11889
+        "sha256": "7c4ae17bc5e40de6631d78de3a2f02d2466ba2f88dac3f80764dfee7ca04a241",
+        "size_bytes": 10551
       },
       "step_25_3_data_feature_reuse": {
         "exists": true,
         "path": "reports\\phase_25_data_feature_reuse.json",
-        "sha256": "a5ad1d8b753f662c65f7ea98b60a43e50bf9a2c96f7855152151e345674c3a6a",
-        "size_bytes": 7057
+        "sha256": "96b2bd996b64a5808b4691f241e1d04ceb60adbfde2020f1e7b0704051d8aa2a",
+        "size_bytes": 7082
       },
       "step_25_4_e5_embedding_contract": {
         "exists": true,
         "path": "reports\\phase_25_e5_embedding_contract.json",
-        "sha256": "e78a7577822ede00493dbf57f0209ee3d467dccdfcfef54c07e8c41a38171cbe",
-        "size_bytes": 4641
+        "sha256": "6a0624bb7051ccb0c9f8398e425693c7b0f5a52edd641fcfa3fe409e4b9e669a",
+        "size_bytes": 4654
       },
       "step_25_5_tensorflow_architecture": {
         "exists": true,
         "path": "reports\\phase_25_tensorflow_architecture.json",
-        "sha256": "c28203df167121dc9e231a699aeea109b6dc2438da16d379d898696af1f53f3e",
-        "size_bytes": 7995
+        "sha256": "bf794a26e236e1be874ce3567ad818c1c1c87386adce5e3e97ba5d956fe71400",
+        "size_bytes": 8004
       },
       "step_25_6_custom_component": {
         "exists": true,
         "path": "reports\\phase_25_custom_component.json",
-        "sha256": "c531e6ba9b979b773192ea43e0bc75260b799b895976d84cdad4e243e5ccdd21",
-        "size_bytes": 4239
+        "sha256": "4f16719d15f44feb6fe3a06578481092b00c5f1799981c81f93688c7ec032733",
+        "size_bytes": 4248
       },
       "step_25_7_training_evaluation_loop": {
         "exists": true,
         "path": "reports\\phase_25_training_evaluation_loop.json",
-        "sha256": "79bcf560813438f9c2514abe63afe5781f10c0519469209ec170bb3f21a1ffa2",
-        "size_bytes": 11151
+        "sha256": "7a9a64930c3a23f75a6421a36ae5f4b4c3f54dfe0053a16152c86496e5bb1a94",
+        "size_bytes": 11144
       },
       "step_25_8_tensorboard_monitoring": {
         "exists": true,
         "path": "reports\\phase_25_tensorboard_monitoring.json",
-        "sha256": "a50bf993ed19e4b401a2e97ce28f297a57d338f73c26c032dd215d2250f8be88",
-        "size_bytes": 4346
+        "sha256": "90a2eab12d5ffa1e8b1ea707e3317aeb5e5670672d405fd327b5350f569bc561",
+        "size_bytes": 4352
       },
       "step_25_9_baseline_selection_gate": {
         "exists": true,
         "path": "reports\\phase_25_baseline_selection_gate.json",
-        "sha256": "b2709fe7bc574686ec986b893ca2221c31848ad8c0df7b37f954bdcdf50891bc",
-        "size_bytes": 11544
+        "sha256": "cc700307daea1c46d86a6355b3de140315ccf3c825a665df26513a9556603875",
+        "size_bytes": 12586
       },
       "tensorboard_monitoring_manifest": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorboard_monitoring_manifest.json",
-        "sha256": "a50bf993ed19e4b401a2e97ce28f297a57d338f73c26c032dd215d2250f8be88",
-        "size_bytes": 4346
+        "sha256": "90a2eab12d5ffa1e8b1ea707e3317aeb5e5670672d405fd327b5350f569bc561",
+        "size_bytes": 4352
       },
       "tensorflow_artifact_export_manifest": {
         "exists": true,
         "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_artifact_export.json",
-        "sha256": "cdaa578e3299916beb4c7f5007bce2b857637203216b5a5f8bcbbfb726ff514d",
-        "size_bytes": 7316
+        "sha256": "853582232a6c5f451bd2d64a9447df4439e33b0e1dcbb08ed5896e192e4f57c3",
+        "size_bytes": 7340
       }
     },
-    "manifest_checked_count": 27,
+    "manifest_checked_count": 25,
     "manifest_failed_count": 0,
     "manifest_failures": [],
     "manifest_sync": {
-      "updated_count": 20,
+      "updated_count": 1,
       "updates": [
         {
-          "artifact_id": "score_calibration",
-          "new_sha256": "447ff910458d8dfd8946d61745ab3ba5ef9a5da0fa6777e9b87f3238010ae1d9",
-          "old_sha256": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json"
-        },
-        {
-          "artifact_id": "feature_config",
-          "new_sha256": "a24b955059f079c3d5fb4dc602a4ff92ae7f2fd4d3042648bec6b7e82014642f",
-          "old_sha256": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/feature_config.json"
-        },
-        {
-          "artifact_id": "label_manifest",
-          "new_sha256": "50a5e45247f9325a270d7321332087b984c4698345d935631df653c6a701f206",
-          "old_sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json"
-        },
-        {
-          "artifact_id": "dataset_manifest",
-          "new_sha256": "8325c2cae87b237c2e33aaec933aae58c2e0f62bc83e2e6004d5dc678ee09a98",
-          "old_sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json"
-        },
-        {
-          "artifact_id": "source_tensorflow_feature_config",
-          "new_sha256": "5907c383768a71f2cadae39a31f7df8485bbef493c49e598de802bef177d89d4",
-          "old_sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json"
-        },
-        {
-          "artifact_id": "source_ats_benchmark",
-          "new_sha256": "4ddf6edaf91cf62e371534d1e1d3dadb93dc1b6409b1db7454d165072d6de150",
-          "old_sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17",
-          "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv"
-        },
-        {
-          "artifact_id": "source_candidate_reranking",
-          "new_sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036",
-          "old_sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
-          "path": "reports/phase_21_backend_candidate_reranking.json"
-        },
-        {
-          "artifact_id": "source_phase23_contract_fixtures",
-          "new_sha256": "bb208d2acf2bc34425041e0083f154eccdf8e1eb0f9e6c5e407da076bf9e5e5e",
-          "old_sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3",
-          "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json"
-        },
-        {
-          "artifact_id": "clean_reload_script",
-          "new_sha256": "38a73290c3c273b8a18291517079ae64bc41560b3ac18034602b718bcf9e58ea",
-          "old_sha256": "3dc2c703929fa460acdf5468cf4e2abfccc3993f816cbe9ddcf97495eb09b657",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py"
-        },
-        {
-          "artifact_id": "inference_smoke_fixture",
-          "new_sha256": "4e2cd8cb099c759eae2f80dcff0e2949ef8ebfb55cac8da0c231e1b1179538de",
-          "old_sha256": "d0d0558cb16f3db60c379c11c4d2c33f057c64f6fdd646dd00555113052ef94d",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json"
-        },
-        {
-          "artifact_id": "tensorflow_artifact_export",
-          "new_sha256": "cdaa578e3299916beb4c7f5007bce2b857637203216b5a5f8bcbbfb726ff514d",
-          "old_sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json"
-        },
-        {
-          "artifact_id": "model_api_handoff_fixtures",
-          "new_sha256": "2b73284121c9de2d53c2c36b1ce02ea930958f5dbd0daba394472c1ffa9b1a39",
-          "old_sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json"
-        },
-        {
-          "artifact_id": "model_api_handoff_validation",
-          "new_sha256": "bd5a88dfafe9a4956392ef81a1ea896bb9ef8a808e2d8c2e81bd1973803fa69d",
-          "old_sha256": "41259486b941a58ec9e7b6ed760a386aa5371edee911732c17340ed5a98836e2",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json"
-        },
-        {
           "artifact_id": "phase25_model_api_handoff_report",
-          "new_sha256": "c8b5c8e527c10969a209955fa33009b62373ded7d9116a790b09381107ac2b92",
-          "old_sha256": "1ce32a785459f8a9e27ad3858b0beb09a506f55896e283e144a4f30d5a636846",
-          "path": "reports/phase_25_model_api_handoff_fixtures.json"
-        },
-        {
-          "artifact_id": "training_only_genai_boundary",
-          "new_sha256": "61814a83eccc970c20a12c538d033a0877881a51a69a376b3bca15d8ef7b86bb",
-          "old_sha256": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json"
-        },
-        {
-          "artifact_id": "genai_wrapper_handoff_contract",
-          "new_sha256": "d51b3c922d22b73af8f498b8faa997e2e6b55d4a657d6fc566468d19d6220cf6",
-          "old_sha256": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json"
-        },
-        {
-          "artifact_id": "deterministic_summary_signal_placeholders",
-          "new_sha256": "e39eb5fb1fc64f80736e26465998e85d3403c03a32cfe396b80ae2554add145e",
-          "old_sha256": "df73748b27ae87f4875f319fa017e13e867e15924ac125ed1ae19c21e82e3eab",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/deterministic_summary_signal_placeholders.json"
-        },
-        {
-          "artifact_id": "model_card",
-          "new_sha256": "f336c9e6c17bacc91e8b3bfbb38b9275f24a8c396bf136e7de135bab17e4c2fe",
-          "old_sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json"
-        },
-        {
-          "artifact_id": "phase25_training_only_genai_boundary_report",
-          "new_sha256": "8a791afe0774676dc02917f3aded4f084c5b94ec9f6d5563909e8515f8d5862d",
-          "old_sha256": "1bdc8af7e23989aaadb7ed0b1e8634d16809b110d37e1c8976243295781d7e32",
-          "path": "reports/phase_25_training_only_genai_boundary.json"
-        },
-        {
-          "artifact_id": "phase25_tensorboard_release_manifest",
-          "new_sha256": "deb8d013eb84bf4720908b631efb6bfb9300a5f5bc854bee6af77caf2da93db5",
-          "old_sha256": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json"
+          "new_sha256": "68cbdfb47aa38d0a3d7e88bb5cce4a6a3578cb2752f67163aef7ff70356d731a",
+          "old_sha256": "4e1d4f807503ea69a56167cfb420f8670dae3ad205d63c75f74d502b69f6f9bc",
+          "path": "reports\\phase_25_model_api_handoff_fixtures.json"
         }
       ]
     }
   },
   "known_limitations": [
     "Automated hiring decision, rejection, eligibility, salary, or protected-class inference.",
-    "Production score claims without frozen human/reviewer validation coverage.",
-    "Backend-owned persistence, auth, DB hydration, or GenAI wrapper output generation.",
-    "Scoring candidate jobs not supplied by the backend request."
+    "Production score claims without replacing fixture/weak-label evidence with validated labels.",
+    "Backend-owned persistence, auth, job hydration, or GenAI wrapper output generation."
   ],
   "metrics": {
     "test": {
       "calibration": {
-        "ece_0_1": 0.00511387,
-        "ece_0_100": 0.511387,
-        "max_bucket_gap_0_100": 2.179496
+        "ece_0_1": 0.0110849,
+        "ece_0_100": 1.10849,
+        "max_bucket_gap_0_100": 4.685647
       },
       "high_fit_recall": 1.0,
-      "loss": 0.00015298,
-      "mae": 0.0086032,
-      "mae_0_100": 0.86032,
-      "predicted_high_count": 102,
-      "r2": 0.98956618,
-      "rmse": 0.02977602,
-      "rmse_0_100": 2.977602,
+      "loss": 0.00029563,
+      "mae": 0.01495885,
+      "mae_0_100": 1.495885,
+      "predicted_high_count": 105,
+      "r2": 0.95147322,
+      "rmse": 0.06421487,
+      "rmse_0_100": 6.421487,
       "row_count": 540,
-      "score_band_agreement": 0.99444444,
-      "spearman": 0.99536524,
+      "score_band_agreement": 0.97777778,
+      "spearman": 0.99305492,
       "true_high_count": 90
     },
     "validation": {
       "calibration": {
-        "ece_0_1": 0.00290665,
-        "ece_0_100": 0.290665,
-        "max_bucket_gap_0_100": 0.892771
+        "ece_0_1": 0.00821059,
+        "ece_0_100": 0.821059,
+        "max_bucket_gap_0_100": 2.913994
       },
       "high_fit_recall": 1.0,
-      "loss": 0.0002141,
-      "mae": 0.0084428,
-      "mae_0_100": 0.84428,
-      "predicted_high_count": 100,
-      "r2": 0.98737391,
-      "rmse": 0.03328179,
-      "rmse_0_100": 3.328179,
+      "loss": 0.00020141,
+      "mae": 0.01189119,
+      "mae_0_100": 1.189119,
+      "predicted_high_count": 104,
+      "r2": 0.96944801,
+      "rmse": 0.05177165,
+      "rmse_0_100": 5.177165,
       "row_count": 540,
-      "score_band_agreement": 0.98888889,
-      "spearman": 0.99548961,
+      "score_band_agreement": 0.97777778,
+      "spearman": 0.99402889,
       "true_high_count": 90
     }
   },
-  "next_action": "Ready for artifact promotion review.",
-  "passed": true,
+  "next_action": "Commit or otherwise freeze the clean-run artifacts before claiming production-ready status.",
+  "passed": false,
   "phase_id": "phase_25_tensorflow_training_delivery",
   "requirement_targets": {
     "custom_components": [
@@ -379,36 +304,35 @@
     },
     "inference_smoke": {
       "fixture": "artifacts\\phase_25_tensorflow_training_delivery\\export\\inference_smoke_fixture.json",
-      "reload_status": "PASS"
+      "reload_status": "FAIL"
     },
     "mae_target_normalized": {
       "required_max": 0.02,
-      "test": 0.0086032,
-      "validation": 0.0084428
+      "test": 0.01495885,
+      "validation": 0.01189119
     },
     "tensorboard": {
       "check": "tensorboard_logs_exist",
       "event_file_count": 1,
-      "log_root": "artifacts/tensorboard/phase_25_tensorflow_training_delivery",
+      "log_root": "artifacts\\tensorboard\\phase_25_tensorflow_training_delivery",
       "release_events_present": true,
       "release_manifest": "artifacts\\phase_25_tensorflow_training_delivery\\tensorboard_release\\manifest.json",
       "status": "PASS"
     },
     "tensorflow_export": {
       "format": ".keras",
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
-      "size_bytes": 80901
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+      "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
     },
     "tensorflow_functional_or_subclassing": "Keras Functional API"
   },
   "schema_version": "phase-25-final-clean-kernel-gate-v1",
-  "status": "production-ready",
+  "status": "prototype-only",
   "strict_checks": [
     {
       "check": "clean_kernel_top_to_bottom_reached_final_gate",
       "evidence": "This cell is executed last by Restart Kernel / Run All or nbconvert --execute; earlier cell failure would stop before this report is written.",
-      "python": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe",
+      "python": "d:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe",
       "status": "PASS"
     },
     {
@@ -419,7 +343,7 @@
     },
     {
       "check": "artifact_manifest_hashes_match_current_files",
-      "checked_count": 27,
+      "checked_count": 25,
       "failed": [],
       "failed_count": 0,
       "status": "PASS"
@@ -427,7 +351,7 @@
     {
       "check": "tensorboard_logs_exist",
       "event_file_count": 1,
-      "log_root": "artifacts/tensorboard/phase_25_tensorflow_training_delivery",
+      "log_root": "artifacts\\tensorboard\\phase_25_tensorflow_training_delivery",
       "release_events_present": true,
       "release_manifest": "artifacts\\phase_25_tensorflow_training_delivery\\tensorboard_release\\manifest.json",
       "status": "PASS"
@@ -435,15 +359,15 @@
     {
       "check": "clean_keras_reload_subprocess",
       "command": [
-        "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe",
-        "artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py",
-        "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-        "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
-        "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json"
+        "python.exe",
+        "artifacts\\phase_25_tensorflow_training_delivery\\export\\registered_custom_objects_smoke.py",
+        "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+        "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz",
+        "artifacts\\phase_25_tensorflow_training_delivery\\export\\inference_smoke_fixture.json"
       ],
-      "returncode": 0,
-      "status": "PASS",
-      "stderr_tail": " To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nWARNING: All log messages before absl::InitializeLog() is called are written to STDERR\nI0000 00:00:1780548002.858114    6908 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.\nI0000 00:00:1780548005.556427    6908 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.\nTo enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.\nWARNING:tensorflow:From D:\\bisakerja-model\\training\\.tf-venv-3.13\\Lib\\site-packages\\keras\\src\\backend\\tensorflow\\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.\n\nWARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.\n",
+      "returncode": 1,
+      "status": "FAIL",
+      "stderr_tail": "Traceback (most recent call last):\n  File \u001b[35m\"D:\\bisakerja-model\\artifacts\\phase_25_tensorflow_training_delivery\\export\\registered_custom_objects_smoke.py\"\u001b[0m, line \u001b[35m8\u001b[0m, in \u001b[35m<module>\u001b[0m\n    import numpy as np\n\u001b[1;35mModuleNotFoundError\u001b[0m: \u001b[35mNo module named 'numpy'\u001b[0m\n",
       "stdout_tail": ""
     },
     {
@@ -539,11 +463,11 @@
     },
     {
       "check": "step_25_9_baseline_selection_gate",
-      "failed_gate_count": 0,
-      "failure_count": 0,
+      "failed_gate_count": 2,
+      "failure_count": 2,
       "passed": null,
       "report_status": "complete",
-      "status": "PASS"
+      "status": "FAIL"
     },
     {
       "check": "step_25_10_calibration_model_card_export",
@@ -592,14 +516,14 @@
       },
       "audit_report": {
         "path": "reports\\phase_25_human_readable_final_report.json",
-        "sha256": "7c93d0394d97546cd57bbd25b224cf390f7f9f5d84c05d30f31ff7153dcf4a16",
+        "sha256": "07f10b8205f675190e7966081fe37b15aeca1adea4ca43287fe81526a4db66a7",
         "size_bytes": 2169
       },
       "check": "step_25_15_human_readable_final_report",
       "human_report": {
         "path": "reports\\phase_25_human_readable_final_report.md",
-        "sha256": "b70ea60a91e0179880d343ae8c79bdae409a6675faa711c6a2bd055c4f613f02",
-        "size_bytes": 3479
+        "sha256": "ae9180ab865142d1bb5727df74967457641bb20e39db335e93f9e37d1c4793f6",
+        "size_bytes": 3507
       },
       "status": "PASS"
     }

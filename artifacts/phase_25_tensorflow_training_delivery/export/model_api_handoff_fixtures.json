@@ -94,10 +94,10 @@
       "workType"
     ]
   },
-  "generated_at": "2026-06-03T01:45:40.685985+00:00",
+  "generated_at": "2026-06-04T08:19:59.365457+00:00",
   "negative": {
     "cv_invalid_language": {
-      "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
+      "analyzedAt": "2026-06-04T08:19:59.365457+00:00",
       "atsFriendliness": {
         "detectedIssues": [
           "skills section could be grouped more clearly",
@@ -144,8 +144,8 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
@@ -166,7 +166,7 @@
       "schemaVersion": "model-core-cv-analysis-v1"
     },
     "cv_score_out_of_range": {
-      "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
+      "analyzedAt": "2026-06-04T08:19:59.365457+00:00",
       "atsFriendliness": {
         "detectedIssues": [
           "skills section could be grouped more clearly",
@@ -213,8 +213,8 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
@@ -235,7 +235,7 @@
       "schemaVersion": "model-core-cv-analysis-v1"
     },
     "cv_wrapper_owned_field": {
-      "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
+      "analyzedAt": "2026-06-04T08:19:59.365457+00:00",
       "atsFriendliness": {
         "detectedIssues": [
           "skills section could be grouped more clearly",
@@ -282,8 +282,8 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
@@ -312,13 +312,13 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
       },
-      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "rankedAt": "2026-06-04T08:19:59.365457+00:00",
       "recommendations": [
         {
           "jobId": "11111111-1111-4111-8111-111111111111",
@@ -380,13 +380,13 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
       },
-      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "rankedAt": "2026-06-04T08:19:59.365457+00:00",
       "recommendations": [
         {
           "jobId": "11111111-1111-4111-8111-111111111111",
@@ -423,13 +423,13 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
       },
-      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "rankedAt": "2026-06-04T08:19:59.365457+00:00",
       "recommendations": [
         {
           "jobId": "99999999-9999-4999-8999-999999999999",
@@ -466,13 +466,13 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
       },
-      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "rankedAt": "2026-06-04T08:19:59.365457+00:00",
       "recommendations": [
         {
           "jobId": "11111111-1111-4111-8111-111111111111",
@@ -513,13 +513,13 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
       },
-      "rankedAt": "2026-06-03T01:45:40.685985+00:00",
+      "rankedAt": "2026-06-04T08:19:59.365457+00:00",
       "recommendations": [
         {
           "jobId": "11111111-1111-4111-8111-111111111111",
@@ -665,7 +665,7 @@
       "schemaVersion": "model-core-candidate-reranking-request-v1"
     },
     "cvAnalysisCoreOutput": {
-      "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
+      "analyzedAt": "2026-06-04T08:19:59.365457+00:00",
       "atsFriendliness": {
         "detectedIssues": [
           "skills section could be grouped more clearly",
@@ -712,8 +712,8 @@
       "model": {
         "artifact": {
           "format": ".keras",
-          "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-          "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+          "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+          "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
         },
         "name": "bisakerja_jobfit_tf_functional_custom_v1",
         "version": "jobfit_tf_phase25_gradient_tape_v1"
@@ -736,10 +736,10 @@
   },
   "schema_version": "phase-25-model-api-handoff-fixtures-v1",
   "source_context": {
-    "calibration_report": "reports/phase_25_calibration_model_card_export.json",
-    "candidate_reranking_report": "reports/phase_21_backend_candidate_reranking.json",
-    "openapi": "references/docs/generated/openapi.json",
-    "phase23_contract_fixtures": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
-    "tensorflow_artifact_export": "reports/phase_25_tensorflow_artifact_export.json"
+    "calibration_report": "reports\\phase_25_calibration_model_card_export.json",
+    "candidate_reranking_report": "reports\\phase_21_backend_candidate_reranking.json",
+    "openapi": "references\\docs\\generated\\openapi.json",
+    "phase23_contract_fixtures": "artifacts\\phase_23_model_api_contract_validation\\contract_fixtures.json",
+    "tensorflow_artifact_export": "reports\\phase_25_tensorflow_artifact_export.json"
   }
 }

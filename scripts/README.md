@@ -18,6 +18,15 @@ python scripts/verify_phase_27_9_model_api_production_smoke.py --write --run-liv
 python scripts/verify_phase_31_release_gate.py
 ```
 
+Clean local runtime noise without touching durable artifacts:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\clean_workspace.ps1
+powershell -ExecutionPolicy Bypass -File scripts\clean_workspace.ps1 -Execute
+```
+
+Use `-IncludeVirtualEnv` only when local Python environments should be rebuilt.
+
 ## Rules
 
 - Keep outputs deterministic and path-stable.

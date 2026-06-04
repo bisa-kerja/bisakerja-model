@@ -1,14 +1,14 @@
 # Phase 25 Final Human-Readable Report
 
-Generated at: `2026-06-04T04:40:07.475477+00:00`
+Generated at: `2026-06-04T08:20:00.979855+00:00`
 
 ## Final decision
 
-- Status: **production-ready**
+- Status: **prototype-only**
 - Model version: `jobfit_tf_phase25_gradient_tape_v1`
 - Model API: `Keras Functional API`
 - Score scale: training `0-1`, API `0-100`
-- Production cap: no dirty-worktree cap detected
+- Production cap: dirty worktree at export blocks production-ready claim
 
 ## Requirement compliance
 
@@ -18,9 +18,9 @@ Generated at: `2026-06-04T04:40:07.475477+00:00`
 | 1.2 Custom component | CosineInteractionLayer, WeightedHuberLoss, ProductionGateCallback, HighRecallCalibrationLayer |
 | 1.3 GradientTape loop | PASS |
 | 1.4 TensorBoard | PASS (1 event files) |
-| 1.5 MAE <= 0.02 | PASS (test=0.0086, validation=0.0084) |
+| 1.5 MAE <= 0.02 | PASS (test=0.0150, validation=0.0119) |
 | 2.1 TensorFlow export | PASS (.keras) |
-| 2.2 Inference smoke | PASS |
+| 2.2 Inference smoke | FAIL |
 | 3.x REST API boundary | handoff fixtures exported; server remains separate deliverable |
 | 4.x GenAI boundary | wrapper contract exported; no external GenAI call in training |
 
@@ -28,29 +28,29 @@ Generated at: `2026-06-04T04:40:07.475477+00:00`
 
 | Metric | Value |
 |---|---|
-| validation_mae_0_1 | 0.0084 |
-| validation_mae_points | 0.844 |
-| validation_r2 | 0.9874 |
-| validation_spearman | 0.9955 |
+| validation_mae_0_1 | 0.0119 |
+| validation_mae_points | 1.189 |
+| validation_r2 | 0.9694 |
+| validation_spearman | 0.9940 |
 | validation_high_fit_recall | 1.0000 |
-| validation_score_band_agreement | 0.9889 |
-| test_mae_0_1 | 0.0086 |
-| test_mae_points | 0.860 |
-| test_r2 | 0.9896 |
-| test_spearman | 0.9954 |
+| validation_score_band_agreement | 0.9778 |
+| test_mae_0_1 | 0.0150 |
+| test_mae_points | 1.496 |
+| test_r2 | 0.9515 |
+| test_spearman | 0.9931 |
 | test_high_fit_recall | 1.0000 |
-| test_score_band_agreement | 0.9944 |
+| test_score_band_agreement | 0.9778 |
 
 ## Gate status
 
 | Gate | Status |
 |---|---|
-| final_status | production-ready |
-| all_strict_checks_passed | PASS |
-| production_selection_passed | PASS |
-| strict_failure_count | 0 |
-| git_dirty_at_export | PASS |
-| baseline_readiness_cap | production-ready |
+| final_status | prototype-only |
+| all_strict_checks_passed | FAIL |
+| production_selection_passed | FAIL |
+| strict_failure_count | 1 |
+| git_dirty_at_export | WARN |
+| baseline_readiness_cap | staging-ready |
 
 ## Calibration and manifest checks
 
@@ -84,17 +84,16 @@ Generated at: `2026-06-04T04:40:07.475477+00:00`
 | wrapper_backend_fields_rejected | True |
 
 Files:
-- `artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json`
-- `artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json`
+- `artifacts\phase_25_tensorflow_training_delivery\export\model_api_handoff_fixtures.json`
+- `artifacts\phase_25_tensorflow_training_delivery\export\model_api_handoff_validation.json`
 
 ## Known limitations
 
 - Automated hiring decision, rejection, eligibility, salary, or protected-class inference.
-- Production score claims without frozen human/reviewer validation coverage.
-- Backend-owned persistence, auth, DB hydration, or GenAI wrapper output generation.
-- Scoring candidate jobs not supplied by the backend request.
+- Production score claims without replacing fixture/weak-label evidence with validated labels.
+- Backend-owned persistence, auth, job hydration, or GenAI wrapper output generation.
 
 ## Next action
 
-- Ready for artifact promotion review.
+- Commit or otherwise freeze the clean-run artifacts before claiming production-ready status.
 

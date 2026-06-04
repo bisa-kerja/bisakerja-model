@@ -9,7 +9,7 @@
     "wrapper_handoff_contract_exported": true
   },
   "artifact_manifest": {
-    "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json"
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\artifact_manifest.json"
   },
   "boundary_summary": {
     "api_runtime_separate": true,
@@ -19,21 +19,21 @@
     "training_role": "deterministic_model_training_export_and_model_core_handoff"
   },
   "export_hashes": {
-    "deterministic_summary_signal_placeholders": "df73748b27ae87f4875f319fa017e13e867e15924ac125ed1ae19c21e82e3eab",
-    "genai_wrapper_handoff_contract": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
-    "training_only_genai_boundary": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06"
+    "deterministic_summary_signal_placeholders": "e39eb5fb1fc64f80736e26465998e85d3403c03a32cfe396b80ae2554add145e",
+    "genai_wrapper_handoff_contract": "5fe5b7cad326c8a2a1c76d67626b52b5ddcf4e6936de0b5f15b684363f3b31ce",
+    "training_only_genai_boundary": "a44b819b5e21d81aaaa97ed6db6974bcb3105d9bd0c6169cfca5ed7769194a5b"
   },
   "export_paths": {
-    "deterministic_summary_signal_placeholders": "artifacts/phase_25_tensorflow_training_delivery/export/deterministic_summary_signal_placeholders.json",
-    "genai_wrapper_handoff_contract": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
-    "report": "reports/phase_25_training_only_genai_boundary.json",
-    "training_only_genai_boundary": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json"
+    "deterministic_summary_signal_placeholders": "artifacts\\phase_25_tensorflow_training_delivery\\export\\deterministic_summary_signal_placeholders.json",
+    "genai_wrapper_handoff_contract": "artifacts\\phase_25_tensorflow_training_delivery\\export\\genai_wrapper_handoff_contract.json",
+    "report": "reports\\phase_25_training_only_genai_boundary.json",
+    "training_only_genai_boundary": "artifacts\\phase_25_tensorflow_training_delivery\\training_only_genai_boundary.json"
   },
   "external_genai_findings": [],
-  "generated_at": "2026-06-03T01:45:40.727565+00:00",
+  "generated_at": "2026-06-04T08:19:59.680728+00:00",
   "model_card": {
-    "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-    "sha256": "902d3b6653e4aafe6ef458446b4b56a7c14d6877ade96846e43fe4682b06755e"
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+    "sha256": "3a4e17efd695e43c611f10b9bb35ec424bbbf9a59ca520ec0d7db11555907b33"
   },
   "notes": [
     "Training exports deterministic summary signals only; API wrapper owns GenAI prose generation.",
@@ -56,10 +56,10 @@
     "sectionReviews": {
       "owner": "api-wrapper-genai-secondary",
       "required": [
-        "sectionName",
-        "analysis",
-        "actionPoints",
-        "whyItsImportantForYou"
+        "section",
+        "status",
+        "summary",
+        "actionPoints"
       ]
     },
     "topActionables": {

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T01:45:36.646906+00:00",
+  "generated_at": "2026-06-04T08:19:46.706696+00:00",
   "labels": {
     "atsFriendliness.score": {
       "api_scale": "0-100",
@@ -35,8 +35,8 @@
   "schema_version": "phase-25-label-manifest-v1",
   "source_label_manifests": {
     "phase16": {
-      "path": "reports/phase_16_label_manifest.json",
-      "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd",
+      "path": "reports\\phase_16_label_manifest.json",
+      "sha256": "c178aec9033052b41190b3ec3fee428ca1512dfb3fcc7d7a3fd8aa71589836f4",
       "summary": {
         "agreement": {
           "disagreement_flag_rate": 0.0,
@@ -101,7 +101,7 @@
             "medium": 80
           },
           "row_count": 240,
-          "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+          "sha256": "ec7e0db9a1c2bb7bf0746e3e84c9b4ede064cf3801fa14d40853edf565c6e24a"
         },
         "label_version": "human-validation-v1",
         "manifest": {
@@ -146,12 +146,12 @@
       }
     },
     "phase19": {
-      "path": "reports/phase_19_ats_issue_labels.json",
-      "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+      "path": "reports\\phase_19_ats_issue_labels.json",
+      "sha256": "98ef89fd68157c7e752052a9418225921cfd93169be431b14ccb5c6db5663194"
     },
     "phase21": {
-      "path": "reports/phase_21_backend_candidate_reranking.json",
-      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
+      "path": "reports\\phase_21_backend_candidate_reranking.json",
+      "sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036",
       "summary": {
         "allowedValues": {
           "0": "not relevant",

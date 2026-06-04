@@ -1,0 +1,163 @@
+{
+  "acceptance": {
+    "model_card_and_manifest_consistent": true,
+    "no_export_artifact_mutated_without_manifest_refresh": true,
+    "phase_27_8_refresh_complete": true,
+    "tensorboard_release_evidence_recorded": true
+  },
+  "blocking_steps": [],
+  "final_decision": "pass",
+  "generated_at": "2026-06-04T08:13:39.935315+00:00",
+  "phase_id": "training_step_10_calibration_model_card_manifest",
+  "schema_version": "training-step-10-calibration-model-card-manifest-v1",
+  "steps": {
+    "artifact_manifest": {
+      "artifact_manifest": {
+        "exists": true,
+        "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+        "sha256": "8f7ca8714f26f35ba0dec8cd38499c745b1dd9f0a7d51936d5b657f12035d8bf",
+        "size_bytes": 24757
+      },
+      "blockers": [],
+      "entry_count": 27,
+      "mismatch_count": 0,
+      "mismatches": [],
+      "missing_hash_or_size": [],
+      "phase_27_8_release_refresh": {
+        "calibration_hash": "447ff910458d8dfd8946d61745ab3ba5ef9a5da0fa6777e9b87f3238010ae1d9",
+        "dataset_hash": "8325c2cae87b237c2e33aaec933aae58c2e0f62bc83e2e6004d5dc678ee09a98",
+        "feature_config_hash": "a24b955059f079c3d5fb4dc602a4ff92ae7f2fd4d3042648bec6b7e82014642f",
+        "generated_at": "2026-06-04T08:13:39.478504Z",
+        "git_commit": "c9aa942c7a24c9ef15d97698b31e6f39c3bd719c",
+        "git_dirty_file_count": 27,
+        "label_hash": "50a5e45247f9325a270d7321332087b984c4698345d935631df653c6a701f206",
+        "model_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+        "production_claim_allowed": false,
+        "score_semantics_refreshed_in_model_card": true,
+        "tensorboard_release_manifest_hash": "341621cf66e71f672a37743057a662acafb40ec1346da5d24d122767d3bdb2cf",
+        "tensorflow_feature_config_hash": "5907c383768a71f2cadae39a31f7df8485bbef493c49e598de802bef177d89d4"
+      },
+      "status": "PASS",
+      "step": "10-artifact-manifest",
+      "warnings": []
+    },
+    "calibration": {
+      "all_metric_leaves_passed": true,
+      "blockers": [],
+      "bucket_sequence": [
+        "0-20",
+        "21-40",
+        "41-60",
+        "61-80",
+        "81-100"
+      ],
+      "model_card_calibration_hash": "447ff910458d8dfd8946d61745ab3ba5ef9a5da0fa6777e9b87f3238010ae1d9",
+      "required_outputs": [
+        "jobFitAlignment.score",
+        "atsFriendliness.score",
+        "recommendations[].matchScore"
+      ],
+      "score_calibration": {
+        "exists": true,
+        "path": "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+        "sha256": "447ff910458d8dfd8946d61745ab3ba5ef9a5da0fa6777e9b87f3238010ae1d9",
+        "size_bytes": 13433
+      },
+      "status": "PASS",
+      "step": "10-calibration",
+      "warnings": []
+    },
+    "model_card": {
+      "blockers": [],
+      "model_card": {
+        "exists": true,
+        "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+        "sha256": "97f37c48975762c1a729005127b2f1620a994fc9f126f499e2a6d09aa2d555ad",
+        "size_bytes": 14478
+      },
+      "phase_27_8_release_refresh": {
+        "calibration_hash": "447ff910458d8dfd8946d61745ab3ba5ef9a5da0fa6777e9b87f3238010ae1d9",
+        "dataset_hash": "8325c2cae87b237c2e33aaec933aae58c2e0f62bc83e2e6004d5dc678ee09a98",
+        "feature_config_hash": "a24b955059f079c3d5fb4dc602a4ff92ae7f2fd4d3042648bec6b7e82014642f",
+        "generated_at": "2026-06-04T08:13:39.478504Z",
+        "git_commit": "c9aa942c7a24c9ef15d97698b31e6f39c3bd719c",
+        "git_dirty_file_count": 27,
+        "label_hash": "50a5e45247f9325a270d7321332087b984c4698345d935631df653c6a701f206",
+        "model_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+        "production_claim_allowed": false,
+        "production_claim_blockers": [
+          "clean-git Phase 25 production-ready export not proven",
+          "real Python 3.13 Model API smoke not recorded",
+          "end-to-end REQUIREMENT.md matrix not recorded",
+          "final Phase 27 release gate not recorded"
+        ],
+        "split_seed": 202621,
+        "tensorboard_event_hashes": [
+          "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1",
+          "4b2d518ecd5d562decf54bff7af317417d1a831729426f561aaa8cf5c06572de",
+          "04f7f7265915dbaa719dba12a3075302de37949e6e4bbd6011e872d15cbd1273"
+        ],
+        "tensorboard_release_manifest_hash": "341621cf66e71f672a37743057a662acafb40ec1346da5d24d122767d3bdb2cf",
+        "tensorflow_feature_config_hash": "5907c383768a71f2cadae39a31f7df8485bbef493c49e598de802bef177d89d4"
+      },
+      "score_semantics_outputs": [
+        "atsFriendliness.score",
+        "jobFitAlignment.score",
+        "recommendations[].matchScore"
+      ],
+      "selected_model": {
+        "exists": true,
+        "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+        "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+        "size_bytes": 80901
+      },
+      "status": "PASS",
+      "step": "10-model-card",
+      "warnings": []
+    },
+    "phase_27_8": {
+      "blockers": [],
+      "final_decision": "refresh-complete",
+      "gates": {
+        "artifact_manifest_contains_phase_27_8_release_refresh": "PASS",
+        "manifest_model_card_hash_matches_current_file": "PASS",
+        "model_card_contains_phase_27_8_release_refresh": "PASS",
+        "production_claim_remains_blocked_until_all_phase27_gates": "PASS",
+        "required_model_card_and_manifest_exist": "PASS",
+        "required_release_hash_inputs_exist": "PASS",
+        "score_semantics_present": "PASS"
+      },
+      "report": {
+        "exists": true,
+        "path": "reports/phase_27_8_model_card_manifest_refresh.json",
+        "sha256": "988efd4422163f43ddb6aa2b56b691539c329627c07f6d31f4fa82661bc7dff5",
+        "size_bytes": 7406
+      },
+      "status": "PASS",
+      "step": "10-phase-27-8-refresh",
+      "warnings": []
+    },
+    "tensorboard": {
+      "blockers": [],
+      "event_file_count": 1,
+      "event_mismatches": [],
+      "release_git_ignore_check": {
+        "production_rule": "Release TensorBoard evidence must be committed from non-ignored paths before production-ready status.",
+        "release_event_file_ignored": false,
+        "release_manifest_ignored": false
+      },
+      "status": "PASS",
+      "step": "10-tensorboard-release-evidence",
+      "tensorboard_release_manifest": {
+        "exists": true,
+        "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
+        "sha256": "341621cf66e71f672a37743057a662acafb40ec1346da5d24d122767d3bdb2cf",
+        "size_bytes": 1475
+      },
+      "total_event_bytes": 126450,
+      "warnings": []
+    }
+  },
+  "todo_source": "training/TODOS.md#step-10-verifikasi-calibration-model-card-dan-artifact-manifest",
+  "warning_steps": []
+}

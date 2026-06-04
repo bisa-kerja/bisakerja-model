@@ -35,6 +35,17 @@ The layout is conservative on purpose: existing tests, notebooks, artifact manif
 | `reports/`   | Generated evidence    | Limited         | Prefer generated writes through verification scripts.                |
 | `legacy/`    | Historical snapshot   | No, except docs | Do not use for active runtime.                                       |
 
+## Local Runtime Noise
+
+Local caches, scratch exports, and runtime helpers such as `.uv-cache/`, `.uv-python/`, `.pytest_cache/`, `.ipynb_checkpoints/`, `__pycache__/`, `.codex-tools/`, `artifacts/tensorboard/`, `references/prisma/`, and local virtual environments are not part of the project structure. They should stay ignored by Git and can be cleaned with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\clean_workspace.ps1
+powershell -ExecutionPolicy Bypass -File scripts\clean_workspace.ps1 -Execute
+```
+
+The cleanup script is conservative by default. It prints a dry run unless `-Execute` is passed, and it only removes local cache paths from a fixed allowlist inside this repository.
+
 ## Backend Boundary
 
 Backend API source and deployment config belong to <https://github.com/bisa-kerja/bisakerja-api>. This model repo may consume Backend-generated contracts or fixtures as release inputs, but it must not treat Backend source as an in-repo workspace.

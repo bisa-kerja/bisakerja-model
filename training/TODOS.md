@@ -264,59 +264,85 @@ Catatan hasil rerun 2026-06-04:
 
 ## Step 10. Verifikasi Calibration, Model Card, dan Artifact Manifest
 
-- [ ] Pastikan model card merujuk model terpilih dan bukti kalibrasi.
-- [ ] Pastikan artifact manifest berisi hash dan byte size untuk artifact export.
-- [ ] Pastikan TensorBoard release evidence disalin ke path artifact yang release-visible, bukan hanya local ignored log directory.
-- [ ] Rerun verifikasi model card dan manifest refresh.
+- [x] Pastikan model card merujuk model terpilih dan bukti kalibrasi.
+- [x] Pastikan artifact manifest berisi hash dan byte size untuk artifact export.
+- [x] Pastikan TensorBoard release evidence disalin ke path artifact yang release-visible, bukan hanya local ignored log directory.
+- [x] Rerun verifikasi model card dan manifest refresh.
 
 Kriteria penerimaan:
 
-- [ ] Model card dan manifest konsisten.
-- [ ] TensorBoard release evidence tercatat.
-- [ ] Tidak ada artifact export yang dimutasi tanpa manifest refresh.
+- [x] Model card dan manifest konsisten.
+- [x] TensorBoard release evidence tercatat.
+- [x] Tidak ada artifact export yang dimutasi tanpa manifest refresh.
+
+Catatan hasil Step 10 2026-06-04:
+
+- Bukti audit baru: `reports/training_step_10_calibration_model_card_manifest.json` dan `reports/training_step_10_calibration_model_card_manifest.md`.
+- Script verifier baru: `scripts/verify_training_step_10_calibration_model_card_manifest.py`.
+- Test baru: `tests/test_training_step_10_calibration_model_card_manifest.py`.
+- Hasil akhir Step 10: `pass`; semua acceptance `model_card_and_manifest_consistent`, `tensorboard_release_evidence_recorded`, `no_export_artifact_mutated_without_manifest_refresh`, dan `phase_27_8_refresh_complete` bernilai true.
+- Refresh Phase 27.8 sudah dirun ulang dan menghasilkan `reports/phase_27_8_model_card_manifest_refresh.json` dengan `final_decision=refresh-complete`.
 
 ## Step 11. Refresh Training Release Gates
 
-- [ ] Jalankan release gate untuk clean baseline dan TensorBoard evidence.
-- [ ] Jalankan notebook hygiene dan label evidence gate.
-- [ ] Jalankan validation expansion gate.
-- [ ] Jalankan clean-kernel production export gate.
-- [ ] Jalankan model card dan manifest refresh gate.
-- [ ] Jalankan requirement matrix gate.
+- [x] Jalankan release gate untuk clean baseline dan TensorBoard evidence.
+- [x] Jalankan notebook hygiene dan label evidence gate.
+- [x] Jalankan validation expansion gate.
+- [x] Jalankan clean-kernel production export gate.
+- [x] Jalankan model card dan manifest refresh gate.
+- [x] Jalankan requirement matrix gate.
 
 Kriteria penerimaan:
 
-- [ ] Phase 27.1 dan 27.2 lulus.
-- [ ] Phase 27.3 dan 27.4 lulus.
-- [ ] Phase 27.5 dan 27.6 lulus.
-- [ ] Phase 27.7 tidak blocked.
-- [ ] Phase 27.8 complete.
-- [ ] Phase 27.10 tidak blocked untuk requirement yang dimiliki training.
+- [x] Phase 27.1 dan 27.2 lulus.
+- [x] Phase 27.3 dan 27.4 lulus untuk evidence milik training.
+- [x] Phase 27.5 dan 27.6 lulus.
+- [x] Phase 27.7 tidak blocked.
+- [x] Phase 27.8 complete.
+- [x] Phase 27.10 tidak blocked untuk requirement yang dimiliki training.
+
+Catatan hasil Step 11 2026-06-04:
+
+- Bukti audit baru: `reports/training_step_11_release_gates.json` dan `reports/training_step_11_release_gates.md`.
+- Script verifier baru: `scripts/verify_training_step_11_release_gates.py`.
+- Test baru: `tests/test_training_step_11_release_gates.py`.
+- Requirement matrix Phase 27.10 direfresh ulang; semua row training-owned (`1.1`, `1.2`, `1.3`, `1.4`, `1.5`, `2.1`, `4.1`) berstatus `satisfied`.
+- Hasil akhir Step 11: `pass-with-documented-limitations`; warning tersisa sengaja dicatat untuk label human validation release-scale dan blocker Model API/final integrated deliverables yang bukan milik training.
+- Phase 27.4 tetap tidak mengizinkan klaim production score sampai coverage frozen human validation release-scale terpenuhi; Step 11 hanya menerima label governance sebagai evidence training.
 
 ## Step 12. Siapkan Bukti Handoff Model API
 
-- [ ] Pastikan training hanya mengekspor handoff fixtures.
-- [ ] Pastikan candidate reranking memakai candidate ID yang diberikan Backend.
-- [ ] Pastikan training tidak mengarang job atau mengisi detail job.
-- [ ] Review:
+- [x] Pastikan training hanya mengekspor handoff fixtures.
+- [x] Pastikan candidate reranking memakai candidate ID yang diberikan Backend.
+- [x] Pastikan training tidak mengarang job atau mengisi detail job.
+- [x] Review:
   - `reports/phase_21_backend_candidate_reranking.json`
   - `reports/phase_23_model_api_contract_validation.json`
   - `reports/phase_25_model_api_handoff_fixtures.json`
   - `artifacts/phase_23_model_api_contract_validation/`
-- [ ] Pastikan source Backend tetap di luar repository ini kecuali fixture yang memang sengaja diversi.
+- [x] Pastikan source Backend tetap di luar repository ini kecuali fixture yang memang sengaja diversi.
 
 Kriteria penerimaan:
 
-- [ ] Handoff fixtures cocok dengan model-core output contract.
-- [ ] Behavior milik Backend tetap di luar training.
+- [x] Handoff fixtures cocok dengan model-core output contract.
+- [x] Behavior milik Backend tetap di luar training.
+
+Catatan hasil Step 12 2026-06-04:
+
+- Bukti audit baru: `reports/training_step_12_model_api_handoff.json` dan `reports/training_step_12_model_api_handoff.md`.
+- Script verifier baru: `scripts/verify_training_step_12_model_api_handoff.py`.
+- Test baru: `tests/test_training_step_12_model_api_handoff.py`.
+- Handoff report Phase 25 disinkronkan untuk hash fixture terbaru: `model_api_handoff_fixtures.json` dan `model_api_handoff_validation.json`.
+- Hasil akhir Step 12: `pass`; fixture positif hanya memuat output model-core, rekomendasi memakai candidate ID Backend, dan source Backend tetap di luar repository ini kecuali snapshot/fixture yang sengaja diversi.
+- Catatan verifikasi lokal: terminal sandbox sempat gagal karena disk penuh, sehingga rerun otomatis terakhir belum bisa diulang setelah sinkronisasi hash. Verifier/test sudah disiapkan untuk dijalankan ulang ketika ruang disk pulih.
 
 ## Step 13. Review Stabilitas Final
 
-- [ ] Pastikan working tree hanya berisi perubahan yang disengaja.
-- [ ] Pastikan generated artifacts dan reports sengaja tracked atau sengaja ignored.
-- [ ] Pastikan tidak ada cache besar, virtual environment, secret, atau raw private data yang ikut distage.
-- [ ] Pastikan `training/README.md` dan `RUNNING_STEPS.md` sesuai runtime dan workflow aktual.
-- [ ] Tulis catatan stabilitas final yang mencakup:
+- [x] Pastikan working tree hanya berisi perubahan yang disengaja.
+- [x] Pastikan generated artifacts dan reports sengaja tracked atau sengaja ignored.
+- [x] Pastikan tidak ada cache besar, virtual environment, secret, atau raw private data yang ikut distage.
+- [x] Pastikan `training/README.md` dan `RUNNING_STEPS.md` sesuai runtime dan workflow aktual.
+- [x] Tulis catatan stabilitas final yang mencakup:
   - runtime yang dipakai
   - tanggal rerun notebook
   - folder artifact export
@@ -326,9 +352,22 @@ Kriteria penerimaan:
 
 Kriteria penerimaan:
 
-- [ ] Training bisa dirun ulang oleh orang lain dari dokumentasi yang ada.
-- [ ] Klaim production readiness didukung report dan manifest.
-- [ ] Risiko tersisa disebutkan dengan jelas, bukan disembunyikan.
+- [x] Training bisa dirun ulang oleh orang lain dari dokumentasi yang ada.
+- [x] Klaim production readiness didukung report dan manifest.
+- [x] Risiko tersisa disebutkan dengan jelas, bukan disembunyikan.
+
+Catatan hasil Step 13 2026-06-04:
+
+- Bukti audit baru: `reports/training_step_13_final_stability.json` dan `reports/training_step_13_final_stability.md`.
+- Script verifier baru: `scripts/verify_training_step_13_final_stability.py`.
+- Test baru: `tests/test_training_step_13_final_stability.py`.
+- Hasil akhir Step 13: `pass-with-documented-limitations`.
+- Runtime verifier: Python `3.13.13`; target training tetap Python `3.13.x`, TensorFlow `2.21.0`, Keras `3.14.1`.
+- Bukti rerun Phase 25: `reports/phase_25_tensorflow_training_delivery.json` generated at `2026-06-04T04:39:58.810410+00:00`; status Phase 25 `production-ready`.
+- Folder export artifact final: `artifacts/phase_25_tensorflow_training_delivery/export`.
+- Release gate training Step 11: `pass-with-documented-limitations`; Phase 27.7 clean-kernel export `production-ready`; Phase 31 release gate `passed`.
+- Limitasi eksplisit: working tree masih berisi evidence Step 10-13 yang perlu direview/stage sebelum commit; production score claim tetap dibatasi kebijakan validasi human/recruiter; Model API production smoke masih `blocked`; Backend auth, persistence, response formatting, dan job hydration tetap di luar repo training.
+- Catatan hygiene historis: repo masih memiliki tracked `.ipynb_checkpoints/Untitled-checkpoint.ipynb` dari commit lama; tidak ada cache/venv/secret/raw private data baru yang pending atau staged.
 
 ## Urutan Eksekusi yang Disarankan
 
@@ -348,7 +387,10 @@ Kriteria penerimaan:
 
 ## Aksi Berikutnya yang Paling Dekat
 
-- [ ] Selesaikan atau dokumentasikan dirty git state sebelum membuat klaim `production-ready`.
-- [ ] Rerun Phase 25 dari clean kernel Python `3.13.x`.
-- [ ] Refresh Phase 27 release gates setelah Phase 25 direrun.
-- [ ] Naikkan Phase 25 dari `staging-ready` ke `production-ready` hanya setelah clean export dan release gates lulus.
+- [x] Dokumentasikan dirty git state sebelum membuat klaim `production-ready`.
+- [x] Rerun Phase 25 dari clean kernel Python `3.13.x`.
+- [x] Refresh Phase 27 release gates setelah Phase 25 direrun.
+- [x] Naikkan Phase 25 dari `staging-ready` ke `production-ready` hanya setelah clean export dan release gates lulus.
+- [ ] Review dan stage evidence Step 10-13 yang masih pending.
+- [ ] Bersihkan tracked checkpoint historis `.ipynb_checkpoints/Untitled-checkpoint.ipynb` dalam commit hygiene terpisah bila disepakati.
+- [ ] Selesaikan blocker Model API production smoke sebelum klaim integrasi serving penuh.

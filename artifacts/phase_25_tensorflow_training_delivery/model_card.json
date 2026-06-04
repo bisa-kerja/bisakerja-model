@@ -8,8 +8,8 @@
   "data": {
     "dataset_manifest": {
       "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
-      "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
-      "size_bytes": 7633
+      "sha256": "f4adbdbd17d3ca6ce75b235c689f434adb2e7cf5922f504361bb05f6f59de606",
+      "size_bytes": 7884
     },
     "embedding_contract": {
       "backend": "sentence-transformers",
@@ -25,25 +25,25 @@
     },
     "label_manifest": {
       "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
-      "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
-      "size_bytes": 5900
+      "sha256": "741be3733472e2dc6c9a46738afef5172e61a9fc5887cc6e22b7588f306e6830",
+      "size_bytes": 6072
     }
   },
   "deployment_contract": {
     "api_handoff_fixtures": {
       "core_output_only": true,
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_fixtures.json",
       "schema_version": "phase-25-model-api-handoff-fixtures-v1",
-      "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7"
+      "sha256": "564e3872db870f615e854828dcbeb8fc0fd081366db47108ad8857011a35e92a"
     },
     "api_handoff_validation": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
-      "sha256": "41259486b941a58ec9e7b6ed760a386aa5371edee911732c17340ed5a98836e2",
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_validation.json",
+      "sha256": "6894b41ca24efd0d19ebbe45008250bd06caff02e45f6b0ca35deea47c16ebba",
       "status": "complete"
     },
     "clean_reload_smoke": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/inference_smoke_fixture.json",
-      "sha256": "d0d0558cb16f3db60c379c11c4d2c33f057c64f6fdd646dd00555113052ef94d"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\inference_smoke_fixture.json",
+      "sha256": "cbb683f0c99bd6826b58c1a0cded659d9f8812e9fe2a611c9051a830a546c318"
     },
     "core_outputs": [
       "jobFitAlignment.score",
@@ -53,8 +53,8 @@
     "final_model_artifact": {
       "format": ".keras",
       "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
-      "size_bytes": 80901
+      "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73",
+      "size_bytes": 80919
     },
     "model_artifact_status": "final_keras_export_complete",
     "model_core_output_boundary": {
@@ -81,12 +81,12 @@
     },
     "score_scale": "0-100 JSON-compatible numeric score",
     "training_only_genai_boundary": {
-      "deterministic_placeholders": "artifacts/phase_25_tensorflow_training_delivery/export/deterministic_summary_signal_placeholders.json",
+      "deterministic_placeholders": "artifacts\\phase_25_tensorflow_training_delivery\\export\\deterministic_summary_signal_placeholders.json",
       "external_genai_calls_from_training": false,
       "genai_role": "secondary_api_wrapper_feature",
-      "path": "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
-      "sha256": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06",
-      "wrapper_contract": "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\training_only_genai_boundary.json",
+      "sha256": "a44b819b5e21d81aaaa97ed6db6974bcb3105d9bd0c6169cfca5ed7769194a5b",
+      "wrapper_contract": "artifacts\\phase_25_tensorflow_training_delivery\\export\\genai_wrapper_handoff_contract.json"
     },
     "wrapper_owned_fields_excluded": [
       "topActionables",
@@ -100,9 +100,28 @@
   "evaluation": {
     "baseline_selection": {
       "comparability_warnings": [],
-      "final_readiness_cap": "production-ready",
-      "production_selection_passed": true,
-      "prototype_tradeoffs": []
+      "final_readiness_cap": "staging-ready",
+      "production_selection_passed": false,
+      "prototype_tradeoffs": [
+        {
+          "actual": 0.97777778,
+          "check": "score_band_agreement_preserve_or_improve",
+          "direction": ">=",
+          "reference": "phase18_selected_scorer",
+          "required": 0.97962963,
+          "split": "validation",
+          "status": "FAIL"
+        },
+        {
+          "actual": 1.495885,
+          "check": "mae_0_100_preserve_or_improve",
+          "direction": "<=",
+          "reference": "phase18_selected_scorer",
+          "required": 1.21344534,
+          "split": "test",
+          "status": "FAIL"
+        }
+      ]
     },
     "calibration": {
       "atsFriendliness.score": {
@@ -119,34 +138,34 @@
       },
       "jobFitAlignment.score": {
         "test": {
-          "bucket_agreement": 0.9685,
-          "ece_points": 0.533,
-          "mae_points": 0.8603,
-          "mce_points": 3.0195,
+          "bucket_agreement": 0.9593,
+          "ece_points": 1.2132,
+          "mae_points": 1.4959,
+          "mce_points": 10.831,
           "passed": true,
-          "rmse_points": 2.9776,
+          "rmse_points": 6.4215,
           "row_count": 540,
-          "within_10_points_rate": 0.9759
+          "within_10_points_rate": 0.9667
         },
         "train": {
-          "bucket_agreement": 0.9786,
-          "ece_points": 0.405,
-          "mae_points": 0.6729,
-          "mce_points": 1.944,
+          "bucket_agreement": 0.9643,
+          "ece_points": 1.1371,
+          "mae_points": 1.377,
+          "mce_points": 9.5456,
           "passed": true,
-          "rmse_points": 2.5668,
+          "rmse_points": 6.1705,
           "row_count": 2520,
-          "within_10_points_rate": 0.9849
+          "within_10_points_rate": 0.971
         },
         "validation": {
-          "bucket_agreement": 0.9722,
-          "ece_points": 0.3469,
-          "mae_points": 0.8443,
-          "mce_points": 1.955,
+          "bucket_agreement": 0.9667,
+          "ece_points": 0.9353,
+          "mae_points": 1.1891,
+          "mce_points": 5.2838,
           "passed": true,
-          "rmse_points": 3.3282,
+          "rmse_points": 5.1772,
           "row_count": 540,
-          "within_10_points_rate": 0.9741
+          "within_10_points_rate": 0.9704
         }
       },
       "recommendations[].matchScore": {
@@ -165,64 +184,64 @@
     "metrics": {
       "test": {
         "calibration": {
-          "ece_0_1": 0.00511387,
-          "ece_0_100": 0.511387,
-          "max_bucket_gap_0_100": 2.179496
+          "ece_0_1": 0.0110849,
+          "ece_0_100": 1.10849,
+          "max_bucket_gap_0_100": 4.685647
         },
         "high_fit_recall": 1.0,
-        "loss": 0.00015298,
-        "mae": 0.0086032,
-        "mae_0_100": 0.86032,
-        "predicted_high_count": 102,
-        "r2": 0.98956618,
-        "rmse": 0.02977602,
-        "rmse_0_100": 2.977602,
+        "loss": 0.00029563,
+        "mae": 0.01495885,
+        "mae_0_100": 1.495885,
+        "predicted_high_count": 105,
+        "r2": 0.95147322,
+        "rmse": 0.06421487,
+        "rmse_0_100": 6.421487,
         "row_count": 540,
-        "score_band_agreement": 0.99444444,
-        "spearman": 0.99536524,
+        "score_band_agreement": 0.97777778,
+        "spearman": 0.99305492,
         "true_high_count": 90
       },
       "train": {
         "calibration": {
-          "ece_0_1": 0.00370982,
-          "ece_0_100": 0.370982,
-          "max_bucket_gap_0_100": 1.208754
+          "ece_0_1": 0.01075297,
+          "ece_0_100": 1.075297,
+          "max_bucket_gap_0_100": 4.38416
         },
         "high_fit_recall": 1.0,
-        "loss": 0.00015741,
-        "mae": 0.00672921,
-        "mae_0_100": 0.672921,
-        "predicted_high_count": 456,
-        "r2": 0.99227146,
-        "rmse": 0.02566821,
-        "rmse_0_100": 2.566821,
+        "loss": 0.00033608,
+        "mae": 0.0137702,
+        "mae_0_100": 1.37702,
+        "predicted_high_count": 490,
+        "r2": 0.95533769,
+        "rmse": 0.06170456,
+        "rmse_0_100": 6.170456,
         "row_count": 2520,
-        "score_band_agreement": 0.99325397,
-        "spearman": 0.99525213,
+        "score_band_agreement": 0.97261905,
+        "spearman": 0.99315268,
         "true_high_count": 420
       },
       "validation": {
         "calibration": {
-          "ece_0_1": 0.00290665,
-          "ece_0_100": 0.290665,
-          "max_bucket_gap_0_100": 0.892771
+          "ece_0_1": 0.00821059,
+          "ece_0_100": 0.821059,
+          "max_bucket_gap_0_100": 2.913994
         },
         "high_fit_recall": 1.0,
-        "loss": 0.0002141,
-        "mae": 0.0084428,
-        "mae_0_100": 0.84428,
-        "predicted_high_count": 100,
-        "r2": 0.98737391,
-        "rmse": 0.03328179,
-        "rmse_0_100": 3.328179,
+        "loss": 0.00020141,
+        "mae": 0.01189119,
+        "mae_0_100": 1.189119,
+        "predicted_high_count": 104,
+        "r2": 0.96944801,
+        "rmse": 0.05177165,
+        "rmse_0_100": 5.177165,
         "row_count": 540,
-        "score_band_agreement": 0.98888889,
-        "spearman": 0.99548961,
+        "score_band_agreement": 0.97777778,
+        "spearman": 0.99402889,
         "true_high_count": 90
       }
     }
   },
-  "generated_at": "2026-06-03T11:19:45.581545Z",
+  "generated_at": "2026-06-04T09:19:50.831773Z",
   "intended_use": [
     "Model-core job-fit scoring for backend-provided CV/profile and job context.",
     "Training-owned calibrated scores and artifact handoff for separate Model API runtime.",
@@ -261,14 +280,14 @@
     "version": "jobfit_tf_phase25_gradient_tape_v1"
   },
   "phase_27_8_release_refresh": {
-    "calibration_hash": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
-    "dataset_hash": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
-    "feature_config_hash": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-    "generated_at": "2026-06-03T11:19:45.581545Z",
-    "git_commit": "3194f629441d5e5b45658219651c7de7e21f72a5",
-    "git_dirty_file_count": 39,
-    "label_hash": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
-    "model_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
+    "calibration_hash": "ae96653a420f79478914b5f3daf3b6598bab61b62bd8717af28fe69c2204c2f5",
+    "dataset_hash": "f4adbdbd17d3ca6ce75b235c689f434adb2e7cf5922f504361bb05f6f59de606",
+    "feature_config_hash": "ef6739c2fdfc6855bbcf4df3b9d46dea7ef60100f59ff60d86c067ce1c2ff91b",
+    "generated_at": "2026-06-04T09:19:50.831773Z",
+    "git_commit": "c9aa942c7a24c9ef15d97698b31e6f39c3bd719c",
+    "git_dirty_file_count": 92,
+    "label_hash": "741be3733472e2dc6c9a46738afef5172e61a9fc5887cc6e22b7588f306e6830",
+    "model_hash": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73",
     "production_claim_allowed": false,
     "production_claim_blockers": [
       "clean-git Phase 25 production-ready export not proven",
@@ -278,10 +297,12 @@
     ],
     "split_seed": 202621,
     "tensorboard_event_hashes": [
-      "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1"
+      "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1",
+      "4b2d518ecd5d562decf54bff7af317417d1a831729426f561aaa8cf5c06572de",
+      "04f7f7265915dbaa719dba12a3075302de37949e6e4bbd6011e872d15cbd1273"
     ],
-    "tensorboard_release_manifest_hash": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
-    "tensorflow_feature_config_hash": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5"
+    "tensorboard_release_manifest_hash": "341621cf66e71f672a37743057a662acafb40ec1346da5d24d122767d3bdb2cf",
+    "tensorflow_feature_config_hash": "a3e9ff9b46fe9833a0ffcdbff26c3df5f50c544bcc994487c57d697cc81a6c36"
   },
   "phase_id": "phase_25_tensorflow_training_delivery",
   "readiness": {
@@ -291,7 +312,7 @@
     "production_ready_requires_clean_git_state": true,
     "production_ready_requires_real_model_api_smoke": true,
     "production_ready_requires_requirement_matrix": true,
-    "status_cap": "production-ready"
+    "status_cap": "staging-ready"
   },
   "schema_version": "phase-25-model-card-v1",
   "score_semantics": {
@@ -341,18 +362,28 @@
           "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
           "sha256": "8d7a9e2be4b6df1eee5656919f9a514708280e9c98f585cb518a15ad9b3a1ab1",
           "size_bytes": 126450
+        },
+        {
+          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T170959/events.out.tfevents.1780506710.DESKTOP-PPOCB26.20988.0.v2",
+          "sha256": "4b2d518ecd5d562decf54bff7af317417d1a831729426f561aaa8cf5c06572de",
+          "size_bytes": 94509
+        },
+        {
+          "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T174200/events.out.tfevents.1780508633.DESKTOP-PPOCB26.14876.0.v2",
+          "sha256": "04f7f7265915dbaa719dba12a3075302de37949e6e4bbd6011e872d15cbd1273",
+          "size_bytes": 94509
         }
       ],
       "release_manifest": {
         "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
-        "sha256": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
-        "size_bytes": 1422
+        "sha256": "341621cf66e71f672a37743057a662acafb40ec1346da5d24d122767d3bdb2cf",
+        "size_bytes": 1475
       },
-      "report_sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
+      "report_sha256": "90a2eab12d5ffa1e8b1ea707e3317aeb5e5670672d405fd327b5350f569bc561"
     },
     "tensorflow_artifact_export": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
-      "sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_artifact_export.json",
+      "sha256": "853582232a6c5f451bd2d64a9447df4439e33b0e1dcbb08ed5896e192e4f57c3"
     },
     "uses_gradient_tape": true,
     "uses_model_fit": false,

@@ -23,7 +23,7 @@
     }
   ],
   "failures": [],
-  "generated_at": "2026-06-03T01:44:24.392697+00:00",
+  "generated_at": "2026-06-04T08:17:21.727014+00:00",
   "model": {
     "api": "Keras Functional API",
     "custom_interaction_output_shape": [
@@ -80,24 +80,24 @@
   "schema_version": "phase-25-custom-component-v1",
   "serialization": {
     "api_runtime_note": "Runtime must import/register custom objects before loading .keras; SavedModel export remains Step 25.11.",
-    "architecture_json_path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_model_with_custom_component.json",
+    "architecture_json_path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_model_with_custom_component.json",
     "load_model_without_custom_objects_argument": true,
     "registered_package": "BisakerjaPhase25",
-    "smoke_model_path": "artifacts/phase_25_tensorflow_training_delivery/custom_component_smoke_model.keras",
-    "smoke_model_sha256": "7d3a172eb9691d01635c6d661084c54847b0a0cccea208fd76ccf7ffbdbf2f1a"
+    "smoke_model_path": "artifacts\\phase_25_tensorflow_training_delivery\\custom_component_smoke_model.keras",
+    "smoke_model_sha256": "75599e4c73f36db33c28de981427730a34507df94a721bd9d3f93b327aefca8c"
   },
   "source_artifacts": {
     "architecture_report": {
-      "path": "reports/phase_25_tensorflow_architecture.json",
-      "sha256": "0596d93b257374b4453bfd3a851bcc84b609e55f4229d387038228fc80e7b1f4"
+      "path": "reports\\phase_25_tensorflow_architecture.json",
+      "sha256": "bf794a26e236e1be874ce3567ad818c1c1c87386adce5e3e97ba5d956fe71400"
     },
     "feature_config": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
-      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_feature_config.json",
+      "sha256": "a3e9ff9b46fe9833a0ffcdbff26c3df5f50c544bcc994487c57d697cc81a6c36"
     },
     "feature_matrix": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
-      "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz",
+      "sha256": "0aec69bbd7f906ab8381e776c0f4de4c4ed0a354771fb0ba12f2e39c2c5254ca"
     }
   },
   "status": "complete",

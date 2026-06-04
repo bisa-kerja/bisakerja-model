@@ -676,7 +676,10 @@ class Phase26LayoutTest(unittest.TestCase):
         row_by_pair_id = {str(pair_id): index for index, pair_id in enumerate(training_features["pair_id"])}
         fixture_predictions = fixture["sample_predictions"]
         fixture_pair_ids = [item["pair_id"] for item in fixture_predictions]
-        rows = [training_features["X_scaled"][row_by_pair_id[pair_id]] for pair_id in fixture_pair_ids]
+        rows = np.asarray(
+            [training_features["X_scaled"][row_by_pair_id[pair_id]] for pair_id in fixture_pair_ids],
+            dtype="float32",
+        )
 
         model = load_phase25_keras_model(
             Path("artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras")

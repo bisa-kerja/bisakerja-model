@@ -189,11 +189,14 @@
     "requestId": "req_phase28_upload_001",
     "language": "id",
     "parsedCv": {
-      "parseStatus": "parsed",
+      "status": "parsed",
       "pageCount": 2,
-      "textCharCount": 4820,
+      "textLength": 4820,
       "detectedSections": ["summary", "experience", "skills", "education"],
-      "evidenceSummary": {
+      "extractionEvidence": {
+        "source": "deterministic_pdf_parser",
+        "parseQuality": "high",
+        "hasExtractableText": true,
         "normalizedSkills": ["typescript", "postgresql", "rest api"],
         "targetRoles": ["Backend Developer"],
         "experienceSignals": ["Built REST APIs", "Maintained PostgreSQL schema"]
@@ -241,8 +244,7 @@
     },
     "model": {
       "name": "bisakerja-jobfit-tf",
-      "version": "phase25",
-      "artifactSha256": "artifact-sha256-placeholder"
+      "version": "phase25"
     },
     "createdAt": "2026-06-03T00:00:00.000Z"
   }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-03T01:45:40.727565+00:00",
+  "generated_at": "2026-06-04T08:19:59.680728+00:00",
   "model_core_inputs_to_wrapper": {
     "candidateRerankingCoreOutput": {
       "candidate_ids_source": "backend-provided jobCandidates only",
@@ -22,7 +22,7 @@
         "model",
         "analyzedAt"
       ],
-      "source_fixture": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json"
+      "source_fixture": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_fixtures.json"
     },
     "sanitizedBackendContext": {
       "allowed": [
@@ -60,10 +60,10 @@
     "sectionReviews": {
       "owner": "api-wrapper-genai-secondary",
       "required": [
-        "sectionName",
-        "analysis",
-        "actionPoints",
-        "whyItsImportantForYou"
+        "section",
+        "status",
+        "summary",
+        "actionPoints"
       ]
     },
     "topActionables": {
@@ -77,28 +77,28 @@
   "schema_version": "phase-25-training-only-genai-boundary-v1",
   "source_context": {
     "artifact_manifest": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-      "sha256": "3a04ea81684c3d0214e5c05e5c2f3e098401f91f3e26a9446ff98b6f8531cd9e"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\artifact_manifest.json",
+      "sha256": "1164a467dd1c9809b7a9c0713b8e88b51a4aa3930e32d0d90fa09007a325475f"
     },
     "gap_model_training": {
       "path": "GAP_MODEL_TRAINING.md",
-      "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67"
+      "sha256": "35a9ea1021e8401dd2342a15feb9a2351f0b7f9f363d23f694312d22e782003e"
     },
     "model_api_handoff_fixtures": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
-      "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_fixtures.json",
+      "sha256": "564e3872db870f615e854828dcbeb8fc0fd081366db47108ad8857011a35e92a"
     },
     "model_card": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "sha256": "30275a5e40db8c984cb90993bd0106a12474c7997a925af4395caa05d28f595c"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+      "sha256": "19af07ed301667ffbd064f37a045c5fa54647d0dff30c603ea65ddffd1bbe462"
     },
     "openapi": {
-      "path": "references/docs/generated/openapi.json",
-      "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+      "path": "references\\docs\\generated\\openapi.json",
+      "sha256": "51beae913df6632993c0f0ce83deaa52fd3b769bd138e9a99e8d1e867a597640"
     },
     "requirement": {
       "path": "REQUIREMENT.md",
-      "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723"
+      "sha256": "ef60fa7cfe2733daeae98f4cc53c93184bda31fc6eb8129d7bc588ce9ad19de5"
     }
   },
   "training_policy": {

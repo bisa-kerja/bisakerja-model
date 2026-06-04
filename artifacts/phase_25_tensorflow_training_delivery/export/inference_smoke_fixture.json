@@ -18,49 +18,49 @@
   "sample_predictions": [
     {
       "pair_id": "c1966cac7f07407a22a5fe7a",
-      "score_0_1": 0.713413,
-      "score_0_100": 71.341,
+      "score_0_1": 0.7,
+      "score_0_100": 70.0,
       "split": "validation",
       "target_0_1": 0.702
     },
     {
       "pair_id": "6b2ec14c33e34197a0430050",
-      "score_0_1": 0.732709,
-      "score_0_100": 73.271,
+      "score_0_1": 0.7,
+      "score_0_100": 70.0,
       "split": "validation",
       "target_0_1": 0.7067
     },
     {
       "pair_id": "93a8e5792dfbd972a8750d13",
-      "score_0_1": 0.7,
-      "score_0_100": 70.0,
+      "score_0_1": 0.961601,
+      "score_0_100": 96.16,
       "split": "validation",
       "target_0_1": 1.0
     },
     {
       "pair_id": "0ebd55720e44e63b8c109a8c",
-      "score_0_1": 0.729129,
-      "score_0_100": 72.913,
+      "score_0_1": 0.731125,
+      "score_0_100": 73.113,
       "split": "test",
       "target_0_1": 0.73
     },
     {
       "pair_id": "77eec81454bacfe75491286d",
-      "score_0_1": 0.999988,
-      "score_0_100": 99.999,
+      "score_0_1": 1.0,
+      "score_0_100": 100.0,
       "split": "test",
       "target_0_1": 1.0
     },
     {
       "pair_id": "6b81295c60b0648cbe42a91a",
-      "score_0_1": 0.999987,
-      "score_0_100": 99.999,
+      "score_0_1": 1.0,
+      "score_0_100": 100.0,
       "split": "test",
       "target_0_1": 1.0
     }
   ],
   "score_bounds": {
-    "max_0_1": 0.999987781047821,
+    "max_0_1": 1.0,
     "min_0_1": 0.699999988079071
   },
   "status": "complete",

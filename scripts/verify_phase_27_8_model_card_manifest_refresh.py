@@ -88,6 +88,12 @@ def rel(path: Path) -> str:
     return path.relative_to(ROOT).as_posix()
 
 
+def path_from_repo(value: str | None) -> Path | None:
+    if not value:
+        return None
+    return ROOT / value.replace("\\", "/")
+
+
 def file_record(path: Path) -> dict[str, Any]:
     return {"path": rel(path), "sha256": sha256_file(path), "size_bytes": path.stat().st_size}
 
@@ -226,6 +232,15 @@ def update_manifest(manifest: dict[str, Any], snapshot: dict[str, Any], generate
         if entry is not None and isinstance(record, dict):
             entry["sha256"] = record["sha256"]
             entry["size_bytes"] = record["size_bytes"]
+    for entry in updated.get("artifacts", []):
+        if not isinstance(entry, dict):
+            continue
+        path = path_from_repo(entry.get("path"))
+        if path is None or not path.is_file():
+            continue
+        record = file_record(path)
+        entry["sha256"] = record["sha256"]
+        entry["size_bytes"] = record["size_bytes"]
     if MODEL_CARD_PATH.exists() and "model_card" in by_id:
         model_record = file_record(MODEL_CARD_PATH)
         by_id["model_card"].update({"sha256": model_record["sha256"], "size_bytes": model_record["size_bytes"]})

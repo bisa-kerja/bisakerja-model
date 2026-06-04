@@ -26,8 +26,11 @@ class Phase32ContractDriftAuditTest(unittest.TestCase):
         self.assertEqual(backend["modelApiEndpoint"], "POST /internal/model/cv-analysis")
         self.assertIn("jobRoles[]", backend["multipartRequest"]["fields"])
         self.assertIn("raw strict", backend["expectedModelCoreResponse"]["shape"])
-        self.assertEqual(actual["responseBehavior"]["envelope"], "returns { success: true, message, data, error: null }")
-        self.assertIn("form.get('jobRoles')", actual["multipartBehavior"]["jobRoles"])
+        self.assertEqual(actual["responseBehavior"]["envelope"], "returns raw model-core JSON on /internal/model/cv-analysis")
+        self.assertIn("repeated jobRoles", actual["multipartBehavior"]["jobRoles"])
+        self.assertIn("requirement objects", actual["parsedPayload"]["candidateRequirements"])
+        self.assertIn("numericSignals", actual["parsedPayload"]["numericFeatures"])
+        self.assertIn("locationDisplay", actual["parsedPayload"]["backendMetadata"])
 
     def test_drift_matrix_covers_required_payload_language_error_and_privacy_items(self) -> None:
         report = build_report()
@@ -48,14 +51,14 @@ class Phase32ContractDriftAuditTest(unittest.TestCase):
         report = build_report()
         canonical = report["canonicalContractDecision"]
 
-        self.assertEqual(report["final_decision"], "review_required")
+        self.assertEqual(report["final_decision"], "implemented")
         self.assertEqual(report["blockers"], [])
         self.assertTrue(all(report["checks"].values()))
         self.assertIn("raw model-core JSON", canonical["internalResponseShape"])
         self.assertIn("Backend owns public cv-analysis-v2", canonical["backendOwner"])
         self.assertIn("English", canonical["languagePolicy"])
         self.assertIn("separate audit scope", canonical["aiCvGenerateScope"])
-        self.assertIn("No request/response implementation phase", canonical["reviewGate"])
+        self.assertIn("implemented", canonical["reviewGate"])
 
     def test_report_is_written_as_durable_json_and_markdown(self) -> None:
         report = write_all()

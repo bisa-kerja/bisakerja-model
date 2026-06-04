@@ -1,8 +1,8 @@
 {
   "failures": [],
   "feature_config": {
-    "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
-    "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5"
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_feature_config.json",
+    "sha256": "a3e9ff9b46fe9833a0ffcdbff26c3df5f50c544bcc994487c57d697cc81a6c36"
   },
   "feature_matrix": {
     "feature_count": 6,
@@ -14,9 +14,9 @@
       "experience_match",
       "experience_gap_years_clipped"
     ],
-    "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz",
     "row_count": 3600,
-    "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5",
+    "sha256": "0aec69bbd7f906ab8381e776c0f4de4c4ed0a354771fb0ba12f2e39c2c5254ca",
     "split_counts": {
       "test": 540,
       "train": 2520,
@@ -25,10 +25,10 @@
     "target_max": 1.0,
     "target_min": 0.0
   },
-  "generated_at": "2026-06-03T01:44:24.220786+00:00",
+  "generated_at": "2026-06-04T08:17:20.828490+00:00",
   "model": {
     "api": "TensorFlow Functional API",
-    "architecture_json_path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_model_architecture.json",
+    "architecture_json_path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_model_architecture.json",
     "inference_outputs": [
       "score_0_1",
       "score_0_100"
@@ -58,35 +58,35 @@
     "keras": "3.14.1",
     "numpy": "2.4.6",
     "pandas": "3.0.3",
-    "python": "3.13.11",
+    "python": "3.13.13",
     "tensorflow": "2.21.0"
   },
   "sample_forward_pass": [
     {
       "pair_id": "c593ed80cd8e55fb79bbbea3",
-      "score_0_1": 0.5117562413215637,
-      "score_0_100": 51.17562413215637,
+      "score_0_1": 0.5075215101242065,
+      "score_0_100": 50.752151012420654,
       "split": "train",
       "target_0_1": 1.0
     },
     {
       "pair_id": "2302520551f8bfc5dbb25402",
-      "score_0_1": 0.4915243685245514,
-      "score_0_100": 49.15243685245514,
+      "score_0_1": 0.5009155869483948,
+      "score_0_100": 50.09155869483948,
       "split": "train",
       "target_0_1": 0.7300000190734863
     },
     {
       "pair_id": "c1966cac7f07407a22a5fe7a",
-      "score_0_1": 0.4889099597930908,
-      "score_0_100": 48.89099597930908,
+      "score_0_1": 0.5140210390090942,
+      "score_0_100": 51.402103900909424,
       "split": "validation",
       "target_0_1": 0.7020000219345093
     },
     {
       "pair_id": "6b2ec14c33e34197a0430050",
-      "score_0_1": 0.4826885461807251,
-      "score_0_100": 48.26885461807251,
+      "score_0_1": 0.5148835182189941,
+      "score_0_100": 51.488351821899414,
       "split": "validation",
       "target_0_1": 0.7067000269889832
     }

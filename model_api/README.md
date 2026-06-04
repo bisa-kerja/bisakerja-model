@@ -6,6 +6,10 @@ Model API consumes exported training artifacts, validates strict model-core cont
 
 Backend API is a separate repository: <https://github.com/bisa-kerja/bisakerja-api>.
 
+Generated backend/model handoff evidence for this repository is kept in
+`artifacts/backend_model_api_contract/internal_contract_fixtures.json` and
+`artifacts/backend_model_api_contract/openapi_prisma_owner_matrix.json`.
+
 ## Boundary
 
 Model API owns:
@@ -161,6 +165,7 @@ Backend sends:
 
 Model API returns model-core only:
 
+- `schemaVersion=model-core-cv-analysis-v1`
 - `parsedCv`
 - `jobFitAlignment`
 - `atsFriendliness`

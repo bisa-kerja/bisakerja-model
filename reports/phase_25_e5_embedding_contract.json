@@ -15,7 +15,7 @@
       "sentence_transformers_version": "5.5.1",
       "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
     },
-    "path": "artifacts/phase_25_tensorflow_training_delivery/embeddings/e5_pair_embeddings_v1.npz",
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\embeddings\\e5_pair_embeddings_v1.npz",
     "sha256": "bbf4c6013e4bdd678f672eaf14180223db1bc574edb8a102c88fcf288adde35d",
     "status": "validated_existing"
   },
@@ -50,7 +50,7 @@
       "source_text_hash",
       "schema_version"
     ],
-    "path": "artifacts/phase_25_tensorflow_training_delivery/e5_pair_features.parquet",
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\e5_pair_features.parquet",
     "row_count": 3600,
     "sha256": "5e64066d2dadab8b814ffa96cadd061178f0877cd66289dc89e9b850cf9d2c57",
     "split_counts": {
@@ -59,18 +59,18 @@
       "validation": 540
     }
   },
-  "generated_at": "2026-06-03T01:44:24.047279+00:00",
+  "generated_at": "2026-06-04T08:17:19.951803+00:00",
   "passed": true,
   "phase_id": "phase_25_tensorflow_training_delivery",
   "schema_version": "phase-25-e5-embedding-contract-v1",
   "source_text_contract": {
     "empty_job_text_count": 0,
     "empty_profile_text_count": 0,
-    "jobs_path": "legacy/dataset/indotech_job_cleaned.csv",
+    "jobs_path": "legacy\\dataset\\indotech_job_cleaned.csv",
     "pair_count": 3600,
-    "pairs_path": "artifacts/pairs_v2.parquet",
+    "pairs_path": "artifacts\\pairs_v2.parquet",
     "pairs_sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a",
-    "profiles_path": "legacy/dataset/techtalent_profile_cleaned.csv",
+    "profiles_path": "legacy\\dataset\\techtalent_profile_cleaned.csv",
     "raw_job_text_count": 0,
     "raw_profile_text_count": 0,
     "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
@@ -78,21 +78,21 @@
   "status": "complete",
   "upstream_evidence": {
     "phase17_embedding_manifest": {
-      "path": "reports/phase_17_embedding_manifest.json",
+      "path": "reports\\phase_17_embedding_manifest.json",
       "production_eligible_e5": true,
-      "sha256": "517558eabb701432daab54cdc83add13df203e601bdae3c3a964ad7c8b55ab72",
+      "sha256": "e4564a85041da9631c410a920e97744dc183071b5b95ec6ff264d2e06f3b1c7d",
       "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
     },
     "phase18_embedding_manifest": {
-      "path": "reports/phase_18_embedding_manifest.json",
+      "path": "reports\\phase_18_embedding_manifest.json",
       "production_eligible_e5": true,
-      "sha256": "55296386621e4d30ffe802dbc84f48ecaac96b888ae443f60c1a81ac454e0b64",
+      "sha256": "29bda000590d6daf98e2ba0cd019dda3f58da3989ca0ea621451a2f57f526ef8",
       "source_text_hash": "aa354559574917840f263c203289242f70a18b957be643b37c691669a9cff447"
     },
     "phase19_5_e5_runtime_manifest": {
-      "path": "reports/phase_19_5_e5_runtime_manifest.json",
+      "path": "reports\\phase_19_5_e5_runtime_manifest.json",
       "production_eligible_e5": true,
-      "sha256": "1cefadfe8ed498ac378f0101eb39979f50957b5b9560f6f2f995d27c234db845",
+      "sha256": "ad812772d8208ef1ab9e92c875f7c105d71cc3c3d5a204feead19bc7f1e0b45d",
       "source_text_hash": null
     }
   },

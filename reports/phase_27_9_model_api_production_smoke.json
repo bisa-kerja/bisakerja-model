@@ -1,8 +1,6 @@
 {
   "blockers": [
-    "serving_dependencies_importable",
     "phase26_tests_unskipped",
-    "real_keras_custom_object_loader_smoke",
     "live_fastapi_health_model_info_inference_smoke"
   ],
   "final_decision": "blocked",
@@ -12,7 +10,7 @@
       "evidence": {
         "executable": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe",
         "platform": "Windows-11-10.0.26200-SP0",
-        "python": "3.13.13 (tags/v3.13.13:01104ce, Apr  7 2026, 19:25:48) [MSC v.1944 64 bit (AMD64)]"
+        "python": "3.13.13 (main, Jun  2 2026, 22:38:31) [MSC v.1944 64 bit (AMD64)]"
       },
       "status": "PASS"
     },
@@ -33,70 +31,44 @@
       "status": "PASS"
     },
     {
-      "blocker": "Install root requirements.txt in Python 3.13 env",
       "check": "serving_dependencies_importable",
       "evidence": {
         "modules": {
-          "fastapi": false,
+          "fastapi": true,
           "keras": true,
           "numpy": true,
           "sentence_transformers": true,
           "tensorflow": true,
-          "uvicorn": false
+          "uvicorn": true
         }
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "check": "phase26_tests_unskipped",
       "evidence": {
         "result": {
           "command": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe -m unittest tests.model_api.test_phase_26_layout",
-          "elapsed_ms": 8970.941,
-          "returncode": 1,
+          "elapsed_ms": 9284360.726,
+          "returncode": null,
           "stderr_tail": [
-            "    schema_text = path.read_text(encoding=\"utf-8\")",
-            "  File \"C:\\Users\\ADVAN\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\pathlib\\_local.py\", line 546, in read_text",
-            "    return PathBase.read_text(self, encoding, errors, newline)",
-            "           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-            "  File \"C:\\Users\\ADVAN\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\pathlib\\_abc.py\", line 632, in read_text",
-            "    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:",
-            "         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-            "  File \"C:\\Users\\ADVAN\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\pathlib\\_local.py\", line 537, in open",
-            "    return io.open(self, mode, buffering, encoding, errors, newline)",
-            "           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
-            "FileNotFoundError: [Errno 2] No such file or directory: 'references\\\\prisma\\\\schema.prisma'",
+            ".................WARNING: All log messages before absl::InitializeLog() is called are written to STDERR",
+            "I0000 00:00:1780565936.862742   19640 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.",
+            "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR",
+            "I0000 00:00:1780566249.461957   19640 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.",
+            "...I0000 00:00:1780569372.119731   19640 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.",
+            "To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.",
+            "WARNING:tensorflow:From D:\\bisakerja-model\\training\\.tf-venv-3.13\\Lib\\site-packages\\keras\\src\\backend\\tensorflow\\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.",
             "",
-            "The above exception was the direct cause of the following exception:",
-            "",
-            "Traceback (most recent call last):",
-            "  File \"D:\\bisakerja-model\\tests\\model_api\\test_phase_26_layout.py\", line 103, in test_prisma_contract_matches_backend_persistence_enums",
-            "    contract = load_prisma_cv_analysis_contract()",
-            "  File \"D:\\bisakerja-model\\model_api\\contracts.py\", line 140, in load_prisma_cv_analysis_contract",
-            "    raise ContractReferenceError(f\"Prisma schema not found: {path}\") from exc",
-            "model_api.errors.ContractReferenceError: Prisma schema not found: references\\prisma\\schema.prisma",
-            "",
-            "======================================================================",
-            "ERROR: test_real_phase25_keras_artifact_matches_inference_smoke_fixture_predictions (tests.model_api.test_phase_26_layout.Phase26LayoutTest.test_real_phase25_keras_artifact_matches_inference_smoke_fixture_predictions)",
+            "WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.",
+            ".................",
             "----------------------------------------------------------------------",
-            "Traceback (most recent call last):",
-            "  File \"D:\\bisakerja-model\\tests\\model_api\\test_phase_26_layout.py\", line 684, in test_real_phase25_keras_artifact_matches_inference_smoke_fixture_predictions",
-            "    predictions = model.predict(rows, verbose=0).tolist()",
-            "                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^",
-            "  File \"D:\\bisakerja-model\\training\\.tf-venv-3.13\\Lib\\site-packages\\keras\\src\\utils\\traceback_utils.py\", line 122, in error_handler",
-            "    raise e.with_traceback(filtered_tb) from None",
-            "  File \"D:\\bisakerja-model\\training\\.tf-venv-3.13\\Lib\\site-packages\\keras\\src\\layers\\input_spec.py\", line 161, in assert_input_compatibility",
-            "    raise ValueError(",
-            "    ...<3 lines>...",
-            "    )",
-            "ValueError: Layer \"bisakerja_jobfit_tf_functional_custom_v1_calibrated\" expects 1 input(s), but it received 6 input tensors. Inputs received: [<tf.Tensor 'data:0' shape=(6,) dtype=float32>, <tf.Tensor 'data_1:0' shape=(6,) dtype=float32>, <tf.Tensor 'data_2:0' shape=(6,) dtype=float32>, <tf.Tensor 'data_3:0' shape=(6,) dtype=float32>, <tf.Tensor 'data_4:0' shape=(6,) dtype=float32>, <tf.Tensor 'data_5:0' shape=(6,) dtype=float32>]",
+            "Ran 37 tests in 9282.804s",
             "",
-            "----------------------------------------------------------------------",
-            "Ran 37 tests in 7.527s",
-            "",
-            "FAILED (errors=2)"
+            "OK"
           ],
-          "stdout_tail": []
+          "stdout_tail": [],
+          "timeout": 180
         },
         "summary": {
           "passed": false,
@@ -110,23 +82,157 @@
       "blocker": "Real .keras custom-object loader smoke not run or failed",
       "check": "real_keras_custom_object_loader_smoke",
       "evidence": {
-        "reason": "Python 3.13 with TensorFlow/Keras required",
-        "status": "not_run"
+        "output": {
+          "custom_objects_registered": [
+            "CosineInteractionLayer",
+            "WeightedHuberLoss",
+            "ProductionGateCallback",
+            "HighRecallCalibrationLayer"
+          ],
+          "input_shape": [
+            null,
+            6
+          ],
+          "keras_version": "3.14.1",
+          "model_name": "bisakerja_jobfit_tf_functional_custom_v1_calibrated",
+          "output_shape": [
+            null,
+            1
+          ],
+          "sample_predictions": [
+            {
+              "pair_id": "c1966cac7f07407a22a5fe7a",
+              "score_0_1": 0.7,
+              "score_0_100": 70.0,
+              "split": "validation",
+              "target_0_1": 0.702
+            },
+            {
+              "pair_id": "6b2ec14c33e34197a0430050",
+              "score_0_1": 0.7,
+              "score_0_100": 70.0,
+              "split": "validation",
+              "target_0_1": 0.7067
+            },
+            {
+              "pair_id": "93a8e5792dfbd972a8750d13",
+              "score_0_1": 0.961601,
+              "score_0_100": 96.16,
+              "split": "validation",
+              "target_0_1": 1.0
+            },
+            {
+              "pair_id": "0ebd55720e44e63b8c109a8c",
+              "score_0_1": 0.731125,
+              "score_0_100": 73.113,
+              "split": "test",
+              "target_0_1": 0.73
+            },
+            {
+              "pair_id": "77eec81454bacfe75491286d",
+              "score_0_1": 1.0,
+              "score_0_100": 100.0,
+              "split": "test",
+              "target_0_1": 1.0
+            },
+            {
+              "pair_id": "6b81295c60b0648cbe42a91a",
+              "score_0_1": 1.0,
+              "score_0_100": 100.0,
+              "split": "test",
+              "target_0_1": 1.0
+            }
+          ],
+          "score_bounds": {
+            "max_0_1": 1.0,
+            "min_0_1": 0.699999988079071
+          },
+          "status": "complete",
+          "tensorflow_version": "2.21.0"
+        },
+        "output_path": "reports\\phase_27_9_keras_custom_object_loader_smoke.json",
+        "result": {
+          "command": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe D:\\bisakerja-model\\artifacts\\phase_25_tensorflow_training_delivery\\export\\registered_custom_objects_smoke.py D:\\bisakerja-model\\artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras D:\\bisakerja-model\\artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz D:\\bisakerja-model\\reports\\phase_27_9_keras_custom_object_loader_smoke.json",
+          "elapsed_ms": 9769.632,
+          "returncode": 0,
+          "stderr_tail": [
+            "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR",
+            "I0000 00:00:1780575219.012704   15752 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.",
+            "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR",
+            "I0000 00:00:1780575223.298088   15752 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.",
+            "I0000 00:00:1780575226.701764   15752 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.",
+            "To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.",
+            "WARNING:tensorflow:From D:\\bisakerja-model\\training\\.tf-venv-3.13\\Lib\\site-packages\\keras\\src\\backend\\tensorflow\\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.",
+            "",
+            "WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin."
+          ],
+          "stdout_tail": []
+        },
+        "status": "PASS"
       },
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "blocker": "Live FastAPI/TensorFlow/E5 smoke not run or failed",
       "check": "live_fastapi_health_model_info_inference_smoke",
       "evidence": {
-        "reason": "pass --run-live to execute real FastAPI/TensorFlow/E5 endpoint smoke",
-        "status": "not_run"
+        "endpoint_latency_ms": {
+          "cv_analysis": 46929.528,
+          "health": 4.757,
+          "internal_model_cv_analysis": 1025.267,
+          "model_info": 2.988
+        },
+        "responses": {
+          "cv_analysis": {
+            "data_keys": [],
+            "status_code": 422,
+            "success": false
+          },
+          "health": {
+            "body": {
+              "artifactHash": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73",
+              "environment": "local",
+              "message": "ready",
+              "modelName": "bisakerja_jobfit_tf_functional_custom_v1",
+              "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
+              "ready": true,
+              "service": "bisakerja-model-api"
+            },
+            "status_code": 200
+          },
+          "internal_model_cv_analysis": {
+            "hasEnvelope": true,
+            "modelKeys": [],
+            "schemaVersion": null,
+            "status_code": 422
+          },
+          "model_info": {
+            "model": {
+              "artifact": {
+                "format": ".keras",
+                "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
+                "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
+              },
+              "name": "bisakerja_jobfit_tf_functional_custom_v1",
+              "version": "jobfit_tf_phase25_gradient_tape_v1"
+            },
+            "ready": true,
+            "status_code": 200
+          }
+        },
+        "status": "FAIL",
+        "total_elapsed_ms": 66225.81
       },
       "status": "FAIL"
     }
   ],
-  "generated_at": "2026-06-03T17:45:56.806940Z",
-  "latency": {},
+  "generated_at": "2026-06-04T12:14:54.487235Z",
+  "latency": {
+    "cv_analysis": 46929.528,
+    "health": 4.757,
+    "internal_model_cv_analysis": 1025.267,
+    "model_info": 2.988
+  },
   "phase_id": "phase_27_9_model_api_production_smoke",
   "policy": {
     "fake_model_or_fake_embedding_allowed_for_production_smoke": false,

@@ -1,12 +1,12 @@
 {
   "artifactPaths": {
-    "exportDir": "artifacts/phase_25_tensorflow_training_delivery/export",
-    "fixtureDir": "artifacts/phase_25_tensorflow_training_delivery/fixtures",
-    "modelDir": "artifacts/models/phase_25_tensorflow_training_delivery",
-    "phase25ArtifactDir": "artifacts/phase_25_tensorflow_training_delivery",
+    "exportDir": "artifacts\\phase_25_tensorflow_training_delivery\\export",
+    "fixtureDir": "artifacts\\phase_25_tensorflow_training_delivery\\fixtures",
+    "modelDir": "artifacts\\models\\phase_25_tensorflow_training_delivery",
+    "phase25ArtifactDir": "artifacts\\phase_25_tensorflow_training_delivery",
     "setupArtifact": "artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
     "setupReport": "reports/phase_25_reproducibility_setup.json",
-    "tensorboardDir": "artifacts/tensorboard/phase_25_tensorflow_training_delivery"
+    "tensorboardDir": "artifacts\\tensorboard\\phase_25_tensorflow_training_delivery"
   },
   "checks": {
     "artifact_paths_defined": true,
@@ -35,43 +35,43 @@
       "exists": true,
       "path": "TODOS.md",
       "role": "todo_plan",
-      "sha256": "18d82e122b7b0150152db9fc47a6265b5da46e351c1abab0d02226142ce687be"
+      "sha256": "9fec773615e8a4a85f838e73c326cc0bfad4221a94dfaa54f933a226a941f263"
     },
     {
       "exists": true,
       "path": "REQUIREMENT.md",
       "role": "requirement",
-      "sha256": "1c29ce5406e670d24136bf1588ac74c97e18ebd3b46408062ddcccfc759cb723"
+      "sha256": "ef60fa7cfe2733daeae98f4cc53c93184bda31fc6eb8129d7bc588ce9ad19de5"
     },
     {
       "exists": true,
       "path": "GAP_MODEL_TRAINING.md",
       "role": "gap_model_training",
-      "sha256": "5ba0762630f4d14f736fd1aff3ce8736f3f5c783d6abd546aba1d25ba336fc67"
+      "sha256": "35a9ea1021e8401dd2342a15feb9a2351f0b7f9f363d23f694312d22e782003e"
     },
     {
       "exists": true,
       "path": "references/docs/generated/openapi.json",
       "role": "openapi",
-      "sha256": "aca7181f441e5fc969322795c8db78fbdaeab6e6427e89fa0608025f525bc68e"
+      "sha256": "51beae913df6632993c0f0ce83deaa52fd3b769bd138e9a99e8d1e867a597640"
     },
     {
       "exists": true,
       "path": "reports/phase_12_notebook_configs.json",
       "role": "phase12_configs",
-      "sha256": "e8901a4dee6938cea0462eb2260cd94e06676f119d921b280b7f1c852b242b62"
+      "sha256": "3b78b4db9ceff1f993061ea9a25e8a4b1a499141b8dfacc2f412810a4a23750d"
     },
     {
       "exists": true,
       "path": "reports/phase_13_snapshot_manifests.json",
       "role": "phase13_snapshot_manifest",
-      "sha256": "6ce9dad49415cb95efd29bb3d18e31dd4b9f609dc9c78f4ef3285fa08ff63153"
+      "sha256": "dfea6b1651d5c2990b741e071541a9df35247181e349a6895f2c9e166eb4bcdf"
     },
     {
       "exists": true,
       "path": "reports/phase_14_feature_quality_report.json",
       "role": "phase14_feature_quality",
-      "sha256": "9e4fcc7db30153a138c46080dd028f647de7390364b806b8bf2295285a8fe6bc"
+      "sha256": "f553f3dbc24b0824ff7044460197ee3b591e9bb42f07116689939df2e30f147a"
     },
     {
       "exists": true,
@@ -83,79 +83,79 @@
       "exists": true,
       "path": "reports/phase_15_leakage_report.json",
       "role": "phase15_leakage",
-      "sha256": "680eb1ae920e7559b66765519379c680095f4b55782ae077de1eb94e0ea75c78"
+      "sha256": "d3c74c46ca24315075a01e69ff04392cef36a11b4374ed0cf8b708af4f7e0c0f"
     },
     {
       "exists": true,
       "path": "reports/phase_16_label_manifest.json",
       "role": "phase16_label_manifest",
-      "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd"
+      "sha256": "c178aec9033052b41190b3ec3fee428ca1512dfb3fcc7d7a3fd8aa71589836f4"
     },
     {
       "exists": true,
       "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
       "role": "phase16_human_labels",
-      "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+      "sha256": "ec7e0db9a1c2bb7bf0746e3e84c9b4ede064cf3801fa14d40853edf565c6e24a"
     },
     {
       "exists": true,
       "path": "reports/phase_17_embedding_manifest.json",
       "role": "phase17_embedding_manifest",
-      "sha256": "517558eabb701432daab54cdc83add13df203e601bdae3c3a964ad7c8b55ab72"
+      "sha256": "e4564a85041da9631c410a920e97744dc183071b5b95ec6ff264d2e06f3b1c7d"
     },
     {
       "exists": true,
       "path": "reports/phase_18_embedding_manifest.json",
       "role": "phase18_embedding_manifest",
-      "sha256": "55296386621e4d30ffe802dbc84f48ecaac96b888ae443f60c1a81ac454e0b64"
+      "sha256": "29bda000590d6daf98e2ba0cd019dda3f58da3989ca0ea621451a2f57f526ef8"
     },
     {
       "exists": true,
       "path": "reports/phase_19_ats_issue_labels.json",
       "role": "phase19_ats_labels",
-      "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+      "sha256": "98ef89fd68157c7e752052a9418225921cfd93169be431b14ccb5c6db5663194"
     },
     {
       "exists": true,
       "path": "reports/phase_19_cv_benchmark_manifest.json",
       "role": "phase19_cv_benchmark",
-      "sha256": "b09f2fd20d387586b5143cb1ff3791c1b56faf4bfcf0a8c5b94134a656ff473d"
+      "sha256": "bc86cee94f87bc3a047b34c7c72c1cacc5349e3f0ad799601983b3af80a929ca"
     },
     {
       "exists": true,
       "path": "reports/phase_21_backend_candidate_reranking.json",
       "role": "phase21_candidate_reranking",
-      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef"
+      "sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036"
     },
     {
       "exists": true,
       "path": "artifacts/phase_22_calibration_model_card_export/feature_config.json",
       "role": "phase22_feature_config",
-      "sha256": "ea2b1db13617d7684b35ff167a068dd3353c4596422fb236a0a78df6d42c2585"
+      "sha256": "08c37edca12b1b147719e1dd2d35ec3d2e920734217c6e265a280e8426c11c5e"
     },
     {
       "exists": true,
       "path": "artifacts/phase_22_calibration_model_card_export/label_manifest.json",
       "role": "phase22_label_manifest",
-      "sha256": "56592660cc4f0b7e2c0725067db8541ca076869d4e49e2bbc99cdb97b6bdcc09"
+      "sha256": "7f013d1b34cbaf380ed566f3bfa3abc66b087cd68dc8ebadd195897f711ec573"
     },
     {
       "exists": true,
       "path": "artifacts/phase_22_calibration_model_card_export/artifact_manifest.json",
       "role": "phase22_artifact_manifest",
-      "sha256": "fea0debb87847b1b6b885cab84b07ed4f35e4a4c833fb1d6ecdda2171422f83a"
+      "sha256": "53e1afc04004c20d748ae31353e9aa88b6c1d365df2808275ef74dc314722857"
     },
     {
       "exists": true,
       "path": "artifacts/phase_23_model_api_contract_validation/model_core_contract.json",
       "role": "phase23_contract",
-      "sha256": "345f6a9b86cef6ba462a7dbbc73d90469805a172c8ea4c040caed2e8e7d218b8"
+      "sha256": "c62928b0b0be866c3d1df1c7ded488b55dcb5fe41fb37b905dea914ca57a4d9f"
     },
     {
       "exists": true,
       "path": "reports/phase_24_reproducibility_final_gate.json",
       "role": "phase24_final_gate",
-      "sha256": "44bfb9029b87ff656d0b1c3166cb98053f08665280959be9fab6c9b4e7307cfa"
+      "sha256": "9937100ad814a69e8ca4be045c0789552d61c16eb6dccb2974729e511b2b5a01"
     }
   ],
   "dependencies": [
@@ -185,7 +185,7 @@
       "importName": "sklearn",
       "installed": true,
       "requiredNow": true,
-      "version": "1.8.0"
+      "version": "1.9.0"
     },
     {
       "distribution": "scipy",
@@ -224,7 +224,7 @@
     "productionEligibleE5": true,
     "profileCvPrefix": "query:"
   },
-  "generatedAt": "2026-06-03T01:44:23.679060+00:00",
+  "generatedAt": "2026-06-04T08:17:06.280718+00:00",
   "labelVersions": {
     "atsQualityLabel": "ats-quality-label-v1",
     "exportLabel": "human-validation-v1",
@@ -234,56 +234,41 @@
   },
   "phaseId": "phase_25_tensorflow_training_delivery",
   "runtime": {
-    "gitCommit": "1a6dd0c",
+    "gitCommit": "c9aa942",
     "gitDirtyAtSetup": true,
-    "gitDirtyPathCount": 43,
+    "gitDirtyPathCount": 28,
     "gitDirtyPaths": [
-      "ODOS.md",
-      "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-      "artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
-      "artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",
-      "artifacts/phase_25_tensorflow_training_delivery/custom_component_smoke_model.keras",
-      "artifacts/phase_25_tensorflow_training_delivery/data_feature_reuse.json",
-      "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
-      "artifacts/phase_25_tensorflow_training_delivery/e5_embedding_contract.json",
-      "artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
-      "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
-      "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
-      "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-      "artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
-      "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
-      "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
+      "rtifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
       "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
-      "artifacts/phase_25_tensorflow_training_delivery/requirement_contract_matrix.json",
-      "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
-      "artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
-      "artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
-      "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
-      "artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
-      "reports/phase_25_baseline_selection_gate.json",
-      "reports/phase_25_calibration_model_card_export.json",
-      "reports/phase_25_custom_component.json",
-      "reports/phase_25_data_feature_reuse.json",
-      "reports/phase_25_e5_embedding_contract.json",
-      "reports/phase_25_human_readable_final_report.json",
-      "reports/phase_25_human_readable_final_report.md",
       "reports/phase_25_model_api_handoff_fixtures.json",
-      "reports/phase_25_reproducibility_setup.json",
-      "reports/phase_25_requirement_contract_matrix.json",
-      "reports/phase_25_tensorboard_monitoring.json",
-      "reports/phase_25_tensorflow_architecture.json",
-      "reports/phase_25_tensorflow_artifact_export.json",
-      "reports/phase_25_tensorflow_training_delivery.json",
-      "reports/phase_25_training_evaluation_loop.json",
-      "reports/phase_25_training_only_genai_boundary.json",
+      "reports/phase_27_10_requirement_matrix.json",
+      "reports/phase_27_10_requirement_matrix.md",
+      "reports/phase_27_8_model_card_manifest_refresh.json",
+      "reports/phase_27_8_model_card_manifest_refresh.md",
+      "reports/phase_27_9_model_api_production_smoke.json",
+      "reports/phase_27_9_model_api_production_smoke.md",
+      "scripts/verify_phase_27_8_model_card_manifest_refresh.py",
+      "training/TODOS.md",
       "training/notebooks/phase_25_tensorflow_training_delivery.ipynb",
-      "model_api/",
-      "reports/phase_26_1_api_package_layout.json",
-      "tests/"
+      "reports/training_step_10_calibration_model_card_manifest.json",
+      "reports/training_step_10_calibration_model_card_manifest.md",
+      "reports/training_step_11_release_gates.json",
+      "reports/training_step_11_release_gates.md",
+      "reports/training_step_12_model_api_handoff.json",
+      "reports/training_step_12_model_api_handoff.md",
+      "reports/training_step_13_final_stability.json",
+      "reports/training_step_13_final_stability.md",
+      "scripts/verify_training_step_10_calibration_model_card_manifest.py",
+      "scripts/verify_training_step_11_release_gates.py",
+      "scripts/verify_training_step_12_model_api_handoff.py",
+      "scripts/verify_training_step_13_final_stability.py",
+      "tests/test_training_step_10_calibration_model_card_manifest.py",
+      "tests/test_training_step_11_release_gates.py",
+      "tests/test_training_step_12_model_api_handoff.py",
+      "tests/test_training_step_13_final_stability.py"
     ],
-    "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
-    "python": "3.13.11 (main, Jun  1 2026, 12:57:06) [Clang 16.0.0 (clang-1600.0.26.6)]"
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.13 (main, Jun  2 2026, 22:38:31) [MSC v.1944 64 bit (AMD64)]"
   },
   "schemaVersion": "phase-25-reproducibility-setup-v1",
   "seeds": {

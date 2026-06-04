@@ -1,0 +1,218 @@
+{
+  "acceptance": {
+    "phase_27_10_training_owned_requirements_not_blocked": true,
+    "phase_27_1_and_27_2_passed": true,
+    "phase_27_3_and_27_4_training_evidence_passed": true,
+    "phase_27_5_and_27_6_passed": true,
+    "phase_27_7_not_blocked": true,
+    "phase_27_8_complete": true
+  },
+  "blocking_steps": [],
+  "final_decision": "pass-with-documented-limitations",
+  "generated_at": "2026-06-04T07:08:50.589356+00:00",
+  "phase_id": "training_step_11_release_gates",
+  "policy": {
+    "out_of_scope_requirement_ids": [
+      "2.2",
+      "3.1",
+      "3.2",
+      "deliverables"
+    ],
+    "production_score_claims_require_release_scale_human_validation": true,
+    "training_owned_requirement_ids": [
+      "1.1",
+      "1.2",
+      "1.3",
+      "1.4",
+      "1.5",
+      "2.1",
+      "4.1"
+    ]
+  },
+  "schema_version": "training-step-11-release-gates-v1",
+  "steps": {
+    "phase_27_10": {
+      "blocked_out_of_scope_rows": [
+        {
+          "failed_checks": [
+            "real_keras_custom_object_loader_smoke_passed"
+          ],
+          "requirement_id": "2.2",
+          "status": "failed-gate"
+        },
+        {
+          "failed_checks": [
+            "live_fastapi_smoke_passed"
+          ],
+          "requirement_id": "3.1",
+          "status": "failed-gate"
+        },
+        {
+          "failed_checks": [
+            "phase26_tests_unskipped_passed",
+            "live_fastapi_health_model_info_inference_smoke_passed"
+          ],
+          "requirement_id": "3.2",
+          "status": "failed-gate"
+        },
+        {
+          "failed_checks": [
+            "runtime_smoke_production_passed"
+          ],
+          "requirement_id": "deliverables",
+          "status": "failed-gate"
+        }
+      ],
+      "blocked_training_rows": [],
+      "blockers": [],
+      "final_decision": "blocked",
+      "generated_at": "2026-06-04T07:05:48.118668Z",
+      "out_of_scope_requirement_ids": [
+        "2.2",
+        "3.1",
+        "3.2",
+        "deliverables"
+      ],
+      "phase_id": "phase_27_10_requirement_matrix",
+      "report": {
+        "exists": true,
+        "path": "reports/phase_27_10_requirement_matrix.json",
+        "sha256": "448ef26d65306861b647ba74c3f2e4f560f185e3b407f924c0b137e7c8feb8ce",
+        "size_bytes": 22035
+      },
+      "schema_version": "phase-27-10-requirement-matrix-v1",
+      "status": "WARN",
+      "training_owned_requirement_ids": [
+        "1.1",
+        "1.2",
+        "1.3",
+        "1.4",
+        "1.5",
+        "2.1",
+        "4.1"
+      ],
+      "training_owned_satisfied_count": 7,
+      "warnings": [
+        "Phase 27.10 still has non-training blockers owned by Model API or final integrated deliverables."
+      ]
+    },
+    "phase_27_1_27_2": {
+      "blockers": [],
+      "final_decision": "production-ready",
+      "generated_at": "2026-06-04T04:42:11Z",
+      "git_state": {
+        "commit": "ed07f74",
+        "dirty": false,
+        "dirty_path_count": 0,
+        "dirty_paths": [],
+        "production_rule": "git_dirty_at_setup=false and git_dirty_at_export=false are mandatory before production-ready status."
+      },
+      "phase_27_1_status": "PASS",
+      "phase_27_2_status": "PASS",
+      "phase_id": "phase_27_production_readiness_release_gate",
+      "release_event_file": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
+      "report": {
+        "exists": true,
+        "path": "reports/phase_27_1_27_2_release_gate.json",
+        "sha256": "3ee3353d343e2189105c9673506981f1e236ea6adda0e2fe0afd0fe076b200fe",
+        "size_bytes": 1473
+      },
+      "schema_version": "phase-27-1-27-2-release-gate-v1",
+      "status": "PASS",
+      "warnings": []
+    },
+    "phase_27_3_27_4": {
+      "blockers": [],
+      "final_decision": "blocked",
+      "generated_at": "2026-06-04T03:31:43.962020+00:00",
+      "label_checks": {
+        "frozen_label_items_present": true,
+        "human_labels_not_model_inputs": true,
+        "low_medium_high_covered": true,
+        "minimum_two_reviewers_per_item": true,
+        "two_reviewers_recorded": true,
+        "weak_labels_bootstrap_only": true
+      },
+      "label_release_blocker_count": 8,
+      "phase_27_3_status": "PASS",
+      "phase_27_4_training_label_evidence_status": "PASS",
+      "phase_id": "phase_27_3_27_4_notebook_hygiene_label_evidence",
+      "production_score_claims_allowed": false,
+      "report": {
+        "exists": true,
+        "path": "reports/phase_27_3_27_4_notebook_label_gate.json",
+        "sha256": "6ed0383d9b37bf423cae2db870d2e583dc49a6327a5e44311b6dd98b050d8521",
+        "size_bytes": 35019
+      },
+      "reviewer_count": 2,
+      "schema_version": "phase-27-3-27-4-notebook-label-gate-v1",
+      "score_band_counts_by_item": {
+        "high": 40,
+        "low": 40,
+        "medium": 40
+      },
+      "status": "WARN",
+      "unique_review_items": 120,
+      "warnings": [
+        "Phase 27.4 release-scale production score claims remain limited by label-policy blockers; Step 11 treats this as a training release limitation, not a training-owned blocker.",
+        "Production score claims remain disabled until release-scale human validation coverage is available."
+      ]
+    },
+    "phase_27_5_27_6": {
+      "blockers": [],
+      "final_decision": "production-ready",
+      "generated_at": "2026-06-03T10:41:38.226690+00:00",
+      "phase_27_5_status": "PASS",
+      "phase_27_6_status": "PASS",
+      "phase_id": "phase_27_5_27_6_validation_expansion",
+      "report": {
+        "exists": true,
+        "path": "reports/phase_27_5_27_6_validation_expansion.json",
+        "sha256": "92c821b3c0433f95c09570b1cafa3bec3cdc1c029ad5f01081a65554da373826",
+        "size_bytes": 13201
+      },
+      "schema_version": "phase-27-5-27-6-validation-expansion-v1",
+      "status": "PASS",
+      "warnings": []
+    },
+    "phase_27_7": {
+      "blockers": [],
+      "failed_gates": [],
+      "final_decision": "production-ready",
+      "gate_count": 13,
+      "generated_at": "2026-06-04T04:43:43.259369+00:00",
+      "phase_id": "phase_27_7_clean_kernel_production_export",
+      "report": {
+        "exists": true,
+        "path": "reports/phase_27_7_clean_kernel_production_export.json",
+        "sha256": "2b4f82505fe4399347db8dc9e7325b1a104e829b06f260ea142a317b1bd621c0",
+        "size_bytes": 5281
+      },
+      "schema_version": "phase-27-7-clean-kernel-production-export-v1",
+      "status": "PASS",
+      "warnings": []
+    },
+    "phase_27_8": {
+      "blockers": [],
+      "failed_gates": [],
+      "final_decision": "refresh-complete",
+      "gate_count": 7,
+      "generated_at": "2026-06-04T07:05:42.364186Z",
+      "phase_id": "phase_27_8_model_card_manifest_refresh",
+      "report": {
+        "exists": true,
+        "path": "reports/phase_27_8_model_card_manifest_refresh.json",
+        "sha256": "e269933117a87510d85d6d68300b178d6657c28ae783ff674bb10f4db10c3fce",
+        "size_bytes": 7406
+      },
+      "schema_version": "phase-27-8-model-card-manifest-refresh-v1",
+      "status": "PASS",
+      "warnings": []
+    }
+  },
+  "todo_source": "training/TODOS.md#step-11-refresh-training-release-gates",
+  "warning_steps": [
+    "phase_27_3_27_4",
+    "phase_27_10"
+  ]
+}

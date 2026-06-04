@@ -263,9 +263,14 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         body = response.json()
-        self.assertTrue(body["success"])
-        self.assertEqual(body["data"]["requestId"], "req-phase33-endpoint")
-        self.assertEqual(body["data"]["candidateReranking"]["recommendations"][0]["jobId"], "job-33-001")
+        self.assertEqual(body["requestId"], "req-phase33-endpoint")
+        self.assertEqual(body["schemaVersion"], "model-core-cv-analysis-v1")
+        self.assertEqual(body["parsedCv"]["status"], "parsed")
+        self.assertIn("createdAt", body)
+        self.assertNotIn("success", body)
+        self.assertNotIn("data", body)
+        self.assertEqual(body["candidateReranking"]["recommendations"][0]["jobId"], "job-33-001")
+        self.assertEqual(set(body["model"]), {"name", "version"})
 
 
 if __name__ == "__main__":

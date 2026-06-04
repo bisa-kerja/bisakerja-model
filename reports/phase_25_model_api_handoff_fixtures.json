@@ -10,23 +10,23 @@
     "wrapper_backend_owned_fields_rejected": true
   },
   "artifact_manifest": {
-    "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-    "sha256": "3a04ea81684c3d0214e5c05e5c2f3e098401f91f3e26a9446ff98b6f8531cd9e"
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\artifact_manifest.json",
+    "sha256": "1164a467dd1c9809b7a9c0713b8e88b51a4aa3930e32d0d90fa09007a325475f"
   },
   "export_hashes": {
-    "handoff_fixtures": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7",
-    "handoff_validation": "41259486b941a58ec9e7b6ed760a386aa5371edee911732c17340ed5a98836e2",
-    "report": "28475005fa6727719f4366c8a994e4e2090ab9f0c43ed544edd43ca6d086e0dc"
+    "handoff_fixtures": "564e3872db870f615e854828dcbeb8fc0fd081366db47108ad8857011a35e92a",
+    "handoff_validation": "6894b41ca24efd0d19ebbe45008250bd06caff02e45f6b0ca35deea47c16ebba",
+    "report": "ab0b408c690e51500df02ed2c88eac2d7815cd76cf527b75bada9f170fb6a4f0"
   },
   "export_paths": {
-    "handoff_fixtures": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
-    "handoff_validation": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
-    "report": "reports/phase_25_model_api_handoff_fixtures.json"
+    "handoff_fixtures": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_fixtures.json",
+    "handoff_validation": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_validation.json",
+    "report": "reports\\phase_25_model_api_handoff_fixtures.json"
   },
-  "generated_at": "2026-06-03T01:45:40.685985+00:00",
+  "generated_at": "2026-06-04T08:19:59.365457+00:00",
   "model_card": {
-    "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-    "sha256": "30275a5e40db8c984cb90993bd0106a12474c7997a925af4395caa05d28f595c"
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+    "sha256": "19af07ed301667ffbd064f37a045c5fa54647d0dff30c603ea65ddffd1bbe462"
   },
   "negative_rejection_summary": {
     "cv_invalid_language": [

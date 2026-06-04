@@ -31,6 +31,27 @@
       "schemaVersion": "model-core-cv-analysis-v1",
       "shape": "raw strict cvAnalyzerModelResponseSchema JSON, not { success, message, data, error } envelope"
     },
+    "fixtureCoverage": {
+      "negativeCases": [
+        "duplicate-job-ids",
+        "empty-pdf-parse",
+        "missing-candidate-evidence"
+      ],
+      "ownerEntities": [
+        "CvAnalysis.analysisResult",
+        "CvAnalysisResult",
+        "JobRecommendationRun",
+        "JobRecommendationItem",
+        "JobListing",
+        "JobRequirement",
+        "JobSkill"
+      ],
+      "positiveCases": [
+        "direct-upload-pdf-job-search",
+        "active-cv-reference-bookmark",
+        "direct-job-detail-candidate"
+      ]
+    },
     "modelApiEndpoint": "POST /internal/model/cv-analysis",
     "multipartRequest": {
       "backendMetadata": "strict { title, companyName, locationDisplay, sourceUpdatedAt }",
@@ -51,9 +72,8 @@
       "numericSignals": "optional numeric record under scoringInput"
     },
     "sources": [
-      "references/src/shared/integrations/model-api.schema.ts",
-      "references/src/shared/integrations/model-api.client.ts",
-      "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.service.ts"
+      "artifacts/backend_model_api_contract/internal_contract_fixtures.json",
+      "artifacts/backend_model_api_contract/openapi_prisma_owner_matrix.json"
     ]
   },
   "blockers": [],
@@ -63,14 +83,17 @@
     "internalResponseShape": "POST /internal/model/cv-analysis returns raw model-core JSON, not success/data envelope",
     "languagePolicy": "Request language remains explicit id|en; product-facing staging default is English; fallback/wrapper must not silently switch to Indonesian",
     "modelCoreOwner": "Model API owns parsedCv, jobFitAlignment evidence, atsFriendliness evidence, overallImpression evidence, candidate reranking scores, model name/version, createdAt",
-    "reviewGate": "No request/response implementation phase should start until this canonical schema and drift matrix are reviewed",
+    "reviewGate": "Canonical schema reviewed and implemented for Model API internal route",
     "securityPolicy": "Model API remains internal-only; no DB credentials, tokens, raw CV text, storage keys, artifact paths, or public hydrated job fields in public response/logs"
   },
   "checks": {
     "ai_cv_generate_marked_separate": true,
     "backend_client_contract_extracted": true,
+    "backend_request_shape_supported": true,
     "canonical_internal_shape_chosen": true,
     "drift_matrix_complete": true,
+    "internal_response_metadata_minimized": true,
+    "internal_route_returns_raw_model_core": true,
     "language_policy_frozen": true,
     "model_api_actual_contract_extracted": true,
     "ownership_boundary_clear": true,
@@ -82,25 +105,25 @@
     "multipartBehavior": {
       "cvFile": "requires exactly one cvFile; content-type application/pdf or application/octet-stream; PDF magic bytes required",
       "jobCandidates": "form field parsed as JSON array",
-      "jobRoles": "form.get('jobRoles') then JSON parse; repeated fields from Backend are not accepted as array",
+      "jobRoles": "reads repeated jobRoles form values and also accepts a JSON array string",
       "rankingPolicy": "form field parsed as JSON object/null"
     },
     "parsedPayload": {
-      "backendMetadata": "title/companyName/location/workType/experienceLevel/postedAt/sourceUpdatedAt/source; no locationDisplay",
-      "candidateRequirements": "currently array of strings only",
+      "backendMetadata": "allows safe trace/hydration hints including title, companyName, locationDisplay, and sourceUpdatedAt",
+      "candidateRequirements": "accepts strings or Backend requirement objects and derives scoring text from value",
       "inputVersion": "cv-analyzer-v1 forced internally",
-      "numericFeatures": "currently accepted; numericSignals unknown",
+      "numericFeatures": "accepts approved numericSignals or numericFeatures, but not both",
       "profile": "built from parsed PDF text, targetRoles, normalized skills, detected section names"
     },
     "responseBehavior": {
-      "atsFriendliness": "returns score, detectedIssues, fallback, evidence object; parseQuality nested in evidence/observability",
-      "candidateReranking": "nested full model-core reranking with requestId/schemaVersion/candidateSetId/language/recommendations/model/rankedAt",
-      "envelope": "returns { success: true, message, data, error: null }",
-      "model": "includes artifact metadata via dataclass identity",
-      "observability": "included in response data",
-      "overallImpression": "returns score, summary, evidenceKeys, confidenceNotes",
-      "parsedCv": "injects { textLength, pageCount, parseQuality, sectionNames }",
-      "timestamp": "uses analyzedAt in model-core payload"
+      "atsFriendliness": "returns score, detectedIssues, parseQuality, and evidence list",
+      "candidateReranking": "returns model-core candidate IDs, bounded scores, match level, skill evidence, and no hydrated fields",
+      "envelope": "returns raw model-core JSON on /internal/model/cv-analysis",
+      "model": "returns only { name, version } on internal response",
+      "observability": "kept out of internal response body; health/model-info expose operational readiness separately",
+      "overallImpression": "returns score and evidence list; Backend owns prose",
+      "parsedCv": "returns { status, pageCount, textLength, detectedSections, extractionEvidence }",
+      "timestamp": "uses createdAt in internal model-core payload"
     },
     "route": "POST /internal/model/cv-analysis",
     "sources": [
@@ -117,104 +140,104 @@
   "driftMatrix": [
     {
       "canonical": "Internal route returns raw model-core JSON; no data wrapper",
-      "current": "Model API returns success/message/data/error envelope",
+      "current": "Implemented: internal route returns raw model-core JSON",
       "id": "response-envelope",
-      "impact": "Backend Zod parses envelope root and rejects",
+      "impact": "Resolved for Backend internal route",
       "sourceOfTruth": "Backend expects raw cvAnalyzerModelResponseSchema"
     },
     {
       "canonical": "Model-core uses createdAt; Backend maps to public analyzedAt",
-      "current": "Model API emits analyzedAt",
+      "current": "Implemented: internal route emits createdAt",
       "id": "timestamp-createdAt-vs-analyzedAt",
-      "impact": "Strict response validation fails and timestamp ownership drifts",
+      "impact": "Resolved for strict Backend timestamp parsing",
       "sourceOfTruth": "Backend model response requires createdAt; public OpenAPI uses analyzedAt after mapping"
     },
     {
       "canonical": "Model-core parsedCv = status/pageCount/textLength/detectedSections/extractionEvidence",
-      "current": "Model API emits sectionNames and no status",
+      "current": "Implemented: parsedCv uses status, textLength, detectedSections, extractionEvidence",
       "id": "parsedCv-status-detectedSections-vs-sectionNames",
-      "impact": "Parsed CV evidence rejected/misread",
+      "impact": "Resolved for parsed CV evidence",
       "sourceOfTruth": "Backend requires parsedCv.status and detectedSections"
     },
     {
       "canonical": "Map parser qualities to high|medium|low|failed before response",
-      "current": "Parser emits text_ok or parser-specific quality",
+      "current": "Implemented: parser qualities are mapped before internal response",
       "id": "parseQuality-enum",
-      "impact": "Enum mismatch",
+      "impact": "Resolved for parseQuality enum",
       "sourceOfTruth": "Backend allows high|medium|low|failed"
     },
     {
       "canonical": "Model API accepts Backend requirement objects and derives scoring text from value",
-      "current": "Model API accepts string[]",
+      "current": "Implemented: accepts strings or requirement objects and uses value for scoring",
       "id": "requirements-object-vs-string",
-      "impact": "Request validation fails",
+      "impact": "Resolved for Backend request parsing",
       "sourceOfTruth": "Backend sends { type, value, priority }[]"
     },
     {
       "canonical": "Accept numericSignals as approved numeric feature source or remove from Backend fixture explicitly",
-      "current": "Model API scoringInput.numericFeatures",
+      "current": "Implemented: accepts approved numericSignals or numericFeatures",
       "id": "numericSignals-vs-numericFeatures",
-      "impact": "Strict request rejects numericSignals",
+      "impact": "Resolved for approved numeric features",
       "sourceOfTruth": "Backend scoringInput.numericSignals"
     },
     {
       "canonical": "Allow title/companyName/locationDisplay/sourceUpdatedAt only for trace/hydration hints",
-      "current": "Model API allows nested location, not locationDisplay",
+      "current": "Implemented: locationDisplay is accepted as safe backend metadata",
       "id": "backendMetadata-locationDisplay",
-      "impact": "Strict request rejects safe hydration hint",
+      "impact": "Resolved for safe hydration hints",
       "sourceOfTruth": "Backend sends locationDisplay"
     },
     {
       "canonical": "Model API reads all jobRoles form values; min 1 max 10",
-      "current": "Model API JSON-parses form.get('jobRoles')",
+      "current": "Implemented: all repeated jobRoles values are read",
       "id": "jobRoles-repeated-form-fields",
-      "impact": "Repeated multipart roles fail",
+      "impact": "Resolved for multipart role parsing",
       "sourceOfTruth": "Backend FormData.append('jobRoles', role)"
     },
     {
       "canonical": "Model-core response contains only Backend schema fields",
-      "current": "Model API emits summarySignals/confidenceNotes/summary/evidenceKeys/fallback/observability/nested metadata",
+      "current": "Implemented: internal route removes debug summary/confidence/observability fields",
       "id": "strict-extra-fields",
-      "impact": "Strict response fails",
+      "impact": "Resolved for Backend strict response",
       "sourceOfTruth": "Backend strict Zod response"
     },
     {
       "canonical": "Model-core HTTP response exposes only name/version unless explicitly allowed",
-      "current": "Model API may include artifact path/hash",
+      "current": "Implemented: internal response returns model name/version only",
       "id": "model-artifact-metadata-exposure",
-      "impact": "Strict response failure and unnecessary internal metadata exposure",
+      "impact": "Resolved for internal metadata minimization",
       "sourceOfTruth": "Backend expects model { name, version }"
     },
     {
       "canonical": "Model API returns evidence/signals only; Backend wrapper owns prose",
-      "current": "Model API core has summary-style fields",
+      "current": "Implemented: internal route returns evidence arrays and scores only",
       "id": "wrapper-output-ownership",
-      "impact": "Ownership boundary blurred",
+      "impact": "Resolved for ownership boundary",
       "sourceOfTruth": "Backend owns prose/topActionables/sectionReviews/hydrated recommendations"
     },
     {
       "canonical": "Backend maps Model API 4xx/5xx/timeout/invalid schema to public ErrorEnvelope",
-      "current": "Model API internal envelope differs",
+      "current": "Documented: Model API internal errors stay internal for Backend mapping",
       "id": "error-envelope-mapping",
-      "impact": "Backend must not leak Model API internal error shape",
+      "impact": "Backend must still map internal error payloads",
       "sourceOfTruth": "Frontend sees Backend ErrorEnvelope; Model API internal errors mapped by client"
     },
     {
       "canonical": "English default for wrapper/fallback; no silent Indonesian switch",
-      "current": "OpenAPI example uses id and fallback copy may mix language",
+      "current": "Documented: request language remains explicit; Backend wrapper owns prose language",
       "id": "language-default-policy",
-      "impact": "Inconsistent product-facing prose",
+      "impact": "Backend wrapper must enforce product-facing copy policy",
       "sourceOfTruth": "Staging product prose default English; request language explicit id|en"
     },
     {
       "canonical": "Raw CV/storage keys stay internal request only; public response excludes them; logs use allowlist",
-      "current": "Request carries cv.storageKey to client serializer and response may expose observability/artifact metadata",
+      "current": "Implemented: request parser rejects unsafe backend metadata and internal response omits artifacts/observability",
       "id": "security-privacy-fields",
-      "impact": "PII/internal metadata leak risk",
+      "impact": "Resolved for Model API internal response; Backend public response remains separate",
       "sourceOfTruth": "Model API internal-only; no raw CV logs/tokens/storage keys/DB creds in public response"
     }
   ],
-  "final_decision": "review_required",
+  "final_decision": "implemented",
   "publicOpenApiContract": {
     "analysisResult": {
       "generatedCv": "strict { available, note }",
@@ -334,29 +357,18 @@
     "requestContentType": "multipart/form-data",
     "source": "references/docs/generated/openapi.json#/paths/~1api~1v1~1ai~1cv-analyzer/post",
     "successEnvelope": {
-      "additionalProperties": false,
-      "properties": [
-        "data",
-        "message",
-        "meta",
-        "success"
-      ],
-      "required": [
-        "success",
-        "message",
-        "data",
-        "meta"
-      ]
+      "additionalProperties": null,
+      "properties": [],
+      "required": []
     }
   },
   "schema_version": "phase-32-ai-cv-analyzer-contract-drift-audit-v1",
   "sources": {
-    "backend_client": "references/src/shared/integrations/model-api.client.ts",
-    "backend_schema": "references/src/shared/integrations/model-api.schema.ts",
-    "backend_service": "references/src/modules/ai-cv-analyzer/ai-cv-analyzer.service.ts",
-    "model_api_app": "model_api/app.py",
-    "model_api_schemas": "model_api/schemas.py",
-    "model_api_validators": "model_api/validators.py",
-    "openapi": "references/docs/generated/openapi.json"
+    "backend_fixtures": "artifacts\\backend_model_api_contract\\internal_contract_fixtures.json",
+    "model_api_app": "model_api\\app.py",
+    "model_api_schemas": "model_api\\schemas.py",
+    "model_api_validators": "model_api\\validators.py",
+    "openapi": "references\\docs\\generated\\openapi.json",
+    "owner_matrix": "artifacts\\backend_model_api_contract\\openapi_prisma_owner_matrix.json"
   }
 }

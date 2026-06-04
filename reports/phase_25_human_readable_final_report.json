@@ -11,11 +11,11 @@
     "required_sections_present": true,
     "requirement_compliance_included": true
   },
-  "generated_at": "2026-06-04T04:40:07.489092+00:00",
+  "generated_at": "2026-06-04T08:20:00.993581+00:00",
   "human_report": {
     "path": "reports\\phase_25_human_readable_final_report.md",
-    "sha256": "b70ea60a91e0179880d343ae8c79bdae409a6675faa711c6a2bd055c4f613f02",
-    "size_bytes": 3479
+    "sha256": "ae9180ab865142d1bb5727df74967457641bb20e39db335e93f9e37d1c4793f6",
+    "size_bytes": 3507
   },
   "phase_id": "phase_25_tensorflow_training_delivery",
   "report_sections": [
@@ -31,28 +31,28 @@
   "source_reports": {
     "calibration_model_card_export": {
       "path": "reports\\phase_25_calibration_model_card_export.json",
-      "sha256": "aea230b794ce9621cad8e2a57e3df3b4befaa95ce8bd26ba9bf97c591ebb498b",
-      "size_bytes": 7209
+      "sha256": "ec437bd1d131ccc52bc68b239beb24f4dd9db9012280a8b594ad0809333c48af",
+      "size_bytes": 7223
     },
     "final_clean_kernel_gate": {
       "path": "reports\\phase_25_tensorflow_training_delivery.json",
-      "sha256": "ea32d983053a7a29d73a5c0658927ee378f7a9342c902fd3c329e43eb787f8ad",
-      "size_bytes": 25428
+      "sha256": "d53ec752cd54813ea62e35c87d65b538385651982810dc30c11e2c9459dd498b",
+      "size_bytes": 20034
     },
     "model_api_handoff_fixtures": {
       "path": "reports\\phase_25_model_api_handoff_fixtures.json",
-      "sha256": "c8b5c8e527c10969a209955fa33009b62373ded7d9116a790b09381107ac2b92",
-      "size_bytes": 4256
+      "sha256": "68cbdfb47aa38d0a3d7e88bb5cce4a6a3578cb2752f67163aef7ff70356d731a",
+      "size_bytes": 4267
     },
     "requirement_contract_matrix": {
       "path": "reports\\phase_25_requirement_contract_matrix.json",
-      "sha256": "c1cd11ac61cbbbde5a9d6ec610a9ecd85443711408566e553a344fd5dce47d50",
+      "sha256": "594780a520bab6e1d86602a2c9eecdf179fe162e37b7451e27b706a3514380ca",
       "size_bytes": 7599
     },
     "tensorflow_artifact_export": {
       "path": "reports\\phase_25_tensorflow_artifact_export.json",
-      "sha256": "cdaa578e3299916beb4c7f5007bce2b857637203216b5a5f8bcbbfb726ff514d",
-      "size_bytes": 7316
+      "sha256": "853582232a6c5f451bd2d64a9447df4439e33b0e1dcbb08ed5896e192e4f57c3",
+      "size_bytes": 7340
     }
   },
   "status": "complete"

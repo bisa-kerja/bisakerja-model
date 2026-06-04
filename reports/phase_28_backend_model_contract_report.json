@@ -10,10 +10,10 @@
     "model_recommendations_are_backend_candidate_members": true,
     "negative_fixtures_cover_duplicate_empty_missing_evidence": true,
     "openapi_contains_public_cv_analysis_v2": true,
+    "owner_matrix_contains_persistence_entities": true,
     "owner_matrix_covers_required_entities": true,
     "positive_fixtures_cover_compare_sources": true,
-    "positive_fixtures_cover_input_modes": true,
-    "prisma_contains_persistence_entities": true
+    "positive_fixtures_cover_input_modes": true
   },
   "final_decision": "passed",
   "fixtures": {
@@ -30,12 +30,11 @@
   },
   "schema_version": "phase-28-contract-realignment-report-v1",
   "sources": {
-    "ai_cv_analyzer_doc": "references/docs/modules/ai-cv-analyzer.md",
-    "fixtures": "artifacts/backend_model_api_contract/internal_contract_fixtures.json",
-    "model_api_integration_doc": "references/docs/integrations/model-api.md",
-    "model_api_readme": "model_api/README.md",
-    "openapi": "references/docs/generated/openapi.json",
-    "owner_matrix": "artifacts/backend_model_api_contract/openapi_prisma_owner_matrix.json",
-    "prisma": "references/prisma/schema.prisma"
+    "fixtures": "artifacts\\backend_model_api_contract\\internal_contract_fixtures.json",
+    "model_api_readme": "model_api\\README.md",
+    "openapi": "references\\docs\\generated\\openapi.json",
+    "owner_matrix": "artifacts\\backend_model_api_contract\\openapi_prisma_owner_matrix.json",
+    "root_readme": "README.md",
+    "service_boundary_doc": "docs\\architecture\\service-boundaries.md"
   }
 }

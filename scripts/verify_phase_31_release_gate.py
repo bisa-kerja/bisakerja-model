@@ -93,6 +93,8 @@ def scan_tracked_secret_risks(files: list[Path]) -> list[str]:
     findings: list[str] = []
     for path in files:
         relative = path.relative_to(ROOT)
+        if not path.exists():
+            continue
         if path.name in FORBIDDEN_TRACKED_ENV_NAMES:
             findings.append(f"tracked env file: {relative}")
         if path.suffix in {".keras", ".parquet", ".npz", ".png"}:

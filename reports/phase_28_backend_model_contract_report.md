@@ -15,7 +15,7 @@ Final decision: `passed`
 - [x] `owner_matrix_covers_required_entities`
 - [x] `enum_mapping_is_frozen`
 - [x] `openapi_contains_public_cv_analysis_v2`
-- [x] `prisma_contains_persistence_entities`
+- [x] `owner_matrix_contains_persistence_entities`
 - [x] `docs_reference_contract_and_fixtures`
 
 ## Fixtures

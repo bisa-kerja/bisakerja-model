@@ -1,16 +1,16 @@
 # Phase 27.7 Clean-Kernel Production Export Gate
 
-Generated at: `2026-06-04T04:43:43.259369+00:00`
-Final decision: **production-ready**
-Git commit: `b9e41618875d3e5db456273f8f343ecf2f048009`
-Dirty files: `0`
+Generated at: `2026-06-04T08:42:51.793121+00:00`
+Final decision: **blocked**
+Git commit: `c9aa942c7a24c9ef15d97698b31e6f39c3bd719c`
+Dirty files: `72`
 
 ## Gate checks
 
 - PASS - `required_phase25_evidence_exists`
-- PASS - `clean_git_state_now`
-- PASS - `phase25_final_status_production_ready`
-- PASS - `phase25_strict_gate_checks_pass`
+- FAIL - `clean_git_state_now`
+- FAIL - `phase25_final_status_production_ready`
+- FAIL - `phase25_strict_gate_checks_pass`
 - PASS - `phase25_required_step_reports_pass`
 - PASS - `python_3_13_runtime_recorded`
 - PASS - `tensorflow_functional_api`
@@ -23,7 +23,9 @@ Dirty files: `0`
 
 ## Blockers
 
-- None
+- Worktree is dirty; clean-kernel production export must be frozen from clean git state.
+- Phase 25 final report status is 'prototype-only', not 'production-ready'.
+- Phase 25 strict clean-kernel/export checks missing or failed: clean_keras_reload_subprocess
 
 ## Reproduction command
 

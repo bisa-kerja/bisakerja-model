@@ -1,0 +1,100 @@
+{
+  "acceptance": {
+    "backend_behavior_remains_outside_training": true,
+    "candidate_reranking_uses_backend_candidate_ids": true,
+    "model_core_handoff_matches_contract": true,
+    "training_does_not_invent_or_hydrate_jobs": true,
+    "training_exports_only_handoff_fixtures": true
+  },
+  "blocking_checks": [],
+  "checks": {
+    "backend_source_boundary": {
+      "allowed_versioned_contract_inputs": [
+        "artifacts/backend_model_api_contract/internal_contract_fixtures.json",
+        "artifacts/backend_model_api_contract/openapi_prisma_owner_matrix.json",
+        "references/docs/generated/openapi.json"
+      ],
+      "blockers": [],
+      "disallowed_backend_source_dirs": [],
+      "status": "PASS",
+      "warnings": []
+    },
+    "phase_21_candidate_boundary": {
+      "blockers": [],
+      "candidate_count": 15,
+      "candidate_set_count": 3,
+      "constraint_violation_rate": 0.0,
+      "job_index_required_for_production_output": false,
+      "production_static_job_index_allowed": false,
+      "report": "reports/phase_21_backend_candidate_reranking.json",
+      "require_candidate_job_ids": true,
+      "status": "PASS",
+      "warnings": []
+    },
+    "phase_23_contract_artifacts": {
+      "artifact_dir": "artifacts/phase_23_model_api_contract_validation",
+      "blockers": [],
+      "required_artifacts": [
+        "contract_fixtures.json",
+        "fallback_validation.json",
+        "model_core_contract.json",
+        "validation_results.json"
+      ],
+      "status": "PASS",
+      "warnings": []
+    },
+    "phase_23_contract_validation": {
+      "blockers": [],
+      "readiness_status": "ready_for_backend_integration_fixture_review",
+      "report": "reports/phase_23_model_api_contract_validation.json",
+      "status": "PASS",
+      "validation_summary": {
+        "negativeFixtureCount": 8,
+        "negativeRejectedCount": 8,
+        "positiveViolationCount": 0
+      },
+      "warnings": []
+    },
+    "phase_25_handoff_fixtures": {
+      "blockers": [],
+      "candidate_membership": {
+        "duplicate_job_ids": [],
+        "request_candidate_count": 3,
+        "response_recommendation_count": 3,
+        "unknown_job_ids": []
+      },
+      "fixtures": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "hash_mismatches": [],
+      "positive_fixture_forbidden_paths": [],
+      "report": "reports/phase_25_model_api_handoff_fixtures.json",
+      "score_violations": {
+        "candidate_reranking": [],
+        "cv_analysis": []
+      },
+      "status": "PASS",
+      "validation": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      "warnings": []
+    }
+  },
+  "final_decision": "pass",
+  "generated_at": "2026-06-04T07:55:00+00:00",
+  "phase_id": "training_step_12_model_api_handoff",
+  "policy": {
+    "backend_owns": [
+      "auth",
+      "persistence",
+      "public REST envelope",
+      "wrapper prose",
+      "job visibility/availability",
+      "job detail hydration"
+    ],
+    "model_workspace_owns": [
+      "model-core score/signals",
+      "candidate reranking over Backend-provided job IDs",
+      "versioned handoff fixtures and validation evidence"
+    ]
+  },
+  "schema_version": "training-step-12-model-api-handoff-v1",
+  "todo_source": "training/TODOS.md#step-12-siapkan-bukti-handoff-model-api",
+  "warning_checks": []
+}

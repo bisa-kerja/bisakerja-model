@@ -10,8 +10,8 @@ MATRIX_PATH = ROOT / "artifacts/backend_model_api_contract/openapi_prisma_owner_
 OPENAPI_PATH = ROOT / "references/docs/generated/openapi.json"
 PRISMA_PATH = ROOT / "references/prisma/schema.prisma"
 MODEL_API_README_PATH = ROOT / "model_api/README.md"
-MODEL_API_INTEGRATION_DOC_PATH = ROOT / "references/docs/integrations/model-api.md"
-AI_CV_ANALYZER_DOC_PATH = ROOT / "references/docs/modules/ai-cv-analyzer.md"
+ROOT_README_PATH = ROOT / "README.md"
+SERVICE_BOUNDARY_DOC_PATH = ROOT / "docs/architecture/service-boundaries.md"
 REPORT_JSON_PATH = ROOT / "reports/phase_28_backend_model_contract_report.json"
 REPORT_MD_PATH = ROOT / "reports/phase_28_backend_model_contract_report.md"
 
@@ -68,11 +68,10 @@ def build_report() -> dict[str, Any]:
     fixture = load_json(FIXTURE_PATH)
     matrix = load_json(MATRIX_PATH)
     openapi = load_json(OPENAPI_PATH)
-    prisma = PRISMA_PATH.read_text(encoding="utf-8")
     docs = {
         "model_api_readme": MODEL_API_README_PATH.read_text(encoding="utf-8"),
-        "model_api_integration": MODEL_API_INTEGRATION_DOC_PATH.read_text(encoding="utf-8"),
-        "ai_cv_analyzer": AI_CV_ANALYZER_DOC_PATH.read_text(encoding="utf-8"),
+        "root_readme": ROOT_README_PATH.read_text(encoding="utf-8"),
+        "service_boundaries": SERVICE_BOUNDARY_DOC_PATH.read_text(encoding="utf-8"),
     }
 
     positive_cases = fixture["positiveCases"]
@@ -118,8 +117,8 @@ def build_report() -> dict[str, Any]:
         },
         "openapi_contains_public_cv_analysis_v2": "CvAnalysis" in openapi["components"]["schemas"]
         and "CvAnalysisJobRecommendation" in openapi["components"]["schemas"],
-        "prisma_contains_persistence_entities": all(
-            f"model {name}" in prisma
+        "owner_matrix_contains_persistence_entities": all(
+            name in owner_entities
             for name in [
                 "CvAnalysisResult",
                 "JobRecommendationRun",
@@ -154,10 +153,9 @@ def build_report() -> dict[str, Any]:
             "fixtures": str(FIXTURE_PATH.relative_to(ROOT)),
             "owner_matrix": str(MATRIX_PATH.relative_to(ROOT)),
             "openapi": str(OPENAPI_PATH.relative_to(ROOT)),
-            "prisma": str(PRISMA_PATH.relative_to(ROOT)),
             "model_api_readme": str(MODEL_API_README_PATH.relative_to(ROOT)),
-            "model_api_integration_doc": str(MODEL_API_INTEGRATION_DOC_PATH.relative_to(ROOT)),
-            "ai_cv_analyzer_doc": str(AI_CV_ANALYZER_DOC_PATH.relative_to(ROOT)),
+            "root_readme": str(ROOT_README_PATH.relative_to(ROOT)),
+            "service_boundary_doc": str(SERVICE_BOUNDARY_DOC_PATH.relative_to(ROOT)),
         },
     }
 

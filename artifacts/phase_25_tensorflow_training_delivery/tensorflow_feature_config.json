@@ -14,7 +14,7 @@
     "uses_raw_embedding_vectors": false,
     "uses_wrapper_or_backend_owned_fields": false
   },
-  "generated_at": "2026-06-03T01:44:24.220786+00:00",
+  "generated_at": "2026-06-04T08:17:20.828490+00:00",
   "model_name": "bisakerja_jobfit_tf_functional_v1",
   "model_version": "jobfit_tf_phase25_v1",
   "normalization": {
@@ -39,15 +39,15 @@
   "schema_version": "phase-25-tensorflow-architecture-v1",
   "source_artifacts": {
     "e5_contract": {
-      "path": "reports/phase_25_e5_embedding_contract.json",
-      "sha256": "36f818d0983891c22f307ff882fb7e0a5bd2fed369f829fdf8a1d06f0e57a54b"
+      "path": "reports\\phase_25_e5_embedding_contract.json",
+      "sha256": "6a0624bb7051ccb0c9f8398e425693c7b0f5a52edd641fcfa3fe409e4b9e669a"
     },
     "e5_pair_features": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/e5_pair_features.parquet",
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\e5_pair_features.parquet",
       "sha256": "5e64066d2dadab8b814ffa96cadd061178f0877cd66289dc89e9b850cf9d2c57"
     },
     "pairs_v2": {
-      "path": "artifacts/pairs_v2.parquet",
+      "path": "artifacts\\pairs_v2.parquet",
       "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
     }
   },

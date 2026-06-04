@@ -9,7 +9,7 @@
       "label_versions": [
         "ats-issue-labels-v1"
       ],
-      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
+      "path": "artifacts\\ats_benchmark\\phase_19_cv_benchmark.csv",
       "required_issue_keys": [
         "parseability_issue",
         "section_completeness_issue",
@@ -20,15 +20,15 @@
         "empty_parse_risk"
       ],
       "row_count": 21,
-      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+      "sha256": "4ddf6edaf91cf62e371534d1e1d3dadb93dc1b6409b1db7454d165072d6de150"
     },
     "candidate_set_fixtures": {
       "candidate_set_id": "candidate_set_phase23",
       "output_jobs_subset_of_input": true,
-      "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
+      "path": "artifacts\\phase_23_model_api_contract_validation\\contract_fixtures.json",
       "request_job_count": 3,
       "response_recommendation_count": 2,
-      "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3"
+      "sha256": "bb208d2acf2bc34425041e0083f154eccdf8e1eb0f9e6c5e407da076bf9e5e5e"
     },
     "human_validation": {
       "band_counts": {
@@ -40,11 +40,11 @@
       "label_versions": [
         "human-validation-v1"
       ],
-      "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
+      "path": "artifacts\\manual_validation\\phase_16_human_labels_frozen.csv",
       "review_item_count": 120,
       "reviewer_count": 2,
       "row_count": 240,
-      "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+      "sha256": "ec7e0db9a1c2bb7bf0746e3e84c9b4ede064cf3801fa14d40853edf565c6e24a"
     },
     "pairs_v2": {
       "job_count": 813,
@@ -65,7 +65,7 @@
         "random_negative": 600,
         "same_role_different_seniority": 600
       },
-      "path": "artifacts/pairs_v2.parquet",
+      "path": "artifacts\\pairs_v2.parquet",
       "profile_count": 920,
       "row_count": 3600,
       "schema_versions": [
@@ -88,15 +88,15 @@
       }
     },
     "tensorflow_feature_matrix": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
-      "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz",
+      "sha256": "0aec69bbd7f906ab8381e776c0f4de4c4ed0a354771fb0ba12f2e39c2c5254ca"
     },
     "tensorflow_predictions": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
-      "sha256": "2aa9a5b4266252dfe4dee634e44e0eb5713123bc1deff714cd9da3ace25be16a"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\gradient_tape_predictions_v1.npz",
+      "sha256": "ba4965706dfeccbb37bc692cb03ec27af6cf5527e4da9e18bfdb08a8da8d6907"
     }
   },
-  "generated_at": "2026-06-03T01:45:36.646906+00:00",
+  "generated_at": "2026-06-04T08:19:46.706696+00:00",
   "language_counts": {
     "EN": 2260,
     "ID": 22,
@@ -111,96 +111,96 @@
   ],
   "source_artifacts": {
     "architecture": {
-      "path": "reports/phase_25_tensorflow_architecture.json",
-      "sha256": "0596d93b257374b4453bfd3a851bcc84b609e55f4229d387038228fc80e7b1f4"
+      "path": "reports\\phase_25_tensorflow_architecture.json",
+      "sha256": "bf794a26e236e1be874ce3567ad818c1c1c87386adce5e3e97ba5d956fe71400"
     },
     "ats_benchmark": {
-      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
-      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17"
+      "path": "artifacts\\ats_benchmark\\phase_19_cv_benchmark.csv",
+      "sha256": "4ddf6edaf91cf62e371534d1e1d3dadb93dc1b6409b1db7454d165072d6de150"
     },
     "ats_metrics": {
-      "path": "reports/phase_19_ats_scorer_metrics.json",
-      "sha256": "9fba73b66e04dde2b0a5ba0c3efc18665d3762804f580c591e75f12269161086"
+      "path": "reports\\phase_19_ats_scorer_metrics.json",
+      "sha256": "36f2d5f6cfe59326f9a660f549c08071fe31e7ad6dac23d2ebf39111d6d63fca"
     },
     "baseline_gate": {
-      "path": "reports/phase_25_baseline_selection_gate.json",
-      "sha256": "d6999d851e0406917f756f8c501b48b09458ad68b764c2d82d4d2f20fa6c0ef2"
+      "path": "reports\\phase_25_baseline_selection_gate.json",
+      "sha256": "cc700307daea1c46d86a6355b3de140315ccf3c825a665df26513a9556603875"
     },
     "candidate_notebook": {
-      "path": "training/notebooks/phase_21_backend_candidate_reranking.ipynb",
-      "sha256": "fd58067cc7a68e7f1a820d2329d89fcda262e3075935f81c337237c2dbe910be"
+      "path": "training\\notebooks\\phase_21_backend_candidate_reranking.ipynb",
+      "sha256": "04cb99bda2e9ef94a078a43acf1f3c36d5f551c5bdbfd08e1394177b9ac52ab5"
     },
     "candidate_reranking": {
-      "path": "reports/phase_21_backend_candidate_reranking.json",
-      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef"
+      "path": "reports\\phase_21_backend_candidate_reranking.json",
+      "sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036"
     },
     "custom_component": {
-      "path": "reports/phase_25_custom_component.json",
-      "sha256": "bb7b0e9b53d7c777ce5690b9483d55f5a79391b88130bf8e0c381b750145a0b2"
+      "path": "reports\\phase_25_custom_component.json",
+      "sha256": "4f16719d15f44feb6fe3a06578481092b00c5f1799981c81f93688c7ec032733"
     },
     "data_feature_reuse": {
-      "path": "reports/phase_25_data_feature_reuse.json",
-      "sha256": "cce3d9dc6658bd25eae1427308d2f43f0c02799b4adf4c9e1faf9ee59ce06b6d"
+      "path": "reports\\phase_25_data_feature_reuse.json",
+      "sha256": "96b2bd996b64a5808b4691f241e1d04ceb60adbfde2020f1e7b0704051d8aa2a"
     },
     "e5_contract": {
-      "path": "reports/phase_25_e5_embedding_contract.json",
-      "sha256": "36f818d0983891c22f307ff882fb7e0a5bd2fed369f829fdf8a1d06f0e57a54b"
+      "path": "reports\\phase_25_e5_embedding_contract.json",
+      "sha256": "6a0624bb7051ccb0c9f8398e425693c7b0f5a52edd641fcfa3fe409e4b9e669a"
     },
     "feature_matrix": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz",
-      "sha256": "ed76edc9ce2164f245eb0e7e93230b304db0a29f6df3e9f82849a5d0c28215c5"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz",
+      "sha256": "0aec69bbd7f906ab8381e776c0f4de4c4ed0a354771fb0ba12f2e39c2c5254ca"
     },
     "human_labels": {
-      "path": "artifacts/manual_validation/phase_16_human_labels_frozen.csv",
-      "sha256": "a5587a58447cc677320caa4c518b626a02b8295a90a5430c60978d5e35dce6fa"
+      "path": "artifacts\\manual_validation\\phase_16_human_labels_frozen.csv",
+      "sha256": "ec7e0db9a1c2bb7bf0746e3e84c9b4ede064cf3801fa14d40853edf565c6e24a"
     },
     "pairs_v2": {
-      "path": "artifacts/pairs_v2.parquet",
+      "path": "artifacts\\pairs_v2.parquet",
       "sha256": "0876d3353a220dc5fe1f93654b4d7ae85a19fe9bd4fd9c132e11d9f47958cd8a"
     },
     "phase16_label_manifest": {
-      "path": "reports/phase_16_label_manifest.json",
-      "sha256": "82b503c852afef5ec12139df3e7113736ebc1bfe6f8ac23cca0d7769e3dd55cd"
+      "path": "reports\\phase_16_label_manifest.json",
+      "sha256": "c178aec9033052b41190b3ec3fee428ca1512dfb3fcc7d7a3fd8aa71589836f4"
     },
     "phase19_issue_labels": {
-      "path": "reports/phase_19_ats_issue_labels.json",
-      "sha256": "fd9192944caef47bde6424e5e6aef3b45325db4b39aa532d7504ff0cb908747e"
+      "path": "reports\\phase_19_ats_issue_labels.json",
+      "sha256": "98ef89fd68157c7e752052a9418225921cfd93169be431b14ccb5c6db5663194"
     },
     "phase23_contract_fixtures": {
-      "path": "artifacts/phase_23_model_api_contract_validation/contract_fixtures.json",
-      "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3"
+      "path": "artifacts\\phase_23_model_api_contract_validation\\contract_fixtures.json",
+      "sha256": "bb208d2acf2bc34425041e0083f154eccdf8e1eb0f9e6c5e407da076bf9e5e5e"
     },
     "predictions": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_predictions_v1.npz",
-      "sha256": "2aa9a5b4266252dfe4dee634e44e0eb5713123bc1deff714cd9da3ace25be16a"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\gradient_tape_predictions_v1.npz",
+      "sha256": "ba4965706dfeccbb37bc692cb03ec27af6cf5527e4da9e18bfdb08a8da8d6907"
     },
     "repro_setup": {
-      "path": "reports/phase_25_reproducibility_setup.json",
-      "sha256": "838251f56db45a635bbb8cc3c8eafa70fbaea90a504e22a85e5eb5d0b32d988e"
+      "path": "reports\\phase_25_reproducibility_setup.json",
+      "sha256": "7c4ae17bc5e40de6631d78de3a2f02d2466ba2f88dac3f80764dfee7ca04a241"
     },
     "tensorboard_manifest": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
-      "sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorboard_monitoring_manifest.json",
+      "sha256": "90a2eab12d5ffa1e8b1ea707e3317aeb5e5670672d405fd327b5350f569bc561"
     },
     "tensorboard_report": {
-      "path": "reports/phase_25_tensorboard_monitoring.json",
-      "sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d"
+      "path": "reports\\phase_25_tensorboard_monitoring.json",
+      "sha256": "90a2eab12d5ffa1e8b1ea707e3317aeb5e5670672d405fd327b5350f569bc561"
     },
     "tensorflow_feature_config": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
-      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_feature_config.json",
+      "sha256": "a3e9ff9b46fe9833a0ffcdbff26c3df5f50c544bcc994487c57d697cc81a6c36"
     },
     "trained_candidate_model": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_trained_candidate.keras",
-      "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\gradient_tape_trained_candidate.keras",
+      "sha256": "47793dd9f0062de5c331eb983d7e0c65e4207302539db2dac3c961f653eb9b73"
     },
     "training_history": {
-      "path": "artifacts/phase_25_tensorflow_training_delivery/gradient_tape_training_history.csv",
-      "sha256": "432705c47b2dd867ac4196c69d88314c1f90597fb90198668771810d1c29954e"
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\gradient_tape_training_history.csv",
+      "sha256": "edf8ffa1b1fd6a46faa5a4d49466cdc7cca610d7bd4e8397f24ae3617ebd09c1"
     },
     "training_report": {
-      "path": "reports/phase_25_training_evaluation_loop.json",
-      "sha256": "f62ce42d6b5d9b0fcd022266506d3ad103f894e8c4a48d7594e46bd6f9a55523"
+      "path": "reports\\phase_25_training_evaluation_loop.json",
+      "sha256": "7a9a64930c3a23f75a6421a36ae5f4b4c3f54dfe0053a16152c86496e5bb1a94"
     }
   },
   "split_seed": 202621

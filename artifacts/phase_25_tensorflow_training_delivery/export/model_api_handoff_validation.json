@@ -9,7 +9,7 @@
     "score_bounds_enforced": true,
     "wrapper_backend_owned_fields_rejected": true
   },
-  "generated_at": "2026-06-03T01:45:40.685985+00:00",
+  "generated_at": "2026-06-04T08:19:59.365457+00:00",
   "negative_validation_errors": {
     "cv_invalid_language": [
       "language must be one of ['en', 'id']"
