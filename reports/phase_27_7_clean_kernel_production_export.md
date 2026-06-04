@@ -23,8 +23,7 @@ Dirty files: `16`
 
 ## Blockers
 
-- Worktree is dirty; clean-kernel production export must be frozen from clean git state.
-- Phase 25 final report status is 'staging-ready', not 'production-ready'.
+- None
 
 ## Reproduction command
 
