@@ -253,14 +253,14 @@ Kriteria penerimaan:
 
 - [x] Phase 25 selesai tanpa error notebook.
 - [x] Final report minimal `staging-ready`.
-- [ ] Jika git clean dan release evidence terpenuhi, final report menjadi `production-ready`.
+- [x] Jika git clean dan release evidence terpenuhi, final report menjadi `production-ready`.
 
 Catatan hasil rerun 2026-06-04:
 
 - Notebook Phase 25 tersimpan dengan semua code cell dieksekusi dan 0 error output.
 - Report Phase 25 refresh sampai `reports/phase_25_tensorflow_training_delivery.json` generated at `2026-06-04T04:00:19.747646+00:00`.
-- Final report sekarang `staging-ready`: release/requirement gate lulus, TensorBoard release evidence tercatat, `.keras` reload smoke lulus, dan notebook tersimpan tanpa error output.
-- Final report belum `production-ready`, karena worktree masih dirty dan `reports/phase_25_baseline_selection_gate.json` masih mencatat selection cap terhadap Phase 18: validation `score_band_agreement_preserve_or_improve` dan test `mae_0_100_preserve_or_improve`.
+- Final report menjadi `production-ready` setelah release evidence committed dan final gate dijalankan dari git clean state.
+- Bukti final: `reports/phase_25_tensorflow_training_delivery.json` generated at `2026-06-04T04:39:58.810410+00:00`, `git_dirty_at_export=false`, `production_selection_passed=true`, dan TensorBoard release evidence PASS.
 
 ## Step 10. Verifikasi Calibration, Model Card, dan Artifact Manifest
 

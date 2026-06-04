@@ -16,8 +16,8 @@
       "required_for_inference": true,
       "role": "phase25_export",
       "schema_version": "phase-25-score-calibration-v1",
-      "sha256": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
-      "size_bytes": 12943
+      "sha256": "447ff910458d8dfd8946d61745ab3ba5ef9a5da0fa6777e9b87f3238010ae1d9",
+      "size_bytes": 13433
     },
     {
       "artifact_id": "calibration_tables_csv",
@@ -54,8 +54,8 @@
       "required_for_inference": true,
       "role": "phase25_export",
       "schema_version": "phase-25-feature-config-export-v1",
-      "sha256": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-      "size_bytes": 2741
+      "sha256": "a24b955059f079c3d5fb4dc602a4ff92ae7f2fd4d3042648bec6b7e82014642f",
+      "size_bytes": 2837
     },
     {
       "artifact_id": "label_manifest",
@@ -73,8 +73,8 @@
       "required_for_inference": false,
       "role": "phase25_export",
       "schema_version": "phase-25-label-manifest-v1",
-      "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
-      "size_bytes": 5900
+      "sha256": "50a5e45247f9325a270d7321332087b984c4698345d935631df653c6a701f206",
+      "size_bytes": 6069
     },
     {
       "artifact_id": "dataset_manifest",
@@ -92,8 +92,8 @@
       "required_for_inference": false,
       "role": "phase25_export",
       "schema_version": "phase-25-dataset-manifest-v1",
-      "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
-      "size_bytes": 7633
+      "sha256": "8325c2cae87b237c2e33aaec933aae58c2e0f62bc83e2e6004d5dc678ee09a98",
+      "size_bytes": 7840
     },
     {
       "artifact_id": "source_predictions",
@@ -167,8 +167,8 @@
       "required_for_inference": true,
       "role": "source_evidence",
       "schema_version": null,
-      "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
-      "size_bytes": 2029
+      "sha256": "5907c383768a71f2cadae39a31f7df8485bbef493c49e598de802bef177d89d4",
+      "size_bytes": 2088
     },
     {
       "artifact_id": "source_ats_benchmark",
@@ -182,8 +182,8 @@
       "required_for_inference": false,
       "role": "source_evidence",
       "schema_version": null,
-      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17",
-      "size_bytes": 16367
+      "sha256": "4ddf6edaf91cf62e371534d1e1d3dadb93dc1b6409b1db7454d165072d6de150",
+      "size_bytes": 16389
     },
     {
       "artifact_id": "source_candidate_reranking",
@@ -197,8 +197,8 @@
       "required_for_inference": false,
       "role": "source_evidence",
       "schema_version": null,
-      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
-      "size_bytes": 18519
+      "sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036",
+      "size_bytes": 19285
     },
     {
       "artifact_id": "source_phase23_contract_fixtures",
@@ -212,8 +212,8 @@
       "required_for_inference": false,
       "role": "source_evidence",
       "schema_version": null,
-      "sha256": "d4cf2d04af54f3be038f2530d5f8567815bc327bf092985625e280f1e9c8bfa3",
-      "size_bytes": 14874
+      "sha256": "bb208d2acf2bc34425041e0083f154eccdf8e1eb0f9e6c5e407da076bf9e5e5e",
+      "size_bytes": 15448
     },
     {
       "artifact_id": "final_keras_model",
@@ -246,8 +246,8 @@
       "required_for_inference": false,
       "role": "verification",
       "schema_version": null,
-      "sha256": "3dc2c703929fa460acdf5468cf4e2abfccc3993f816cbe9ddcf97495eb09b657",
-      "size_bytes": 7375
+      "sha256": "38a73290c3c273b8a18291517079ae64bc41560b3ac18034602b718bcf9e58ea",
+      "size_bytes": 7523
     },
     {
       "artifact_id": "inference_smoke_fixture",
@@ -263,8 +263,8 @@
       "required_for_inference": false,
       "role": "verification",
       "schema_version": null,
-      "sha256": "d0d0558cb16f3db60c379c11c4d2c33f057c64f6fdd646dd00555113052ef94d",
-      "size_bytes": 1515
+      "sha256": "4e2cd8cb099c759eae2f80dcff0e2949ef8ebfb55cac8da0c231e1b1179538de",
+      "size_bytes": 1583
     },
     {
       "artifact_id": "tensorflow_artifact_export",
@@ -280,8 +280,8 @@
       "required_for_inference": true,
       "role": "final_model_export_manifest",
       "schema_version": "phase-25-tensorflow-artifact-export-v1",
-      "sha256": "6a1885d24c399d2196b6a65f216bbf505fad88825a4389a8926f1ddbcde5dfbe",
-      "size_bytes": 7098
+      "sha256": "cdaa578e3299916beb4c7f5007bce2b857637203216b5a5f8bcbbfb726ff514d",
+      "size_bytes": 7316
     },
     {
       "artifact_id": "model_api_handoff_fixtures",
@@ -297,8 +297,8 @@
       "required_for_inference": true,
       "role": "model_api_handoff",
       "schema_version": "phase-25-model-api-handoff-fixtures-v1",
-      "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7",
-      "size_bytes": 23261
+      "sha256": "2b73284121c9de2d53c2c36b1ce02ea930958f5dbd0daba394472c1ffa9b1a39",
+      "size_bytes": 24006
     },
     {
       "artifact_id": "model_api_handoff_validation",
@@ -314,8 +314,8 @@
       "required_for_inference": true,
       "role": "model_api_handoff_validation",
       "schema_version": "phase-25-model-api-handoff-fixtures-v1",
-      "sha256": "41259486b941a58ec9e7b6ed760a386aa5371edee911732c17340ed5a98836e2",
-      "size_bytes": 2280
+      "sha256": "bd5a88dfafe9a4956392ef81a1ea896bb9ef8a808e2d8c2e81bd1973803fa69d",
+      "size_bytes": 2361
     },
     {
       "artifact_id": "phase25_model_api_handoff_report",
@@ -329,8 +329,8 @@
       "required_for_inference": false,
       "role": "report",
       "schema_version": "phase-25-model-api-handoff-fixtures-v1",
-      "sha256": "1ce32a785459f8a9e27ad3858b0beb09a506f55896e283e144a4f30d5a636846",
-      "size_bytes": 4152
+      "sha256": "c8b5c8e527c10969a209955fa33009b62373ded7d9116a790b09381107ac2b92",
+      "size_bytes": 4256
     },
     {
       "artifact_id": "training_only_genai_boundary",
@@ -346,8 +346,8 @@
       "required_for_inference": true,
       "role": "genai_boundary",
       "schema_version": "phase-25-training-only-genai-boundary-v1",
-      "sha256": "5ff614fc618818e1f01af46f5cc2d03b0272711ea64aea3ff656f0729b062f06",
-      "size_bytes": 10877
+      "sha256": "61814a83eccc970c20a12c538d033a0877881a51a69a376b3bca15d8ef7b86bb",
+      "size_bytes": 11156
     },
     {
       "artifact_id": "genai_wrapper_handoff_contract",
@@ -363,8 +363,8 @@
       "required_for_inference": true,
       "role": "api_wrapper_handoff",
       "schema_version": "phase-25-training-only-genai-boundary-v1",
-      "sha256": "c5902ee2c4fb3f27ffaa94de9664b3eb100806d1e56f57cf3369812ad8df82c3",
-      "size_bytes": 4948
+      "sha256": "d51b3c922d22b73af8f498b8faa997e2e6b55d4a657d6fc566468d19d6220cf6",
+      "size_bytes": 5076
     },
     {
       "artifact_id": "deterministic_summary_signal_placeholders",
@@ -380,8 +380,8 @@
       "required_for_inference": false,
       "role": "api_wrapper_handoff_fixture",
       "schema_version": "phase-25-training-only-genai-boundary-v1",
-      "sha256": "df73748b27ae87f4875f319fa017e13e867e15924ac125ed1ae19c21e82e3eab",
-      "size_bytes": 3862
+      "sha256": "e39eb5fb1fc64f80736e26465998e85d3403c03a32cfe396b80ae2554add145e",
+      "size_bytes": 3966
     },
     {
       "artifact_id": "model_card",
@@ -397,8 +397,8 @@
       "required_for_inference": true,
       "role": "phase25_export",
       "schema_version": "phase-25-model-card-v1",
-      "sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
-      "size_bytes": 13283
+      "sha256": "f336c9e6c17bacc91e8b3bfbb38b9275f24a8c396bf136e7de135bab17e4c2fe",
+      "size_bytes": 13644
     },
     {
       "artifact_id": "phase25_training_only_genai_boundary_report",
@@ -412,8 +412,8 @@
       "required_for_inference": false,
       "role": "report",
       "schema_version": "phase-25-training-only-genai-boundary-v1",
-      "sha256": "1bdc8af7e23989aaadb7ed0b1e8634d16809b110d37e1c8976243295781d7e32",
-      "size_bytes": 3030
+      "sha256": "8a791afe0774676dc02917f3aded4f084c5b94ec9f6d5563909e8515f8d5862d",
+      "size_bytes": 3104
     },
     {
       "artifact_id": "phase25_tensorboard_release_manifest",
@@ -428,8 +428,8 @@
       "required_for_inference": false,
       "role": "tensorboard_release_manifest",
       "schema_version": "phase-27-tensorboard-release-manifest-v1",
-      "sha256": "af4088ca30b099ca9d36b41035a978991f984bd1127ad5d9473ab7dbe72705ab",
-      "size_bytes": 1422
+      "sha256": "deb8d013eb84bf4720908b631efb6bfb9300a5f5bc854bee6af77caf2da93db5",
+      "size_bytes": 1450
     },
     {
       "artifact_id": "phase25_tensorboard_event_file",
@@ -448,7 +448,7 @@
       "size_bytes": 126450
     }
   ],
-  "generated_at": "2026-06-03T11:19:45.581545Z",
+  "generated_at": "2026-06-04T04:39:58.810410+00:00",
   "hash_policy": "Every listed file has SHA-256 and byte size. Manifest hash is recorded in the report.",
   "phase_27_8_release_refresh": {
     "calibration_hash": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
