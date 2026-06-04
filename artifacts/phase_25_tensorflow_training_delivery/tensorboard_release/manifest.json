@@ -1,14 +1,14 @@
 {
   "schema_version": "phase-27-tensorboard-release-manifest-v1",
   "phase_id": "phase_27_production_readiness_release_gate",
-  "generated_at": "2026-06-03T10:28:34Z",
+  "generated_at": "2026-06-04T04:42:11Z",
   "requirement_reference": "REQUIREMENT.md#1.4",
   "source_monitoring_manifest": {
     "path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_monitoring_manifest.json",
-    "sha256": "9296e4c91ab4ab8cd924b61fa125e524425d52179882dcdbf49f18c784cb935d",
-    "size_bytes": 4233
+    "sha256": "a50bf993ed19e4b401a2e97ce28f297a57d338f73c26c032dd215d2250f8be88",
+    "size_bytes": 4346
   },
-  "source_ignored_log_path": "artifacts/tensorboard/tensorflow_training_delivery/jobfit_tf_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
+  "source_ignored_log_path": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
   "release_log_root": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release",
   "release_git_ignore_check": {
     "release_event_file_ignored": false,

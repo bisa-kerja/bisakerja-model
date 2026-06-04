@@ -428,8 +428,8 @@
       "required_for_inference": false,
       "role": "tensorboard_release_manifest",
       "schema_version": "phase-27-tensorboard-release-manifest-v1",
-      "sha256": "deb8d013eb84bf4720908b631efb6bfb9300a5f5bc854bee6af77caf2da93db5",
-      "size_bytes": 1450
+      "sha256": "341621cf66e71f672a37743057a662acafb40ec1346da5d24d122767d3bdb2cf",
+      "size_bytes": 1475
     },
     {
       "artifact_id": "phase25_tensorboard_event_file",
@@ -465,14 +465,14 @@
     "tensorflow_feature_config_hash": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5"
   },
   "phase_27_release_gate_update": {
-    "git_dirty_must_be_false_for_production": true,
     "steps": [
       "27.1",
       "27.2"
     ],
+    "tensorboard_release_manifest": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json",
     "tensorboard_event_file": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/jobfit_tf_phase25_gradient_tape_v1_20260603T014424/events.out.tfevents.1780451136.Macbook-Pro-M1-Pro.local.67267.3.v2",
-    "tensorboard_release_evidence_required_for_production": true,
-    "tensorboard_release_manifest": "artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/manifest.json"
+    "git_dirty_must_be_false_for_production": true,
+    "tensorboard_release_evidence_required_for_production": true
   },
   "phase_id": "phase_25_tensorflow_training_delivery",
   "schema_version": "phase-25-artifact-manifest-v1"

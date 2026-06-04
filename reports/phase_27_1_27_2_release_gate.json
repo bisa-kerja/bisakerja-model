@@ -22,9 +22,9 @@
   "steps": {
     "27.1": {
       "name": "Freeze a clean release baseline",
-      "status": "FAIL",
+      "status": "PASS",
       "implemented_gate": true,
-      "required_next_action": "Commit or intentionally remove every dirty path, rerun final export from clean worktree, and record clean git commit."
+      "required_next_action": null
     },
     "27.2": {
       "name": "Make TensorBoard evidence release-visible",
@@ -41,5 +41,5 @@
     "tensorboard_event_file_artifact_id": "phase25_tensorboard_event_file",
     "recorded_in_manifest": true
   },
-  "final_decision": "blocked"
+  "final_decision": "production-ready"
 }
