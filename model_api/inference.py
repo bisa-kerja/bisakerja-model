@@ -188,6 +188,18 @@ def build_model_identity(
 
     model_name = str(model_section.get("name") or getattr(loaded_model, "name", "") or UNKNOWN_MODEL_NAME)
     model_version = str(model_section.get("version") or UNKNOWN_MODEL_VERSION)
+    data_section = model_card.get("data", {})
+    if not isinstance(data_section, Mapping):
+        data_section = {}
+    embedding_contract = data_section.get("embedding_contract")
+    if not isinstance(embedding_contract, Mapping):
+        embedding_contract = {}
+    embedding_model = str(
+        model_section.get("embedding_model")
+        or embedding_contract.get("embedding_model")
+        or (artifact_report.manifest.embedding_model_metadata or {}).get("embedding_model")
+        or ""
+    ) or None
     final_model = find_verified_artifact(artifact_report, "final_keras_model")
     artifact_path = paths.model_path if final_model is None else final_model.path
     artifact_sha256 = None if final_model is None else final_model.sha256
@@ -200,6 +212,8 @@ def build_model_identity(
             path=str(artifact_path),
             sha256=artifact_sha256,
         ),
+        artifact_phase=artifact_report.manifest.phase_id,
+        embedding_model=embedding_model,
     )
 
 

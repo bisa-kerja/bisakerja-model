@@ -1549,7 +1549,7 @@ Verification:
 
 ### Phase 47 — Model API Runtime Support for Versioned Embedding Artifacts
 
-Status: Planned
+Status: Complete
 
 Goal: Update Model API so it can safely load the multilingual-E5-small artifact package through config/env without hardcoded E5-base assumptions or mixed artifacts.
 
@@ -1561,21 +1561,26 @@ Scope boundary:
 
 Tasks:
 
-- [ ] Step 47.1: Make embedding model configurable from artifact config — Read the approved embedding model name from `tensorflow_feature_config.json` or `feature_config.json` instead of a hardcoded runtime constant.
-- [ ] Step 47.2: Validate artifact/runtime embedding match — Fail startup when env/model card says multilingual-E5-small but feature config/model card/manifest disagree.
-- [ ] Step 47.3: Preserve prefix policy — Keep `query:` for CV/profile text and `passage:` for job text; record prefix policy in model info.
-- [ ] Step 47.4: Update E5 backend validation — Allow only the embedding model declared by the loaded artifact package; reject local-hash/TF-IDF/fallback and reject undeclared model swaps.
-- [ ] Step 47.5: Support artifact root switching — Add env/runbook support for selecting the new artifact root, model path, feature config, calibration, model card, and manifest together.
-- [ ] Step 47.6: Update `/model-info` — Return embedding model name, artifact phase, model version, artifact hash, and readiness so backend/staging can confirm the correct model is deployed.
-- [ ] Step 47.7: Add runtime tests — Cover E5-base artifact load, multilingual-E5-small artifact load, mismatch rejection, fallback rejection, missing config, and response contract stability.
-- [ ] Step 47.8: Add performance smoke — Measure startup, `/ready`, first inference, warm inference, memory, and cache behavior for the new artifact on VPS.
+- [x] Step 47.1: Make embedding model configurable from artifact config — Read the approved embedding model name from `tensorflow_feature_config.json` or `feature_config.json` instead of a hardcoded runtime constant.
+- [x] Step 47.2: Validate artifact/runtime embedding match — Fail startup when env/model card says multilingual-E5-small but feature config/model card/manifest disagree.
+- [x] Step 47.3: Preserve prefix policy — Keep `query:` for CV/profile text and `passage:` for job text; record prefix policy in model info.
+- [x] Step 47.4: Update E5 backend validation — Allow only the embedding model declared by the loaded artifact package; reject local-hash/TF-IDF/fallback and reject undeclared model swaps.
+- [x] Step 47.5: Support artifact root switching — Add env/runbook support for selecting the new artifact root, model path, feature config, calibration, model card, and manifest together.
+- [x] Step 47.6: Update `/model-info` — Return embedding model name, artifact phase, model version, artifact hash, and readiness so backend/staging can confirm the correct model is deployed.
+- [x] Step 47.7: Add runtime tests — Cover E5-base artifact load, multilingual-E5-small artifact load, mismatch rejection, fallback rejection, missing config, and response contract stability.
+- [x] Step 47.8: Add performance smoke — Measure startup, `/ready`, first inference, warm inference, memory, and cache behavior for the new artifact on VPS.
 
 Acceptance Criteria:
 
-- [ ] Model API cannot silently run a different embedding model than the artifact declares.
-- [ ] Both old and new artifact packages can be selected explicitly for rollback/testing.
-- [ ] `/ready` and `/model-info` expose enough metadata to verify deployment correctness.
-- [ ] Runtime tests prove no backend-owned fields leak and no fallback embeddings are used.
+- [x] Model API cannot silently run a different embedding model than the artifact declares.
+- [x] Both old and new artifact packages can be selected explicitly for rollback/testing.
+- [x] `/ready` and `/model-info` expose enough metadata to verify deployment correctness.
+- [x] Runtime tests prove no backend-owned fields leak and no fallback embeddings are used.
+
+Verification:
+
+- [x] `python -m unittest tests.model_api.test_phase_26_layout tests.test_phase_29_model_api_hardening tests.test_phase_33_cv_analyzer_request_compatibility tests.test_phase_34_cv_analyzer_response_compatibility tests.test_phase_38_ai_cv_analyzer_runtime_gate tests.test_phase_47_model_api_runtime_support` — 65 tests passed, 2 skipped 2026-06-04.
+- [x] `python scripts/verify_phase_47_model_api_runtime_support.py` — report complete 2026-06-04.
 
 ---
 

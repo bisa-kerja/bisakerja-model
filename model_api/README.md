@@ -70,7 +70,7 @@ Target runtime:
 - FastAPI
 - Uvicorn
 - NumPy `2.1.x`
-- SentenceTransformers with `intfloat/e5-base-v2`
+- SentenceTransformers with artifact-declared E5 model (`intfloat/e5-base-v2` rollback or `intfloat/multilingual-e5-small`)
 
 Install from repo root with the same Python version used by the TensorFlow notebook runtime:
 
@@ -86,18 +86,27 @@ If you do not use `pyenv`, make sure `python -V` prints `3.13.11` before creatin
 
 ## Required Artifact Paths
 
-Defaults resolve from repository root:
+Defaults resolve from repository root. Set `MODEL_API_ARTIFACT_ROOT` to switch a known versioned package; explicit env paths can still pin every file for rollback.
 
 | Env var                               | Default                                                                                   |
 | ------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `MODEL_API_ARTIFACT_ROOT`             | `artifacts/phase_25_tensorflow_training_delivery`                                         |
 | `MODEL_API_MODEL_PATH`                | `artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras` |
 | `MODEL_API_TENSORFLOW_FEATURE_CONFIG` | `artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json`          |
 | `MODEL_API_FEATURE_CONFIG`            | `artifacts/phase_25_tensorflow_training_delivery/feature_config.json`                     |
 | `MODEL_API_SCORE_CALIBRATION`         | `artifacts/phase_25_tensorflow_training_delivery/score_calibration.json`                  |
 | `MODEL_API_MODEL_CARD`                | `artifacts/phase_25_tensorflow_training_delivery/model_card.json`                         |
 | `MODEL_API_ARTIFACT_MANIFEST`         | `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json`                  |
+| `MODEL_API_EXPECTED_EMBEDDING_MODEL`  | optional startup assertion, e.g. `intfloat/e5-base-v2`                                    |
 
-Startup verifies manifest SHA-256 and byte-size metadata before serving inference.
+For the multilingual-E5-small package, set:
+
+```bash
+export MODEL_API_ARTIFACT_ROOT=artifacts/phase_46_calibration_model_card_manifest_handoff_refresh
+export MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/multilingual-e5-small
+```
+
+Startup verifies manifest SHA-256 and byte-size metadata before serving inference. It also verifies the embedding model, prefixes, and normalization policy agree across feature config, model card, manifest, env expectation, and runtime backend.
 
 ## Backend Contract Snapshots
 
@@ -127,7 +136,7 @@ export MODEL_API_MAX_PDF_PAGES=10
 export MODEL_API_ENABLE_GENAI_WRAPPER=false
 ```
 
-Use `MODEL_API_ENV=local` only for local experiments. Staging and production require `MODEL_API_SERVICE_TOKEN`, verified artifacts, TensorFlow model loading, E5 backend configuration, PDF parser availability, and no fallback embedding backend.
+Use `MODEL_API_ENV=local` only for local experiments. Staging and production require `MODEL_API_SERVICE_TOKEN`, verified artifacts, TensorFlow model loading, E5 backend configuration, PDF parser availability, and no fallback embedding backend. TF-IDF, local-hash, and undeclared embedding model swaps are rejected in every environment.
 
 ## Run API
 
@@ -146,7 +155,7 @@ curl http://127.0.0.1:8000/ready
 curl -H "authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:8000/model-info
 ```
 
-`/live` is a lightweight process liveness endpoint. Runtime model loading starts in the background so `/live`, `/`, and `/health` can respond during cold start. `/ready.ready=true` means artifacts are verified, TensorFlow model is loaded, E5 backend is configured, PDF parser is available, service token is configured when required, and warmup is complete when `MODEL_API_WARMUP_REQUIRED=true`. `/model-info` uses the same bearer token in staging/production. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
+`/live` is a lightweight process liveness endpoint. Runtime model loading starts in the background so `/live`, `/`, and `/health` can respond during cold start. `/ready.ready=true` means artifacts are verified, TensorFlow model is loaded, the artifact-declared E5 backend is configured, PDF parser is available, service token is configured when required, and warmup is complete when `MODEL_API_WARMUP_REQUIRED=true`. `/ready` and `/model-info` expose `embeddingModel`, artifact phase, model version, artifact hash, and readiness metadata for deployment verification. `/model-info` uses the same bearer token in staging/production. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
 
 ## Internal Multipart CV Analysis Contract
 
@@ -218,13 +227,13 @@ Response `data` is model-core only: bounded integer scores, evidence keys, candi
 
 ## Feature Builder
 
-Runtime feature construction uses the Phase 25 contract only:
+Runtime feature construction uses the versioned artifact contract:
 
 - feature order: `e5_cosine`, `skill_overlap`, `requirement_coverage`, `role_match`, `experience_match`, `experience_gap_years_clipped`
-- E5 backend: `sentence-transformers` + `intfloat/e5-base-v2`
+- E5 backend: `sentence-transformers` with the embedding model declared by the loaded artifact
 - prefixes: `query:` for CV/profile text and `passage:` for job text
 - normalization: train-split `mean`/`std` from `tensorflow_feature_config.json`
-- staging/production: TF-IDF, local-hash, and fallback embedding backends are rejected
+- all environments: TF-IDF, local-hash, fallback backends, and undeclared embedding swaps are rejected
 
 ## Error Behavior
 

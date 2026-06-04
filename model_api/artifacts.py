@@ -13,6 +13,24 @@ from .errors import ArtifactError, UnsupportedArtifactVersionError
 
 EXPECTED_ARTIFACT_MANIFEST_SCHEMA_VERSION = "phase-25-artifact-manifest-v1"
 EXPECTED_ARTIFACT_MANIFEST_PHASE_ID = "phase_25_tensorflow_training_delivery"
+PHASE46_ARTIFACT_MANIFEST_SCHEMA_VERSION = "phase-46-artifact-manifest-v1"
+PHASE46_ARTIFACT_MANIFEST_PHASE_ID = "phase_46_calibration_model_card_manifest_handoff_refresh"
+
+SUPPORTED_ARTIFACT_MANIFESTS: dict[str, str] = {
+    EXPECTED_ARTIFACT_MANIFEST_SCHEMA_VERSION: EXPECTED_ARTIFACT_MANIFEST_PHASE_ID,
+    PHASE46_ARTIFACT_MANIFEST_SCHEMA_VERSION: PHASE46_ARTIFACT_MANIFEST_PHASE_ID,
+}
+
+PHASE_RUNTIME_REQUIRED_ARTIFACT_IDS: dict[str, tuple[str, ...]] = {
+    EXPECTED_ARTIFACT_MANIFEST_PHASE_ID: REQUIRED_RUNTIME_ARTIFACT_IDS,
+    PHASE46_ARTIFACT_MANIFEST_PHASE_ID: (
+        "final_keras_model",
+        "tensorflow_feature_config",
+        "feature_config",
+        "score_calibration",
+        "model_card",
+    ),
+}
 
 
 @dataclass(frozen=True)
@@ -24,6 +42,7 @@ class ArtifactManifestEntry:
     size_bytes: int | None
     role: str | None = None
     schema_version: str | None = None
+    embedding_model_metadata: dict[str, Any] | None = None
 
     @classmethod
     def from_mapping(cls, raw: dict[str, Any]) -> "ArtifactManifestEntry":
@@ -35,6 +54,7 @@ class ArtifactManifestEntry:
             size_bytes=None if raw.get("size_bytes") is None else int(raw["size_bytes"]),
             role=None if raw.get("role") is None else str(raw["role"]),
             schema_version=None if raw.get("schema_version") is None else str(raw["schema_version"]),
+            embedding_model_metadata=raw.get("embedding_model_metadata") if isinstance(raw.get("embedding_model_metadata"), dict) else None,
         )
 
 
@@ -43,6 +63,7 @@ class ArtifactManifest:
     schema_version: str
     phase_id: str
     entries: tuple[ArtifactManifestEntry, ...]
+    embedding_model_metadata: dict[str, Any] | None = None
 
     @classmethod
     def from_mapping(cls, raw: dict[str, Any]) -> "ArtifactManifest":
@@ -51,6 +72,7 @@ class ArtifactManifest:
             schema_version=str(raw.get("schema_version", "")),
             phase_id=str(raw.get("phase_id", "")),
             entries=entries,
+            embedding_model_metadata=raw.get("embedding_model_metadata") if isinstance(raw.get("embedding_model_metadata"), dict) else None,
         )
 
     def by_id(self) -> dict[str, ArtifactManifestEntry]:
@@ -58,13 +80,14 @@ class ArtifactManifest:
 
     def required_runtime_entries(
         self,
-        artifact_ids: Iterable[str] = REQUIRED_RUNTIME_ARTIFACT_IDS,
+        artifact_ids: Iterable[str] | None = None,
     ) -> tuple[ArtifactManifestEntry, ...]:
+        selected_ids = tuple(artifact_ids) if artifact_ids is not None else PHASE_RUNTIME_REQUIRED_ARTIFACT_IDS.get(self.phase_id, ())
         indexed = self.by_id()
-        missing = [artifact_id for artifact_id in artifact_ids if artifact_id not in indexed]
+        missing = [artifact_id for artifact_id in selected_ids if artifact_id not in indexed]
         if missing:
             raise ArtifactError(f"Missing runtime artifacts in manifest: {missing}")
-        return tuple(indexed[artifact_id] for artifact_id in artifact_ids)
+        return tuple(indexed[artifact_id] for artifact_id in selected_ids)
 
     def required_for_inference_entries(self) -> tuple[ArtifactManifestEntry, ...]:
         """Return every manifest entry flagged as runtime-required."""
@@ -116,22 +139,21 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def load_manifest(paths: ArtifactPaths) -> ArtifactManifest:
-    """Load Phase 25 artifact manifest without verifying hashes yet."""
+    """Load supported runtime artifact manifest without verifying hashes yet."""
 
     manifest = ArtifactManifest.from_mapping(load_json(paths.manifest_path))
-    errors: list[str] = []
-    if manifest.schema_version != EXPECTED_ARTIFACT_MANIFEST_SCHEMA_VERSION:
-        errors.append(
-            "artifact_manifest.json schema_version must be "
-            f"{EXPECTED_ARTIFACT_MANIFEST_SCHEMA_VERSION!r}; actual={manifest.schema_version!r}"
+    expected_phase = SUPPORTED_ARTIFACT_MANIFESTS.get(manifest.schema_version)
+    if expected_phase is None:
+        supported = sorted(SUPPORTED_ARTIFACT_MANIFESTS)
+        raise UnsupportedArtifactVersionError(
+            "artifact_manifest.json schema_version must be one of "
+            f"{supported!r}; actual={manifest.schema_version!r}"
         )
-    if manifest.phase_id != EXPECTED_ARTIFACT_MANIFEST_PHASE_ID:
-        errors.append(
-            "artifact_manifest.json phase_id must be "
-            f"{EXPECTED_ARTIFACT_MANIFEST_PHASE_ID!r}; actual={manifest.phase_id!r}"
+    if manifest.phase_id != expected_phase:
+        raise UnsupportedArtifactVersionError(
+            "artifact_manifest.json phase_id must match schema_version; "
+            f"expected={expected_phase!r}; actual={manifest.phase_id!r}"
         )
-    if errors:
-        raise UnsupportedArtifactVersionError("; ".join(errors))
     return manifest
 
 
@@ -156,10 +178,13 @@ def configured_runtime_artifact_paths(paths: ArtifactPaths) -> dict[str, Path]:
         "feature_config": paths.feature_config_path,
         "source_trained_candidate_model": paths.source_trained_candidate_model_path,
         "source_tensorflow_feature_config": paths.tensorflow_feature_config_path,
+        "tensorflow_feature_config": paths.tensorflow_feature_config_path,
         "tensorflow_artifact_export": paths.tensorflow_artifact_export_path,
         "final_keras_model": paths.model_path,
         "model_api_handoff_fixtures": paths.handoff_fixtures_path,
+        "handoff_fixtures": paths.handoff_fixtures_path,
         "model_api_handoff_validation": paths.handoff_validation_path,
+        "handoff_validation": paths.handoff_validation_path,
         "training_only_genai_boundary": paths.training_only_genai_boundary_path,
         "genai_wrapper_handoff_contract": paths.genai_contract_path,
         "model_card": paths.model_card_path,
@@ -239,9 +264,8 @@ def verify_runtime_artifacts(
         raise ArtifactError("No runtime-required artifacts found in manifest")
 
     if artifact_ids is None:
-        configured_missing = [
-            artifact_id for artifact_id in REQUIRED_RUNTIME_ARTIFACT_IDS if artifact_id not in manifest.by_id()
-        ]
+        required_ids = PHASE_RUNTIME_REQUIRED_ARTIFACT_IDS.get(manifest.phase_id, ())
+        configured_missing = [artifact_id for artifact_id in required_ids if artifact_id not in manifest.by_id()]
         if configured_missing:
             raise ArtifactError(f"Missing configured runtime artifacts in manifest: {configured_missing}")
 

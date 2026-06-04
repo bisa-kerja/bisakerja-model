@@ -126,6 +126,43 @@ EXPERIENCE_NUMERIC_KEYS: tuple[str, ...] = (
 )
 
 
+@dataclass(frozen=True)
+class EmbeddingModelMetadata:
+    """Artifact-declared embedding model and prefix policy."""
+
+    embedding_model: str = E5_MODEL_NAME
+    profile_prefix: str = E5_PROFILE_PREFIX
+    job_prefix: str = E5_JOB_PREFIX
+    normalized_embeddings: bool = E5_NORMALIZE_EMBEDDINGS
+    embedding_dimension: int | None = None
+
+    @classmethod
+    def from_mapping(cls, payload: Mapping[str, Any] | None) -> "EmbeddingModelMetadata":
+        if not isinstance(payload, Mapping):
+            return cls()
+        raw_model = payload.get("embedding_model") or payload.get("model_name")
+        raw_profile_prefix = payload.get("profile_prefix")
+        raw_job_prefix = payload.get("job_prefix")
+        raw_normalized = payload.get("normalized_embeddings")
+        raw_dimension = payload.get("embedding_dimension")
+        return cls(
+            embedding_model=str(raw_model or E5_MODEL_NAME),
+            profile_prefix=str(raw_profile_prefix or E5_PROFILE_PREFIX),
+            job_prefix=str(raw_job_prefix or E5_JOB_PREFIX),
+            normalized_embeddings=bool(E5_NORMALIZE_EMBEDDINGS if raw_normalized is None else raw_normalized),
+            embedding_dimension=int(raw_dimension) if isinstance(raw_dimension, int) and not isinstance(raw_dimension, bool) else None,
+        )
+
+    def as_dict(self) -> dict[str, object]:
+        return {
+            "embeddingModel": self.embedding_model,
+            "profilePrefix": self.profile_prefix,
+            "jobPrefix": self.job_prefix,
+            "normalizedEmbeddings": self.normalized_embeddings,
+            "embeddingDimension": self.embedding_dimension,
+        }
+
+
 class TextEmbeddingBackend(Protocol):
     """Minimal backend contract for E5 encoding."""
 
@@ -169,6 +206,7 @@ class TensorFlowFeatureConfig:
     model_name: str | None = None
     model_version: str | None = None
     schema_version: str | None = None
+    embedding_metadata: EmbeddingModelMetadata = EmbeddingModelMetadata()
 
     @classmethod
     def from_mapping(cls, payload: Mapping[str, Any]) -> "TensorFlowFeatureConfig":
@@ -201,11 +239,26 @@ class TensorFlowFeatureConfig:
             model_name=None if payload.get("model_name") is None else str(payload.get("model_name")),
             model_version=None if payload.get("model_version") is None else str(payload.get("model_version")),
             schema_version=None if payload.get("schema_version") is None else str(payload.get("schema_version")),
+            embedding_metadata=EmbeddingModelMetadata.from_mapping(
+                payload.get("embedding_model_metadata") if isinstance(payload.get("embedding_model_metadata"), Mapping) else None
+            ),
         )
 
     @classmethod
     def from_path(cls, path: Path) -> "TensorFlowFeatureConfig":
         return cls.from_mapping(load_json(path))
+
+    @property
+    def embedding_model_name(self) -> str:
+        return self.embedding_metadata.embedding_model
+
+    @property
+    def profile_prefix(self) -> str:
+        return self.embedding_metadata.profile_prefix
+
+    @property
+    def job_prefix(self) -> str:
+        return self.embedding_metadata.job_prefix
 
     def normalize(self, vector: FeatureVector) -> FeatureVector:
         return normalize_feature_vector(vector, self.mean, self.std)
@@ -255,15 +308,24 @@ class FeatureBuilder:
         embedding_backend: TextEmbeddingBackend | None = None,
         environment: str = "local",
     ) -> "FeatureBuilder":
+        feature_config = TensorFlowFeatureConfig.from_path(path)
         return cls(
-            feature_config=TensorFlowFeatureConfig.from_path(path),
-            embedding_backend=embedding_backend or SentenceTransformerE5Embedder(),
+            feature_config=feature_config,
+            embedding_backend=embedding_backend or SentenceTransformerE5Embedder(feature_config.embedding_model_name),
             environment=environment,
         )
 
     def build_candidate(self, profile: SanitizedProfileInput, candidate: CandidateJobInput) -> CandidateFeatureVectors:
-        validate_e5_backend(self.embedding_backend, self.environment)
-        raw = build_candidate_raw_feature_map(profile, candidate, self.embedding_backend, self.environment)
+        validate_e5_backend(self.embedding_backend, self.environment, expected_model_name=self.feature_config.embedding_model_name)
+        raw = build_candidate_raw_feature_map(
+            profile,
+            candidate,
+            self.embedding_backend,
+            self.environment,
+            expected_model_name=self.feature_config.embedding_model_name,
+            profile_prefix=self.feature_config.profile_prefix,
+            job_prefix=self.feature_config.job_prefix,
+        )
         raw_vector = build_ordered_feature_vector(candidate.jobId, raw)
         normalized = self.feature_config.normalize(raw_vector)
         return CandidateFeatureVectors(candidate_id=candidate.jobId, raw=raw_vector, normalized=normalized)
@@ -331,7 +393,7 @@ def build_feature_vectors_for_request(
         raise FeatureBuildError("Request must expose SanitizedProfileInput and jobCandidates")
     builder = FeatureBuilder(
         feature_config=feature_config,
-        embedding_backend=embedding_backend or SentenceTransformerE5Embedder(),
+        embedding_backend=embedding_backend or SentenceTransformerE5Embedder(feature_config.embedding_model_name),
         environment=environment,
     )
     return builder.build_batch(profile, candidates)
@@ -342,13 +404,16 @@ def build_candidate_raw_feature_map(
     candidate: CandidateJobInput,
     embedding_backend: TextEmbeddingBackend,
     environment: str = "local",
+    expected_model_name: str = E5_MODEL_NAME,
+    profile_prefix: str = E5_PROFILE_PREFIX,
+    job_prefix: str = E5_JOB_PREFIX,
 ) -> dict[str, float]:
-    """Compute raw Phase 25 features before normalization."""
+    """Compute raw Phase 25-compatible features before normalization."""
 
-    validate_e5_backend(embedding_backend, environment)
+    validate_e5_backend(embedding_backend, environment, expected_model_name=expected_model_name)
     scoring = candidate.model_scoring_input
-    profile_text = prefixed_e5_text(E5_PROFILE_PREFIX, build_profile_e5_text(profile))
-    job_text = prefixed_e5_text(E5_JOB_PREFIX, build_job_e5_text(scoring))
+    profile_text = prefixed_e5_text(profile_prefix, build_profile_e5_text(profile))
+    job_text = prefixed_e5_text(job_prefix, build_job_e5_text(scoring))
     e5_cosine = cosine_similarity_from_backend(embedding_backend, profile_text, job_text)
 
     profile_skills = normalized_skill_set(profile.normalizedSkills)
@@ -380,15 +445,19 @@ def build_candidate_raw_feature_map(
     return raw
 
 
-def validate_e5_backend(backend: TextEmbeddingBackend, environment: str = "local") -> None:
+def validate_e5_backend(
+    backend: TextEmbeddingBackend,
+    environment: str = "local",
+    expected_model_name: str = E5_MODEL_NAME,
+) -> None:
     backend_name = str(getattr(backend, "backend_name", "")).strip().lower()
     model_name = str(getattr(backend, "model_name", "")).strip()
-    if model_name != E5_MODEL_NAME:
-        raise FeatureBuildError(f"E5 backend must use {E5_MODEL_NAME}; actual={model_name!r}")
+    if model_name != expected_model_name:
+        raise FeatureBuildError(f"E5 backend must use artifact-declared model {expected_model_name}; actual={model_name!r}")
     if not backend_name:
         raise FeatureBuildError("E5 backend must expose backend_name")
     is_fallback = any(token in backend_name for token in FORBIDDEN_FALLBACK_BACKENDS)
-    if is_fallback and environment.lower() in PRODUCTION_ENVIRONMENTS:
+    if is_fallback:
         raise FeatureBuildError(f"Fallback embedding backend is forbidden in {environment}: {backend_name}")
 
 

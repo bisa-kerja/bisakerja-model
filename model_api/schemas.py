@@ -325,6 +325,8 @@ class ModelIdentity:
     name: str
     version: str
     artifact: ModelArtifactIdentity | None = None
+    artifact_phase: str | None = None
+    embedding_model: str | None = None
 
     @property
     def artifact_sha256(self) -> str | None:

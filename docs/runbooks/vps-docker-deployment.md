@@ -89,11 +89,22 @@ MODEL_API_WARMUP_ON_STARTUP=true
 MODEL_API_WARMUP_REQUIRED=false
 MODEL_API_MAX_PDF_BYTES=5000000
 MODEL_API_MAX_PDF_PAGES=10
+MODEL_API_ARTIFACT_ROOT=artifacts/phase_25_tensorflow_training_delivery
+MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/e5-base-v2
 MODEL_API_ENABLE_GENAI_WRAPPER=false
 SENTENCE_TRANSFORMERS_HOME=/home/user/.cache/sentence-transformers
 ```
 
 Do not include Backend DB credentials or public user credentials in Model API env.
+
+To run the multilingual-E5-small package, switch the artifact root and expected embedding together:
+
+```env
+MODEL_API_ARTIFACT_ROOT=artifacts/phase_46_calibration_model_card_manifest_handoff_refresh
+MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/multilingual-e5-small
+```
+
+If explicit artifact paths are set, update model path, TensorFlow feature config, feature config, calibration, model card, and manifest as one unit. Startup fails when env, feature config, model card, manifest, or runtime backend disagree on embedding model or prefix policy.
 
 ## Deployment Flow
 
@@ -172,15 +183,17 @@ COMPOSE_PROJECT_NAME=bisakerja-model-api \
 
 `docker-compose.production.yml` supports these optional env overrides:
 
-| Env var                      | Default                                   | Purpose                                              |
-| ---------------------------- | ----------------------------------------- | ---------------------------------------------------- |
-| `MODEL_API_IMAGE`            | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                                        |
-| `MODEL_API_BIND_ADDRESS`     | `127.0.0.1`                               | Local host bind address for Nginx upstream.          |
-| `MODEL_API_PORT`             | `3004`                                    | Host port mapped to container port `7860`.           |
-| `MODEL_API_ENV_FILE`         | `.env.production`                         | Compose env file path.                               |
-| `MODEL_API_MEM_LIMIT`        | `8g`                                      | Container memory limit.                              |
-| `SENTENCE_TRANSFORMERS_HOME` | `/home/user/.cache/sentence-transformers` | Persistent E5 cache path mounted to a Docker volume. |
-| `COMPOSE_PROJECT_NAME`       | `bisakerja-model-api`                     | Compose project name.                                |
+| Env var                              | Default                                   | Purpose                                                  |
+| ------------------------------------ | ----------------------------------------- | -------------------------------------------------------- |
+| `MODEL_API_IMAGE`                    | `ghcr.io/bisa-kerja/bisakerja-model:main` | Image to run.                                            |
+| `MODEL_API_BIND_ADDRESS`             | `127.0.0.1`                               | Local host bind address for Nginx upstream.              |
+| `MODEL_API_PORT`                     | `3004`                                    | Host port mapped to container port `7860`.               |
+| `MODEL_API_ENV_FILE`                 | `.env.production`                         | Compose env file path.                                   |
+| `MODEL_API_MEM_LIMIT`                | `8g`                                      | Container memory limit.                                  |
+| `SENTENCE_TRANSFORMERS_HOME`         | `/home/user/.cache/sentence-transformers` | Persistent E5 cache path mounted to a Docker volume.     |
+| `MODEL_API_ARTIFACT_ROOT`            | app default                               | Versioned artifact package root for model/config switch. |
+| `MODEL_API_EXPECTED_EMBEDDING_MODEL` | unset                                     | Optional startup assertion for deployed embedding model. |
+| `COMPOSE_PROJECT_NAME`               | `bisakerja-model-api`                     | Compose project name.                                    |
 
 For a 4 vCPU / 12 GB VPS, keep defaults first. Increase `MODEL_API_TIMEOUT_MS` before raising memory limits. The compose file intentionally does not set Docker CPU quota because some VPS kernels/cgroup drivers reject `cpu.cfs_quota_us` writes.
 
@@ -201,7 +214,11 @@ Then verify:
 ```bash
 curl -fsS http://127.0.0.1:3004/live
 curl -fsS http://127.0.0.1:3004/health
+curl -fsS http://127.0.0.1:3004/ready
+curl -fsS -H "Authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:3004/model-info
 ```
+
+For artifact rollback without changing image tag, switch `MODEL_API_ARTIFACT_ROOT` and `MODEL_API_EXPECTED_EMBEDDING_MODEL` back to the rollback package, restart, then confirm `/ready.embeddingModel`, `/ready.artifactPhase`, `/model-info.model.version`, and `/model-info.model.artifact.sha256`.
 
 ## Troubleshooting
 

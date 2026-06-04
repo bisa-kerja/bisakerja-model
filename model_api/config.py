@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Mapping
 
 DEFAULT_ARTIFACT_ROOT = Path("artifacts/phase_25_tensorflow_training_delivery")
+PHASE46_ARTIFACT_ROOT_NAME = "phase_46_calibration_model_card_manifest_handoff_refresh"
 DEFAULT_EXPORT_DIR = DEFAULT_ARTIFACT_ROOT / "export"
 DEFAULT_OPENAPI_PATH = Path("references/docs/generated/openapi.json")
 DEFAULT_PRISMA_SCHEMA_PATH = Path("references/prisma/schema.prisma")
@@ -34,9 +35,17 @@ REQUIRED_RUNTIME_ARTIFACT_IDS: tuple[str, ...] = (
 )
 
 
+def default_model_path_for_root(root: Path, export_dir: Path) -> Path:
+    """Return default Keras artifact for known versioned artifact roots."""
+
+    if root.name == PHASE46_ARTIFACT_ROOT_NAME:
+        return export_dir / "selected_jobfit_tf_phase46_multilingual_e5_small.keras"
+    return export_dir / "selected_jobfit_tf_phase25.keras"
+
+
 @dataclass(frozen=True)
 class ArtifactPaths:
-    """Resolved Phase 25 runtime artifact paths."""
+    """Resolved runtime artifact paths for versioned artifact packages."""
 
     artifact_root: Path = DEFAULT_ARTIFACT_ROOT
     export_dir: Path = DEFAULT_EXPORT_DIR
@@ -62,11 +71,12 @@ class ArtifactPaths:
         data = os.environ if env is None else env
         root = Path(data.get("MODEL_API_ARTIFACT_ROOT", str(DEFAULT_ARTIFACT_ROOT)))
         export_dir = Path(data.get("MODEL_API_EXPORT_DIR", str(root / "export")))
+        default_model_path = default_model_path_for_root(root, export_dir)
         return cls(
             artifact_root=root,
             export_dir=export_dir,
             manifest_path=Path(data.get("MODEL_API_ARTIFACT_MANIFEST", str(root / "artifact_manifest.json"))),
-            model_path=Path(data.get("MODEL_API_MODEL_PATH", str(export_dir / "selected_jobfit_tf_phase25.keras"))),
+            model_path=Path(data.get("MODEL_API_MODEL_PATH", str(default_model_path))),
             tensorflow_feature_config_path=Path(
                 data.get("MODEL_API_TENSORFLOW_FEATURE_CONFIG", str(root / "tensorflow_feature_config.json"))
             ),
@@ -146,6 +156,7 @@ class RuntimeConfig:
     warmup_required: bool = False
     artifact_paths: ArtifactPaths = field(default_factory=ArtifactPaths.from_env)
     openrouter: OpenRouterConfig = field(default_factory=OpenRouterConfig.from_env)
+    expected_embedding_model: str | None = None
 
     @property
     def requires_service_token(self) -> bool:
@@ -173,4 +184,5 @@ class RuntimeConfig:
             warmup_required=data.get("MODEL_API_WARMUP_REQUIRED", warmup_required_default).lower() == "true",
             artifact_paths=ArtifactPaths.from_env(data),
             openrouter=OpenRouterConfig.from_env(data),
+            expected_embedding_model=(data.get("MODEL_API_EXPECTED_EMBEDDING_MODEL") or None),
         )

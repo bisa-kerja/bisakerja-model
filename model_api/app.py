@@ -7,14 +7,13 @@ Phase 26 packaging step. Importing this module must remain lightweight for tests
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
-from dataclasses import asdict
 import asyncio
 import json
 from secrets import compare_digest
 from time import perf_counter
 from typing import Any
 
-from .artifacts import ArtifactVerificationReport, verify_runtime_artifacts
+from .artifacts import ArtifactVerificationReport, load_json, verify_runtime_artifacts
 from .config import RuntimeConfig
 from .errors import (
     ArtifactError,
@@ -28,11 +27,13 @@ from .errors import (
 )
 from .features import (
     PHASE25_FEATURE_ORDER,
+    EmbeddingModelMetadata,
     SentenceTransformerE5Embedder,
     TensorFlowFeatureConfig,
     TextEmbeddingBackend,
     build_feature_vectors_for_request,
     normalized_skill_set,
+    validate_e5_backend,
 )
 from .observability import build_safe_observability_event
 from .pdf_parser import ats_score_from_pdf_evidence, normalized_skills_from_text, parse_pdf_bytes
@@ -59,9 +60,102 @@ from .validators import validate_model_core_payload
 def _model_identity_payload(identity: ModelIdentity | None, *, include_artifact: bool = False) -> dict[str, object] | None:
     if identity is None:
         return None
-    if include_artifact:
-        return asdict(identity)
-    return {"name": identity.name, "version": identity.version}
+    payload: dict[str, object] = {"name": identity.name, "version": identity.version}
+    if not include_artifact:
+        return payload
+    if identity.artifact is not None:
+        payload["artifact"] = {
+            "format": identity.artifact.format,
+            "path": identity.artifact.path,
+            "sha256": identity.artifact.sha256,
+        }
+    payload["artifactPhase"] = identity.artifact_phase
+    payload["embeddingModel"] = identity.embedding_model
+    return payload
+
+
+def _metadata_from_payload(payload: dict[str, Any]) -> EmbeddingModelMetadata | None:
+    direct = payload.get("embedding_model_metadata")
+    if isinstance(direct, dict):
+        return EmbeddingModelMetadata.from_mapping(direct)
+    embedding_contract = payload.get("embedding_contract")
+    if isinstance(embedding_contract, dict):
+        return EmbeddingModelMetadata.from_mapping(embedding_contract)
+    data = payload.get("data")
+    if isinstance(data, dict) and isinstance(data.get("embedding_contract"), dict):
+        return EmbeddingModelMetadata.from_mapping(data["embedding_contract"])
+    model = payload.get("model")
+    if isinstance(model, dict) and model.get("embedding_model"):
+        return EmbeddingModelMetadata.from_mapping(model)
+    return None
+
+
+def _manifest_embedding_metadata(report: ArtifactVerificationReport) -> EmbeddingModelMetadata | None:
+    if report.manifest.embedding_model_metadata:
+        return EmbeddingModelMetadata.from_mapping(report.manifest.embedding_model_metadata)
+    for entry in report.manifest.required_for_inference_entries():
+        if entry.embedding_model_metadata:
+            return EmbeddingModelMetadata.from_mapping(entry.embedding_model_metadata)
+    return None
+
+
+def _assert_same_embedding_metadata(name: str, actual: EmbeddingModelMetadata, expected: EmbeddingModelMetadata) -> None:
+    mismatches: list[str] = []
+    if actual.embedding_model != expected.embedding_model:
+        mismatches.append(f"embedding_model expected={expected.embedding_model!r} actual={actual.embedding_model!r}")
+    if actual.profile_prefix != expected.profile_prefix:
+        mismatches.append(f"profile_prefix expected={expected.profile_prefix!r} actual={actual.profile_prefix!r}")
+    if actual.job_prefix != expected.job_prefix:
+        mismatches.append(f"job_prefix expected={expected.job_prefix!r} actual={actual.job_prefix!r}")
+    if actual.normalized_embeddings != expected.normalized_embeddings:
+        mismatches.append(
+            "normalized_embeddings "
+            f"expected={expected.normalized_embeddings!r} actual={actual.normalized_embeddings!r}"
+        )
+    if mismatches:
+        raise ArtifactError(f"Embedding metadata mismatch in {name}: " + "; ".join(mismatches))
+
+
+def validate_runtime_embedding_contract(
+    *,
+    paths: Any,
+    artifact_report: ArtifactVerificationReport,
+    feature_config: TensorFlowFeatureConfig,
+    expected_embedding_model: str | None = None,
+) -> EmbeddingModelMetadata:
+    """Validate artifact-declared embedding model across runtime metadata."""
+
+    sources: list[tuple[str, EmbeddingModelMetadata]] = []
+    tf_payload = load_json(paths.tensorflow_feature_config_path)
+    feature_payload = load_json(paths.feature_config_path)
+    model_card_payload = load_json(paths.model_card_path)
+
+    for name, metadata in (
+        ("tensorflow_feature_config.json", _metadata_from_payload(tf_payload)),
+        ("feature_config.json", _metadata_from_payload(feature_payload)),
+        ("model_card.json", _metadata_from_payload(model_card_payload)),
+        ("artifact_manifest.json", _manifest_embedding_metadata(artifact_report)),
+    ):
+        if metadata is not None:
+            sources.append((name, metadata))
+
+    if artifact_report.manifest.phase_id != "phase_25_tensorflow_training_delivery" and not any(
+        source in {"tensorflow_feature_config.json", "feature_config.json"} for source, _metadata in sources
+    ):
+        raise ArtifactError("Embedding metadata missing from tensorflow_feature_config.json or feature_config.json")
+    if not sources:
+        sources.append(("tensorflow_feature_config.json", feature_config.embedding_metadata))
+
+    declared = sources[0][1]
+    for name, metadata in sources[1:]:
+        _assert_same_embedding_metadata(name, metadata, declared)
+    if expected_embedding_model and declared.embedding_model != expected_embedding_model:
+        raise ArtifactError(
+            "MODEL_API_EXPECTED_EMBEDDING_MODEL mismatch: "
+            f"expected={expected_embedding_model!r} actual={declared.embedding_model!r}"
+        )
+    _assert_same_embedding_metadata("loaded TensorFlowFeatureConfig", feature_config.embedding_metadata, declared)
+    return declared
 
 
 def _runtime_state_payload(state: RuntimeState) -> dict[str, object]:
@@ -560,9 +654,16 @@ def create_app(
     runtime_config.validate_security()
     artifact_report = verify_runtime_artifacts(runtime_config.artifact_paths)
     feature_config = TensorFlowFeatureConfig.from_path(runtime_config.artifact_paths.tensorflow_feature_config_path)
+    embedding_contract = validate_runtime_embedding_contract(
+        paths=runtime_config.artifact_paths,
+        artifact_report=artifact_report,
+        feature_config=feature_config,
+        expected_embedding_model=runtime_config.expected_embedding_model,
+    )
     calibration_policy = ScoreCalibrationPolicy.from_path(runtime_config.artifact_paths.score_calibration_path)
     inference_service = service or InferenceService()
-    runtime_embedding_backend = embedding_backend or SentenceTransformerE5Embedder()
+    runtime_embedding_backend = embedding_backend or SentenceTransformerE5Embedder(embedding_contract.embedding_model)
+    validate_e5_backend(runtime_embedding_backend, runtime_config.environment, expected_model_name=embedding_contract.embedding_model)
     warmup_state: dict[str, object] = {"completed": False, "latencyMs": None, "error": None}
 
     def _load_runtime_once() -> RuntimeState:
@@ -590,6 +691,7 @@ def create_app(
         app.state.inference_service = inference_service
         app.state.feature_config = feature_config
         app.state.calibration_policy = calibration_policy
+        app.state.embedding_contract = embedding_contract
         load_task = asyncio.create_task(asyncio.to_thread(_load_runtime_once))
         app.state.model_load_task = load_task
         yield
@@ -705,6 +807,8 @@ def create_app(
         checks = {
             "artifactsVerified": bool(artifact_report.artifact_hashes),
             "tensorflowModelLoaded": state.ready and identity is not None,
+            "embeddingModelDeclared": bool(embedding_contract.embedding_model),
+            "embeddingModelMatchesBackend": getattr(runtime_embedding_backend, "model_name", "") == embedding_contract.embedding_model,
             "e5BackendConfigured": getattr(runtime_embedding_backend, "backend_name", "") != "local-hash",
             "pdfParserAvailable": callable(parse_pdf_bytes),
             "serviceTokenConfigured": (not runtime_config.requires_service_token) or bool(runtime_config.service_token),
@@ -723,6 +827,8 @@ def create_app(
                 "error": warmup_state.get("error"),
             },
             "modelVersion": None if identity is None else identity.version,
+            "embeddingModel": embedding_contract.embedding_model,
+            "artifactPhase": artifact_report.manifest.phase_id,
             "artifactHash": None if identity is None else identity.artifact_sha256,
         }
 
@@ -738,6 +844,7 @@ def create_app(
             "model": _model_identity_payload(state.model_identity, include_artifact=True),
             "artifacts": runtime_config.artifact_paths.as_dict(),
             "artifactVerification": _artifact_verification_payload(artifact_report),
+            "embeddingPolicy": embedding_contract.as_dict(),
             "openrouter": {
                 "baseUrl": runtime_config.openrouter.base_url,
                 "modelsUrl": runtime_config.openrouter.models_url,

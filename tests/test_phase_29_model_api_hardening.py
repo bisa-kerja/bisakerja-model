@@ -174,13 +174,14 @@ class Phase29ModelApiHardeningTest(unittest.TestCase):
         self.assertNotIn("title", str(payload))
         self.assertNotIn("companyName", str(payload))
 
-    def test_fallback_embedding_backend_blocked_in_staging_and_production(self) -> None:
+    def test_fallback_embedding_backend_blocked_for_runtime_artifacts(self) -> None:
         class FallbackBackend(FakeE5Backend):
             backend_name = "local-hash"
 
         with self.assertRaises(FeatureBuildError):
             validate_e5_backend(FallbackBackend(), "production")
-        self.assertIsNone(validate_e5_backend(FallbackBackend(), "local"))
+        with self.assertRaises(FeatureBuildError):
+            validate_e5_backend(FallbackBackend(), "local")
 
 
 if __name__ == "__main__":
