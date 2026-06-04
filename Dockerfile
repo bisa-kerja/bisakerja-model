@@ -39,7 +39,7 @@ RUN python -m pip install --upgrade pip \
     && python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch==2.9.1" \
     && python -m pip install -r requirements.txt \
     && python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('intfloat/multilingual-e5-small')" \
-    && python -c "from pathlib import Path; import shutil, site; roots=site.getsitepackages()+[site.getusersitepackages()]; targets=('torch/include','torch/share','torch/test','torch/testing/_internal'); [shutil.rmtree(Path(root)/target, ignore_errors=True) for root in roots for target in targets if Path(root).exists()]; [path.unlink() for root in roots if Path(root).exists() for pattern in ('**/*.a','**/*.pyc') for path in Path(root).glob(pattern) if path.is_file()]"
+    && python -c "from pathlib import Path; import shutil, site; roots=site.getsitepackages()+[site.getusersitepackages()]; targets=('torch/include','torch/share','torch/test'); [shutil.rmtree(Path(root)/target, ignore_errors=True) for root in roots for target in targets if Path(root).exists()]; [path.unlink() for root in roots if Path(root).exists() for pattern in ('**/*.a','**/*.pyc') for path in Path(root).glob(pattern) if path.is_file()]"
 
 COPY --chown=user model_api ./model_api
 COPY --chown=user artifacts/phase_25_tensorflow_training_delivery ./artifacts/phase_25_tensorflow_training_delivery
