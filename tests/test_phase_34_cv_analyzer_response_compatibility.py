@@ -114,7 +114,11 @@ class Phase34CvAnalyzerResponseCompatibilityTest(unittest.TestCase):
         except ModuleNotFoundError:
             self.skipTest("FastAPI serving dependencies are not installed")
 
-        app = create_app(config=RuntimeConfig.from_env({}), service=self.service(), embedding_backend=FakeE5Backend())
+        app = create_app(
+            config=RuntimeConfig.from_env({"MODEL_API_ARTIFACT_ROOT": "artifacts/phase_25_tensorflow_training_delivery"}),
+            service=self.service(),
+            embedding_backend=FakeE5Backend(),
+        )
         client = TestClient(app)
         pdf = b"%PDF-1.4\n1 0 obj<</Type /Page>>stream\n(Summary Backend developer) Tj\n(Skills Python SQL) Tj\n(Experience 2020) Tj\nendstream\n%%EOF"
         multipart = [

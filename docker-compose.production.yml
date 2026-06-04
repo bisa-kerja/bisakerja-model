@@ -21,7 +21,7 @@ services:
         - CMD
         - python
         - -c
-        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:7860/live', timeout=5).read()"
+        - "import json, urllib.request; data=json.loads(urllib.request.urlopen('http://127.0.0.1:7860/ready', timeout=5).read()); raise SystemExit(0 if data.get('ready') is True else 1)"
       interval: 30s
       timeout: 10s
       start_period: 180s

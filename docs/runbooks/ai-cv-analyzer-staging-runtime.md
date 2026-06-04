@@ -21,7 +21,7 @@ Model responses include safe observability keys for latency evidence: `parseLate
 
 ## E5 cache and Hugging Face settings
 
-Set `SENTENCE_TRANSFORMERS_HOME` to persistent storage so `intfloat/e5-base-v2` weights are not fetched on every deploy.
+Set `SENTENCE_TRANSFORMERS_HOME` to persistent storage so `intfloat/multilingual-e5-small` weights are not fetched on every deploy.
 
 Examples:
 

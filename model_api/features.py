@@ -13,6 +13,7 @@ from dataclasses import dataclass
 import math
 from pathlib import Path
 import re
+from threading import Lock
 from typing import Any, Protocol
 
 from .artifacts import load_json
@@ -273,16 +274,20 @@ class SentenceTransformerE5Embedder:
     def __init__(self, model_name: str = E5_MODEL_NAME) -> None:
         self.model_name = model_name
         self._model: Any | None = None
+        self._model_lock = Lock()
 
     def _load_model(self) -> Any:
         if self._model is not None:
             return self._model
-        try:
-            from sentence_transformers import SentenceTransformer  # type: ignore[import-not-found]
-        except Exception as exc:  # pragma: no cover - optional runtime dependency
-            raise FeatureBuildError("sentence-transformers dependency missing for intfloat/e5-base-v2 embeddings") from exc
-        self._model = SentenceTransformer(self.model_name)
-        return self._model
+        with self._model_lock:
+            if self._model is not None:
+                return self._model
+            try:
+                from sentence_transformers import SentenceTransformer  # type: ignore[import-not-found]
+            except Exception as exc:  # pragma: no cover - optional runtime dependency
+                raise FeatureBuildError(f"sentence-transformers dependency missing for {self.model_name} embeddings") from exc
+            self._model = SentenceTransformer(self.model_name)
+            return self._model
 
     def encode(self, texts: Sequence[str]) -> Sequence[Sequence[float]]:
         model = self._load_model()
@@ -331,7 +336,40 @@ class FeatureBuilder:
         return CandidateFeatureVectors(candidate_id=candidate.jobId, raw=raw_vector, normalized=normalized)
 
     def build_batch(self, profile: SanitizedProfileInput, candidates: Sequence[CandidateJobInput]) -> tuple[CandidateFeatureVectors, ...]:
-        return tuple(self.build_candidate(profile, candidate) for candidate in candidates)
+        validate_e5_backend(self.embedding_backend, self.environment, expected_model_name=self.feature_config.embedding_model_name)
+        if not candidates:
+            return ()
+
+        profile_text = prefixed_e5_text(self.feature_config.profile_prefix, build_profile_e5_text(profile))
+        job_texts = tuple(
+            prefixed_e5_text(self.feature_config.job_prefix, build_job_e5_text(candidate.model_scoring_input))
+            for candidate in candidates
+        )
+        try:
+            encoded = self.embedding_backend.encode((profile_text, *job_texts))
+        except FeatureBuildError:
+            raise
+        except Exception as exc:
+            raise FeatureBuildError(f"E5 embedding failed: {exc}") from exc
+        vectors = tuple(encoded)
+        expected_count = len(candidates) + 1
+        if len(vectors) != expected_count:
+            raise FeatureBuildError(f"E5 backend must return {expected_count} vectors; actual={len(vectors)}")
+
+        profile_vector = vectors[0]
+        output: list[CandidateFeatureVectors] = []
+        for candidate, job_vector in zip(candidates, vectors[1:], strict=True):
+            e5_cosine = cosine_similarity(profile_vector, job_vector)
+            raw = build_candidate_raw_feature_map_from_e5_cosine(profile, candidate, e5_cosine)
+            raw_vector = build_ordered_feature_vector(candidate.jobId, raw)
+            output.append(
+                CandidateFeatureVectors(
+                    candidate_id=candidate.jobId,
+                    raw=raw_vector,
+                    normalized=self.feature_config.normalize(raw_vector),
+                )
+            )
+        return tuple(output)
 
 
 def assert_phase25_feature_order(feature_names: Sequence[str]) -> None:
@@ -415,7 +453,17 @@ def build_candidate_raw_feature_map(
     profile_text = prefixed_e5_text(profile_prefix, build_profile_e5_text(profile))
     job_text = prefixed_e5_text(job_prefix, build_job_e5_text(scoring))
     e5_cosine = cosine_similarity_from_backend(embedding_backend, profile_text, job_text)
+    return build_candidate_raw_feature_map_from_e5_cosine(profile, candidate, e5_cosine)
 
+
+def build_candidate_raw_feature_map_from_e5_cosine(
+    profile: SanitizedProfileInput,
+    candidate: CandidateJobInput,
+    e5_cosine: float,
+) -> dict[str, float]:
+    """Compute raw Phase 25-compatible features with precomputed E5 cosine."""
+
+    scoring = candidate.model_scoring_input
     profile_skills = normalized_skill_set(profile.normalizedSkills)
     job_skills = normalized_skill_set((*scoring.requiredSkills, *scoring.requirements))
     skill_overlap = jaccard(profile_skills, job_skills)
@@ -434,7 +482,7 @@ def build_candidate_raw_feature_map(
         experience_match = max(0.0, 1.0 - experience_gap / 6.0)
 
     raw = {
-        "e5_cosine": e5_cosine,
+        "e5_cosine": clamp(e5_cosine, -1.0, 1.0),
         "skill_overlap": clamp(skill_overlap, 0.0, 1.0),
         "requirement_coverage": clamp(requirement_coverage, 0.0, 1.0),
         "role_match": clamp(role_match, 0.0, 1.0),

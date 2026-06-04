@@ -70,9 +70,14 @@ from model_api.validators import FORBIDDEN_MODEL_CORE_FIELDS, validate_model_cor
 
 
 class Phase26LayoutTest(unittest.TestCase):
-    def test_runtime_artifact_paths_match_phase_25_exports_and_backend_refs(self) -> None:
+    def test_runtime_artifact_paths_match_default_phase46_exports_and_backend_refs(self) -> None:
         paths = ArtifactPaths.from_env({})
-        self.assertEqual(paths.model_path, Path("artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras"))
+        self.assertEqual(
+            paths.model_path,
+            Path(
+                "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras"
+            ),
+        )
         self.assertEqual(paths.tensorflow_feature_config_path.name, "tensorflow_feature_config.json")
         self.assertEqual(paths.openapi_path, Path("references/docs/generated/openapi.json"))
         self.assertEqual(paths.prisma_schema_path, Path("references/prisma/schema.prisma"))
@@ -255,7 +260,8 @@ class Phase26LayoutTest(unittest.TestCase):
         self.assertIn("$.jobCandidates must contain at least 1 candidate", error_context.exception.errors)
 
     def test_manifest_exposes_required_runtime_artifact_ids(self) -> None:
-        manifest = load_manifest(ArtifactPaths.from_env({}))
+        phase25_paths = ArtifactPaths.from_env({"MODEL_API_ARTIFACT_ROOT": "artifacts/phase_25_tensorflow_training_delivery"})
+        manifest = load_manifest(phase25_paths)
         required = manifest.required_runtime_entries(REQUIRED_RUNTIME_ARTIFACT_IDS)
         self.assertEqual(len(required), len(REQUIRED_RUNTIME_ARTIFACT_IDS))
         self.assertTrue(all(entry.required_for_inference for entry in required))
@@ -264,7 +270,7 @@ class Phase26LayoutTest(unittest.TestCase):
 
     def test_runtime_artifact_verification_checks_hashes_and_sizes(self) -> None:
         report = verify_runtime_artifacts(
-            ArtifactPaths.from_env({}),
+            ArtifactPaths.from_env({"MODEL_API_ARTIFACT_ROOT": "artifacts/phase_25_tensorflow_training_delivery"}),
             artifact_ids=("score_calibration", "feature_config"),
         )
         calibration_path = Path("artifacts/phase_25_tensorflow_training_delivery/score_calibration.json")
@@ -463,6 +469,49 @@ class Phase26LayoutTest(unittest.TestCase):
         )
         self.assertEqual(result.raw.as_model_row(), result.normalized.as_model_row())
         self.assertEqual(result.as_model_row(), [1.0, 1.0, 1.0, 1.0, 1.0, 0.0])
+
+    def test_feature_builder_batches_profile_and_candidate_embeddings_once(self) -> None:
+        class FakeE5Backend:
+            model_name = E5_MODEL_NAME
+            backend_name = "sentence-transformers"
+
+            def __init__(self) -> None:
+                self.calls = 0
+                self.texts: list[str] = []
+
+            def encode(self, texts):
+                self.calls += 1
+                self.texts.extend(texts)
+                return ([1.0, 0.0], [1.0, 0.0], [0.0, 1.0])
+
+        config = TensorFlowFeatureConfig(
+            approved_features=PHASE25_FEATURE_ORDER,
+            mean={name: 0.0 for name in PHASE25_FEATURE_ORDER},
+            std={name: 1.0 for name in PHASE25_FEATURE_ORDER},
+        )
+        backend = FakeE5Backend()
+        builder = FeatureBuilder(config, backend, environment="production")
+        profile = SanitizedProfileInput(profileText="Backend TypeScript developer", normalizedSkills=("typescript",), roleFamily="backend")
+        candidates = (
+            CandidateJobInput(
+                jobId="job-1",
+                scoringInput=CandidateScoringInput(titleText="Backend Engineer", requiredSkills=("typescript",), roleFamily="backend"),
+            ),
+            CandidateJobInput(
+                jobId="job-2",
+                scoringInput=CandidateScoringInput(titleText="Frontend Engineer", requiredSkills=("react",), roleFamily="frontend"),
+            ),
+        )
+
+        result = builder.build_batch(profile, candidates)
+
+        self.assertEqual(backend.calls, 1)
+        self.assertEqual(len(backend.texts), 3)
+        self.assertTrue(backend.texts[0].startswith(f"{E5_PROFILE_PREFIX} "))
+        self.assertTrue(all(text.startswith(f"{E5_JOB_PREFIX} ") for text in backend.texts[1:]))
+        self.assertEqual([vector.candidate_id for vector in result], ["job-1", "job-2"])
+        self.assertEqual(result[0].raw.values[0], 1.0)
+        self.assertEqual(result[1].raw.values[0], 0.0)
 
     def test_feature_builder_rejects_non_e5_or_fallback_embedding_backend_in_staging(self) -> None:
         class LocalHashBackend:
@@ -746,8 +795,8 @@ class Phase26LayoutTest(unittest.TestCase):
         self.assertTrue(state.ready)
         self.assertEqual(service.load_count, 1)
         self.assertEqual(calls, [paths.model_path])
-        self.assertEqual(state.model_identity.name, "bisakerja_jobfit_tf_functional_custom_v1")
-        self.assertEqual(state.model_identity.version, "jobfit_tf_phase25_gradient_tape_v1")
+        self.assertEqual(state.model_identity.name, "bisakerja_jobfit_tf_phase46_multilingual_e5_small_v1")
+        self.assertEqual(state.model_identity.version, "jobfit_tf_phase46_multilingual_e5_small_v1")
         self.assertEqual(state.model_identity.artifact_sha256, report.artifact_hashes["final_keras_model"])
         self.assertIsNotNone(state.loaded_at)
 
@@ -799,7 +848,7 @@ class Phase26LayoutTest(unittest.TestCase):
             backend_name = "sentence-transformers"
 
             def encode(self, texts):
-                return ([1.0, 0.0], [1.0, 0.0])
+                return ([1.0, 0.0], [1.0, 0.0], [0.0, 1.0])
 
         request = CvAnalysisModelCoreRequest(
             requestId="req_cv_endpoint",

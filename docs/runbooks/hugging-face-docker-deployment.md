@@ -17,12 +17,12 @@ Why Docker Spaces:
 
 ## Files Added
 
-| File                     | Purpose                                                                                       |
-| ------------------------ | --------------------------------------------------------------------------------------------- |
-| `Dockerfile`             | Hugging Face Docker Space runtime for FastAPI/Uvicorn on port `7860`.                         |
-| `.dockerignore`          | Keeps Docker build context focused on Model API source and Phase 25 runtime artifacts.        |
-| `docker-compose.yml`     | Local Docker smoke runner using the same image.                                               |
-| `README.md` front matter | Hugging Face Space metadata: `sdk: docker`, `app_port: 7860`, model preload, startup timeout. |
+| File                     | Purpose                                                                                                                 |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `Dockerfile`             | Hugging Face Docker Space runtime for FastAPI/Uvicorn on port `7860`.                                                   |
+| `.dockerignore`          | Keeps Docker build context focused on Model API source and Phase 46 runtime artifacts plus Phase 25 rollback artifacts. |
+| `docker-compose.yml`     | Local Docker smoke runner using the same image.                                                                         |
+| `README.md` front matter | Hugging Face Space metadata: `sdk: docker`, `app_port: 7860`, model preload, startup timeout.                           |
 
 ## Hugging Face Space Metadata
 
@@ -39,9 +39,9 @@ app_port: 7860
 suggested_hardware: cpu-upgrade
 startup_duration_timeout: 1h
 models:
-  - intfloat/e5-base-v2
+  - intfloat/multilingual-e5-small
 preload_from_hub:
-  - intfloat/e5-base-v2
+  - intfloat/multilingual-e5-small
 pinned: false
 ---
 ```
@@ -51,7 +51,7 @@ Notes:
 - `sdk: docker` tells Spaces to build the root `Dockerfile`.
 - `app_port: 7860` matches Uvicorn and `EXPOSE 7860`.
 - `startup_duration_timeout: 1h` allows TensorFlow and E5 warmup on cold start.
-- `preload_from_hub` downloads `intfloat/e5-base-v2` into the default Hugging Face cache during build.
+- `preload_from_hub` downloads `intfloat/multilingual-e5-small` into the default Hugging Face cache during build.
 - Do not override `HF_HOME` in Space Settings; Hugging Face preloading writes to the default Hub cache.
 
 ## Required Hugging Face Settings
@@ -106,7 +106,9 @@ The script creates `../bisakerja-model-hf-space` by default and copies only:
 - root Space files: `README.md`, `Dockerfile`, `.dockerignore`, `requirements.txt`
 - `model_api/`
 - `docs/`
-- Phase 25 artifacts with `required_for_inference=true`
+- Phase 46 artifacts with `required_for_inference=true`
+- Phase 25 rollback artifacts with `required_for_inference=true`
+- `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json`
 - `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json`
 
 The script intentionally excludes:
@@ -205,11 +207,11 @@ Do not call Model API directly from Frontend.
 
 ## Troubleshooting
 
-| Symptom                                | Likely Cause                             | Fix                                                                             |
-| -------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------- |
-| Build cannot find runtime artifacts    | Docker context missing Phase 25 files    | Ensure `artifacts/phase_25_tensorflow_training_delivery/**` exists before push. |
-| App exits with service token error     | `MODEL_API_ENV=staging` without token    | Add `MODEL_API_SERVICE_TOKEN` as Space secret.                                  |
-| `/ready` shows `warmupCompleted=false` | Warmup failed or disabled while required | Check Space logs; set `MODEL_API_WARMUP_ON_STARTUP=true`, verify E5 download.   |
-| E5 download slow                       | Cache miss on cold build/start           | Keep `preload_from_hub: intfloat/e5-base-v2`; optionally add `HF_TOKEN`.        |
-| 401 on inference                       | Missing/wrong bearer token               | Send `authorization: Bearer <MODEL_API_SERVICE_TOKEN>`.                         |
-| Space sleeps                           | Free hardware lifecycle                  | Upgrade hardware if service must stay warm.                                     |
+| Symptom                                | Likely Cause                             | Fix                                                                                                |
+| -------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Build cannot find runtime artifacts    | Docker context missing Phase 46 files    | Ensure `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/**` exists before push. |
+| App exits with service token error     | `MODEL_API_ENV=staging` without token    | Add `MODEL_API_SERVICE_TOKEN` as Space secret.                                                     |
+| `/ready` shows `warmupCompleted=false` | Warmup failed or disabled while required | Check Space logs; set `MODEL_API_WARMUP_ON_STARTUP=true`, verify E5 download.                      |
+| E5 download slow                       | Cache miss on cold build/start           | Keep `preload_from_hub: intfloat/multilingual-e5-small`; optionally add `HF_TOKEN`.                |
+| 401 on inference                       | Missing/wrong bearer token               | Send `authorization: Bearer <MODEL_API_SERVICE_TOKEN>`.                                            |
+| Space sleeps                           | Free hardware lifecycle                  | Upgrade hardware if service must stay warm.                                                        |

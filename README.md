@@ -8,9 +8,9 @@ app_port: 7860
 suggested_hardware: cpu-upgrade
 startup_duration_timeout: 1h
 models:
-  - intfloat/e5-base-v2
+  - intfloat/multilingual-e5-small
 preload_from_hub:
-  - intfloat/e5-base-v2
+  - intfloat/multilingual-e5-small
 pinned: false
 ---
 

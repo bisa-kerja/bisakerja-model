@@ -120,13 +120,19 @@ from pathlib import Path
 
 repo = Path(sys.argv[1])
 deploy = Path(sys.argv[2])
-manifest_path = repo / "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json"
-manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+artifact_roots = (
+    "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh",
+    "artifacts/phase_25_tensorflow_training_delivery",
+)
 
-paths: set[str] = {"artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json"}
-for item in manifest.get("artifacts", []):
-    if item.get("required_for_inference") is True:
-        paths.add(str(item["path"]))
+paths: set[str] = set()
+for root in artifact_roots:
+    manifest_path = repo / root / "artifact_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    paths.add(f"{root}/artifact_manifest.json")
+    for item in manifest.get("artifacts", []):
+        if item.get("required_for_inference") is True:
+            paths.add(str(item["path"]))
 
 missing: list[str] = []
 for rel in sorted(paths):

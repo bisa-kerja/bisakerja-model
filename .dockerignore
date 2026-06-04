@@ -36,6 +36,8 @@ scripts
 artifacts/**
 !artifacts/phase_25_tensorflow_training_delivery/
 !artifacts/phase_25_tensorflow_training_delivery/**
+!artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/
+!artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/**
 
 # Generated / heavy non-runtime artifact folders inside Phase 25.
 artifacts/phase_25_tensorflow_training_delivery/embeddings

@@ -14,6 +14,7 @@ tensorflow==2.21.0
 keras==3.14.1
 numpy==2.1.3
 
-# Approved embedding runtime: intfloat/e5-base-v2 via sentence-transformers.
+# Approved embedding runtime: artifact-declared E5 model via sentence-transformers.
+# Staging image defaults to intfloat/multilingual-e5-small; intfloat/e5-base-v2 remains rollback artifact support.
 # Dockerfile preinstalls CPU-only torch from the PyTorch CPU index before this line to avoid CUDA-sized runtime layers.
 sentence-transformers==5.5.1

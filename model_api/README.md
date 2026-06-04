@@ -90,20 +90,20 @@ Defaults resolve from repository root. Set `MODEL_API_ARTIFACT_ROOT` to switch a
 
 | Env var                               | Default                                                                                   |
 | ------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `MODEL_API_ARTIFACT_ROOT`             | `artifacts/phase_25_tensorflow_training_delivery`                                         |
-| `MODEL_API_MODEL_PATH`                | `artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras` |
-| `MODEL_API_TENSORFLOW_FEATURE_CONFIG` | `artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json`          |
-| `MODEL_API_FEATURE_CONFIG`            | `artifacts/phase_25_tensorflow_training_delivery/feature_config.json`                     |
-| `MODEL_API_SCORE_CALIBRATION`         | `artifacts/phase_25_tensorflow_training_delivery/score_calibration.json`                  |
-| `MODEL_API_MODEL_CARD`                | `artifacts/phase_25_tensorflow_training_delivery/model_card.json`                         |
-| `MODEL_API_ARTIFACT_MANIFEST`         | `artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json`                  |
-| `MODEL_API_EXPECTED_EMBEDDING_MODEL`  | optional startup assertion, e.g. `intfloat/e5-base-v2`                                    |
+| `MODEL_API_ARTIFACT_ROOT`             | `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh`                                                 |
+| `MODEL_API_MODEL_PATH`                | `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras` |
+| `MODEL_API_TENSORFLOW_FEATURE_CONFIG` | `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/tensorflow_feature_config.json`                  |
+| `MODEL_API_FEATURE_CONFIG`            | `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/feature_config.json`                             |
+| `MODEL_API_SCORE_CALIBRATION`         | `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json`                          |
+| `MODEL_API_MODEL_CARD`                | `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json`                                 |
+| `MODEL_API_ARTIFACT_MANIFEST`         | `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json`                          |
+| `MODEL_API_EXPECTED_EMBEDDING_MODEL`  | optional startup assertion, e.g. `intfloat/multilingual-e5-small`                                                    |
 
-For the multilingual-E5-small package, set:
+For rollback to Phase 25 E5-base, set:
 
 ```bash
-export MODEL_API_ARTIFACT_ROOT=artifacts/phase_46_calibration_model_card_manifest_handoff_refresh
-export MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/multilingual-e5-small
+export MODEL_API_ARTIFACT_ROOT=artifacts/phase_25_tensorflow_training_delivery
+export MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/e5-base-v2
 ```
 
 Startup verifies manifest SHA-256 and byte-size metadata before serving inference. It also verifies the embedding model, prefixes, and normalization policy agree across feature config, model card, manifest, env expectation, and runtime backend.
@@ -130,7 +130,7 @@ export MODEL_API_SERVICE_TOKEN=replace-with-internal-token
 export MODEL_API_MAX_RECOMMENDATIONS=5
 export MODEL_API_TIMEOUT_MS=30000
 export MODEL_API_WARMUP_REQUIRED=true
-export MODEL_API_WARMUP_ON_STARTUP=false
+export MODEL_API_WARMUP_ON_STARTUP=true
 export MODEL_API_MAX_PDF_BYTES=5000000
 export MODEL_API_MAX_PDF_PAGES=10
 export MODEL_API_ENABLE_GENAI_WRAPPER=false

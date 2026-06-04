@@ -231,7 +231,11 @@ class Phase33CvAnalyzerRequestCompatibilityTest(unittest.TestCase):
             model=FakeModel(),
             state=RuntimeState(ready=True, model_identity=identity, artifact_manifest_phase="phase_25", message="ready"),
         )
-        app = create_app(config=RuntimeConfig.from_env({}), service=service, embedding_backend=FakeE5Backend())
+        app = create_app(
+            config=RuntimeConfig.from_env({"MODEL_API_ARTIFACT_ROOT": "artifacts/phase_25_tensorflow_training_delivery"}),
+            service=service,
+            embedding_backend=FakeE5Backend(),
+        )
         client = TestClient(app)
         pdf = b"%PDF-1.4\n1 0 obj<</Type /Page>>stream\n(Summary Backend developer) Tj\n(Skills TypeScript PostgreSQL REST API) Tj\n(Experience 2020) Tj\nendstream\n%%EOF"
         multipart = [

@@ -23,6 +23,8 @@ ENV HOME=/home/user \
     MODEL_API_TIMEOUT_MS=30000 \
     MODEL_API_WARMUP_ON_STARTUP=true \
     MODEL_API_WARMUP_REQUIRED=true \
+    MODEL_API_ARTIFACT_ROOT=artifacts/phase_46_calibration_model_card_manifest_handoff_refresh \
+    MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/multilingual-e5-small \
     MODEL_API_MAX_PDF_BYTES=5000000 \
     MODEL_API_MAX_PDF_PAGES=10 \
     MODEL_API_ENABLE_GENAI_WRAPPER=false \
@@ -36,14 +38,16 @@ COPY --chown=user requirements.txt ./requirements.txt
 RUN python -m pip install --upgrade pip \
     && python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch==2.9.1" \
     && python -m pip install -r requirements.txt \
+    && python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('intfloat/multilingual-e5-small')" \
     && python -c "from pathlib import Path; import shutil, site; roots=site.getsitepackages()+[site.getusersitepackages()]; targets=('torch/include','torch/share','torch/test','torch/testing/_internal'); [shutil.rmtree(Path(root)/target, ignore_errors=True) for root in roots for target in targets if Path(root).exists()]; [path.unlink() for root in roots if Path(root).exists() for pattern in ('**/*.a','**/*.pyc') for path in Path(root).glob(pattern) if path.is_file()]"
 
 COPY --chown=user model_api ./model_api
 COPY --chown=user artifacts/phase_25_tensorflow_training_delivery ./artifacts/phase_25_tensorflow_training_delivery
+COPY --chown=user artifacts/phase_46_calibration_model_card_manifest_handoff_refresh ./artifacts/phase_46_calibration_model_card_manifest_handoff_refresh
 
 EXPOSE 7860
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=180s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:7860/health', timeout=5).read()" || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:7860/ready', timeout=5).read()" || exit 1
 
 CMD ["uvicorn", "model_api.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "7860"]

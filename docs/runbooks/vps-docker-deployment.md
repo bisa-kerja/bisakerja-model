@@ -86,22 +86,22 @@ MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL=false
 MODEL_API_TIMEOUT_MS=60000
 MODEL_API_MAX_RECOMMENDATIONS=5
 MODEL_API_WARMUP_ON_STARTUP=true
-MODEL_API_WARMUP_REQUIRED=false
+MODEL_API_WARMUP_REQUIRED=true
 MODEL_API_MAX_PDF_BYTES=5000000
 MODEL_API_MAX_PDF_PAGES=10
-MODEL_API_ARTIFACT_ROOT=artifacts/phase_25_tensorflow_training_delivery
-MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/e5-base-v2
+MODEL_API_ARTIFACT_ROOT=artifacts/phase_46_calibration_model_card_manifest_handoff_refresh
+MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/multilingual-e5-small
 MODEL_API_ENABLE_GENAI_WRAPPER=false
 SENTENCE_TRANSFORMERS_HOME=/home/user/.cache/sentence-transformers
 ```
 
 Do not include Backend DB credentials or public user credentials in Model API env.
 
-To run the multilingual-E5-small package, switch the artifact root and expected embedding together:
+To rollback to the Phase 25 E5-base package, switch the artifact root and expected embedding together:
 
 ```env
-MODEL_API_ARTIFACT_ROOT=artifacts/phase_46_calibration_model_card_manifest_handoff_refresh
-MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/multilingual-e5-small
+MODEL_API_ARTIFACT_ROOT=artifacts/phase_25_tensorflow_training_delivery
+MODEL_API_EXPECTED_EMBEDDING_MODEL=intfloat/e5-base-v2
 ```
 
 If explicit artifact paths are set, update model path, TensorFlow feature config, feature config, calibration, model card, and manifest as one unit. Startup fails when env, feature config, model card, manifest, or runtime backend disagree on embedding model or prefix policy.
