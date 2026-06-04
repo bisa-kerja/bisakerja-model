@@ -770,7 +770,7 @@ def create_app(
         )
 
     @app.get("/live")
-    def live() -> dict[str, object]:
+    async def live() -> dict[str, object]:
         return {
             "service": runtime_config.service_name,
             "environment": runtime_config.environment,
@@ -779,7 +779,7 @@ def create_app(
         }
 
     @app.get("/")
-    def root() -> dict[str, object]:
+    async def root() -> dict[str, object]:
         state = inference_service.state
         return {
             "service": runtime_config.service_name,
@@ -797,7 +797,7 @@ def create_app(
         }
 
     @app.get("/health")
-    def health() -> dict[str, object]:
+    async def health() -> dict[str, object]:
         state = inference_service.state
         identity = state.model_identity
         return {
@@ -811,7 +811,7 @@ def create_app(
         }
 
     @app.get("/ready")
-    def ready() -> dict[str, object]:
+    async def ready() -> dict[str, object]:
         state = inference_service.state
         identity = state.model_identity
         checks = {
