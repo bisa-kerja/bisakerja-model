@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 from dataclasses import asdict
+import asyncio
 import json
 from secrets import compare_digest
 from time import perf_counter
@@ -542,7 +543,7 @@ def create_app(
     service: InferenceService | None = None,
     embedding_backend: TextEmbeddingBackend | None = None,
 ):
-    """Create HTTP app, verify artifacts, and load model during lifespan startup.
+    """Create HTTP app, verify artifacts, and load model in the background during lifespan startup.
 
     Raises a clear error when FastAPI is not installed instead of failing during
     package import.
@@ -564,15 +565,9 @@ def create_app(
     runtime_embedding_backend = embedding_backend or SentenceTransformerE5Embedder()
     warmup_state: dict[str, object] = {"completed": False, "latencyMs": None, "error": None}
 
-    @asynccontextmanager
-    async def lifespan(app: FastAPI):
-        app.state.runtime_config = runtime_config
-        app.state.artifact_report = artifact_report
-        app.state.inference_service = inference_service
-        app.state.feature_config = feature_config
-        app.state.calibration_policy = calibration_policy
-        inference_service.load_once(runtime_config.artifact_paths, artifact_report)
-        if runtime_config.warmup_on_startup and inference_service.state.ready:
+    def _load_runtime_once() -> RuntimeState:
+        state = inference_service.load_once(runtime_config.artifact_paths, artifact_report)
+        if runtime_config.warmup_on_startup and state.ready:
             try:
                 warmup_state.update(
                     _run_cv_analysis_warmup(
@@ -586,6 +581,17 @@ def create_app(
                 )
             except Exception as exc:  # pragma: no cover - depends on live TensorFlow/E5 runtime
                 warmup_state.update({"completed": False, "error": repr(exc)})
+        return inference_service.state
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        app.state.runtime_config = runtime_config
+        app.state.artifact_report = artifact_report
+        app.state.inference_service = inference_service
+        app.state.feature_config = feature_config
+        app.state.calibration_policy = calibration_policy
+        load_task = asyncio.create_task(asyncio.to_thread(_load_runtime_once))
+        app.state.model_load_task = load_task
         yield
 
     app = FastAPI(title="Bisakerja Model API", version="0.1.0-phase26.4", lifespan=lifespan)
@@ -651,13 +657,26 @@ def create_app(
             content={"success": False, "message": "Model API error", "data": None, "error": exc.to_error_payload()},
         )
 
+    @app.get("/live")
+    def live() -> dict[str, object]:
+        return {
+            "service": runtime_config.service_name,
+            "environment": runtime_config.environment,
+            "live": True,
+            "message": "alive",
+        }
+
     @app.get("/")
     def root() -> dict[str, object]:
+        state = inference_service.state
         return {
             "service": runtime_config.service_name,
             "environment": runtime_config.environment,
             "message": "Bisakerja Model API is running",
+            "ready": state.ready,
+            "status": state.message,
             "endpoints": {
+                "live": "/live",
                 "health": "/health",
                 "ready": "/ready",
                 "modelInfo": "/model-info",

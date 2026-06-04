@@ -137,15 +137,16 @@ export MODEL_API_SERVICE_TOKEN=replace-with-local-service-token
 uvicorn model_api.app:create_app --factory --host 0.0.0.0 --port 8000
 ```
 
-Health/readiness checks:
+Liveness/readiness checks:
 
 ```bash
+curl http://127.0.0.1:8000/live
 curl http://127.0.0.1:8000/health
 curl http://127.0.0.1:8000/ready
 curl -H "authorization: Bearer ${MODEL_API_SERVICE_TOKEN}" http://127.0.0.1:8000/model-info
 ```
 
-`/ready.ready=true` means artifacts are verified, TensorFlow model is loaded, E5 backend is configured, PDF parser is available, service token is configured when required, and warmup is complete when `MODEL_API_WARMUP_REQUIRED=true`. `/model-info` uses the same bearer token in staging/production. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
+`/live` is a lightweight process liveness endpoint. Runtime model loading starts in the background so `/live`, `/`, and `/health` can respond during cold start. `/ready.ready=true` means artifacts are verified, TensorFlow model is loaded, E5 backend is configured, PDF parser is available, service token is configured when required, and warmup is complete when `MODEL_API_WARMUP_REQUIRED=true`. `/model-info` uses the same bearer token in staging/production. Loader failure keeps inference unavailable and returns deterministic `model_not_ready` or `model_load_error` payloads.
 
 ## Internal Multipart CV Analysis Contract
 
@@ -300,6 +301,7 @@ See `docs/runbooks/hugging-face-docker-deployment.md` for Hugging Face Spaces an
 - Set env vars explicitly in staging/production.
 - Keep Model API private behind Backend/internal routing.
 - Set `SENTENCE_TRANSFORMERS_HOME` to persistent cache storage; set optional `HF_TOKEN` only when needed for Hugging Face rate limits.
+- Use `/live` for uptime checks that must not wait for TensorFlow/E5 readiness; use `/ready` as the traffic gate.
 - Run `python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url "$MODEL_API_URL" --token "$MODEL_API_SERVICE_TOKEN" --latency-budget-ms 30000` before routing inference traffic.
 - Keep `MODEL_API_TIMEOUT_MS` greater than measured cold-start latency, or make warmup mandatory before traffic.
 - Keep OpenRouter disabled for core inference; wrapper GenAI remains Backend-owned.
