@@ -572,7 +572,7 @@
     "profile_prefix": "query:",
     "sentence_transformers_version": "5.5.1"
   },
-  "generated_at": "2026-06-04T08:01:48Z",
+  "generated_at": "2026-06-04T13:23:38Z",
   "jobfit_metrics": {
     "test": {
       "calibration": {
@@ -847,45 +847,45 @@
   "source_reports": {
     "baseline_selection": {
       "exists": true,
-      "path": "reports/phase_25_baseline_selection_gate.json",
-      "sha256": "d6999d851e0406917f756f8c501b48b09458ad68b764c2d82d4d2f20fa6c0ef2",
-      "size_bytes": 11164
+      "path": "reports\\phase_25_baseline_selection_gate.json",
+      "sha256": "b2709fe7bc574686ec986b893ca2221c31848ad8c0df7b37f954bdcdf50891bc",
+      "size_bytes": 11544
     },
     "calibration": {
       "exists": true,
-      "path": "artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\score_calibration.json",
       "sha256": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
       "size_bytes": 12943
     },
     "data_feature_reuse": {
       "exists": true,
-      "path": "reports/phase_25_data_feature_reuse.json",
-      "sha256": "cce3d9dc6658bd25eae1427308d2f43f0c02799b4adf4c9e1faf9ee59ce06b6d",
-      "size_bytes": 6830
+      "path": "reports\\phase_25_data_feature_reuse.json",
+      "sha256": "a5ad1d8b753f662c65f7ea98b60a43e50bf9a2c96f7855152151e345674c3a6a",
+      "size_bytes": 7057
     },
     "handoff_fixtures": {
       "exists": true,
-      "path": "artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\export\\model_api_handoff_fixtures.json",
       "sha256": "be559a63bbb94b22be797e0e609ac061468b6b3becd5af2dbd41fa7f7fa628b7",
       "size_bytes": 23261
     },
     "model_card": {
       "exists": true,
-      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
-      "size_bytes": 13283
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+      "sha256": "674cbeee2194f23729e6a1a267f574fa4f31d837664a415cc6e1f393072fa038",
+      "size_bytes": 13644
     },
     "phase25_final_gate": {
       "exists": true,
-      "path": "reports/phase_25_tensorflow_training_delivery.json",
-      "sha256": "16e42357b8037dfbfaf79dbf28c6eeebd2dd2b1325822edb5a994dd7c7572db9",
-      "size_bytes": 20613
+      "path": "reports\\phase_25_tensorflow_training_delivery.json",
+      "sha256": "75a7c044a6d67979e4513b1062f7041858f214dd3e268c11fb3f0bb50a3d8250",
+      "size_bytes": 21120
     },
     "phase39_copy_report": {
       "exists": true,
-      "path": "reports/phase_39_product_copy_localization.json",
-      "sha256": "7496788cf7669c2e3794f0c4ad4070a35cb04640015596acc9c07acdbb9119d7",
-      "size_bytes": 2482
+      "path": "reports\\phase_39_product_copy_localization.json",
+      "sha256": "0f9b42a4041cfab41fcb842add49e1110201253fb646cbed13f0f5a63873254f",
+      "size_bytes": 2531
     }
   },
   "strict_gate_checks": [

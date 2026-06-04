@@ -1,5 +1,5 @@
 {
-  "artifact_root": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh",
+  "artifact_root": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh",
   "artifacts": [
     {
       "artifact_id": "final_keras_model",
@@ -12,7 +12,7 @@
         "profile_prefix": "query:"
       },
       "format": "keras",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\selected_jobfit_tf_phase46_multilingual_e5_small.keras",
       "required_for_inference": true,
       "role": "runtime_model",
       "runtime_classification": "runtime-required",
@@ -31,13 +31,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/tensorflow_feature_config.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\tensorflow_feature_config.json",
       "required_for_inference": true,
       "role": "runtime_config",
       "runtime_classification": "runtime-required",
       "schema_version": "phase-46-tensorflow-feature-config-v1",
-      "sha256": "43066b083eda288234e78bc286b9fef5dfb337273bf3f15f935c494819a6ce06",
-      "size_bytes": 4258
+      "sha256": "c238882e0caed3166528b58d4f528d4ad9d6acd38169deccdd9848291ceb784b",
+      "size_bytes": 4375
     },
     {
       "artifact_id": "feature_config",
@@ -50,13 +50,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/feature_config.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\feature_config.json",
       "required_for_inference": true,
       "role": "runtime_config",
       "runtime_classification": "runtime-required",
       "schema_version": "phase-46-feature-config-export-v1",
-      "sha256": "ed0a1e959f10911b485158971dbf7f83e43d5dcd02fab67cbf2c5e5ae38da033",
-      "size_bytes": 3301
+      "sha256": "7b332974379ba3a186235abfe122ecffdea6d6410cba77c50fe790ce01a8138e",
+      "size_bytes": 3402
     },
     {
       "artifact_id": "score_calibration",
@@ -69,13 +69,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\score_calibration.json",
       "required_for_inference": true,
       "role": "runtime_calibration",
       "runtime_classification": "runtime-required",
       "schema_version": "phase-46-score-calibration-v1",
-      "sha256": "3e522e8555be55a531d5ea09984f6182b0799ecfdbe6fc03acb4a29644921f39",
-      "size_bytes": 30021
+      "sha256": "656f01a179f5a7bb0a972d7f950ecf10fc070fe68ee71659257c118ded3c9277",
+      "size_bytes": 31095
     },
     {
       "artifact_id": "label_manifest",
@@ -88,13 +88,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/label_manifest.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\label_manifest.json",
       "required_for_inference": false,
       "role": "release_evidence",
       "runtime_classification": "training-or-release-evidence",
       "schema_version": "phase-46-label-manifest-v1",
-      "sha256": "006c7fb6e574a89d76715dcc722bec67e2d90a407776c2d7437f501d28a7a2db",
-      "size_bytes": 1601
+      "sha256": "1c5e2d2bef44f7cb83b8301a878666a7785a688734046343c480210eade39c21",
+      "size_bytes": 1646
     },
     {
       "artifact_id": "dataset_manifest",
@@ -107,13 +107,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/dataset_manifest.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\dataset_manifest.json",
       "required_for_inference": false,
       "role": "release_evidence",
       "runtime_classification": "training-or-release-evidence",
       "schema_version": "phase-46-dataset-manifest-v1",
-      "sha256": "d71eaf84e78ccebd3c13c13c266c2061c19cf8e4b029c302259460157f5ee256",
-      "size_bytes": 9647
+      "sha256": "36825477e9dde2380241f98f1ae1e7ac1657146eb75f2c410f5ba3a6f410d598",
+      "size_bytes": 9901
     },
     {
       "artifact_id": "model_card",
@@ -126,13 +126,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\model_card.json",
       "required_for_inference": true,
       "role": "release_evidence",
       "runtime_classification": "runtime-required",
       "schema_version": "phase-46-model-card-v1",
-      "sha256": "a6d258e0a07ed98374cca142817caa5963f8f167c882f46c9af26b23e0ab41aa",
-      "size_bytes": 69848
+      "sha256": "9a73232d3a897c2477cc18335f11d2a2abf9c22d187a0db37f3c965f7600d4b2",
+      "size_bytes": 72069
     },
     {
       "artifact_id": "handoff_fixtures",
@@ -145,13 +145,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_fixtures.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\model_api_handoff_fixtures.json",
       "required_for_inference": false,
       "role": "contract_fixture",
       "runtime_classification": "training-or-release-evidence",
       "schema_version": "phase-46-model-api-handoff-fixtures-v1",
-      "sha256": "84c34f856a3115cd196b19ac11f8d8b6e7d31dc8dd6e27faefbc19ab8fa9fe3f",
-      "size_bytes": 22158
+      "sha256": "fb841c84a0bc8ca6902a9916d05d09fa01ad264d0e8ed7d0119209fc923bd1a8",
+      "size_bytes": 22889
     },
     {
       "artifact_id": "handoff_validation",
@@ -164,13 +164,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_validation.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\model_api_handoff_validation.json",
       "required_for_inference": false,
       "role": "contract_validation",
       "runtime_classification": "training-or-release-evidence",
       "schema_version": "phase-46-handoff-validation-v1",
-      "sha256": "f2efbc042223b16ace0f97c3e10f957426b35111bd16f3e25732a62d632a9d92",
-      "size_bytes": 851
+      "sha256": "6f5b49badf9936440a5d076819fd0910cc1a5d2cd8966fdfbedb3ae3b35b5f2d",
+      "size_bytes": 884
     },
     {
       "artifact_id": "inference_smoke_fixture",
@@ -183,13 +183,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/inference_smoke_fixture.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\inference_smoke_fixture.json",
       "required_for_inference": false,
       "role": "runtime_smoke",
       "runtime_classification": "training-or-release-evidence",
       "schema_version": "phase-46-inference-smoke-fixture-v1",
-      "sha256": "e56af04fda4a2fd8fd14e5a247120137815f1b2dd4058aa13a41d5a45ab6a400",
-      "size_bytes": 1213
+      "sha256": "cab97daa46378ba81ef9cccecb069250def997d226308483d762e12277a2f6f2",
+      "size_bytes": 1253
     },
     {
       "artifact_id": "score_calibration_tables_csv",
@@ -202,7 +202,7 @@
         "profile_prefix": "query:"
       },
       "format": "csv",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration_tables.csv",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\score_calibration_tables.csv",
       "required_for_inference": false,
       "role": "release_evidence",
       "runtime_classification": "training-or-release-evidence",
@@ -221,13 +221,13 @@
         "profile_prefix": "query:"
       },
       "format": "json",
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/tensorboard_monitoring_manifest.json",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\tensorboard_monitoring_manifest.json",
       "required_for_inference": false,
       "role": "release_evidence",
       "runtime_classification": "training-or-release-evidence",
       "schema_version": "phase-45-multilingual-e5-small-training-delivery-v1",
-      "sha256": "2f2464f45086e003137d97e58e59eecbeea23d1540106f2b355f3f55216b4b32",
-      "size_bytes": 3516
+      "sha256": "1f1fa088c4e3687b8f6405b69807bfe09ab53ca66356a885afb7c1dcf52ddf29",
+      "size_bytes": 3594
     }
   ],
   "embedding_model_metadata": {
@@ -237,32 +237,32 @@
     "normalized_embeddings": true,
     "profile_prefix": "query:"
   },
-  "generated_at": "2026-06-04T08:50:21Z",
+  "generated_at": "2026-06-04T13:35:23Z",
   "no_stale_phase25_runtime_hashes": true,
   "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
   "schema_version": "phase-46-artifact-manifest-v1",
   "source_artifacts": {
     "phase25_rollback_model_card": {
       "exists": true,
-      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
-      "size_bytes": 13283
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+      "sha256": "efd53188bf4e181686c7ad15da2687fbc78d1c57f368b44d1b009634db649f30",
+      "size_bytes": 13644
     },
     "phase45_feature_config": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_feature_config.json",
-      "sha256": "d042e8bb4fcc662abbff5264bfca736520bfd9e2e2461b8c37c095181c815cdc",
-      "size_bytes": 3689
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\tensorflow_feature_config.json",
+      "sha256": "6f9067ef4cb416fac12fe70d4f5b0a8b8334effdabafb4690c1fabd6d1bf4ff0",
+      "size_bytes": 3790
     },
     "phase45_model": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_trained_candidate.keras",
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\gradient_tape_trained_candidate.keras",
       "sha256": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
       "size_bytes": 60594
     },
     "phase45_predictions": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz",
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\gradient_tape_predictions_v1.npz",
       "sha256": "b5c67611e9aa7ee71f078b0310aeb46456ef73e0904ac9d9a03a8bd3da4e15f1",
       "size_bytes": 75671
     }

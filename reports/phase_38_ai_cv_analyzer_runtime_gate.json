@@ -27,13 +27,13 @@
   "phase_id": "phase_38_ai_cv_analyzer_runtime_gate",
   "schema_version": "phase-38-ai-cv-analyzer-runtime-gate-v1",
   "sources": [
-    "model_api/app.py",
-    "model_api/config.py",
-    "model_api/observability.py",
-    "model_api/.env.example",
-    "scripts/warmup_ai_cv_analyzer_runtime.py",
-    "docs/runbooks/ai-cv-analyzer-staging-runtime.md",
-    "docs/runbooks/release-gates.md",
-    "model_api/README.md"
+    "model_api\\app.py",
+    "model_api\\config.py",
+    "model_api\\observability.py",
+    "model_api\\.env.example",
+    "scripts\\warmup_ai_cv_analyzer_runtime.py",
+    "docs\\runbooks\\ai-cv-analyzer-staging-runtime.md",
+    "docs\\runbooks\\release-gates.md",
+    "model_api\\README.md"
   ]
 }

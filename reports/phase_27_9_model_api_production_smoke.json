@@ -1,13 +1,16 @@
 {
-  "blockers": [],
-  "final_decision": "production-smoke-passed",
+  "blockers": [
+    "phase26_tests_unskipped",
+    "live_fastapi_health_model_info_inference_smoke"
+  ],
+  "final_decision": "blocked",
   "gates": [
     {
       "check": "python_3_13_serving_runtime",
       "evidence": {
-        "executable": "/Users/macbookpro/Development/bisakerja-model/.venv/bin/python",
-        "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
-        "python": "3.13.11 (main, Jun  1 2026, 12:57:06) [Clang 16.0.0 (clang-1600.0.26.6)]"
+        "executable": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.13.13 (main, Jun  2 2026, 22:38:31) [MSC v.1944 64 bit (AMD64)]"
       },
       "status": "PASS"
     },
@@ -45,34 +48,79 @@
       "check": "phase26_tests_unskipped",
       "evidence": {
         "result": {
-          "command": "/Users/macbookpro/Development/bisakerja-model/.venv/bin/python -m unittest tests.model_api.test_phase_26_layout",
-          "elapsed_ms": 2919.525,
-          "returncode": 0,
+          "command": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe -m unittest tests.model_api.test_phase_26_layout",
+          "elapsed_ms": 20195.887,
+          "returncode": 1,
           "stderr_tail": [
-            ".....................................",
-            "----------------------------------------------------------------------",
-            "Ran 37 tests in 2.480s",
             "",
-            "OK"
+            "Traceback (most recent call last):",
+            "  File \"D:\\bisakerja-model\\tests\\model_api\\test_phase_26_layout.py\", line 98, in test_backend_openapi_contract_is_cv_analysis_v2",
+            "    contract = load_backend_openapi_contract()",
+            "  File \"D:\\bisakerja-model\\model_api\\contracts.py\", line 93, in load_backend_openapi_contract",
+            "    openapi = _read_json_object(path)",
+            "  File \"D:\\bisakerja-model\\model_api\\contracts.py\", line 55, in _read_json_object",
+            "    raise ContractReferenceError(f\"Contract reference not found: {path}\") from exc",
+            "model_api.errors.ContractReferenceError: Contract reference not found: references\\docs\\generated\\openapi.json",
+            "",
+            "======================================================================",
+            "ERROR: test_prisma_contract_matches_backend_persistence_enums (tests.model_api.test_phase_26_layout.Phase26LayoutTest.test_prisma_contract_matches_backend_persistence_enums)",
+            "----------------------------------------------------------------------",
+            "Traceback (most recent call last):",
+            "  File \"D:\\bisakerja-model\\model_api\\contracts.py\", line 138, in load_prisma_cv_analysis_contract",
+            "    schema_text = path.read_text(encoding=\"utf-8\")",
+            "  File \"D:\\bisakerja-model\\.uv-python\\cpython-3.13-windows-x86_64-none\\Lib\\pathlib\\_local.py\", line 546, in read_text",
+            "    return PathBase.read_text(self, encoding, errors, newline)",
+            "           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+            "  File \"D:\\bisakerja-model\\.uv-python\\cpython-3.13-windows-x86_64-none\\Lib\\pathlib\\_abc.py\", line 632, in read_text",
+            "    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:",
+            "         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+            "  File \"D:\\bisakerja-model\\.uv-python\\cpython-3.13-windows-x86_64-none\\Lib\\pathlib\\_local.py\", line 537, in open",
+            "    return io.open(self, mode, buffering, encoding, errors, newline)",
+            "           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+            "FileNotFoundError: [Errno 2] No such file or directory: 'references\\\\prisma\\\\schema.prisma'",
+            "",
+            "The above exception was the direct cause of the following exception:",
+            "",
+            "Traceback (most recent call last):",
+            "  File \"D:\\bisakerja-model\\tests\\model_api\\test_phase_26_layout.py\", line 109, in test_prisma_contract_matches_backend_persistence_enums",
+            "    contract = load_prisma_cv_analysis_contract()",
+            "  File \"D:\\bisakerja-model\\model_api\\contracts.py\", line 140, in load_prisma_cv_analysis_contract",
+            "    raise ContractReferenceError(f\"Prisma schema not found: {path}\") from exc",
+            "model_api.errors.ContractReferenceError: Prisma schema not found: references\\prisma\\schema.prisma",
+            "",
+            "----------------------------------------------------------------------",
+            "Ran 39 tests in 18.097s",
+            "",
+            "FAILED (errors=2)"
           ],
           "stdout_tail": []
         },
         "summary": {
-          "passed": true,
+          "passed": false,
           "skipped": 0,
-          "tests_run": 37
+          "tests_run": 39
         }
       },
-      "status": "PASS"
+      "status": "FAIL"
     },
     {
       "blocker": "Real .keras custom-object loader smoke not run or failed",
       "check": "real_keras_custom_object_loader_smoke",
       "evidence": {
-        "command": "/Users/macbookpro/Development/bisakerja-model/.venv/bin/python /Users/macbookpro/Development/bisakerja-model/artifacts/phase_25_tensorflow_training_delivery/export/registered_custom_objects_smoke.py /Users/macbookpro/Development/bisakerja-model/artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras /Users/macbookpro/Development/bisakerja-model/artifacts/phase_25_tensorflow_training_delivery/tensorflow_training_features_v1.npz /Users/macbookpro/Development/bisakerja-model/reports/phase_27_9_registered_custom_objects_smoke.json",
-        "elapsed_ms": 2273.92,
+        "command": "D:\\bisakerja-model\\training\\.tf-venv-3.13\\Scripts\\python.exe D:\\bisakerja-model\\artifacts\\phase_25_tensorflow_training_delivery\\export\\registered_custom_objects_smoke.py D:\\bisakerja-model\\artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras D:\\bisakerja-model\\artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_training_features_v1.npz D:\\bisakerja-model\\reports\\phase_27_9_registered_custom_objects_smoke.json",
+        "elapsed_ms": 16182.462,
         "returncode": 0,
-        "stderr_tail": [],
+        "stderr_tail": [
+          "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR",
+          "I0000 00:00:1780579622.993704   21956 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.",
+          "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR",
+          "I0000 00:00:1780579627.222926   21956 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.",
+          "I0000 00:00:1780579634.391995   21956 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.",
+          "To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.",
+          "WARNING:tensorflow:From D:\\bisakerja-model\\training\\.tf-venv-3.13\\Lib\\site-packages\\keras\\src\\backend\\tensorflow\\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.",
+          "",
+          "WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin."
+        ],
         "stdout_tail": []
       },
       "status": "PASS"
@@ -81,64 +129,14 @@
       "blocker": "Live FastAPI/TensorFlow/E5 smoke not run or failed",
       "check": "live_fastapi_health_model_info_inference_smoke",
       "evidence": {
-        "endpoint_latency_ms": {
-          "cv_analysis": 11122.109,
-          "health": 1.308,
-          "model_info": 0.665
-        },
-        "responses": {
-          "cv_analysis": {
-            "data_keys": [
-              "atsFriendliness",
-              "candidateReranking",
-              "createdAt",
-              "jobFitAlignment",
-              "model",
-              "overallImpression",
-              "parsedCv",
-              "schemaVersion"
-            ],
-            "status_code": 200,
-            "success": true
-          },
-          "health": {
-            "body": {
-              "artifactHash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
-              "environment": "local",
-              "message": "ready",
-              "modelName": "bisakerja_jobfit_tf_functional_custom_v1",
-              "modelVersion": "jobfit_tf_phase25_gradient_tape_v1",
-              "ready": true,
-              "service": "bisakerja-model-api"
-            },
-            "status_code": 200
-          },
-          "model_info": {
-            "model": {
-              "artifact": {
-                "format": ".keras",
-                "path": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
-                "sha256": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d"
-              },
-              "name": "bisakerja_jobfit_tf_functional_custom_v1",
-              "version": "jobfit_tf_phase25_gradient_tape_v1"
-            },
-            "ready": true,
-            "status_code": 200
-          }
-        },
-        "status": "PASS",
-        "total_elapsed_ms": 13338.403
+        "reason": "pass --run-live to execute real FastAPI/TensorFlow/E5 endpoint smoke",
+        "status": "not_run"
       },
-      "status": "PASS"
+      "status": "FAIL"
     }
   ],
-  "generated_at": "2026-06-03T16:22:34.740689Z",
-  "latency": {
-    "cv_analysis": 11122.109,
-    "health": 1.308,
-    "model_info": 0.665
-  },
+  "generated_at": "2026-06-04T13:27:18.782957Z",
+  "latency": {},
   "phase_id": "phase_27_9_model_api_production_smoke",
   "policy": {
     "fake_model_or_fake_embedding_allowed_for_production_smoke": false,

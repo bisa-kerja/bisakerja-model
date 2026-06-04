@@ -1,6 +1,6 @@
 # Phase 27.8 Model Card and Manifest Refresh
 
-Generated: `2026-06-03T11:19:45.581545Z`
+Generated: `2026-06-04T13:26:03.089501Z`
 Decision: `refresh-complete`
 
 ## Gates

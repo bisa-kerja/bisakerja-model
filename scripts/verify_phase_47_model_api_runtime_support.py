@@ -5,13 +5,17 @@ from __future__ import annotations
 
 import json
 import os
-import resource
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from time import perf_counter
 from typing import Any
+
+try:
+    import resource
+except ModuleNotFoundError:  # pragma: no cover - Windows portability
+    resource = None
 
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 
@@ -176,8 +180,11 @@ def performance_smoke(phase46: dict[str, Any]) -> dict[str, Any]:
     )
     warm_ms = round((perf_counter() - warm_started) * 1000, 3)
 
-    raw_rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    rss_bytes = raw_rss if sys.platform == "darwin" else raw_rss * 1024
+    if resource is None:
+        rss_bytes = 0
+    else:
+        raw_rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        rss_bytes = raw_rss if sys.platform == "darwin" else raw_rss * 1024
     return {
         "startupArtifactVerifyMs": phase46["verifyMs"],
         "readyCheckSimulated": True,

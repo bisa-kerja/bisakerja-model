@@ -42,16 +42,8 @@
         "time_total_seconds": 0.002189
       }
     },
-    "phase27_endpoint_latency_ms": {
-      "cv_analysis": 11122.109,
-      "health": 1.308,
-      "model_info": 0.665
-    },
-    "phase27_live_fastapi_first_cv_analysis": {
-      "cv_analysis": 11122.109,
-      "health": 1.308,
-      "model_info": 0.665
-    },
+    "phase27_endpoint_latency_ms": null,
+    "phase27_live_fastapi_first_cv_analysis": {},
     "warm_internal_cv_analysis": {
       "latency_ms": 733.644,
       "observability": {
@@ -122,20 +114,31 @@
       "status_code": 200
     }
   },
-  "generated_at": "2026-06-04T08:01:48Z",
+  "generated_at": "2026-06-04T13:23:38Z",
   "git_state": {
-    "commit": "cd35b634d6ceca99bc22b69dbb3b9affac9035fa",
-    "dirty_file_count": 9,
+    "commit": "23ffa58e87b6b8da5683f5d2ab9e99051ecf620d",
+    "dirty_file_count": 33,
     "dirty_sample": [
-      "M TODOS.md",
-      " M docs/runbooks/release-gates.md",
-      " M scripts/README.md",
-      "?? BRAINSTORMING.md",
-      "?? artifacts/phase_43_multilingual_e5_small_migration/",
-      "?? reports/phase_43_multilingual_e5_small_migration_decision.json",
-      "?? reports/phase_43_multilingual_e5_small_migration_decision.md",
-      "?? scripts/verify_phase_43_multilingual_e5_small_migration.py",
-      "?? tests/test_phase_43_multilingual_e5_small_migration.py"
+      "M Dockerfile",
+      " M README.md",
+      " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_quality_baseline.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_runtime_baseline.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/migration_decision_risk_register.json",
+      " M model_api/.env.example",
+      " M model_api/README.md",
+      " M model_api/config.py",
+      " M model_api/schemas.py",
+      " M reports/phase_27_10_requirement_matrix.json"
     ],
     "production_claim_allowed": false
   },
@@ -146,25 +149,25 @@
   ],
   "phase_id": "phase_43_multilingual_e5_small_migration",
   "resource_baseline": {
-    "cpu_brand": "Apple M1 Pro",
+    "cpu_brand": null,
     "disk_usage_repo": {
-      "free": 168633294848,
-      "total": 494384795648,
-      "used": 325751500800
+      "free": 86599069696,
+      "total": 126876643328,
+      "used": 40277573632
     },
     "docker_image_size": {
       "command": "docker images --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep -E 'bisakerja|model'",
       "note": "No matching local Docker image was present during Phase 43 local capture; staging/VPS capture must fill this before rollout.",
       "status": "not_found_in_local_docker_images"
     },
-    "e5_base_hf_cache_path": "/Users/macbookpro/.cache/huggingface/hub/models--intfloat--e5-base-v2",
-    "e5_base_hf_cache_size_bytes": 877935460,
-    "machine": "arm64",
-    "memory_bytes": "17179869184",
-    "phase25_artifact_root_size_bytes": 18374552,
-    "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
-    "processor": "arm",
-    "python": "3.14.2"
+    "e5_base_hf_cache_path": "C:\\Users\\ADVAN\\.cache\\huggingface\\hub\\models--intfloat--e5-base-v2",
+    "e5_base_hf_cache_size_bytes": null,
+    "machine": "AMD64",
+    "memory_bytes": null,
+    "phase25_artifact_root_size_bytes": 18378863,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+    "python": "3.13.13"
   },
   "runtime_commands": {
     "first_internal_cv_analysis": "python scripts/verify_phase_27_9_model_api_production_smoke.py --write --run-live",
@@ -180,33 +183,33 @@
   "source_reports": {
     "model_card": {
       "exists": true,
-      "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "sha256": "f37189396051e746f941ba8f4e8c48a88e87e38aec7d2481b4bf8c4070d3dff5",
-      "size_bytes": 13283
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\model_card.json",
+      "sha256": "674cbeee2194f23729e6a1a267f574fa4f31d837664a415cc6e1f393072fa038",
+      "size_bytes": 13644
     },
     "phase25_final_gate": {
       "exists": true,
-      "path": "reports/phase_25_tensorflow_training_delivery.json",
-      "sha256": "16e42357b8037dfbfaf79dbf28c6eeebd2dd2b1325822edb5a994dd7c7572db9",
-      "size_bytes": 20613
+      "path": "reports\\phase_25_tensorflow_training_delivery.json",
+      "sha256": "75a7c044a6d67979e4513b1062f7041858f214dd3e268c11fb3f0bb50a3d8250",
+      "size_bytes": 21120
     },
     "phase27_model_api_smoke": {
       "exists": true,
-      "path": "reports/phase_27_9_model_api_production_smoke.json",
-      "sha256": "76e17a2624f4c76a97f5136c5826ecab82576fc01f9be8e431effdfe0d1c8806",
-      "size_bytes": 5350
+      "path": "reports\\phase_27_9_model_api_production_smoke.json",
+      "sha256": "21243a4c700d37c0cd0a3e65bb34bcc3ac64cc45e13c6845dcbe1e12199c30af",
+      "size_bytes": 8256
     },
     "tensorflow_feature_config": {
       "exists": true,
-      "path": "artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      "path": "artifacts\\phase_25_tensorflow_training_delivery\\tensorflow_feature_config.json",
       "sha256": "56dc46d57f706586604300ef8836bfabd41d97bca9609e12b310c9111a8970c5",
       "size_bytes": 2029
     },
     "warmup_report": {
       "exists": true,
-      "path": "reports/ai_cv_analyzer_warmup_staging.json",
-      "sha256": "5111e9baf6be987d749d775f0044d7a55e4b61cb1710fd44da469af78aae437c",
-      "size_bytes": 2480
+      "path": "reports\\ai_cv_analyzer_warmup_staging.json",
+      "sha256": "cafdba36d6a5e814f86ff58d0e5ee9bb87179a10d8b3051ce903bc0de2e7c667",
+      "size_bytes": 2563
     }
   }
 }

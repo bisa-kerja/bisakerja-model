@@ -1,11 +1,11 @@
 {
   "artifact_paths": {
-    "artifact_manifest": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json",
-    "artifact_root": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh",
-    "handoff_fixtures": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_fixtures.json",
-    "handoff_validation": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_validation.json",
-    "model_card": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json",
-    "score_calibration": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json"
+    "artifact_manifest": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\artifact_manifest.json",
+    "artifact_root": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh",
+    "handoff_fixtures": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\model_api_handoff_fixtures.json",
+    "handoff_validation": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\model_api_handoff_validation.json",
+    "model_card": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\model_card.json",
+    "score_calibration": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\score_calibration.json"
   },
   "blockers": [],
   "checks": {
@@ -22,19 +22,51 @@
     "runtime_manifest_entries_hashed": true,
     "tensorboard_references_recorded": true
   },
-  "generated_at": "2026-06-04T08:50:24Z",
+  "generated_at": "2026-06-04T13:35:35Z",
   "git_state": {
-    "commit": "a6ac8eb4caae588437caca21e6143e5cc08c2e72",
-    "dirty_file_count": 8,
+    "commit": "23ffa58e87b6b8da5683f5d2ab9e99051ecf620d",
+    "dirty_file_count": 52,
     "dirty_sample": [
-      "M TODOS.md",
-      "?? BRAINSTORMING.md",
-      "?? artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/",
-      "?? reports/phase_46_calibration_model_card_manifest_handoff_refresh.json",
-      "?? reports/phase_46_calibration_model_card_manifest_handoff_refresh.md",
-      "?? scripts/verify_phase_46_calibration_model_card_manifest_handoff_refresh.py",
-      "?? tests/test_phase_46_calibration_model_card_manifest_handoff_refresh.py",
-      "?? training/notebooks/phase_46_calibration_model_card_manifest_handoff_refresh.ipynb"
+      "M Dockerfile",
+      " M README.md",
+      " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_quality_baseline.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_runtime_baseline.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/migration_decision_risk_register.json",
+      " M artifacts/phase_44_embedding_compatibility_audit/embedding_cosine_drift_report.json",
+      " M artifacts/phase_44_embedding_compatibility_audit/feature_normalization_impact.json",
+      " M artifacts/phase_44_embedding_compatibility_audit/retrain_vs_recalibrate_decision.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/dataset_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/inference_smoke_fixture.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_fixtures.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/feature_config.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/label_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/tensorboard_monitoring_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/tensorflow_feature_config.json",
+      " M docker-compose.yml",
+      " M model_api/.env.example",
+      " M model_api/README.md",
+      " M model_api/config.py",
+      " M model_api/schemas.py",
+      " M reports/phase_27_10_requirement_matrix.json",
+      " M reports/phase_27_10_requirement_matrix.md",
+      " M reports/phase_27_7_clean_kernel_production_export.json",
+      " M reports/phase_27_7_clean_kernel_production_export.md",
+      " M reports/phase_27_8_model_card_manifest_refresh.json",
+      " M reports/phase_27_8_model_card_manifest_refresh.md",
+      " M reports/phase_27_9_model_api_production_smoke.json"
     ],
     "production_claim_allowed": false
   },
@@ -44,9 +76,9 @@
     "TODOS.md",
     "GAP_MODEL_TRAINING.md",
     "REQUIREMENT.md",
-    "artifacts/phase_45_multilingual_e5_small_training_delivery/training_evaluation.json",
-    "artifacts/phase_45_multilingual_e5_small_training_delivery/baseline_comparison.json",
-    "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz"
+    "artifacts\\phase_45_multilingual_e5_small_training_delivery\\training_evaluation.json",
+    "artifacts\\phase_45_multilingual_e5_small_training_delivery\\baseline_comparison.json",
+    "artifacts\\phase_45_multilingual_e5_small_training_delivery\\gradient_tape_predictions_v1.npz"
   ],
   "status": "complete",
   "summary": {
@@ -90,7 +122,7 @@
     },
     "model_artifact": {
       "exists": true,
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\selected_jobfit_tf_phase46_multilingual_e5_small.keras",
       "sha256": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
       "size_bytes": 60594
     },

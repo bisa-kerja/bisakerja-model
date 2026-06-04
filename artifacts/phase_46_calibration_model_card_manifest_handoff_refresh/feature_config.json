@@ -39,7 +39,7 @@
     "uses_raw_embedding_vectors": false,
     "uses_wrapper_or_backend_owned_fields": false
   },
-  "generated_at": "2026-06-04T08:50:21Z",
+  "generated_at": "2026-06-04T13:35:23Z",
   "model_name": "bisakerja_jobfit_tf_phase46_multilingual_e5_small_v1",
   "model_version": "jobfit_tf_phase46_multilingual_e5_small_v1",
   "normalization": {
@@ -77,13 +77,13 @@
   "source_artifacts": {
     "phase45_tensorflow_feature_config": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_feature_config.json",
-      "sha256": "d042e8bb4fcc662abbff5264bfca736520bfd9e2e2461b8c37c095181c815cdc",
-      "size_bytes": 3689
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\tensorflow_feature_config.json",
+      "sha256": "6f9067ef4cb416fac12fe70d4f5b0a8b8334effdabafb4690c1fabd6d1bf4ff0",
+      "size_bytes": 3790
     },
     "phase45_training_features": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_training_features_v1.npz",
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\tensorflow_training_features_v1.npz",
       "sha256": "0a57064e73f5cf61b79d675e983d133c015a5d69e5baf72452f5ff12b9afe2ee",
       "size_bytes": 104619
     }

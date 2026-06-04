@@ -1,6 +1,6 @@
 # Phase 41 AI CV Analyzer Public Staging Smoke
 
-Decision: `go`
+Decision: `no-go`
 
 Phase 38.6 public Backend-to-Model smoke is superseded by this public staging smoke evidence.
 
@@ -11,9 +11,13 @@ Phase 38.6 public Backend-to-Model smoke is superseded by this public staging sm
 - PASS `public_response_contract_validated`
 - PASS `persistence_and_latency_recorded`
 - PASS `private_field_leak_checks_present`
-- PASS `multipart_excludes_cv_storage_metadata`
-- PASS `payload_hygiene_test_exists`
+- FAIL `multipart_excludes_cv_storage_metadata`
+- FAIL `payload_hygiene_test_exists`
 - PASS `phase_38_6_superseded_by_phase_41`
+
+## Blockers
+- multipart_excludes_cv_storage_metadata
+- payload_hygiene_test_exists
 
 ## Commands
 - `model_api_warmup`: `python scripts/warmup_ai_cv_analyzer_runtime.py --model-api-url ${MODEL_API_URL:-http://127.0.0.1:8000} --token ${MODEL_API_SERVICE_TOKEN} --latency-budget-ms 30000 --output reports/ai_cv_analyzer_warmup_staging.json`

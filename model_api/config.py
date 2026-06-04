@@ -11,8 +11,9 @@ import os
 from pathlib import Path
 from typing import Mapping
 
+PHASE25_ARTIFACT_ROOT_NAME = "phase_25_tensorflow_training_delivery"
 PHASE46_ARTIFACT_ROOT_NAME = "phase_46_calibration_model_card_manifest_handoff_refresh"
-DEFAULT_ARTIFACT_ROOT = Path("artifacts") / PHASE46_ARTIFACT_ROOT_NAME
+DEFAULT_ARTIFACT_ROOT = Path("artifacts") / PHASE25_ARTIFACT_ROOT_NAME
 DEFAULT_EXPORT_DIR = DEFAULT_ARTIFACT_ROOT / "export"
 DEFAULT_OPENAPI_PATH = Path("references/docs/generated/openapi.json")
 DEFAULT_PRISMA_SCHEMA_PATH = Path("references/prisma/schema.prisma")
@@ -50,7 +51,7 @@ class ArtifactPaths:
     artifact_root: Path = DEFAULT_ARTIFACT_ROOT
     export_dir: Path = DEFAULT_EXPORT_DIR
     manifest_path: Path = DEFAULT_ARTIFACT_ROOT / "artifact_manifest.json"
-    model_path: Path = DEFAULT_EXPORT_DIR / "selected_jobfit_tf_phase46_multilingual_e5_small.keras"
+    model_path: Path = DEFAULT_EXPORT_DIR / "selected_jobfit_tf_phase25.keras"
     tensorflow_feature_config_path: Path = DEFAULT_ARTIFACT_ROOT / "tensorflow_feature_config.json"
     feature_config_path: Path = DEFAULT_ARTIFACT_ROOT / "feature_config.json"
     score_calibration_path: Path = DEFAULT_ARTIFACT_ROOT / "score_calibration.json"

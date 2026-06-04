@@ -316,7 +316,7 @@ class CandidateRerankingCoreRequest:
 @dataclass(frozen=True)
 class ModelArtifactIdentity:
     format: str = ".keras"
-    path: str = "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras"
+    path: str = "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras"
     sha256: str | None = None
 
 

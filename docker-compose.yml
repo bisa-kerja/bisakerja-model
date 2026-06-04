@@ -13,6 +13,8 @@ services:
       MODEL_API_ALLOW_UNAUTHENTICATED_LOCAL: "false"
       MODEL_API_TIMEOUT_MS: "30000"
       MODEL_API_MAX_RECOMMENDATIONS: "5"
+      MODEL_API_ARTIFACT_ROOT: artifacts/phase_46_calibration_model_card_manifest_handoff_refresh
+      MODEL_API_EXPECTED_EMBEDDING_MODEL: intfloat/multilingual-e5-small
       MODEL_API_WARMUP_ON_STARTUP: "false"
       MODEL_API_WARMUP_REQUIRED: "false"
       MODEL_API_MAX_PDF_BYTES: "5000000"

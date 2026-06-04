@@ -5,7 +5,6 @@ Status: `complete`
 This report records a self-contained `intfloat/multilingual-e5-small` artifact package for Model API handoff.
 
 ## Summary
-
 - Embedding model: `intfloat/multilingual-e5-small`
 - Runtime-required artifacts: `5`
 - Handoff validation: `complete`
@@ -13,7 +12,6 @@ This report records a self-contained `intfloat/multilingual-e5-small` artifact p
 - Test calibration: `{'bucket_agreement': 0.9722, 'bucket_mae_points': {'0-20': 0.5085, '21-40': 0.4224, '41-60': 0.7402, '61-80': 1.6269, '81-100': 1.0984}, 'ece_points': 0.3842, 'mae_points': 0.7074, 'mce_points': 0.9083, 'passed': True, 'rmse_points': 2.2366, 'row_count': 540, 'score_band_agreement': 0.9722, 'within_10_points_rate': 0.987}`
 
 ## Checks
-
 - PASS `notebook_exists_with_required_markdown`
 - PASS `no_stale_phase25_runtime_references`
 - PASS `model_card_declares_multilingual_e5_small`
@@ -28,15 +26,13 @@ This report records a self-contained `intfloat/multilingual-e5-small` artifact p
 - PASS `rollback_artifact_recorded`
 
 ## Artifacts
-
-- `artifact_root`: `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh`
-- `model_card`: `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json`
-- `artifact_manifest`: `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json`
-- `score_calibration`: `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json`
-- `handoff_fixtures`: `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_fixtures.json`
-- `handoff_validation`: `artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_validation.json`
+- `artifact_root`: `artifacts\phase_46_calibration_model_card_manifest_handoff_refresh`
+- `model_card`: `artifacts\phase_46_calibration_model_card_manifest_handoff_refresh\model_card.json`
+- `artifact_manifest`: `artifacts\phase_46_calibration_model_card_manifest_handoff_refresh\artifact_manifest.json`
+- `score_calibration`: `artifacts\phase_46_calibration_model_card_manifest_handoff_refresh\score_calibration.json`
+- `handoff_fixtures`: `artifacts\phase_46_calibration_model_card_manifest_handoff_refresh\export\model_api_handoff_fixtures.json`
+- `handoff_validation`: `artifacts\phase_46_calibration_model_card_manifest_handoff_refresh\export\model_api_handoff_validation.json`
 
 ## Commands
-
 - Write evidence: `training/.tf-venv-3.13/bin/python scripts/verify_phase_46_calibration_model_card_manifest_handoff_refresh.py --write`
 - Verify: `.venv/bin/python -m unittest tests.test_phase_46_calibration_model_card_manifest_handoff_refresh`

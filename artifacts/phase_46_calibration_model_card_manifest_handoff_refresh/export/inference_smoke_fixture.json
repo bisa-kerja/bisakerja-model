@@ -7,11 +7,11 @@
   ],
   "feature_source": {
     "exists": true,
-    "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_training_features_v1.npz",
+    "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\tensorflow_training_features_v1.npz",
     "sha256": "0a57064e73f5cf61b79d675e983d133c015a5d69e5baf72452f5ff12b9afe2ee",
     "size_bytes": 104619
   },
-  "generated_at": "2026-06-04T08:50:21Z",
+  "generated_at": "2026-06-04T13:35:23Z",
   "input_shape": [
     8,
     6
@@ -19,7 +19,7 @@
   "model": {
     "artifact": {
       "exists": true,
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\selected_jobfit_tf_phase46_multilingual_e5_small.keras",
       "sha256": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
       "size_bytes": 60594
     },

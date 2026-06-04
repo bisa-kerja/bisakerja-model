@@ -71,12 +71,12 @@ from model_api.validators import FORBIDDEN_MODEL_CORE_FIELDS, validate_model_cor
 
 
 class Phase26LayoutTest(unittest.TestCase):
-    def test_runtime_artifact_paths_match_default_phase46_exports_and_backend_refs(self) -> None:
+    def test_runtime_artifact_paths_match_default_phase25_exports_and_backend_refs(self) -> None:
         paths = ArtifactPaths.from_env({})
         self.assertEqual(
             paths.model_path,
             Path(
-                "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras"
+                "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras"
             ),
         )
         self.assertEqual(paths.tensorflow_feature_config_path.name, "tensorflow_feature_config.json")
@@ -833,8 +833,8 @@ class Phase26LayoutTest(unittest.TestCase):
         self.assertTrue(state.ready)
         self.assertEqual(service.load_count, 1)
         self.assertEqual(calls, [paths.model_path])
-        self.assertEqual(state.model_identity.name, "bisakerja_jobfit_tf_phase46_multilingual_e5_small_v1")
-        self.assertEqual(state.model_identity.version, "jobfit_tf_phase46_multilingual_e5_small_v1")
+        self.assertEqual(state.model_identity.name, "bisakerja_jobfit_tf_functional_custom_v1")
+        self.assertEqual(state.model_identity.version, "jobfit_tf_phase25_gradient_tape_v1")
         self.assertEqual(state.model_identity.artifact_sha256, report.artifact_hashes["final_keras_model"])
         self.assertIsNotNone(state.loaded_at)
 

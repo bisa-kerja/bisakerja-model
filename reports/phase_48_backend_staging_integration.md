@@ -1,12 +1,11 @@
 # Phase 48 Backend/Staging Integration, Shadow Comparison, and Rollback Plan
 
 Status: `ready_for_staging_execution`
-Generated at: 2026-06-04T09:21:54Z
+Generated at: 2026-06-04T13:41:58Z
 
 Repo-side staging harness is ready. Live deployment, Backend token smoke, old-vs-new shadow run, and rollback drill still require operator credentials and approval.
 
 ## Checks
-
 - PASS `phase47_runtime_support_complete`
 - PASS `phase46_artifact_selected_for_staging`
 - PASS `phase25_rollback_artifact_preserved`
@@ -20,7 +19,6 @@ Repo-side staging harness is ready. Live deployment, Backend token smoke, old-vs
 - PASS `secrets_redacted_in_evidence`
 
 ## Required Live Evidence
-
 - Deploy staging Model API revision with Phase 46 artifact env.
 - Run readiness probes and record /model-info metadata.
 - Run direct Model API multipart smoke.
@@ -29,7 +27,6 @@ Repo-side staging harness is ready. Live deployment, Backend token smoke, old-vs
 - Run rollback drill to Phase 25 E5-base artifact path.
 
 ## Commands
-
 - `phase48_gate`: `python scripts/verify_phase_48_backend_staging_integration.py --write`
 - `phase48_new_model_api_smoke`: `python scripts/run_phase_48_backend_staging_shadow.py --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --output reports/phase_48_backend_staging_shadow_report.json`
 - `phase48_backend_public_smoke`: `python scripts/run_phase_48_backend_staging_shadow.py --new-model-api-url ${MODEL_API_URL} --model-api-token ${MODEL_API_SERVICE_TOKEN} --backend-api-url ${BACKEND_API_URL} --user-access-token ${USER_ACCESS_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --output reports/phase_48_backend_staging_shadow_report.json`

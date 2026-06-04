@@ -26,22 +26,22 @@
   "secret_findings": [],
   "sources": {
     "code": [
-      "model_api/app.py",
-      "model_api/observability.py"
+      "model_api\\app.py",
+      "model_api\\observability.py"
     ],
     "docs": [
       "README.md",
-      "model_api/README.md",
-      "docs/architecture/service-boundaries.md",
-      "docs/runbooks/local-development.md",
+      "model_api\\README.md",
+      "docs\\architecture\\service-boundaries.md",
+      "docs\\runbooks\\local-development.md",
       "RUNNING_STEPS.md"
     ],
     "env_templates": [
       ".env.example",
-      "model_api/.env.example"
+      "model_api\\.env.example"
     ],
     "tests": [
-      "tests/test_phase_31_release_gate.py"
+      "tests\\test_phase_31_release_gate.py"
     ]
   }
 }

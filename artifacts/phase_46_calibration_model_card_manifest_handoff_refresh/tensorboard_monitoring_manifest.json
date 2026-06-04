@@ -2,9 +2,9 @@
   "generated_at": "2026-06-04T08:31:33Z",
   "phase_46_source_manifest_copy": {
     "exists": true,
-    "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorboard_monitoring_manifest.json",
-    "sha256": "1de80af61ff79c872b7988b85cb374ed2225cf4503e78dc9b075e5229ccfc1df",
-    "size_bytes": 3238
+    "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\tensorboard_monitoring_manifest.json",
+    "sha256": "974ec5559dee7e2e32961077d8e6ff71715176e235e4f3ac2ef71ea7d44a90d0",
+    "size_bytes": 3308
   },
   "phase_id": "phase_45_multilingual_e5_small_training_delivery",
   "schema_version": "phase-45-multilingual-e5-small-training-delivery-v1",

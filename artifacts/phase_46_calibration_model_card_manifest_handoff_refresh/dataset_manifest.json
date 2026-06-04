@@ -2,37 +2,37 @@
   "frozen_inputs": {
     "ats_benchmark": {
       "exists": true,
-      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
-      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17",
-      "size_bytes": 16367
+      "path": "artifacts\\ats_benchmark\\phase_19_cv_benchmark.csv",
+      "sha256": "4ddf6edaf91cf62e371534d1e1d3dadb93dc1b6409b1db7454d165072d6de150",
+      "size_bytes": 16389
     },
     "candidate_reranking_fixture": {
       "exists": true,
-      "path": "reports/phase_21_backend_candidate_reranking.json",
-      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
-      "size_bytes": 18519
+      "path": "reports\\phase_21_backend_candidate_reranking.json",
+      "sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036",
+      "size_bytes": 19285
     },
     "pair_feature_matrix": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/tensorflow_training_features_v1.npz",
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\tensorflow_training_features_v1.npz",
       "sha256": "0a57064e73f5cf61b79d675e983d133c015a5d69e5baf72452f5ff12b9afe2ee",
       "size_bytes": 104619
     },
     "pair_predictions": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz",
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\gradient_tape_predictions_v1.npz",
       "sha256": "b5c67611e9aa7ee71f078b0310aeb46456ef73e0904ac9d9a03a8bd3da4e15f1",
       "size_bytes": 75671
     }
   },
-  "generated_at": "2026-06-04T08:50:21Z",
+  "generated_at": "2026-06-04T13:35:23Z",
   "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
   "schema_version": "phase-46-dataset-manifest-v1",
   "source_dataset_manifest": {
     "exists": true,
-    "path": "artifacts/phase_25_tensorflow_training_delivery/dataset_manifest.json",
-    "sha256": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
-    "size_bytes": 7633
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\dataset_manifest.json",
+    "sha256": "8325c2cae87b237c2e33aaec933aae58c2e0f62bc83e2e6004d5dc678ee09a98",
+    "size_bytes": 7840
   },
   "source_dataset_summary": {
     "datasets": {

@@ -27,7 +27,7 @@
     }
   ],
   "embedding_model": "intfloat/multilingual-e5-small",
-  "generated_at": "2026-06-04T08:50:21Z",
+  "generated_at": "2026-06-04T13:35:23Z",
   "metrics": {
     "atsFriendliness.score": {
       "benchmark": {
@@ -597,21 +597,21 @@
   "sources": {
     "atsFriendliness.score": {
       "exists": true,
-      "path": "artifacts/ats_benchmark/phase_19_cv_benchmark.csv",
-      "sha256": "e28618309571fd5e9c58b557601520e54efd59e5b028d481a3fb031696b31f17",
-      "size_bytes": 16367
+      "path": "artifacts\\ats_benchmark\\phase_19_cv_benchmark.csv",
+      "sha256": "4ddf6edaf91cf62e371534d1e1d3dadb93dc1b6409b1db7454d165072d6de150",
+      "size_bytes": 16389
     },
     "jobFitAlignment.score": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz",
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\gradient_tape_predictions_v1.npz",
       "sha256": "b5c67611e9aa7ee71f078b0310aeb46456ef73e0904ac9d9a03a8bd3da4e15f1",
       "size_bytes": 75671
     },
     "recommendations[].matchScore": {
       "exists": true,
-      "path": "reports/phase_21_backend_candidate_reranking.json",
-      "sha256": "07d74f930ca57e710586fb84bada2a5a180f7bcbf9e5e309967127d604561eef",
-      "size_bytes": 18519
+      "path": "reports\\phase_21_backend_candidate_reranking.json",
+      "sha256": "8d9bd0ec60d1055851858ef6e5dc3e481e23c10144fe27acf58fbd78ef334036",
+      "size_bytes": 19285
     }
   },
   "tables": [

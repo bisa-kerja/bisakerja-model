@@ -94,7 +94,7 @@
       "workType"
     ]
   },
-  "generated_at": "2026-06-04T08:50:21Z",
+  "generated_at": "2026-06-04T13:35:23Z",
   "negative": {
     "cv_invalid_language": {
       "analyzedAt": "2026-06-03T01:45:40.685985+00:00",
@@ -678,7 +678,7 @@
       "model": {
         "artifact": {
           "exists": true,
-          "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+          "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\selected_jobfit_tf_phase46_multilingual_e5_small.keras",
           "sha256": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
           "size_bytes": 60594
         },
@@ -702,21 +702,21 @@
   "source_context": {
     "feature_config": {
       "exists": true,
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/feature_config.json",
-      "sha256": "ed0a1e959f10911b485158971dbf7f83e43d5dcd02fab67cbf2c5e5ae38da033",
-      "size_bytes": 3301
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\feature_config.json",
+      "sha256": "7b332974379ba3a186235abfe122ecffdea6d6410cba77c50fe790ce01a8138e",
+      "size_bytes": 3402
     },
     "phase45_predictions": {
       "exists": true,
-      "path": "artifacts/phase_45_multilingual_e5_small_training_delivery/gradient_tape_predictions_v1.npz",
+      "path": "artifacts\\phase_45_multilingual_e5_small_training_delivery\\gradient_tape_predictions_v1.npz",
       "sha256": "b5c67611e9aa7ee71f078b0310aeb46456ef73e0904ac9d9a03a8bd3da4e15f1",
       "size_bytes": 75671
     },
     "score_calibration": {
       "exists": true,
-      "path": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json",
-      "sha256": "3e522e8555be55a531d5ea09984f6182b0799ecfdbe6fc03acb4a29644921f39",
-      "size_bytes": 30021
+      "path": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\score_calibration.json",
+      "sha256": "656f01a179f5a7bb0a972d7f950ecf10fc070fe68ee71659257c118ded3c9277",
+      "size_bytes": 31095
     }
   }
 }

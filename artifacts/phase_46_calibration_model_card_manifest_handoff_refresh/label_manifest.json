@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-04T08:50:21Z",
+  "generated_at": "2026-06-04T13:35:23Z",
   "inference_use": "labels are evaluation/calibration evidence only and are not model features",
   "label_policy": {
     "atsFriendliness.score": {
@@ -36,8 +36,8 @@
   "schema_version": "phase-46-label-manifest-v1",
   "source_label_manifest": {
     "exists": true,
-    "path": "artifacts/phase_25_tensorflow_training_delivery/label_manifest.json",
-    "sha256": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
-    "size_bytes": 5900
+    "path": "artifacts\\phase_25_tensorflow_training_delivery\\label_manifest.json",
+    "sha256": "50a5e45247f9325a270d7321332087b984c4698345d935631df653c6a701f206",
+    "size_bytes": 6069
   }
 }

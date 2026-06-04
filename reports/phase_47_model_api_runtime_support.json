@@ -12,7 +12,7 @@
         "profilePrefix": "query:"
       },
       "manifestSchemaVersion": "phase-25-artifact-manifest-v1",
-      "modelPath": "artifacts/phase_25_tensorflow_training_delivery/export/selected_jobfit_tf_phase25.keras",
+      "modelPath": "artifacts\\phase_25_tensorflow_training_delivery\\export\\selected_jobfit_tf_phase25.keras",
       "runtimeArtifactIds": [
         "score_calibration",
         "feature_config",
@@ -26,7 +26,7 @@
         "genai_wrapper_handoff_contract",
         "model_card"
       ],
-      "verifyMs": 3.713
+      "verifyMs": 17.817
     },
     "phase_46_calibration_model_card_manifest_handoff_refresh": {
       "artifactHash": "a5fd7be8289884e191229a058201369aa50c8c54eb55825306d58164007977be",
@@ -40,7 +40,7 @@
         "profilePrefix": "query:"
       },
       "manifestSchemaVersion": "phase-46-artifact-manifest-v1",
-      "modelPath": "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/selected_jobfit_tf_phase46_multilingual_e5_small.keras",
+      "modelPath": "artifacts\\phase_46_calibration_model_card_manifest_handoff_refresh\\export\\selected_jobfit_tf_phase46_multilingual_e5_small.keras",
       "runtimeArtifactIds": [
         "final_keras_model",
         "tensorflow_feature_config",
@@ -48,7 +48,7 @@
         "score_calibration",
         "model_card"
       ],
-      "verifyMs": 2.009
+      "verifyMs": 9.138
     }
   },
   "checks": {
@@ -62,39 +62,63 @@
     "prefixPolicyPreserved": true,
     "responseContractStable": true
   },
-  "generated_at": "2026-06-04T09:12:13Z",
+  "generated_at": "2026-06-04T13:41:58Z",
   "git": {
-    "commit": "cf1a7601a22841164dab1b7b2c31cdcf3eac3319",
-    "dirty_file_count": 16,
+    "commit": "23ffa58e87b6b8da5683f5d2ab9e99051ecf620d",
+    "dirty_file_count": 57,
     "dirty_sample": [
-      "M TODOS.md",
-      " M docs/runbooks/vps-docker-deployment.md",
+      "M Dockerfile",
+      " M README.md",
+      " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/genai_wrapper_handoff_contract.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_fixtures.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/export/model_api_handoff_validation.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/feature_config.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/score_calibration.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/tensorflow_artifact_export.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/tensorflow_feature_config.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/training_only_genai_boundary.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_quality_baseline.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_runtime_baseline.json",
+      " M artifacts/phase_43_multilingual_e5_small_migration/migration_decision_risk_register.json",
+      " M artifacts/phase_44_embedding_compatibility_audit/embedding_cosine_drift_report.json",
+      " M artifacts/phase_44_embedding_compatibility_audit/feature_normalization_impact.json",
+      " M artifacts/phase_44_embedding_compatibility_audit/retrain_vs_recalibrate_decision.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/artifact_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/dataset_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/inference_smoke_fixture.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/export/model_api_handoff_fixtures.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/feature_config.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/label_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/score_calibration.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/tensorboard_monitoring_manifest.json",
+      " M artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/tensorflow_feature_config.json",
+      " M docker-compose.yml",
       " M model_api/.env.example",
       " M model_api/README.md",
-      " M model_api/app.py",
-      " M model_api/artifacts.py",
       " M model_api/config.py",
-      " M model_api/features.py",
-      " M model_api/inference.py",
       " M model_api/schemas.py",
-      " M tests/test_phase_29_model_api_hardening.py",
-      "?? BRAINSTORMING.md",
-      "?? reports/phase_47_model_api_runtime_support.json",
-      "?? reports/phase_47_model_api_runtime_support.md",
-      "?? scripts/verify_phase_47_model_api_runtime_support.py",
-      "?? tests/test_phase_47_model_api_runtime_support.py"
+      " M reports/phase_27_10_requirement_matrix.json",
+      " M reports/phase_27_10_requirement_matrix.md",
+      " M reports/phase_27_7_clean_kernel_production_export.json",
+      " M reports/phase_27_7_clean_kernel_production_export.md",
+      " M reports/phase_27_8_model_card_manifest_refresh.json",
+      " M reports/phase_27_8_model_card_manifest_refresh.md",
+      " M reports/phase_27_9_model_api_production_smoke.json"
     ]
   },
   "performance_smoke": {
     "backendOwnedFieldsLeaked": false,
     "cacheBehavior": "fake sentence-transformers backend reused in-process",
     "embeddingBackendCalls": 2,
-    "firstInferenceMs": 0.779,
-    "maxRssMb": 27.375,
+    "firstInferenceMs": 1.304,
+    "maxRssMb": 0.0,
     "readyCheckSimulated": true,
     "responseContractStable": true,
-    "startupArtifactVerifyMs": 2.009,
-    "warmInferenceMs": 0.324
+    "startupArtifactVerifyMs": 9.138,
+    "warmInferenceMs": 0.659
   },
   "schema_version": "phase-47-model-api-runtime-support-v1",
   "status": "complete"

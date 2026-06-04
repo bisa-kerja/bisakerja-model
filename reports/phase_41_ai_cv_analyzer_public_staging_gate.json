@@ -1,9 +1,12 @@
 {
-  "blockers": [],
+  "blockers": [
+    "multipart_excludes_cv_storage_metadata",
+    "payload_hygiene_test_exists"
+  ],
   "checks": {
     "deterministic_candidate_fixture_documented": true,
-    "multipart_excludes_cv_storage_metadata": true,
-    "payload_hygiene_test_exists": true,
+    "multipart_excludes_cv_storage_metadata": false,
+    "payload_hygiene_test_exists": false,
     "persistence_and_latency_recorded": true,
     "phase_38_6_superseded_by_phase_41": true,
     "private_field_leak_checks_present": true,
@@ -18,17 +21,17 @@
     "phase41_gate": "python scripts/verify_phase_41_ai_cv_analyzer_public_staging_smoke.py --write",
     "public_staging_smoke": "python scripts/smoke_ai_cv_analyzer_public_staging.py --backend-api-url ${BACKEND_API_URL} --user-access-token ${USER_ACCESS_TOKEN} --fixture-pdf artifacts/smoke/sanitized-cv.pdf --job-role 'Backend Developer' --language en --input-mode UPLOAD --compare-source JOB_SEARCH --latency-budget-ms 5000 --output reports/phase_41_ai_cv_analyzer_public_staging_smoke.json"
   },
-  "final_decision": "go",
+  "final_decision": "no-go",
   "phase_38_6_status": "superseded_by_phase_41_public_staging_smoke",
   "phase_id": "phase_41_ai_cv_analyzer_public_staging_smoke",
   "schema_version": "phase-41-ai-cv-analyzer-public-staging-smoke-v1",
   "sources": [
-    "scripts/smoke_ai_cv_analyzer_public_staging.py",
-    "artifacts/smoke/sanitized-cv.pdf",
-    "docs/runbooks/ai-cv-analyzer-staging-runtime.md",
-    "references/src/shared/integrations/model-api.client.ts",
-    "references/tests/unit/shared/model-api.client.test.ts",
-    "references/prisma/seed-data.ts",
-    "reports/phase_38_ai_cv_analyzer_runtime_gate.md"
+    "scripts\\smoke_ai_cv_analyzer_public_staging.py",
+    "artifacts\\smoke\\sanitized-cv.pdf",
+    "docs\\runbooks\\ai-cv-analyzer-staging-runtime.md",
+    "references\\src\\shared\\integrations\\model-api.client.ts",
+    "references\\tests\\unit\\shared\\model-api.client.test.ts",
+    "references\\prisma\\seed-data.ts",
+    "reports\\phase_38_ai_cv_analyzer_runtime_gate.md"
   ]
 }
