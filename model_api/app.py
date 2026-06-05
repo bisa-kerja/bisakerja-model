@@ -62,6 +62,7 @@ from .schemas import (
 )
 from .schemas import MODEL_CORE_CV_ANALYZER_INPUT_VERSION, ModelIdentity
 from .validators import validate_model_core_payload
+from .wrapper_context import skill_requirements
 
 
 LOGGER = logging.getLogger(__name__)
@@ -306,7 +307,7 @@ def _recommendation_payload(recommendation) -> dict[str, object]:
 
 def _candidate_skill_evidence(profile: SanitizedProfileInput, candidate) -> tuple[tuple[str, ...], tuple[str, ...]]:
     profile_skills = normalized_skill_set(profile.normalizedSkills)
-    candidate_skills = normalized_skill_set((*candidate.model_scoring_input.requiredSkills, *candidate.model_scoring_input.requirements))
+    candidate_skills = normalized_skill_set(skill_requirements(candidate.model_scoring_input.requiredSkills, source="requiredSkills"))
     matched = tuple(_skill_list(sorted(profile_skills & candidate_skills)))
     missing = tuple(_skill_list(sorted(candidate_skills - profile_skills)))
     return matched, missing
@@ -612,6 +613,8 @@ def _overall_impression_evidence(
         evidence.append("next improvement: add evidence for " + ", ".join(missing_skills[:4]))
     elif ats_issues:
         evidence.append("next improvement: " + _first_sentence(ats_issues[0]))
+    else:
+        evidence.append("next improvement: add one measurable role-specific result to strengthen wrapper-ready evidence")
     if parsed_pdf_evidence and isinstance(parsed_pdf_evidence.get("wordCount"), int):
         evidence.append(f"parser evidence: {parsed_pdf_evidence.get('wordCount')} words; sections={len(profile.detectedCvSectionNames)}")
     return _signal_list(evidence)

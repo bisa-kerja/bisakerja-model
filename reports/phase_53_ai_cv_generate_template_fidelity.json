@@ -1,0 +1,169 @@
+{
+  "checks": {
+    "fallback": "Provider failures or template drift use deterministic placeholder rendering from grounded evidence.",
+    "privacy": "Executable HTML, prompt text, storage keys, secrets, raw email, and raw phone output are rejected.",
+    "structuredEvidence": "Backend sends bounded structured currentCv evidence instead of cvTextPreview.",
+    "templateValidation": "Template tag order, attributes, and static copy are compared before returning provider output."
+  },
+  "generatedAt": "2026-06-04T21:17:17.600299+00:00",
+  "passed": true,
+  "results": [
+    {
+      "expected_valid": true,
+      "generated_output": "<section id=\"cv\" class=\"modern\" data-kind=\"cv\"><h1></h1><p class=\"summary\">Backend REST API candidate with PostgreSQL delivery experience.</p><p>Static footer</p></section>",
+      "input_template": "<section id=\"cv\" class=\"modern\" data-kind=\"cv\"><h1>{{name}}</h1><p class=\"summary\">{{summary}}</p><p>Static footer</p></section>",
+      "matches_expectation": true,
+      "name": "valid_placeholder_fill_preserves_structure",
+      "output_signature": [
+        {
+          "attributes": {
+            "class": "modern",
+            "data-kind": "cv",
+            "id": "cv"
+          },
+          "tag_name": "section"
+        },
+        {
+          "attributes": {},
+          "tag_name": "h1"
+        },
+        {
+          "attributes": {
+            "class": "summary"
+          },
+          "tag_name": "p"
+        },
+        {
+          "attributes": {},
+          "tag_name": "p"
+        }
+      ],
+      "safety_checks": {
+        "issues": [],
+        "passed": true
+      },
+      "template_diff_result": {
+        "reasons": [],
+        "valid": true
+      },
+      "template_signature": [
+        {
+          "attributes": {
+            "class": "modern",
+            "data-kind": "cv",
+            "id": "cv"
+          },
+          "tag_name": "section"
+        },
+        {
+          "attributes": {},
+          "tag_name": "h1"
+        },
+        {
+          "attributes": {
+            "class": "summary"
+          },
+          "tag_name": "p"
+        },
+        {
+          "attributes": {},
+          "tag_name": "p"
+        }
+      ]
+    },
+    {
+      "expected_valid": false,
+      "generated_output": "<section id=\"cv\" class=\"changed\"><h2>Candidate</h2><p>Backend REST API candidate.</p></section>",
+      "input_template": "<section id=\"cv\" class=\"modern\"><h1>{{name}}</h1><p>{{summary}}</p></section>",
+      "matches_expectation": true,
+      "name": "invalid_provider_changes_tag_and_class",
+      "output_signature": [
+        {
+          "attributes": {
+            "class": "changed",
+            "id": "cv"
+          },
+          "tag_name": "section"
+        },
+        {
+          "attributes": {},
+          "tag_name": "h2"
+        },
+        {
+          "attributes": {},
+          "tag_name": "p"
+        }
+      ],
+      "safety_checks": {
+        "issues": [],
+        "passed": true
+      },
+      "template_diff_result": {
+        "reasons": [
+          "attribute_changed_at_0_class",
+          "tag_changed_at_1"
+        ],
+        "valid": false
+      },
+      "template_signature": [
+        {
+          "attributes": {
+            "class": "modern",
+            "id": "cv"
+          },
+          "tag_name": "section"
+        },
+        {
+          "attributes": {},
+          "tag_name": "h1"
+        },
+        {
+          "attributes": {},
+          "tag_name": "p"
+        }
+      ]
+    },
+    {
+      "expected_valid": false,
+      "generated_output": "<section><p>Contact me at user@example.test or +62 812 3333 4444.</p></section>",
+      "input_template": "<section><p>{{summary}}</p></section>",
+      "matches_expectation": true,
+      "name": "invalid_privacy_leak",
+      "output_signature": [
+        {
+          "attributes": {},
+          "tag_name": "section"
+        },
+        {
+          "attributes": {},
+          "tag_name": "p"
+        }
+      ],
+      "safety_checks": {
+        "issues": [
+          "email_leak",
+          "phone_leak"
+        ],
+        "passed": false
+      },
+      "template_diff_result": {
+        "reasons": [
+          "unsafe_email_leak",
+          "unsafe_phone_leak"
+        ],
+        "valid": false
+      },
+      "template_signature": [
+        {
+          "attributes": {},
+          "tag_name": "section"
+        },
+        {
+          "attributes": {},
+          "tag_name": "p"
+        }
+      ]
+    }
+  ],
+  "scope": "Phase 53 AI CV Generate current-CV context and template fidelity"
+}

@@ -1,0 +1,117 @@
+{
+  "badCopyBefore": "Add one measurable bullet or project example that proves maximum 3 years of experience",
+  "fallbackAfterExamples": [
+    "Add concrete CV evidence for required skill `sql` using one project, tool, or outcome bullet.",
+    "Address requirement `Remote work in Jakarta` with specific, verifiable CV evidence or mark it as unclear."
+  ],
+  "gates": {
+    "fallback_no_bad_years_copy": true,
+    "no_contact_value_in_wrapper": true,
+    "prompt_rules_cover_evidence_only_and_invariants": true,
+    "required_context_fields_present": true,
+    "section_evidence_grounded": true,
+    "unit_tests_passed": true,
+    "validator_rejects_bad_wrapper": true,
+    "wrapper_evidence_schema_present": true,
+    "years_not_missing_skills": true
+  },
+  "generatedAt": "2026-06-04T21:04:38Z",
+  "passed": true,
+  "requirementCoverageExamples": [
+    {
+      "coverage": "matched",
+      "requirement": "python",
+      "source": "requiredSkills",
+      "supportingEvidence": [
+        "CV evidence mentions python"
+      ],
+      "type": "skill"
+    },
+    {
+      "coverage": "missing",
+      "requirement": "sql",
+      "source": "requiredSkills",
+      "supportingEvidence": [
+        "No sanitized CV evidence for sql"
+      ],
+      "type": "skill"
+    },
+    {
+      "coverage": "matched",
+      "requirement": "maximum 3 years of experience",
+      "source": "requiredSkills",
+      "supportingEvidence": [
+        "Candidate experience years 2 detected"
+      ],
+      "type": "experience_years"
+    },
+    {
+      "coverage": "matched",
+      "requirement": "minimum 1 years of experience",
+      "source": "requirements",
+      "supportingEvidence": [
+        "Candidate experience years 2 detected"
+      ],
+      "type": "experience_years"
+    },
+    {
+      "coverage": "matched",
+      "requirement": "Bachelor degree",
+      "source": "requirements",
+      "supportingEvidence": [
+        "Education section or credential signal detected"
+      ],
+      "type": "education"
+    },
+    {
+      "coverage": "unclear",
+      "requirement": "Remote work in Jakarta",
+      "source": "requirements",
+      "supportingEvidence": [
+        "Requirement kept separate from skills; Backend should use evidence cautiously"
+      ],
+      "type": "other"
+    },
+    {
+      "coverage": "matched",
+      "requirement": "junior",
+      "source": "experienceBand",
+      "supportingEvidence": [
+        "Candidate experience years 2 detected"
+      ],
+      "type": "experience_years"
+    }
+  ],
+  "schemaVersion": "phase-52-ai-cv-analyzer-wrapper-context-quality-v1",
+  "sectionReviewExamples": [
+    {
+      "evidenceReference": "Detected summary section",
+      "review": "Grounded review uses parser evidence: Detected summary section.",
+      "section": "summary"
+    },
+    {
+      "evidenceReference": "Detected experience section",
+      "review": "Grounded review uses parser evidence: Detected experience section.",
+      "section": "experience"
+    },
+    {
+      "evidenceReference": "Detected skills section",
+      "review": "Grounded review uses parser evidence: Detected skills section.",
+      "section": "skills"
+    }
+  ],
+  "testResult": {
+    "command": "/Users/macbookpro/.pyenv/versions/3.14.2/bin/python -m unittest tests.test_phase_52_ai_cv_analyzer_wrapper_context_quality",
+    "returncode": 0,
+    "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.026s\n\nOK",
+    "stdout": ""
+  },
+  "validatorErrorsForBadWrapper": [
+    "$.jobFitAlignment.score changed model-core invariant",
+    "$.model changed model-core invariant",
+    "$.jobRecommendations changed candidate ID order",
+    "wrapper output leaks contact data",
+    "wrapper output leaks prompt, secret, provider, storage, or raw CV language",
+    "wrapper output contains generic or invalid recommendation copy"
+  ]
+}

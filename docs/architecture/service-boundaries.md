@@ -31,6 +31,7 @@ Backend repo: <https://github.com/bisa-kerja/bisakerja-api>
 - loading verified exported TensorFlow/Keras artifacts
 - building approved feature vectors
 - request-scoped PDF parsing signals
+- sanitized wrapper evidence helper contracts for Backend-owned Analyzer prose
 - strict model-core request and response validation
 - deterministic inference errors
 - operational metadata logging without secrets or raw CV text
@@ -61,7 +62,9 @@ Model API may return:
 - `candidateReranking.recommendations[]` with Backend-provided `jobId` values
 - model metadata and timestamps
 
-Model API must not return Backend/public fields such as `title`, `companyName`, `reason`, `nextStep`, `topActionables`, `sectionReviews`, `generatedCv`, auth state, DB objects, or hydrated job data.
+Model API helper contract `ai-cv-analyzer-wrapper-evidence-v1` defines allowlisted Backend wrapper input fields: parsed-CV status, detected section evidence, requirement coverage, ATS issue evidence, role evidence, quantified-impact flags, and candidate job context. This helper context must not include raw CV text, contact data, file bytes, prompts, provider payloads, tokens, storage keys, DB data, or hydrated job fields. Experience years, education, certification, location/work-type, and generic requirements remain separate from skills and must not be emitted as `missingSkills`.
+
+Model API default response shape remains unchanged and must not return Backend/public fields such as `title`, `companyName`, `reason`, `nextStep`, `topActionables`, `sectionReviews`, `generatedCv`, auth state, DB objects, or hydrated job data.
 
 ## Integration Flow
 
@@ -69,8 +72,8 @@ Model API must not return Backend/public fields such as `title`, `companyName`, 
 User uploads or selects CV
   -> Backend API validates auth, ownership, file limits, and candidate jobs
   -> Backend API sends model-core request to internal Model API
-  -> Model API parses CV, builds features, runs TensorFlow inference, validates output
-  -> Backend API maps model-core result into public CvAnalysis response
+  -> Model API parses CV, builds features, classifies requirements, runs TensorFlow inference, validates output
+  -> Backend API uses model-core scores plus allowlisted wrapper evidence to build public CvAnalysis prose
   -> Backend API persists result and hydrates job recommendations
 ```
 

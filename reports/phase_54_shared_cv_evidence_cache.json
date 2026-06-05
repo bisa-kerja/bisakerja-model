@@ -1,0 +1,141 @@
+{
+  "cacheKeyExample": "sha256:e523b9cf6d32978d03a25b50a77ed472ff75ad9a2b85ed430e0b6c2f01161202",
+  "decision": "Backend-owned hybrid fallback cache with Backend parser for Generate MVP and Model API evidence adapter for Analyzer wrapper.",
+  "expiresAtExample": "2026-06-05T21:34:42.006428+00:00",
+  "generatedAt": "2026-06-04T21:34:42.006428+00:00",
+  "invalidationResults": [
+    {
+      "expired": false,
+      "fresh": true,
+      "model_version_changed": false,
+      "name": "fresh_cache",
+      "parser_version_changed": false,
+      "source_hash_changed": false,
+      "template_policy_changed": false
+    },
+    {
+      "expired": false,
+      "fresh": false,
+      "model_version_changed": false,
+      "name": "cv_file_changed",
+      "parser_version_changed": false,
+      "source_hash_changed": true,
+      "template_policy_changed": false
+    },
+    {
+      "expired": false,
+      "fresh": false,
+      "model_version_changed": false,
+      "name": "parser_version_changed",
+      "parser_version_changed": true,
+      "source_hash_changed": false,
+      "template_policy_changed": false
+    },
+    {
+      "expired": false,
+      "fresh": false,
+      "model_version_changed": true,
+      "name": "analysis_model_changed",
+      "parser_version_changed": false,
+      "source_hash_changed": false,
+      "template_policy_changed": false
+    },
+    {
+      "expired": false,
+      "fresh": false,
+      "model_version_changed": false,
+      "name": "template_policy_changed",
+      "parser_version_changed": false,
+      "source_hash_changed": false,
+      "template_policy_changed": true
+    },
+    {
+      "expired": true,
+      "fresh": false,
+      "model_version_changed": false,
+      "name": "retention_expired",
+      "parser_version_changed": false,
+      "source_hash_changed": false,
+      "template_policy_changed": false
+    }
+  ],
+  "parserOptions": [
+    {
+      "decision": "Use for Analyzer wrapper evidence only in MVP.",
+      "implementation_risk": "Medium because Generate would need extra internal endpoint or analyzer dependency.",
+      "latency_risk": "Adds service hop when used only for Generate; acceptable for Analyzer because Model API call already happens.",
+      "name": "Model API parse-only",
+      "owner": "Model API primary, Backend cache adapter",
+      "privacy_risk": "Raw CV stays internal between Backend and Model API; sanitized evidence only may reach GenAI.",
+      "quality": "Highest available parser and ATS signal quality after analyzer inference."
+    },
+    {
+      "decision": "Use as MVP Generate parser and shared cache owner.",
+      "implementation_risk": "Low because Generate already reads owned CV storage.",
+      "latency_risk": "Lowest latency for Generate because no extra service hop.",
+      "name": "Backend parser",
+      "owner": "Backend API",
+      "privacy_risk": "Low when raw text is not cached and contact data is redacted before provider calls.",
+      "quality": "Good enough for bounded section/skill evidence from text-like stored bytes; weak for scanned PDFs."
+    },
+    {
+      "decision": "Use as fallback only when same-CV latest analysis exists.",
+      "implementation_risk": "Low but stale without source/model invalidation.",
+      "latency_risk": "Low read-path latency.",
+      "name": "Latest analysis reuse",
+      "owner": "Backend API persisted sanitized snapshots",
+      "privacy_risk": "Low if scoped to same user and same CV file.",
+      "quality": "Useful fallback for ATS/actionables and section reviews when current stored bytes are weak."
+    },
+    {
+      "decision": "Chosen MVP architecture.",
+      "implementation_risk": "Medium due to schema/invalidation tests.",
+      "latency_risk": "Bounded by using source already available in each flow.",
+      "name": "Hybrid fallback",
+      "owner": "Backend API orchestration",
+      "privacy_risk": "Low when all provider inputs pass shared no-leak policy.",
+      "quality": "Best practical MVP coverage by combining model_api, backend_parser, latest_analysis_cache, metadata_only."
+    }
+  ],
+  "passed": true,
+  "qualityLatencyRiskSummary": {
+    "latency": "No extra Model API parse-only hop for Generate in MVP.",
+    "quality": "Analyzer uses Model API parser/scoring evidence; Generate uses Backend parser with same-CV latest analysis fallback.",
+    "risk": "Weak scanned-PDF Generate evidence remains low confidence and must not fabricate content."
+  },
+  "schemaChecks": {
+    "forbiddenFields": [
+      "raw CV text",
+      "raw PDF content",
+      "contact data",
+      "prompts",
+      "provider payloads",
+      "storage identifiers",
+      "tokens and secrets"
+    ],
+    "observability": [
+      "parser confidence",
+      "evidence source",
+      "cache hit/miss/bypass",
+      "wrapper fallback reason",
+      "template validation failure",
+      "no-leak checks"
+    ],
+    "retainedFields": [
+      "bounded section evidence",
+      "skill and requirement coverage",
+      "ATS/actionable evidence",
+      "parser confidence",
+      "source hash",
+      "timestamps and retention policy"
+    ],
+    "schemaVersion": "shared-cv-evidence-v1",
+    "sources": [
+      "model_api",
+      "backend_parser",
+      "latest_analysis_cache",
+      "metadata_only"
+    ]
+  },
+  "scope": "Shared CV evidence cache and MVP parser ownership decision"
+}

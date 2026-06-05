@@ -1761,6 +1761,162 @@ Phase 51 verification:
 
 ---
 
+### Phase 52 — AI CV Analyzer Wrapper Context and Prompt Quality
+
+Status: Complete
+
+Goal: Make Backend-owned AI CV Analyzer prose (`topActionables`, `sectionReviews`, recommendation `reason`, and `nextStep`) specific, evidence-grounded, and useful by giving the wrapper richer sanitized CV/job context and stronger prompt/schema rules.
+
+Scope boundary:
+
+- Keep public response contract stable as `cv-analysis-v2`.
+- Keep Model API model-core only; no Backend auth, persistence, DB hydration, or final public copy ownership moves to Model API.
+- Backend may parse the CV in MVP if it improves wrapper context faster, but raw CV text and file bytes must not be sent to external GenAI providers.
+- External GenAI wrapper input must use allowlisted sanitized evidence only.
+- Wrapper must preserve model-core scores, model metadata, candidate IDs, recommendation order, timestamps, and recommendation count.
+
+Current gap:
+
+- Deterministic fallback copy can produce generic and awkward output such as `Add one measurable bullet or project example that proves maximum 3 years of experience`.
+- Model/API evidence currently mixes skill gaps with experience-year requirements, so `minimum 1 years` or `maximum 3 years` can appear as if they are skills.
+- Wrapper input is too thin: it has scores, short evidence arrays, section names, and candidate metadata, but not enough section-level CV evidence, project/experience bullets, requirement coverage, or ATS issue severity.
+- Section reviews are hardcoded around broad sections instead of being generated from detected CV sections and grounded evidence.
+
+Tasks:
+
+- [x] Step 52.1: Freeze wrapper evidence contract — Define sanitized wrapper input fields for `parsedCv`, `sectionEvidence`, `requirementCoverage`, `roleEvidence`, `projectEvidence`, `experienceEvidence`, `educationEvidence`, `certificationEvidence`, `quantifiedImpactEvidence`, `atsIssueEvidence`, and candidate-specific job context.
+- [x] Step 52.2: Separate skills from requirements — Update Model API/Backend mapping so `requiredSkills` remain skills, while years of experience, education, certification, location/work-type, and generic requirements are classified separately and never emitted as `missingSkills`.
+- [x] Step 52.3: Add section-level CV evidence — Return or build sanitized summaries per detected section with bounded evidence bullets, skills mentioned, dates found, metrics found, role/company signals, and confidence flags.
+- [x] Step 52.4: Add requirement coverage evidence — For each target role or candidate job requirement, classify coverage as `matched`, `partial`, `missing`, or `unclear` with type (`skill`, `experience_years`, `education`, `certification`, `tool`, `domain`, `soft_skill`, `other`) and supporting evidence.
+- [x] Step 52.5: Improve deterministic fallback templates — Replace generic fallback prose with type-aware templates for skill gaps, experience/seniority gaps, missing metrics, weak summary, ATS readability, and section-specific improvements.
+- [x] Step 52.6: Upgrade GenAI analyzer prompt — Add strict rules: evidence only, language policy, no generic `Recommendation 1`, no prompt leakage, no invented facts, no treating years constraints as skills, every action point tied to evidence or one missing requirement.
+- [x] Step 52.7: Strengthen wrapper output validation — Reject wrapper output that changes numeric/model/candidate invariants, emits raw CV/contact data, includes prompt/secret language, invents unsupported claims, or produces generic duplicate recommendations.
+- [x] Step 52.8: Add benchmark tests for bad-copy regressions — Include fixtures that assert no output says `prove maximum years`, no hardcoded generic section-only copy, and every section review has at least one grounded evidence reference.
+- [x] Step 52.9: Document Backend-vs-Model context ownership — Update Backend and Model API docs to state whether section evidence is parsed by Model API, Backend, or cached from latest analysis, and why raw CV is not sent to GenAI.
+
+Acceptance Criteria:
+
+- [x] Analyzer public copy is specific to detected CV evidence, selected role/job requirements, and ATS issues.
+- [x] Experience-year constraints never appear as skills or as phrases like `prove maximum 3 years of experience`.
+- [x] `sectionReviews` are based on real detected or inferred CV sections, not only hardcoded broad templates.
+- [x] Deterministic fallback remains useful when GenAI is disabled or fails.
+- [x] GenAI wrapper output cannot change model scores, candidate IDs/order, model metadata, timestamps, or recommendation count.
+- [x] No raw CV text, contact data, storage keys, prompts, tokens, or provider payloads are exposed to frontend or logs.
+
+Verification:
+
+- [x] Add and run analyzer wrapper unit tests for evidence classification, deterministic fallback quality, prompt input safety, and invariant preservation.
+- [x] Add and run route/contract tests proving public `cv-analysis-v2` shape remains unchanged.
+- [x] Add a verification script/report with before-vs-after examples for the current bad `Skills` section response.
+
+Phase 52 verification:
+
+- [x] `python -m unittest tests.test_phase_52_ai_cv_analyzer_wrapper_context_quality` — 8 tests passed 2026-06-04.
+- [x] `python -m unittest tests.test_phase_34_cv_analyzer_response_compatibility tests.test_phase_51_ai_cv_analyzer_benchmark_output_quality tests.test_phase_52_ai_cv_analyzer_wrapper_context_quality` — 20 tests passed 2026-06-04.
+- [x] `python scripts/verify_phase_52_ai_cv_analyzer_wrapper_context_quality.py --write --run-tests` — report complete with all Phase 52 quality gates passing.
+
+---
+
+### Phase 53 — AI CV Generate Current-CV Context and Template Fidelity
+
+Status: Complete
+
+Goal: Improve `/api/v1/ai/cv-generate` so generated markdown HTML uses the current CV as grounded context and preserves the provided HTML template structure/style exactly.
+
+Scope boundary:
+
+- Backend remains owner of AI CV Generate orchestration, provider calls, output validation, and public response envelope.
+- Model API remains model-core only unless an explicit parse-only helper is approved; no Model API GenAI generation endpoint is added.
+- Backend may parse the CV in MVP for context if faster than adding a Model API parse-only contract.
+- Generated output must not invent unsupported names, companies, roles, dates, skills, metrics, education, certifications, or hiring outcomes.
+- Template preservation is product-critical; prompt-only enforcement is not enough without validation.
+
+Current gap:
+
+- Generate service currently builds `cvTextPreview` from PDF bytes via UTF-8 decoding, which is unreliable for real PDFs.
+- Prompt tells provider to return safe markdown HTML, but does not strongly enforce exact template tag/class/style/attribute preservation.
+- Latest analysis evidence may help, but it is not enough to reconstruct a high-quality CV when current CV parsing is weak.
+- Output safety checks block executable patterns but do not verify template structure fidelity.
+
+Tasks:
+
+- [x] Step 53.1: Replace PDF byte preview with real CV evidence — Use Model API parse output, Backend parser, or cached latest analyzer evidence to build sanitized structured CV context instead of `buffer.toString("utf8")`.
+- [x] Step 53.2: Define generated-CV evidence schema — Include candidate summary, section summaries, experience bullets, project bullets, skills grouped by category, education, certifications, languages, contact redaction policy, ATS/actionable gaps, and confidence flags.
+- [x] Step 53.3: Decide generation strategy — Choose between direct markdown HTML generation and safer two-step generation (`structured CV content JSON` → deterministic Backend template renderer). Prefer two-step rendering when exact template preservation is required.
+- [x] Step 53.4: Upgrade generate prompt for exact template preservation — Require full markdown HTML only; preserve every original tag, nesting, class, style, id, data attribute, section order, and static copy; only replace intended content/placeholder areas.
+- [x] Step 53.5: Add template structural validator — Parse `templateHtml` and generated output, then verify no required tags, classes, styles, IDs, data attributes, or structural sections are removed or renamed.
+- [x] Step 53.6: Add placeholder/content policy — Define which template regions may be rewritten, which regions must remain unchanged, and fallback behavior when evidence is missing.
+- [x] Step 53.7: Harden output safety and privacy — Continue rejecting scripts, iframes, objects, embeds, event handlers, `javascript:` URLs, raw prompt text, secrets, storage keys, raw contact data if disallowed, and unsupported claims.
+- [x] Step 53.8: Add deterministic fallback renderer — When provider fails or template validation fails, return a safe minimal template-rendered CV from structured evidence or return documented `SERVICE_UNAVAILABLE`/`MODEL_OUTPUT_INVALID` without fabricating claims.
+- [x] Step 53.9: Add template regression fixtures — Test realistic frontend templates and assert output keeps structure/style exactly while filling content from current CV evidence.
+- [x] Step 53.10: Update docs/OpenAPI notes — Document that `templateHtml` is required, generated output is markdown HTML, Backend owns context parsing and template validation, and frontend must still sanitize before rendering.
+
+Acceptance Criteria:
+
+- [x] Generate flow uses parsed current-CV evidence, not raw PDF byte string previews.
+- [x] Generated markdown HTML is grounded in current CV evidence and latest analysis context when available.
+- [x] Template structure, styles, classes, IDs, and section order are preserved or invalid output is rejected.
+- [x] Missing evidence results in omitted/minimal content, not invented facts.
+- [x] Public response remains exactly `{ markdown }` inside the standard API envelope.
+- [x] No raw prompt, raw CV text, storage key, provider payload, token, DB URL, or unsupported personal data leaks.
+
+Verification:
+
+- [x] Add and run AI CV Generate unit tests for evidence building, prompt input, output safety, template structural validation, and fallback behavior.
+- [x] Add and run route/contract tests for public response shape and no leakage.
+- [x] Add a verification report with input template, generated output, template-diff result, and safety checks.
+
+Phase 53 verification:
+
+- [x] `cd references && bun run typecheck` — passed 2026-06-04.
+- [x] `cd references && bun test --preload ./tests/preload-env.ts tests/unit/ai-cv-generate tests/integration/routes/ai-cv-generate.test.ts` — 16 tests passed 2026-06-04.
+- [x] `python scripts/verify_phase_53_ai_cv_generate_template_fidelity.py --write` — report complete with template fidelity and safety checks passing.
+
+---
+
+### Phase 54 — Shared CV Evidence Cache and MVP Parser Ownership Decision
+
+Status: Completed
+
+Goal: Avoid duplicated weak parsing across analyzer and generate flows by creating a shared, sanitized CV evidence layer and deciding whether MVP parsing lives in Backend, Model API, or both.
+
+Scope boundary:
+
+- This phase is architecture/contract hardening for context reuse, not model retraining.
+- Backend still owns user/file ownership, storage reads, persistence, public response, and GenAI orchestration.
+- Model API still owns core CV analysis/scoring/reranking when called.
+- Raw CV text caching requires explicit privacy review; default cache should store bounded sanitized structured evidence only.
+
+Tasks:
+
+- [x] Step 54.1: Compare parser ownership options — Document trade-offs for Model API parse-only, Backend parser, latest-analysis reuse, and hybrid fallback.
+- [x] Step 54.2: Define shared evidence cache schema — Store bounded sanitized section evidence, skill/requirement coverage, ATS evidence, parser confidence, source hash/version, timestamps, and retention policy.
+- [x] Step 54.3: Add cache invalidation policy — Invalidate evidence when CV file changes, parser version changes, analysis model version changes, template policy changes, or retention expires.
+- [x] Step 54.4: Add privacy and logging guardrails — Ensure raw CV text, contact data, prompts, provider payloads, and storage keys are not logged or exposed; document any approved retained fields.
+- [x] Step 54.5: Wire analyzer and generate to shared evidence — Analyzer wrapper and CV generate should consume the same evidence schema where possible, with flow-specific allowlists.
+- [x] Step 54.6: Add observability — Track parser confidence, evidence source (`model_api`, `backend_parser`, `latest_analysis_cache`), cache hit/miss, wrapper fallback reason, template validation failures, and no-leak checks.
+- [x] Step 54.7: Add contract and migration tests — Verify old CV analysis snapshots still read safely, new evidence shape is backward-compatible, and MVP parser choice does not break public contracts.
+
+Acceptance Criteria:
+
+- [x] Analyzer and generate can share sanitized current-CV context without sending raw CV to external GenAI.
+- [x] MVP parser ownership is explicit and documented.
+- [x] Evidence cache has clear retention, invalidation, privacy, and observability rules.
+- [x] Public API contracts remain unchanged.
+
+Verification:
+
+- [x] Add and run shared evidence schema tests, cache invalidation tests, analyzer/generate integration tests, and privacy/no-leak tests.
+- [x] Add a report comparing parser ownership decision, evidence quality, latency, and implementation risk.
+
+Phase 54 verification:
+
+- [x] `cd references && bun run typecheck` — passed 2026-06-04.
+- [x] `cd references && bun test --preload ./tests/preload-env.ts tests/unit/shared/cv-evidence.test.ts tests/unit/ai-cv-generate/ai-cv-generate.service.test.ts tests/unit/ai-cv-analyzer/ai-cv-analyzer.service.test.ts tests/integration/routes/ai-cv-analyzer.test.ts tests/integration/routes/ai-cv-generate.test.ts` — 50 tests passed 2026-06-04.
+- [x] `python scripts/verify_phase_54_shared_cv_evidence_cache.py --write` — report complete with parser ownership, invalidation, privacy, latency, and risk checks passing.
+
+---
+
 ## Suggested Execution Order
 
 1. Treat Phase 0-11 as completed design and audit baseline.
@@ -1791,6 +1947,9 @@ Phase 51 verification:
 26. Complete Phase 49 before broader staging/demo or production claims, and keep production blocked until human/reviewer validation, calibration, contract, runtime, monitoring, and rollback gates are satisfied.
 27. Do not change runtime constants or default env examples directly for embedding migration. Promote only through `MODEL_API_ARTIFACT_ROOT` and `MODEL_API_EXPECTED_EMBEDDING_MODEL`, then verify `/ready` and `/model-info` metadata.
 28. Implement Phase 51 before any new user-facing AI CV Analyzer copy demo, because benchmark outputs must be English-only, role-specific, non-generic, and grounded in real CV parser evidence.
+29. Implement Phase 52 before enabling or demoing GenAI Analyzer wrapper copy, because fallback and provider copy must use richer sanitized CV/job evidence and must not treat experience-year constraints as skills.
+30. Implement Phase 53 before relying on AI CV Generate for final user-facing CV output, because current-CV parsing and exact template preservation need stronger prompts plus structural validation.
+31. Implement Phase 54 when analyzer and generate start duplicating CV parsing logic or when MVP latency/privacy needs shared evidence caching; use Backend parser in MVP only with explicit ownership, retention, and no-leak rules.
 
 ## Out of Scope for Model-Core Training Notebooks
 

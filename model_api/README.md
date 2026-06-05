@@ -186,6 +186,10 @@ Model API returns model-core only:
 - `candidateReranking.recommendations[]`
 - model metadata and timestamps
 
+Model API also defines sanitized helper contract `ai-cv-analyzer-wrapper-evidence-v1` for Backend-owned GenAI/fallback prose context. It contains parsed-CV status, section evidence, requirement coverage, role evidence, ATS issue evidence, quantified-impact flags, and candidate job context. It excludes raw CV text, file bytes, contact data, prompts, provider payloads, tokens, storage keys, DB fields, hydrated jobs, and final public copy. Default response shape remains unchanged.
+
+Requirement handling is type-aware: `requiredSkills` are filtered to real skills; years of experience, education, certification, location/work-type, and generic requirements remain in requirement coverage and never appear as `missingSkills`.
+
 ## Example JSON Inference Request
 
 ```bash
@@ -223,7 +227,7 @@ curl -X POST http://127.0.0.1:8000/inference/cv-analysis \
   }'
 ```
 
-Response `data` is model-core only: bounded integer scores, evidence keys, candidate IDs from request, and no Backend-owned hydrated fields.
+Response `data` is model-core only: bounded integer scores, evidence keys, candidate IDs from request, and no Backend-owned hydrated fields or final prose fields.
 
 ## Feature Builder
 
