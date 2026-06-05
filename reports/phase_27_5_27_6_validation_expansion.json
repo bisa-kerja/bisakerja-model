@@ -3,7 +3,7 @@
   "generated_at": "2026-06-03T10:41:38.226690+00:00",
   "phase_id": "phase_27_5_27_6_validation_expansion",
   "references": [
-    "TODOS.md#phase-27",
+    "GAP_MODEL_TRAINING.md#phase-27",
     "GAP_MODEL_TRAINING.md#gap-06",
     "GAP_MODEL_TRAINING.md#gap-10",
     "REQUIREMENT.md"

@@ -931,7 +931,7 @@ def build_report() -> dict[str, Any]:
             "selection_decision": SELECTION_DECISION_PATH,
             "model": MODEL_PATH,
         }.items()},
-        "source_files": [rel(path) for path in [ROOT / "TODOS.md", ROOT / "GAP_MODEL_TRAINING.md", ROOT / "REQUIREMENT.md", PHASE44_FEATURES_PATH, PHASE44_DECISION_PATH, PHASE25_FEATURE_CONFIG_PATH]],
+        "source_files": [rel(path) for path in [ROOT / "GAP_MODEL_TRAINING.md", ROOT / "GAP_MODEL_TRAINING.md", ROOT / "REQUIREMENT.md", PHASE44_FEATURES_PATH, PHASE44_DECISION_PATH, PHASE25_FEATURE_CONFIG_PATH]],
         "git_state": git_state(),
     }
     return report

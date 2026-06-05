@@ -181,7 +181,7 @@
   "inputs": {
     "openapi": "references/docs/generated/openapi.json",
     "phase1_report": "reports/phase_01_data_audit_contracts.json",
-    "todo_scope": "Phase 2 \u2014 Label Schema and Baseline Definitions"
+    "phase_scope": "Phase 2 \u2014 Label Schema and Baseline Definitions"
   },
   "jobfit_label_components": [
     {

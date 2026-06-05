@@ -27,7 +27,7 @@
     "commit": "a6ac8eb4caae588437caca21e6143e5cc08c2e72",
     "dirty_file_count": 8,
     "dirty_sample": [
-      "M TODOS.md",
+      "M GAP_MODEL_TRAINING.md",
       "?? BRAINSTORMING.md",
       "?? artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/",
       "?? reports/phase_46_calibration_model_card_manifest_handoff_refresh.json",
@@ -41,7 +41,7 @@
   "phase_id": "phase_46_calibration_model_card_manifest_handoff_refresh",
   "schema_version": "phase-46-calibration-model-card-manifest-handoff-refresh-v1",
   "source_files": [
-    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
     "GAP_MODEL_TRAINING.md",
     "REQUIREMENT.md",
     "artifacts/phase_45_multilingual_e5_small_training_delivery/training_evaluation.json",

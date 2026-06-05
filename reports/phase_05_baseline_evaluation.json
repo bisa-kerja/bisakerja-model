@@ -441,7 +441,7 @@
     "phase2_report": "reports/phase_02_label_schema_baselines.json",
     "phase3_report": "reports/phase_03_normalization_feature_design.json",
     "phase4_report": "reports/phase_04_pair_generation_splits.json",
-    "todo_scope": "Phase 5 \u2014 Baseline Evaluation Notebook"
+    "phase_scope": "Phase 5 \u2014 Baseline Evaluation Notebook"
   },
   "ranking_baselines": {
     "metrics": [

@@ -233,7 +233,7 @@ def build_report() -> dict[str, Any]:
         "schema_version": "phase-27-7-clean-kernel-production-export-v1",
         "phase_id": "phase_27_7_clean_kernel_production_export",
         "generated_at": now_iso(),
-        "references": ["TODOS.md#phase-27.7", "GAP_MODEL_TRAINING.md", "REQUIREMENT.md", "reports/phase_25_tensorflow_training_delivery.json"],
+        "references": ["GAP_MODEL_TRAINING.md#phase-27.7", "GAP_MODEL_TRAINING.md", "REQUIREMENT.md", "reports/phase_25_tensorflow_training_delivery.json"],
         "policy": {
             "production_ready_requires_clean_git_state": True,
             "production_ready_requires_phase25_status": "production-ready",

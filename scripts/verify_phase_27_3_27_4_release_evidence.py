@@ -267,7 +267,7 @@ def build_report() -> dict[str, Any]:
         "schema_version": "phase-27-3-27-4-notebook-label-gate-v1",
         "phase_id": "phase_27_3_27_4_notebook_hygiene_label_evidence",
         "generated_at": now_iso(),
-        "references": ["TODOS.md#phase-27", "GAP_MODEL_TRAINING.md", "REQUIREMENT.md"],
+        "references": ["GAP_MODEL_TRAINING.md#phase-27", "GAP_MODEL_TRAINING.md", "REQUIREMENT.md"],
         "steps": {
             "27.3": {
                 "name": "Repair notebook hygiene",

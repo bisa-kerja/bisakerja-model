@@ -289,7 +289,7 @@ def build_report(write: bool = False) -> dict[str, Any]:
         "schema_version": "phase-27-8-model-card-manifest-refresh-v1",
         "phase_id": "phase_27_8_model_card_manifest_refresh",
         "generated_at": generated_at,
-        "references": ["TODOS.md#step-27.8", "GAP_MODEL_TRAINING.md", "REQUIREMENT.md"],
+        "references": ["GAP_MODEL_TRAINING.md#step-27.8", "GAP_MODEL_TRAINING.md", "REQUIREMENT.md"],
         "release_snapshot": snapshot,
         "gates": gates,
         "blockers": blockers,

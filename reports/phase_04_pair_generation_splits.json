@@ -107,7 +107,7 @@
     "phase2_report": "reports/phase_02_label_schema_baselines.json",
     "phase3_report": "reports/phase_03_normalization_feature_design.json",
     "profiles_csv": "legacy/dataset/techtalent_profile_cleaned.csv",
-    "todo_scope": "Phase 4 \u2014 Pair Generation and Split Strategy"
+    "phase_scope": "Phase 4 \u2014 Pair Generation and Split Strategy"
   },
   "minimum_high_fit_coverage": {
     "minimum_manual_review_candidates_per_split": 30,

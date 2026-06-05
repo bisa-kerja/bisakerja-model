@@ -113,7 +113,7 @@ bisakerja-model
 Check important files:
 
 ```bash
-ls TODOS.md REQUIREMENT.md GAP_MODEL_TRAINING.md training/requirements.txt
+ls REQUIREMENT.md GAP_MODEL_TRAINING.md training/requirements.txt
 ```
 
 If any file returns `No such file`, you are not in repository root.

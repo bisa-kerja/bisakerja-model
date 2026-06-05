@@ -253,7 +253,7 @@ def build_report() -> dict[str, Any]:
         "schema_version": "phase-27-10-requirement-matrix-v1",
         "phase_id": "phase_27_10_requirement_matrix",
         "generated_at": now_iso(),
-        "references": ["TODOS.md#step-27.10", "REQUIREMENT.md", "GAP_MODEL_TRAINING.md"],
+        "references": ["GAP_MODEL_TRAINING.md#step-27.10", "REQUIREMENT.md", "GAP_MODEL_TRAINING.md"],
         "policy": {
             "all_requirement_sections_required": list(REQUIREMENT_IDS),
             "evidence_must_exist": True,

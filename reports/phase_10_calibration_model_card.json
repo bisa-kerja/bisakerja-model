@@ -505,7 +505,7 @@
     }
   ],
   "source_references": [
-    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
     "GAP_MODEL_TRAINING.md#GAP-07",
     "GAP_MODEL_TRAINING.md#GAP-09",
     "references/docs/integrations/model-api.md",

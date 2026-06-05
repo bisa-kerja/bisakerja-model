@@ -2,7 +2,7 @@
 
 Status: `complete`
 Decision: `staging-experiment-only`
-Generated at: 2026-06-04T16:00:45Z
+Generated at: 2026-06-05T00:33:38Z
 
 multilingual-E5-small remains staging experiment only. Production rollout stays blocked until live staging, validation, monitoring, privacy, contract, runtime, and rollback gates pass.
 

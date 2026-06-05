@@ -68,7 +68,7 @@ def tracked_files() -> list[Path]:
     import subprocess
 
     output = subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True)
-    return [ROOT / line for line in output.splitlines() if line.strip()]
+    return [path for line in output.splitlines() if line.strip() and (path := ROOT / line).exists()]
 
 
 def secret_scan_text(path: Path) -> str:
@@ -99,7 +99,7 @@ def scan_tracked_secret_risks(files: list[Path]) -> list[str]:
             continue
         try:
             text = secret_scan_text(path)
-        except UnicodeDecodeError:
+        except (FileNotFoundError, UnicodeDecodeError):
             continue
         for pattern in PRODUCTION_SECRET_PATTERNS:
             if pattern.search(text):

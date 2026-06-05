@@ -237,7 +237,7 @@
     "phase1_report": "reports/phase_01_data_audit_contracts.json",
     "phase2_report": "reports/phase_02_label_schema_baselines.json",
     "profiles_csv": "legacy/dataset/techtalent_profile_cleaned.csv",
-    "todo_scope": "Phase 3 \u2014 Normalization and Feature Design"
+    "phase_scope": "Phase 3 \u2014 Normalization and Feature Design"
   },
   "language_normalization_policy": {
     "allowed_values": [

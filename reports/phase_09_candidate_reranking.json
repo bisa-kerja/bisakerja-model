@@ -214,7 +214,7 @@
     ]
   },
   "source_references": [
-    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
     "GAP_MODEL_TRAINING.md#GAP-06",
     "references/docs/integrations/model-api.md#Job Recommendation Payload Contract",
     "references/docs/modules/ai-job-recommendations.md#Current Contract",

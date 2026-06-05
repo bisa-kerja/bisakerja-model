@@ -28,7 +28,7 @@
     "commit": "f34e6c39bf963a26bc04ec44db4306614af28da3",
     "dirty_file_count": 8,
     "dirty_sample": [
-      "M TODOS.md",
+      "M GAP_MODEL_TRAINING.md",
       "?? BRAINSTORMING.md",
       "?? artifacts/phase_45_multilingual_e5_small_training_delivery/",
       "?? reports/phase_45_multilingual_e5_small_training_delivery.json",
@@ -44,7 +44,7 @@
   "selection_decision": "select_for_staging_shadow_validation",
   "selection_failures": [],
   "source_files": [
-    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
     "GAP_MODEL_TRAINING.md",
     "REQUIREMENT.md",
     "artifacts/phase_44_embedding_compatibility_audit/multilingual_e5_small_pair_features.json",

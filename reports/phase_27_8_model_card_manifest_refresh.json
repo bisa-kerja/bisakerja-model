@@ -22,9 +22,9 @@
         "calibration_hash": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
         "dataset_hash": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
         "feature_config_hash": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-        "generated_at": "2026-06-04T15:25:07.126762Z",
-        "git_commit": "3be5465cb988c7b7aa89458ce7206a85d4bda98f",
-        "git_dirty_file_count": 33,
+        "generated_at": "2026-06-05T00:32:07.433178Z",
+        "git_commit": "2de23f105e50285491028a145e38cdfdf92ecfcf",
+        "git_dirty_file_count": 92,
         "label_hash": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
         "model_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
         "production_claim_allowed": false,
@@ -49,9 +49,9 @@
         "calibration_hash": "e7ed181fd5473977202dac1848cc9b734e79413ebab92efccbd576c996e50236",
         "dataset_hash": "bfac2fde1168c7850ebd907d6fc040ad7b46729774e3f5b94af2ed09579d09b3",
         "feature_config_hash": "add9c1315e147c5a0e13f6c03501a842ca1f3c8903b85de6da72191a79cdbf9c",
-        "generated_at": "2026-06-04T15:25:07.126762Z",
-        "git_commit": "3be5465cb988c7b7aa89458ce7206a85d4bda98f",
-        "git_dirty_file_count": 33,
+        "generated_at": "2026-06-05T00:32:07.433178Z",
+        "git_commit": "2de23f105e50285491028a145e38cdfdf92ecfcf",
+        "git_dirty_file_count": 92,
         "label_hash": "8e3d1d5e787def63b7454ebc7edd667115fdbe8e8e087fb4b262cc51a6d5d0c6",
         "model_hash": "734b8c22f618e05b4b90ba24f4f0d01b475da4674c94e81fc3ed545fae40063d",
         "production_claim_allowed": false,
@@ -79,23 +79,23 @@
     {
       "check": "manifest_model_card_hash_matches_current_file",
       "evidence": {
-        "current_sha256": "dc899f0588d2716d1427474f9faf4d08dcade303bd33bc4294b761a7fe0cd982",
-        "manifest_sha256": "dc899f0588d2716d1427474f9faf4d08dcade303bd33bc4294b761a7fe0cd982"
+        "current_sha256": "255b15250bc8cc72ba1410f33b2e9844c05ac785cfc8815dcb6835f26f4360ea",
+        "manifest_sha256": "255b15250bc8cc72ba1410f33b2e9844c05ac785cfc8815dcb6835f26f4360ea"
       },
       "status": "PASS"
     }
   ],
-  "generated_at": "2026-06-04T15:25:07.126762Z",
+  "generated_at": "2026-06-05T00:32:07.433178Z",
   "phase_id": "phase_27_8_model_card_manifest_refresh",
   "references": [
-    "TODOS.md#step-27.8",
+    "GAP_MODEL_TRAINING.md#step-27.8",
     "GAP_MODEL_TRAINING.md",
     "REQUIREMENT.md"
   ],
   "release_snapshot": {
     "artifact_manifest": {
       "path": "artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
-      "sha256": "f5d541188345225e41e44d6c0d1f8a5536ab5baaf5a16b870cfde49645650db6",
+      "sha256": "2caa577512e516f1755b2b8690f79aa3db82a0a9622f360694bc35c1fa0727e7",
       "size_bytes": 24278
     },
     "artifacts": {
@@ -142,8 +142,8 @@
         }
       ]
     },
-    "git_commit": "3be5465cb988c7b7aa89458ce7206a85d4bda98f",
-    "git_dirty_file_count": 33,
+    "git_commit": "2de23f105e50285491028a145e38cdfdf92ecfcf",
+    "git_dirty_file_count": 92,
     "missing": [],
     "split_seed": 202621
   },

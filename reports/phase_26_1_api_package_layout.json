@@ -4,7 +4,7 @@
   "step_name": "API package layout",
   "status": "complete_redone_backend_aligned",
   "source_references": [
-    "TODOS.md#Phase-26",
+    "GAP_MODEL_TRAINING.md#Phase-26",
     "references/docs/generated/openapi.json#/components/schemas/AnalyzeCvMultipartRequest",
     "references/docs/generated/openapi.json#/components/schemas/CvAnalysis",
     "references/prisma/schema.prisma#CvAnalysisResult",

@@ -19,8 +19,7 @@ The layout is conservative on purpose: existing tests, notebooks, artifact manif
 |-- requirements.txt
 |-- REQUIREMENT.md
 |-- GAP_MODEL_TRAINING.md
-|-- RUNNING_STEPS.md
-`-- TODOS.md
+`-- RUNNING_STEPS.md
 ```
 
 ## Ownership Rules
@@ -44,7 +43,7 @@ Backend API source and deployment config belong to <https://github.com/bisa-kerj
 To avoid breaking current project behavior:
 
 1. Keep active import paths stable: `model_api.*`, `scripts.*`, and `tests.*`.
-2. Keep root governance files at root: `TODOS.md`, `REQUIREMENT.md`, `GAP_MODEL_TRAINING.md`, `RUNNING_STEPS.md`.
+2. Keep root governance files at root: `REQUIREMENT.md`, `GAP_MODEL_TRAINING.md`, and `RUNNING_STEPS.md`.
 3. Keep artifact paths stable because notebooks and manifests record SHA-256 and relative paths.
 4. Add documentation and README files freely when they do not alter runtime behavior.
 5. Move files only when every script, notebook, manifest, README, and test reference is updated and verified.

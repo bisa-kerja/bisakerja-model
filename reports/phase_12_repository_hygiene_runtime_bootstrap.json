@@ -108,9 +108,9 @@
       "sha256": "cf0886a0093613604d6dda4f707fceea5a84d96fad0d9ef744ee218571594537",
       "size_bytes": 15503
     },
-    "TODOS.md": {
+    "GAP_MODEL_TRAINING.md": {
       "exists": true,
-      "path": "TODOS.md",
+      "path": "GAP_MODEL_TRAINING.md",
       "sha256": "78e698cb57a147bff9b0165b45e6b3e1b81009834484cd3f5587973bb72e4230",
       "size_bytes": 37718
     },

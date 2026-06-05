@@ -20,7 +20,7 @@ PHASE46_REPORT_PATH = ROOT / "reports/phase_46_calibration_model_card_manifest_h
 PHASE47_REPORT_PATH = ROOT / "reports/phase_47_model_api_runtime_support.json"
 PHASE48_REPORT_PATH = ROOT / "reports/phase_48_backend_staging_integration.json"
 PHASE46_MODEL_CARD_PATH = ROOT / "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh/model_card.json"
-TODOS_PATH = ROOT / "TODOS.md"
+GAP_MODEL_TRAINING_PATH = ROOT / "GAP_MODEL_TRAINING.md"
 PHASE46_ROOT = "artifacts/phase_46_calibration_model_card_manifest_handoff_refresh"
 PHASE25_ROOT = "artifacts/phase_25_tensorflow_training_delivery"
 PHASE46_EMBEDDING = "intfloat/multilingual-e5-small"
@@ -37,7 +37,7 @@ SOURCE_PATHS = (
     PHASE47_REPORT_PATH,
     PHASE48_REPORT_PATH,
     PHASE46_MODEL_CARD_PATH,
-    TODOS_PATH,
+    GAP_MODEL_TRAINING_PATH,
 )
 
 
@@ -163,10 +163,10 @@ def build_report() -> dict[str, Any]:
             ],
         ),
         "suggested_execution_order_blocks_direct_constant_changes": all_tokens(
-            read(TODOS_PATH),
+            read(GUARDRAILS_PATH),
             [
                 "Complete Phase 49 before broader staging/demo or production claims",
-                "Do not change runtime constants or default env examples directly",
+                "Do not change runtime constants or hardcoded embedding defaults directly",
                 "MODEL_API_ARTIFACT_ROOT",
                 "MODEL_API_EXPECTED_EMBEDDING_MODEL",
             ],

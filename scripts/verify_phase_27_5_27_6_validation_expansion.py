@@ -477,7 +477,7 @@ def build_report() -> dict[str, Any]:
         "schema_version": "phase-27-5-27-6-validation-expansion-v1",
         "phase_id": "phase_27_5_27_6_validation_expansion",
         "generated_at": now_iso(),
-        "references": ["TODOS.md#phase-27", "GAP_MODEL_TRAINING.md#gap-06", "GAP_MODEL_TRAINING.md#gap-10", "REQUIREMENT.md"],
+        "references": ["GAP_MODEL_TRAINING.md#phase-27", "GAP_MODEL_TRAINING.md#gap-06", "GAP_MODEL_TRAINING.md#gap-10", "REQUIREMENT.md"],
         "release_policy": RELEASE_POLICY,
         "steps": {
             "27.5": {

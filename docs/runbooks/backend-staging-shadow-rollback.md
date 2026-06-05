@@ -24,7 +24,7 @@ SENTENCE_TRANSFORMERS_HOME=/home/user/.cache/sentence-transformers
 
 Cache requirements:
 
-- Keep `SENTENCE_TRANSFORMERS_HOME` pointed at the image-baked cache path.
+- Keep `SENTENCE_TRANSFORMERS_HOME` pointed at the image-baked persistent cache path.
 - Do not mount a Docker volume over `SENTENCE_TRANSFORMERS_HOME`; it hides the model predownloaded during image build.
 - Do not write service tokens, `DATABASE_URL`, `OPENROUTER_API_KEY`, raw CV text, or uploaded bytes into reports.
 
@@ -156,7 +156,7 @@ The script uses `compare_shadow_outputs` and records `score_delta_threshold`, sc
 
 ## Failure behavior matrix
 
-Validate these before broader traffic:
+Validate these before broader traffic. Coverage terms: invalid PDF, empty candidates, invalid token, rollback artifact path.
 
 | Scenario               | Expected behavior                                                                                               |
 | ---------------------- | --------------------------------------------------------------------------------------------------------------- |

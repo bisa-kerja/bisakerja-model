@@ -20,6 +20,10 @@ Model, inference, evidence, and Model API workspace for the Bisakerja AI career 
 
 This repository is focused on the model side only: notebook-first model training, production Model API serving, release evidence, validation scripts, tests, artifacts, reports, and a frozen legacy snapshot. The Backend API is a separate repository: <https://github.com/bisa-kerja/bisakerja-api>.
 
+## Production VPS Resource Notice
+
+We apologize if the production Model API is not running reliably at the moment. The current VPS has limited CPU, memory, and cold-start capacity for the TensorFlow and multilingual-E5 runtime, so production inference may fail readiness checks, time out, or become unavailable under load. Treat the current deployment as resource-constrained until the server is upgraded or the runtime is moved to infrastructure with enough memory and warmup capacity.
+
 ## Platform Context
 
 Bisakerja helps Indonesian job seekers understand job fit, improve CV quality, and choose relevant applications. The broader platform has these boundaries:
@@ -72,8 +76,7 @@ Backend contract alignment should use exported contracts or fixtures from <https
 |-- .env.example               # Optional root model-workspace env template
 |-- REQUIREMENT.md             # Project requirement matrix
 |-- GAP_MODEL_TRAINING.md      # Training gap and readiness notes
-|-- RUNNING_STEPS.md           # Local/staging runbook
-`-- TODOS.md                   # Notebook-first training phase tracker
+`-- RUNNING_STEPS.md           # Local/staging runbook
 ```
 
 ## Reading Order

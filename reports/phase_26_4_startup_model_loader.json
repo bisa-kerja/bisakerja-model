@@ -4,7 +4,7 @@
   "step_name": "Startup model loader",
   "status": "complete",
   "source_references": [
-    "TODOS.md#Phase-26",
+    "GAP_MODEL_TRAINING.md#Phase-26",
     "references/docs/generated/openapi.json#/paths/~1api~1v1~1ai~1cv-analyzer",
     "references/docs/generated/openapi.json#/components/schemas/CvAnalysis",
     "references/prisma/schema.prisma#CvAnalysisResult",
@@ -45,7 +45,7 @@
     "model_api/inference.py": {"sha256": "513679963eb182fdc83a31fa0d91a76cd758f00d25a2944819ad1fc9af5057bc"},
     "model_api/errors.py": {"sha256": "9086626d25c598e81607eade92a451051b7e690333107664f4cd9e229118d34f"},
     "tests/model_api/test_phase_26_layout.py": {"sha256": "49766c8697c71bbbf8f177b1e7122a6201b8bc0cf8b97b4d3a66f811d8294883"},
-    "TODOS.md": {"step_26_4_checked": true}
+    "GAP_MODEL_TRAINING.md": {"step_26_4_checked": true}
   },
   "verification": {
     "commands": [

@@ -28,7 +28,7 @@
     "dirty": true,
     "dirty_file_count": 43,
     "sample": [
-      " M TODOS.md",
+      " M GAP_MODEL_TRAINING.md",
       " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
       " M artifacts/phase_25_tensorflow_training_delivery/baseline_selection_gate.json",
       " M artifacts/phase_25_tensorflow_training_delivery/custom_component_registry.json",

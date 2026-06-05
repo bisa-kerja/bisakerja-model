@@ -114,31 +114,31 @@
       "status_code": 200
     }
   },
-  "generated_at": "2026-06-04T15:25:10Z",
+  "generated_at": "2026-06-05T00:32:11Z",
   "git_state": {
-    "commit": "3be5465cb988c7b7aa89458ce7206a85d4bda98f",
-    "dirty_file_count": 33,
+    "commit": "2de23f105e50285491028a145e38cdfdf92ecfcf",
+    "dirty_file_count": 96,
     "dirty_sample": [
-      "M TODOS.md",
+      "D .ipynb_checkpoints/Untitled-checkpoint.ipynb",
+      " M README.md",
+      " M RUNNING_STEPS.md",
+      " D GAP_MODEL_TRAINING.md",
       " M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json",
       " M artifacts/phase_25_tensorflow_training_delivery/model_card.json",
+      " M artifacts/phase_25_tensorflow_training_delivery/reproducibility_setup.json",
       " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_quality_baseline.json",
       " M artifacts/phase_43_multilingual_e5_small_migration/e5_base_runtime_baseline.json",
       " M artifacts/phase_43_multilingual_e5_small_migration/migration_decision_risk_register.json",
       " M artifacts/phase_44_embedding_compatibility_audit/embedding_cosine_drift_report.json",
       " M artifacts/phase_44_embedding_compatibility_audit/feature_normalization_impact.json",
       " M artifacts/phase_44_embedding_compatibility_audit/retrain_vs_recalibrate_decision.json",
-      " M model_api/app.py",
-      " M model_api/pdf_parser.py",
-      " M reports/phase_27_10_requirement_matrix.json",
-      " M reports/phase_27_10_requirement_matrix.md",
-      " M reports/phase_27_7_clean_kernel_production_export.json",
-      " M reports/phase_27_7_clean_kernel_production_export.md",
-      " M reports/phase_27_8_model_card_manifest_refresh.json",
-      " M reports/phase_27_8_model_card_manifest_refresh.md",
-      " M reports/phase_27_9_model_api_production_smoke.json",
-      " M reports/phase_27_9_model_api_production_smoke.md",
-      " M reports/phase_38_ai_cv_analyzer_runtime_gate.md"
+      " M docs/project-structure.md",
+      " M docs/runbooks/backend-staging-shadow-rollback.md",
+      " M docs/runbooks/staging-promotion-production-guardrails.md",
+      " M reports/phase_02_label_schema_baselines.json",
+      " M reports/phase_03_normalization_feature_design.json",
+      " M reports/phase_04_pair_generation_splits.json",
+      " M reports/phase_05_baseline_evaluation.json"
     ],
     "production_claim_allowed": false
   },
@@ -151,9 +151,9 @@
   "resource_baseline": {
     "cpu_brand": "Apple M1 Pro",
     "disk_usage_repo": {
-      "free": 167235481600,
+      "free": 159967043584,
       "total": 494384795648,
-      "used": 327149314048
+      "used": 334417752064
     },
     "docker_image_size": {
       "command": "docker images --format '{{.Repository}}:{{.Tag}} {{.Size}}' | grep -E 'bisakerja|model'",
@@ -164,7 +164,7 @@
     "e5_base_hf_cache_size_bytes": 877935460,
     "machine": "arm64",
     "memory_bytes": "17179869184",
-    "phase25_artifact_root_size_bytes": 18374552,
+    "phase25_artifact_root_size_bytes": 18389324,
     "platform": "macOS-14.8.2-arm64-arm-64bit-Mach-O",
     "processor": "arm",
     "python": "3.14.2"
@@ -184,20 +184,20 @@
     "model_card": {
       "exists": true,
       "path": "artifacts/phase_25_tensorflow_training_delivery/model_card.json",
-      "sha256": "dc899f0588d2716d1427474f9faf4d08dcade303bd33bc4294b761a7fe0cd982",
+      "sha256": "255b15250bc8cc72ba1410f33b2e9844c05ac785cfc8815dcb6835f26f4360ea",
       "size_bytes": 13283
     },
     "phase25_final_gate": {
       "exists": true,
       "path": "reports/phase_25_tensorflow_training_delivery.json",
-      "sha256": "16e42357b8037dfbfaf79dbf28c6eeebd2dd2b1325822edb5a994dd7c7572db9",
-      "size_bytes": 20613
+      "sha256": "0c7375d0fde2bb9fb724390774f3b2b5f7f7453611f1477a25b246c1fa6fd8ed",
+      "size_bytes": 20626
     },
     "phase27_model_api_smoke": {
       "exists": true,
       "path": "reports/phase_27_9_model_api_production_smoke.json",
-      "sha256": "773c774ed133e64ae792d831819859c4d853c510d5f4b5fd741f2c53ca1cab43",
-      "size_bytes": 3499
+      "sha256": "b350bfd3de9888601eb1a5afc94fba5c5ec274004af5de0f8af5aaa565f50827",
+      "size_bytes": 6658
     },
     "tensorflow_feature_config": {
       "exists": true,

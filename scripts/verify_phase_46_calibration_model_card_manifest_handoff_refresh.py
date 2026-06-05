@@ -775,7 +775,7 @@ def build_report() -> dict[str, Any]:
             "handoff_validation_status": validation.get("status"),
         },
         "artifact_paths": {"artifact_root": rel(ARTIFACT_DIR), "model_card": rel(MODEL_CARD_PATH), "artifact_manifest": rel(ARTIFACT_MANIFEST_PATH), "score_calibration": rel(SCORE_CALIBRATION_PATH), "handoff_fixtures": rel(HANDOFF_FIXTURES_PATH), "handoff_validation": rel(HANDOFF_VALIDATION_PATH)},
-        "source_files": [rel(path) for path in [ROOT / "TODOS.md", ROOT / "GAP_MODEL_TRAINING.md", ROOT / "REQUIREMENT.md", PHASE45_EVALUATION_PATH, PHASE45_BASELINE_PATH, PHASE45_PREDICTIONS_PATH]],
+        "source_files": [rel(path) for path in [ROOT / "GAP_MODEL_TRAINING.md", ROOT / "GAP_MODEL_TRAINING.md", ROOT / "REQUIREMENT.md", PHASE45_EVALUATION_PATH, PHASE45_BASELINE_PATH, PHASE45_PREDICTIONS_PATH]],
         "git_state": git_state(),
     }
 

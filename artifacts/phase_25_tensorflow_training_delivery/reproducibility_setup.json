@@ -33,8 +33,8 @@
   "datasetAndContractHashes": [
     {
       "exists": true,
-      "path": "TODOS.md",
-      "role": "todo_plan",
+      "path": "GAP_MODEL_TRAINING.md",
+      "role": "phase_plan",
       "sha256": "18d82e122b7b0150152db9fc47a6265b5da46e351c1abab0d02226142ce687be"
     },
     {

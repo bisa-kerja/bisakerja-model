@@ -15,7 +15,7 @@ REPORT_MD_PATH = ROOT / "reports/phase_50_ai_cv_analyzer_intelligence.md"
 MODEL_API_APP = ROOT / "model_api/app.py"
 PDF_PARSER = ROOT / "model_api/pdf_parser.py"
 TEST_PATH = ROOT / "tests/test_phase_50_ai_cv_analyzer_intelligence.py"
-TODOS_PATH = ROOT / "TODOS.md"
+GAP_MODEL_TRAINING_PATH = ROOT / "GAP_MODEL_TRAINING.md"
 SCHEMA_VERSION = "phase-50-ai-cv-analyzer-intelligence-v1"
 
 

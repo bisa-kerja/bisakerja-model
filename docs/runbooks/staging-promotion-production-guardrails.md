@@ -114,7 +114,7 @@ Production rollout remains blocked until all pass:
 
 ## Runtime constant safety
 
-Do not change runtime constants or hardcoded embedding defaults directly. Promote by changing `MODEL_API_ARTIFACT_ROOT` and `MODEL_API_EXPECTED_EMBEDDING_MODEL`, then verify `/ready` and `/model-info` metadata. Future agents must complete migration validation before changing default env examples.
+Complete Phase 49 before broader staging/demo or production claims. Do not change runtime constants or hardcoded embedding defaults directly. Promote by changing `MODEL_API_ARTIFACT_ROOT` and `MODEL_API_EXPECTED_EMBEDDING_MODEL`, then verify `/ready` and `/model-info` metadata. Future agents must complete migration validation before changing default env examples.
 
 ## Rejected artifact policy
 

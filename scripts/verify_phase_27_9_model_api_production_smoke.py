@@ -205,7 +205,7 @@ def build_report(run_live: bool = False, run_tests: bool = True) -> dict[str, An
         "schema_version": "phase-27-9-model-api-production-smoke-v1",
         "phase_id": "phase_27_9_model_api_production_smoke",
         "generated_at": now_iso(),
-        "references": ["TODOS.md#step-27.9", "model_api/README.md", "REQUIREMENT.md#2.2", "REQUIREMENT.md#3"],
+        "references": ["GAP_MODEL_TRAINING.md#step-27.9", "model_api/README.md", "REQUIREMENT.md#2.2", "REQUIREMENT.md#3"],
         "policy": {
             "python_runtime": "3.13.x",
             "requirements_file": "requirements.txt",

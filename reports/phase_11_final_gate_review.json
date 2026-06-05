@@ -484,7 +484,7 @@
     "wrapper_or_backend_field_count": 12
   },
   "source_references": [
-    "TODOS.md",
+    "GAP_MODEL_TRAINING.md",
     "GAP_MODEL_TRAINING.md",
     "references/docs/generated/openapi.json",
     "reports/phase_00_reproducibility_snapshot.json",

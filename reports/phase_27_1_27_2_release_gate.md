@@ -22,7 +22,7 @@ Production-ready status requires clean setup/export git state and TensorBoard ev
 ## Dirty paths
 
 - ` M .gitignore`
-- ` M TODOS.md`
+- ` M GAP_MODEL_TRAINING.md`
 - ` M artifacts/phase_25_tensorflow_training_delivery/artifact_manifest.json`
 - ` M training/README.md`
 - `?? artifacts/phase_25_tensorflow_training_delivery/tensorboard_release/`

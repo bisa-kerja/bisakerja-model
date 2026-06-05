@@ -3,7 +3,7 @@
   "generated_at": "2026-06-03T10:37:04.454345+00:00",
   "phase_id": "phase_27_3_27_4_notebook_hygiene_label_evidence",
   "references": [
-    "TODOS.md#phase-27",
+    "GAP_MODEL_TRAINING.md#phase-27",
     "GAP_MODEL_TRAINING.md",
     "REQUIREMENT.md"
   ],
