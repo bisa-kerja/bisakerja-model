@@ -182,8 +182,7 @@ jobs:
       - name: Deploy via SSH
         run: |
           set -euo pipefail
-          ssh -i ~/.ssh/deploy_key -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}' <<'REMOTE_SCRIPT'
-          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}' 'bash -seuo pipefail' <<'REMOTE_SCRIPT'
 
           REMOTE_PATH='${{ secrets.DEPLOY_REMOTE_PATH }}'
           RUNTIME_ENV_FILE='${{ env.RUNTIME_ENV_FILE }}'
@@ -347,7 +346,7 @@ jobs:
         if: failure()
         run: |
           set +e
-          ssh -i ~/.ssh/deploy_key -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}' <<'REMOTE_SCRIPT'
+          ssh -i ~/.ssh/deploy_key -p '${{ secrets.DEPLOY_VPS_PORT }}' '${{ secrets.DEPLOY_VPS_USERNAME }}@${{ secrets.DEPLOY_VPS_HOST }}' 'bash -s' <<'REMOTE_SCRIPT'
           cd '${{ secrets.DEPLOY_REMOTE_PATH }}' || exit 0
           docker compose -f '${{ env.COMPOSE_FILE }}' --env-file '${{ env.RUNTIME_ENV_FILE }}' ps model-api
           docker compose -f '${{ env.COMPOSE_FILE }}' --env-file '${{ env.RUNTIME_ENV_FILE }}' logs --tail=150 model-api
